@@ -201,7 +201,7 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos de
+                                    <li><a href="{{url("/listado")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos de
                                             sesion plenaria temporales</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos de
                                             sesión plenaria permanentes</a></li>

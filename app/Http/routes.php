@@ -42,3 +42,9 @@ Route::get('/HistorialDictamenesBitacoras', function () {
 Route::get('/TrabajoComision', function () {
     return view('Comisiones.TrabajoComision');
 });
+
+Route::get('/pdf/{tipo}', 'PdfController@invoice');
+
+Route::get('/listado', function () {
+    return view('Reportes.listado_reportes');
+});
