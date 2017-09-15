@@ -27,11 +27,19 @@ class PdfController extends Controller
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-        if($tipo==1){return $pdf->stream('reporte');}
-        if($tipo==2){return $pdf->download('reporte.pdf'); }
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
 
         //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
         //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
     }
     
    // public function listado(){
@@ -41,12 +49,18 @@ class PdfController extends Controller
 
     public function getData() 
     {
+
+        $data=Array(1);
         $data =  [
             'quantity'      => '1' ,
             'description'   => 'some ramdom text',
             'price'   => '500',
             'total'     => '500'
         ];
+
+        
+      
+
         return $data;
     }
     

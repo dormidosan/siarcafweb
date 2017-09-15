@@ -10,9 +10,10 @@
     width: 100%;
     text-align: center;
     opacity: .4;
-    transform: rotate(10deg);
+    transform: rotate(270deg);
     transform-origin: 50% 50%;
     z-index: -1000;
+    
   }
   #centrar{
 
@@ -21,8 +22,13 @@
     width: 100%;
      text-align: center;
   }
+
 </style>
-  </head>
+ 
+<div>
+<IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%">
+</div>
+</head>
   <body>
  
   <div id="watermark">
@@ -30,7 +36,34 @@
     SOLO PARA FINES INFORMATIVOS
   </h1>
   </div>
-  <div id="centrar">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <!--<div id="centrar">
    TEXTO FRENTE A MARCA DE AGUA 
   </div>
     <main>
@@ -65,6 +98,6 @@
             <td>$6,500.00</td>
           </tr>
         </tfoot>
-      </table>
+      </table>-->
   </body>
 </html>
