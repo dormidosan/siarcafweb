@@ -93,6 +93,12 @@
                 maxFileCount: 3,
                 allowedFileExtensions: ['docx', 'pdf'],
                 showUpload: false,
+                fileActionSettings: {
+                    showRemove: true,
+                    showUpload: false,
+                    showZoom: true,
+                    showDrag: false
+                },
                 hideThumbnailContent: true
             });
         });
