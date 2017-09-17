@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('libs/file/css/fileinput.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/file/themes/explorer/theme.min.css') }}">
+    <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
 @endsection
 
 @section("content")
@@ -55,11 +55,12 @@
                     </div>
                 </div>
 
+
                 <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="documentos">Documento adjunto</label>
-                            <input id="documentos" name="documentos[]" type="file" multiple>
+                    <div class="col-lg-12">
+                        <label for="documento">Seleccione documentos</label>
+                        <div class="file-loading">
+                            <input id="documento" name="documento[]" type="file" multiple>;
                         </div>
                     </div>
                 </div>
@@ -76,8 +77,8 @@
 
 @section("js")
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
-    <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
+    <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
 @endsection
 
 
@@ -85,14 +86,25 @@
     <script type="text/javascript">
         $(function () {
             $("#documentos").fileinput({
-                language: 'es',
+
+                theme: "explorer",
                 hideThumbnailContent: true,
                 //showPreview: false,
                 showUpload: false,
-                theme: "explorer",
                 minFileCount: 1,
                 maxFileCount: 3,
-                allowedFileExtensions: ['docx', 'pdf']
+                //allowedFileExtensions: ['docx', 'pdf']
+            });
+
+            $("#documento").fileinput({
+                theme: "explorer",
+                uploadUrl: "/file-upload-batch/2",
+                language: "es",
+                minFileCount: 1,
+                maxFileCount: 3,
+                allowedFileExtensions: ['jpg', 'png', 'gif'],
+                showUpload: false,
+                hideThumbnailContent: true
             });
         });
     </script>
