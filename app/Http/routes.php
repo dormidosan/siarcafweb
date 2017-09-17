@@ -42,3 +42,9 @@ Route::get('/HistorialDictamenesBitacoras', function () {
 Route::get('/TrabajoComision', function () {
     return view('Comisiones.TrabajoComision');
 });
+
+
+/* Peticiones */
+Route::get('/RegistrarPeticion', function () {
+    return view('General.RegistroPeticion');
+});

@@ -7,10 +7,6 @@
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 @endsection
 
-@section('styles')
-<link rel="stylesheet" href="{{ asset('') }}">
-@endsection
-
 @section('content')
     <div class="box box-solid box-default">
         <div class="box-header with-border">
