@@ -1,46 +1,83 @@
 @extends('layouts.app')
 
+@section("styles")
+    <!-- Datatables-->
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+
+@endsection
+
 @section('content')
-<section id="contact" class="four">
-            <div class="container">
-              <form method="get">
-              <header>
-                <h2>Permisos temporales de sesiones plenarias</h2>
-              </header>
 
-  <script>
-$('.datepicker').datepicker({
-  format: 'mm/dd/yyyy';
-});
+             
 
-  </script>
-<div class="row" width="75%" height="75%" style="position:absolute;">
 
-            <div class="col-xs-12">
-              <div class="box box-info">
-                <div class="box-header">
-                
-                  <div class="box-tools">
-                    <div class="input-group" >
-                      
-                     
-                    </div>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                   
-                    <thead><tr>
-                      
-                      
-                      <th>Filtro <select class="form-control" id="tipoDocumento" name="tipoDocumento">
+
+
+<div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Reporte constancias de renta</h3>
+        </div>
+        <div class="box-body">
+            <form id="buscarDocs" method="post" action="#">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label>Filtro</label>
+                            
+                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value="">--Seleccione una opcion --</option>
                                 <option value="User">Asambleista</option>
                                 <option value="Sesion">Sesion plenaria</option>
                             </select>
-                          </th>
-                      <th>Fecha inicial: <input class="form-control" type="date" data-provide="datepicker"></th>
-                      <th>Fecha final: <input class="form-control" type="date" data-provide="datepicker"></th>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label>Fecha inicial</label>
+                            <div class="input-group date">
+                             <input id="fecha" class="form-control" type="date" ><span class="input-group-addon" ><i class="glyphicon glyphicon-th" ></i></span> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label>Fecha inicial</label>
+                            <div class="input-group date">
+                             <input id="fecha" class="form-control" type="date" ><span class="input-group-addon" ><i class="glyphicon glyphicon-th" ></i></span> 
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+
+
+
+ <div class="box box-solid box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Resultados de Busqueda</h3>
+        </div>
+        <div class="box-body">
+                  <table class="table table-hover">
+                   
+                    <thead><tr>
+                      
+                      <th>Nombre </th>
+                      
+                      <th>Fecha</th>
+                      
                       <th>Ver</th>
                       <th>Descargar</th>
                     </tr></thead>
@@ -49,22 +86,27 @@ $('.datepicker').datepicker({
                       <td>
                         Nombre permiso
                       </td>
-                      <td>fecha 1</td>
-                      <td>fecha 2</td>
-                      <td><a href="{{url("/Reporte_constancias_renta/1")}}"  >VER</a></td>
-                      <td><a href="{{url("/Reporte_constancias_renta/2")}}"  >DESCARGAR</a></td>
+                      <td>fecha</td>
+                    
+                      <td><a href="{{url("/Reporte_constancias_renta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_constancias_renta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                    
                   </tbody></table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-            </div>
- </div>
-
   
-              </form>
+   <script>
+$('#fecha').datepicker({
+              format: "dd/mm/yyyy",
+                clearBtn: true,
+                language: "es",
+                autoclose: true,
+                todayHighlight: true
+            });
 
-            </div>
-          </section>
+
+  </script>
+        
 @endsection

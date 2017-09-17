@@ -53,11 +53,14 @@ Route::get('/ConvocatoriaComision', function () {
 
 
 
+
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales');
 });
+
+
 
 /* Peticiones */
 Route::get('/RegistrarPeticion', function () {
