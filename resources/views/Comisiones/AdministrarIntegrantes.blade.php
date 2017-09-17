@@ -7,55 +7,67 @@
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 @endsection
 
-@section('content')
+@section("content")
     <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Listado Comisiones</h3>
+            <h3 class="box-title">Administrar Integrantes de Comision</h3>
         </div>
         <div class="box-body">
-            <table id="listadoComisiones"
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="nombre">Asambleista</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el nombre del Asambleista"
+                                   id="nombre"
+                                   name="nombre">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="submit" id="crearComision" name="crearComision" class="btn btn-primary">Agregar
+                            Asambleista
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            <br>
+            <!--<label for="listadoAsambleistas">Listado de Asambleistas</label>-->
+            <table id="listadoAsambleistas"
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead class="text-bold">
                 <tr>
-                    <th>Nombre Documento</th>
-                    <th>Numero Integrantes</th>
-                    <th>Integrantes</th>
-                    <th>Administracion</th>
+                    <th>Nombre</th>
+                    <th>Sector</th>
+                    <th>Facultad</th>
+                    <th>Cargo</th>
+                    <th>Opcion</th>
                 </tr>
                 </thead>
 
                 <tbody id="cuerpoTabla">
                 <tr>
-                    <td>Comision de Legislacion</td>
-                    <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td>Jonatan Benjamin Lopez Henriquez</td>
+                    <td>Estudiantil</td>
+                    <td>Ingenieria y Arquitectura</td>
+                    <td>Propetario</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm">Retirar</button>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Comision de Presupuesto</td>
-                    <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td>Jonatan Benjamin Lopez Henriquez</td>
+                    <td>Estudiantil</td>
+                    <td>Ingenieria y Arquitectura</td>
+                    <td>Propetario</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm">Retirar</button>
+                    </td>
                 </tr>
-                <tr>
-                    <td>Comision de Convenios</td>
-                    <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="#">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-
                 </tbody>
 
             </table>
@@ -75,7 +87,7 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            var oTable = $('#listadoComisiones').DataTable({
+            $('#listadoAsambleistas').DataTable({
                 language: {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -100,6 +112,10 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                "order": [[1, "asc"]],
+                "columnDefs": [
+                    {"orderable": false, "targets": 4}
+                ]
 
             });
         });

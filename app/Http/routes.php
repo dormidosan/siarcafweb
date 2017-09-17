@@ -35,6 +35,10 @@ Route::get('/AdministrarComisiones', function () {
     return view('Comisiones.AdministrarComision');
 });
 
+Route::get('/AdministrarIntegrantes', function () {
+    return view('Comisiones.AdministrarIntegrantes');
+});
+
 Route::get('/HistorialDictamenesBitacoras', function () {
     return view('Comisiones.HistorialDictamenesBitacoras');
 });
@@ -42,6 +46,11 @@ Route::get('/HistorialDictamenesBitacoras', function () {
 Route::get('/TrabajoComision', function () {
     return view('Comisiones.TrabajoComision');
 });
+
+Route::get('/ConvocatoriaComision', function () {
+    return view('Comisiones.Convocatoria');
+});
+
 
 
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
