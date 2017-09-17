@@ -1,11 +1,8 @@
 @extends('layouts.app')
 
-@section("styles")
-    <!-- Datatables-->
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
-
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
 @endsection
 
 @section('content')
@@ -35,17 +32,17 @@
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Fecha inicial</label>
-                            <div class="input-group date">
-                             <input id="fecha" class="form-control" type="date" ><span class="input-group-addon" ><i class="glyphicon glyphicon-th" ></i></span> 
+                            <label for="fecha">Fecha inicial</label>
+                            <div class="input-group date fecha">
+                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Fecha inicial</label>
-                            <div class="input-group date">
-                             <input id="fecha" class="form-control" type="date" ><span class="input-group-addon" ><i class="glyphicon glyphicon-th" ></i></span> 
+                            <label for="fecha">Fecha final</label>
+                            <div class="input-group date fecha">
+                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -112,3 +109,28 @@ $('#fecha').datepicker({
 @endsection
 
  
+ @section("js")
+    <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
+    <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+@endsection
+
+@section("scripts")
+    <script type="text/javascript">
+        $(function () {
+            $('.input-group.date.fecha').datepicker({
+                format: "dd/mm/yyyy",
+                clearBtn: true,
+                language: "es",
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true
+            });
+
+            $('#hora').datetimepicker({
+                format: 'LT',
+            });
+        });
+    </script>
+@endsection
