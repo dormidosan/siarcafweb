@@ -133,9 +133,6 @@
                             <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
                             </li>
-                        <!--<li><a href="{{url("TrabajoComision")}}"><i class="fa fa-dot-circle-o"></i>Trabajo de Comision</a></li>-->
-                            <li><a href="{{url("HistorialDictamenesBitacoras")}}"><i class="fa fa-dot-circle-o"></i>Historial
-                                    Dictamenes y Bitacoras</a></li>
                         </ul>
                     </li>
 
@@ -337,7 +334,6 @@
     </footer>
 
 </div>
-
 
 <script src="{{ asset('libs/bootstrap/js/jquery.min.js') }}"></script>
 <script src="{{ asset('libs/bootstrap/js/bootstrap.min.js') }}"></script>
