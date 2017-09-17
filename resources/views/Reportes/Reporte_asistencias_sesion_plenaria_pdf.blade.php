@@ -23,11 +23,34 @@
      text-align: center;
   }
 
+  #p {
+  font-family: "ARIAL", serif;
+  font-size: 12pt;
+  font: bold;
+}
+
 </style>
- 
-<div>
-<IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%">
+                                         
+<div >
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" style="position:absolute;">
 </div>
+
+                            
+                          
+ <div id="p" style="position:relative;left: 250px; top:1%">
+ 
+    UNIVERSIDAD DE EL SALVADOR<br/>
+  
+  
+    ASAMBLEA GENERAL UNIVERSITARIA<br/>
+  
+  PERMISOS TEMPORALES PARA<br/>ASAMBLEISTAS EN SESIONES PLENARIAS
+
+
+  </div>
+                            
+
+
 </head>
   <body>
  
@@ -62,7 +85,7 @@
 
 
 
-  
+
   <!--<div id="centrar">
    TEXTO FRENTE A MARCA DE AGUA 
   </div>

@@ -12,17 +12,17 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
-    @yield("styles")
+@yield("styles")
 
 
-    <!-- CSRF Token -->
+<!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'SIARCA') }}</title>
 
 </head>
 
-<body class="sidebar-mini skin-red-light fixed">
+<body class="fixed sidebar-mini skin-red-light">
 
 <div class="wrapper">
 
@@ -128,12 +128,14 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/CrearComision") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a></li>
+                            <li><a href="{{ url("/CrearComision") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
+                            </li>
                             <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
                             </li>
-                            <!--<li><a href="{{url("TrabajoComision")}}"><i class="fa fa-dot-circle-o"></i>Trabajo de Comision</a></li>-->
-                            <li><a href="{{url("HistorialDictamenesBitacoras")}}"><i class="fa fa-dot-circle-o"></i>Historial Dictamenes y Bitacoras</a></li>
+                        <!--<li><a href="{{url("TrabajoComision")}}"><i class="fa fa-dot-circle-o"></i>Trabajo de Comision</a></li>-->
+                            <li><a href="{{url("HistorialDictamenesBitacoras")}}"><i class="fa fa-dot-circle-o"></i>Historial
+                                    Dictamenes y Bitacoras</a></li>
                         </ul>
                     </li>
 
@@ -146,9 +148,11 @@
                         <ul class="treeview-menu">
                             <li><a href="{{url("/agenda")}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion Plenaria</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda vigente</a>
+                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
+                                    vigente</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a></li>
+                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -162,7 +166,8 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url("/asambleistas")}}"><i class="fa fa-dot-circle-o"></i>Listado de asambleistas</a>
+                            <li><a href="{{url("/asambleistas")}}"><i class="fa fa-dot-circle-o"></i>Listado de
+                                    asambleistas</a>
                             </li>
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de asambleistas por
                                     comision</a></li>
@@ -201,24 +206,28 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/listado")}}"><i class="fa fa-dot-circle-o"></i>Permisos Temporales</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos de
-                                            sesión plenaria permanentes</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de asistencia
-                                            de
-                                            asambleístas a sesión plenaria</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Bitácora
+
+                                    
+                                     <li><a href="{{url("/Reporte_permisos_temporales")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
+                                            de <br/>sesion plenaria temporales</a></li>
+                                    <li><a href="{{url("/Reporte_permisos_permanentes")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
+                                            de <br/>sesión plenaria permanentes</a></li>
+                                    <li><a href="{{url("/Reporte_asistencias_sesion_plenaria")}}"><i class="fa fa-dot-circle-o"></i>Listado de
+                                            asistencia de <br/>asambleístas  a sesión plenaria</a></li>
+                                    <li><a href="{{url("/Reporte_bitacora_correspondencia")}}"><i class="fa fa-dot-circle-o"></i>Bitácora
                                             correspondencia</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Planilla de dieta</a>
+                                    <li><a href="{{url("/Reporte_planilla_dieta")}}"><i class="fa fa-dot-circle-o"></i>Planilla de
+                                            dieta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consolidados de
+                                    <li><a href="{{url("/Reporte_consolidados_renta")}}"><i class="fa fa-dot-circle-o"></i>Consolidados de
                                             renta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Constancias de
+                                    <li><a href="{{url("/Reporte_constancias_renta")}}"><i class="fa fa-dot-circle-o"></i>Constancias de
                                             renta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Constancia Renta JD</a></li>
+                                    <li><a href="{{url("/Reporte_constancias_renta_JD")}}"><i class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -232,7 +241,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/registropeticiones") }}"><i class="fa fa-dot-circle-o"></i> Registrar
+                            <li><a href="{{ url("/RegistrarPeticion") }}"><i class="fa fa-dot-circle-o"></i> Registrar
                                     Peticiones</a></li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Monitorear Peticion</a>
                             </li>
@@ -263,7 +272,8 @@
                             </li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Gestionar usuarios</a>
                             </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Perfiles de usuario</a></li>
+                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Perfiles de usuario</a>
+                            </li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
                         </ul>
                     </li>
@@ -286,11 +296,11 @@
         </section>
         <section class="content">
             <div class="row" style="margin: 0 1px 0 1px !important;">
-                <div class="panel panel-danger" >
+                <div class="panel panel-danger">
                     <div class="panel-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-12" >
+                                <div class="col-lg-2 col-md-2 col-sm-12">
                                     <img src="{{ asset("images/agu_web5.jpg")}}" class="img-responsive"
                                          alt="Responsive image" style="text-align: justify; margin: 0 auto;">
                                 </div>
@@ -317,10 +327,11 @@
 
 
     <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.4.0
-        </div>
-        <strong>Copyright © 2017 <a href="#">Universidad de El Salvador</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright
+            © @php $dt = new DateTime();
+                echo $dt->format('Y');
+            @endphp
+            <a href="#">Universidad de El Salvador</a>.</strong> Todos los derechos reservados.
     </footer>
 
 </div>
