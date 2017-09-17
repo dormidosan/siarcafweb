@@ -85,24 +85,13 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            $("#documentos").fileinput({
-
-                theme: "explorer",
-                hideThumbnailContent: true,
-                //showPreview: false,
-                showUpload: false,
-                minFileCount: 1,
-                maxFileCount: 3,
-                //allowedFileExtensions: ['docx', 'pdf']
-            });
-
             $("#documento").fileinput({
                 theme: "explorer",
                 uploadUrl: "/file-upload-batch/2",
                 language: "es",
                 minFileCount: 1,
                 maxFileCount: 3,
-                allowedFileExtensions: ['jpg', 'png', 'gif'],
+                allowedFileExtensions: ['docx', 'pdf'],
                 showUpload: false,
                 hideThumbnailContent: true
             });
