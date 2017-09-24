@@ -37,40 +37,42 @@
             <br>
             <br>
             <!--<label for="listadoAsambleistas">Listado de Asambleistas</label>-->
-            <table id="listadoAsambleistas"
-                   class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
-                <thead class="text-bold">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Sector</th>
-                    <th>Facultad</th>
-                    <th>Cargo</th>
-                    <th>Opcion</th>
-                </tr>
-                </thead>
+            <div class="table-responsive no-padding">
+                <table id="listadoAsambleistas"
+                       class="table table-bordered table-hover text-center">
+                    <thead class="text-bold">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Sector</th>
+                        <th>Facultad</th>
+                        <th>Cargo</th>
+                        <th>Opcion</th>
+                    </tr>
+                    </thead>
 
-                <tbody id="cuerpoTabla">
-                <tr>
-                    <td>Jonatan Benjamin Lopez Henriquez</td>
-                    <td>Estudiantil</td>
-                    <td>Ingenieria y Arquitectura</td>
-                    <td>Propetario</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm">Retirar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jonatan Benjamin Lopez Henriquez</td>
-                    <td>Estudiantil</td>
-                    <td>Ingenieria y Arquitectura</td>
-                    <td>Propetario</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm">Retirar</button>
-                    </td>
-                </tr>
-                </tbody>
+                    <tbody id="cuerpoTabla">
+                    <tr>
+                        <td>Jonatan Benjamin Lopez Henriquez</td>
+                        <td>Estudiantil</td>
+                        <td>Ingenieria y Arquitectura</td>
+                        <td>Propetario</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm">Retirar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jonatan Benjamin Lopez Henriquez</td>
+                        <td>Estudiantil</td>
+                        <td>Ingenieria y Arquitectura</td>
+                        <td>Propetario</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm">Retirar</button>
+                        </td>
+                    </tr>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
 
         </div>
     </div>
@@ -115,7 +117,7 @@
                 "order": [[1, "asc"]],
                 "columnDefs": [
                     {"orderable": false, "targets": 4}
-                ]
+                ],
 
             });
         });
