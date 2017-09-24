@@ -124,9 +124,10 @@
                     <!-- COMISIONES -->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Comisiones</span>
+                            <i class="glyphicon glyphicon-equalizer"></i> <span>Comisiones</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
+
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/CrearComision") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
                             </li>
@@ -143,7 +144,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url("/agenda")}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion Plenaria</a>
+                            <li><a href="{{url("/CrearSesionPlenaria")}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion Plenaria</a>
                             </li>
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
@@ -176,7 +177,7 @@
                     <!-- Reporteria-->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-share"></i> <span>Reporteria</span>
+                            <i class="glyphicon glyphicon-duplicate"></i> <span>Reporteria</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
@@ -204,8 +205,8 @@
                                 </a>
                                 <ul class="treeview-menu">
 
-                                    
-                                     <li><a href="{{url("/Reporte_permisos_temporales")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
+
+                                    <li><a href="{{url("/Reporte_permisos_temporales")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
                                             de <br/>sesion plenaria temporales</a></li>
                                     <li><a href="{{url("/Reporte_permisos_permanentes")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
                                             de <br/>sesión plenaria permanentes</a></li>
@@ -234,7 +235,7 @@
                     <!-- PETICIONES -->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Peticiones</span>
+                            <i class="glyphicon glyphicon-envelope"></i> <span>Peticiones</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
@@ -248,7 +249,7 @@
                     <!-- JD -->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Junta Directiva</span>
+                            <i class="glyphicon glyphicon-briefcase"></i> <span>Junta Directiva</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
@@ -260,7 +261,7 @@
                     <!-- Administracion -->
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Administracion</span>
+                            <i class="glyphicon glyphicon-wrench"></i> <span>Administracion</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">

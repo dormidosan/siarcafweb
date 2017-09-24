@@ -121,3 +121,17 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 });
 
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
+
+
+/* Routes para Agenda */
+Route::get('/CrearSesionPlenaria', function(){
+    return view('Agenda.CrearSesionPlenaria');
+});
+
+Route:: get('/GestionarAsistencia', function(){
+    return view('Agenda.GestionarAsistencia');
+});
+
+Route::get('/IniciarSesionPlenaria', function(){
+    return view('Agenda.IniciarSesionPlenaria');
+});
