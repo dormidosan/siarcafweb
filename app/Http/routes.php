@@ -83,7 +83,7 @@ Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Re
 
 
 
-
+/* Reportes */
 Route::get('/Reporte_bitacora_correspondencia', function () {
     return view('Reportes.Reporte_bitacora_correspondencia');
 });

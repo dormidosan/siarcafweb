@@ -6,136 +6,166 @@
 @endsection
 
 @section('content')
-<div class="box box-danger">
-	<div class="box-header with-border">
-		<div class="row">
-			<!-- Contenedor de ingreso de asambleista-->
-			<div class="col-sm-5 col-lg-5 col-md-5">
-				<form>
-					<div class="input-group input-group-lg input-group-md input-group-sm">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="asambleista" type="text" class="form-control" name="asambleista" placeholder="Ingrese Asambleista">
-						<div class="input-group-btn">
-						    <button type="button" class="btn btn-primary">Agregar</button>
-       					</div>
-					</div>
-				</form>
-				<br> </br>
-				<!--Panel que despliega el top 5 de los asambleistas ingresados -->
-				<div class="panel panel-success">
-				      <div class="panel-heading">Ultimos Asambleistas</div>
-				      <div class="panel-body">
-				      	<ul class="list-group">
-						 	<li class="list-group-item">Asambleista 1 </li>
-						  	<li class="list-group-item">asambleista 2 </li>
-						  	<li class="list-group-item">asambleista 3 </li>
-						  	<li class="list-group-item">asambleista 4 </li>
-						  	<li class="list-group-item">asambleista 5 </li>
-						</ul> 
-				      </div>
-			    </div>	
-			</div>	
-			<div class="col-sm-2 col-lg-2 col-md-2"></div>
-			<!-- contenedor de sección informativa de quorum e inicio de sesión-->
 
-			<div class="col-sm-2 col-lg-2 col-md-2">
-				<div class="panel panel-success">
-				    <div class="panel-heading">Asambleistas Propietarios</div>
-				     	<div class="panel-body"> <h2>25 </h2></div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div class="box box-default">
+                <!--<div class="box-header with-border">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title">Asambleistas</h3>
+                </div>-->
 
-				</div>	
-				<table class="table table-bordered">
-				    <thead>
-				      <tr>
-				        <th>Propietarios</th>
-				        <th>Calidad de Propietarios</th>
-				        <th>Suplente</th>
-				        <th>Total de Asistentes</th>
-				      </tr>
-				    </thead>
-				    <tbody>
-				      <tr>
-				        <td>20</td>
-				        <td>5</td>
-				        <td>10</td>
-				        <td>36</td>
-				      </tr>
-				    </tbody>
-				  </table>
-			</div>
-			<div class="col-sm-3 col-lg-3 col-md-3">
-				 <br></br>
-				<div class="input-group-btn">
-				    <button type="button" class="btn btn-primary">Iniciar Sesión Plenaria</button>
-       			</div>
-			</div>
-		</div>
-		<!--Sección que controla la asistencia para las 12 facultades -->
-		<div class="row">
-		<div class="col-sm-12 col-lg-12 col-md-12">
-			<div class="panel panel-success">
-				<div class="panel-heading">Control de Asistencia</div>
-					<div class="panel-body">
-					    <div class="row">
-					      	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 1 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 2 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 3 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 4 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					    </div>
-						<br>
-					    <div class="row">
-					      	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 5 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 6 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 7 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					      		<button type="button" class="btn btn-primary"> Facultad 8 </button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					    </div>
-					    <br>
-					    <div class="row">
-					    	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					    	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					    		<button type="button" class="btn btn-primary">Facultad 9</button>	      			
-					      	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					    		<button type="button" class="btn btn-primary">Facultad 10</button>	      			
-					    	</div>
-					    	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					    		<button type="button" class="btn btn-primary">Facultad 11</button>	      			
-					    	</div>
-					    	<div class="col-sm-2 col-lg-2 col-md-2" class="input-group-btn">
-					    		<button type="button" class="btn btn-primary">Facultad 12</button>	      			
-					    	</div>
-					      	<div class="col-sm-2 col-lg-2 col-md-2"></div>
-					    </div>
-					</div>
-			</div>
-			</div>
-			
-		</div>
-			
-		</div>   
-	</div>
+                <!-- Contenedor de ingreso de asambleista-->
+                <div class="box-body">
+                    <form id="agregarAsambleista" method="post" action="">
+                        <div class="input-group input-group-lg input-group-md input-group-sm">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="asambleista" type="text" class="form-control" name="asambleista"
+                                   placeholder="Ingrese Asambleista">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary">Agregar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
 
-</div>
+                    <div class="panel panel-success">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Ultimos Asambleistas</div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">Asambleista 1</li>
+                            <li class="list-group-item">Asambleista 1</li>
+                            <li class="list-group-item">Asambleista 1</li>
+                            <li class="list-group-item">Asambleista 1</li>
+                            <li class="list-group-item">Asambleista 1</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contenedor de sección informativa de quorum e inicio de sesión-->
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div class="box box-default">
+                <!--<div class="box-header with-border">
+                    <i class="fa fa-user"></i>
+                    <h3 class="box-title">Asambleistas</h3>
+                </div>-->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>25</h3>
+                                    <p>Asambleistas Propetarios</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-center">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary">Iniciar Sesión Plenaria</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center table-stripped">
+                        <thead>
+                        <tr style="font-weight: bold">
+                            <th>Propietarios</th>
+                            <th>Calidad de Propietarios</th>
+                            <th>Suplente</th>
+                            <th>Total de Asistentes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>20</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td>36</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="box box-danger">
+        <div class="box-header with-border text-center">
+            <!--Sección que controla la asistencia para las 12 facultades -->
+            <div class="panel panel-success">
+                <div class="panel-heading">Control de Asistencia</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
 
 @endsection
 
