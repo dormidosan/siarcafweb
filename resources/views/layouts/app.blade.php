@@ -203,29 +203,27 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
-                                            de
-                                            sesion plenaria temporales</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
-                                            de
-                                            sesión plenaria permanentes</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de
-                                            asistencia
-                                            de
-                                            asambleístas a sesión plenaria</a></li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Bitácora
+
+                                    
+                                     <li><a href="{{url("/Reporte_permisos_temporales")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
+                                            de <br/>sesion plenaria temporales</a></li>
+                                    <li><a href="{{url("/Reporte_permisos_permanentes")}}"><i class="fa fa-dot-circle-o"></i>Listado de permisos
+                                            de <br/>sesión plenaria permanentes</a></li>
+                                    <li><a href="{{url("/Reporte_asistencias_sesion_plenaria")}}"><i class="fa fa-dot-circle-o"></i>Listado de
+                                            asistencia de <br/>asambleístas  a sesión plenaria</a></li>
+                                    <li><a href="{{url("/Reporte_bitacora_correspondencia")}}"><i class="fa fa-dot-circle-o"></i>Bitácora
                                             correspondencia</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Planilla de
+                                    <li><a href="{{url("/Reporte_planilla_dieta")}}"><i class="fa fa-dot-circle-o"></i>Planilla de
                                             dieta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consolidados de
+                                    <li><a href="{{url("/Reporte_consolidados_renta")}}"><i class="fa fa-dot-circle-o"></i>Consolidados de
                                             renta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Constancias de
+                                    <li><a href="{{url("/Reporte_constancias_renta")}}"><i class="fa fa-dot-circle-o"></i>Constancias de
                                             renta</a>
                                     </li>
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
+                                    <li><a href="{{url("/Reporte_constancias_renta_JD")}}"><i class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
                                     </li>
                                 </ul>
                             </li>
