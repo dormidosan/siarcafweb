@@ -51,9 +51,20 @@ Route::get('/ConvocatoriaComision', function () {
     return view('Comisiones.Convocatoria');
 });
 
-
-
 /* Peticiones */
 Route::get('/RegistrarPeticion', function () {
     return view('General.RegistroPeticion');
+});
+
+/* Routes para Agenda */
+Route::get('/CrearSesionPlenaria', function(){
+	return view('Agenda.CrearSesionPlenaria');
+});
+
+Route:: get('/GestionarAsistencia', function(){
+	return view('Agenda.GestionarAsistencia');
+});
+
+Route::get('/IniciarSesionPlenaria', function(){
+	return view('Agenda.IniciarSesionPlenaria');
 });
