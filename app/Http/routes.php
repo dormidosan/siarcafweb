@@ -135,3 +135,9 @@ Route:: get('/GestionarAsistencia', function(){
 Route::get('/IniciarSesionPlenaria', function(){
     return view('Agenda.IniciarSesionPlenaria');
 });
+
+
+
+/*post*/
+Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
+
