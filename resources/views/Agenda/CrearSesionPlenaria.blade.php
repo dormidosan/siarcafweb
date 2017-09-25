@@ -146,20 +146,7 @@
                             <button type="button" class="btn btn-primary">Facultad 1</button>
                         </div>
                     </div><br>
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
