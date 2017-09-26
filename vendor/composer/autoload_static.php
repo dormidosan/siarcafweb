@@ -16,6 +16,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -85,10 +86,12 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
             'Cron\\' => 5,
+            'Collective\\Html\\' => 16,
             'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
         ),
@@ -242,9 +245,17 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
+        ),
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
+        ),
+        'Collective\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravelcollective/html/src',
         ),
         'ClassPreloader\\' => 
         array (
@@ -290,13 +301,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
-        'D' => 
-        array (
-            'Doctrine\\Common\\Inflector\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
-            ),
-        ),
     );
 
     public static $classMap = array (
@@ -316,6 +320,29 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'Cellmap' => __DIR__ . '/..' . '/dompdf/dompdf/include/cellmap.cls.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateAgendasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002627_create_agendas_table.php',
+        'CreateAsambleistaComisionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020901_create_asambleista_comisiones_table.php',
+        'CreateAsambleistasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020832_create_asambleistas_table.php',
+        'CreateAsistenciasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020915_create_asistencias_table.php',
+        'CreateBitacoraComisionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020717_create_bitacora_comisiones_table.php',
+        'CreateBitacorasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002748_create_bitacoras_table.php',
+        'CreateComisionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002705_create_comisiones_table.php',
+        'CreateDietasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020842_create_dietas_table.php',
+        'CreateDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002756_create_documentos_table.php',
+        'CreateIntervencionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020808_create_intervenciones_table.php',
+        'CreateModuloRolsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020448_create_modulo_rols_table.php',
+        'CreateModulosTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002734_create_modulos_table.php',
+        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePeriodosTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002723_create_periodos_table.php',
+        'CreatePermisoInasistenciasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020932_create_permiso_inasistencias_table.php',
+        'CreatePersonasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002714_create_personas_table.php',
+        'CreatePeticionDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020747_create_peticion_documentos_table.php',
+        'CreatePeticionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002643_create_peticiones_table.php',
+        'CreatePlantillasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002815_create_plantillas_table.php',
+        'CreatePropuestasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020819_create_propuestas_table.php',
+        'CreatePuntosTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020509_create_puntos_table.php',
+        'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002654_create_roles_table.php',
+        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020718_create_users_table.php',
         'DOMPDF' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf.cls.php',
         'DOMPDF_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_exception.cls.php',
         'DOMPDF_Image_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',

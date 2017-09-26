@@ -3,8 +3,6 @@
 @section("styles")
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 @endsection
 
 @section('content')
@@ -12,10 +10,10 @@
         <div class="box-header with-border">
             <h3 class="box-title">Listado Comisiones</h3>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table id="listadoComisiones"
-                   class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
-                <thead class="text-bold">
+                   class="table text-center">
+                <thead>
                 <tr>
                     <th>Nombre Documento</th>
                     <th>Numero Integrantes</th>
@@ -28,32 +26,32 @@
                 <tr>
                     <td>Comision de Legislacion</td>
                     <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
+                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
                 </tr>
                 <tr>
                     <td>Comision de Presupuesto</td>
                     <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
+                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
                 </tr>
                 <tr>
                     <td>Comision de Convenios</td>
                     <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
+                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
                 </tr>
                 <tr>
                     <td>Comision de arte y cultura</td>
                     <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
+                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
                 </tr>
                 <tr>
                     <td>Comision de arte y cultura</td>
                     <td>15</td>
-                    <td><a class="btn btn-primary btn-sm" href="#">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-sm" href="{{ url("TrabajoComision") }}">Acceder</a></td>
+                    <td><a class="btn btn-block btn-primary btn-xs" href="#">Gestionar</a></td>
+                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
                 </tr>
 
                 </tbody>
@@ -71,6 +69,13 @@
 
 @endsection
 
+
+<style>
+    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
 
 @section("scripts")
     <script type="text/javascript">
@@ -99,7 +104,7 @@
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                },
+                }
 
             });
         });

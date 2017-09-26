@@ -66,7 +66,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Resultados de Busqueda</h3>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table id="resultadoDocs"
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead>
@@ -161,6 +161,12 @@
 
 @endsection
 
+<style>
+    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
 
 @section("scripts")
     <script type="text/javascript">
