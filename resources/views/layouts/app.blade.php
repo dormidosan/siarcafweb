@@ -250,7 +250,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/RegistrarPeticion") }}"><i class="fa fa-dot-circle-o"></i> Registrar
                                     Peticiones</a></li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Monitorear Peticion</a>
+                            <li><a href="{{ url("/MonitorearPeticion") }}"><i class="fa fa-dot-circle-o"></i>Monitorear Peticion</a>
                             </li>
                         </ul>
                     </li>
@@ -274,7 +274,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
+                            <li><a href="{{ url("/Parametros") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
                             </li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Gestionar usuarios</a>
