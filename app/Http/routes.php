@@ -121,3 +121,12 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 });
 
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
+
+
+
+
+Route::get('/Plantilla_Actas', function () {
+    return view('Plantillas.Plantilla_actas');
+});
+
+Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
