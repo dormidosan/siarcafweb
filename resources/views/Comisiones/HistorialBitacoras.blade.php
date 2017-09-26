@@ -10,7 +10,7 @@
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Buscar Documentacion</h3>
+            <h3 class="box-title">Consultar Bitacoras</h3>
         </div>
         <div class="box-body">
             <form id="crearbuscar" name="buscar" method="post" action="#">
@@ -37,14 +37,14 @@
     <?php $i = 1; ?>
     <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Resultados de Busqueda</h3>
+            <h3 class="box-title">Listado de Bitacoras</h3>
         </div>
         <div class="box-body">
             <table id="resultadoDocs"
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead>
                 <tr>
-                    <th>Nombre Documento</th>
+                    <th>Nombre Bitacora</th>
                     <th>Fecha Creacion</th>
                     <th>Opcion</th>
                 </tr>

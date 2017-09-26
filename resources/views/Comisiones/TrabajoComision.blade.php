@@ -60,7 +60,7 @@
                         <span class="info-box-icon bg-red"><i class="fa fa-folder-o"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-number">Historial de Bitacoras</span>
-                            <a href="#">Acceder</a>
+                            <a href={{ url("/HistorialBitacoras") }}>Acceder</a>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -76,7 +76,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-number">Asistencia</span>
-                            <a href="#">Acceder</a>
+                            <a href="{{url("/AsistenciaComision")}}">Acceder</a>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -90,7 +90,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-number">Historial de Dictamenes</span>
-                            <a href="#">Acceder</a>
+                            <a href={{ url("/HistorialDictamenes") }}>Acceder</a>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

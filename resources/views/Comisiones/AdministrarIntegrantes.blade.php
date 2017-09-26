@@ -8,11 +8,13 @@
 @endsection
 
 @section("content")
+
     <div class="box box-solid box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Administrar Integrantes de Comision</h3>
         </div>
         <div class="box-body">
+
             <form id="AgregarAsambleista" name="AgregarAsambleista" class="">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
@@ -35,12 +37,9 @@
             </form>
 
             <br>
-            <br>
-            <!--<label for="listadoAsambleistas">Listado de Asambleistas</label>-->
-            <div class="table-responsive no-padding">
-                <table id="listadoAsambleistas"
-                       class="table table-bordered table-hover text-center">
-                    <thead class="text-bold">
+            <div class="table-responsive">
+                <table id="listado" class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                    <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Sector</th>
@@ -50,14 +49,14 @@
                     </tr>
                     </thead>
 
-                    <tbody id="cuerpoTabla">
+                    <tbody>
                     <tr>
                         <td>Jonatan Benjamin Lopez Henriquez</td>
                         <td>Estudiantil</td>
                         <td>Ingenieria y Arquitectura</td>
                         <td>Propetario</td>
                         <td>
-                            <button class="btn btn-danger btn-sm">Retirar</button>
+                            <button class="btn btn-danger btn-block btn-xs">Retirar</button>
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +65,7 @@
                         <td>Ingenieria y Arquitectura</td>
                         <td>Propetario</td>
                         <td>
-                            <button class="btn btn-danger btn-sm">Retirar</button>
+                            <button class="btn btn-danger btn-block btn-xs">Retirar</button>
                         </td>
                     </tr>
                     </tbody>
@@ -78,18 +77,25 @@
     </div>
 @endsection
 
+<style>
+    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
+
 @section("js")
     <!-- Datatables -->
     <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-
 @endsection
 
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            $('#listadoAsambleistas').DataTable({
+
+            var oTable = $('#listado').DataTable({
                 language: {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -114,10 +120,7 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "order": [[1, "asc"]],
-                "columnDefs": [
-                    {"orderable": false, "targets": 4}
-                ],
+                responsive: true
 
             });
         });
