@@ -60,9 +60,11 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <label for="documento">Seleccione documentos</label>
-                        <div class="file-loading">
-                            <input id="documento" name="documento[]" type="file" multiple>;
+                        <div class="form-group">
+                            <label for="documento">Seleccione documentos</label>
+                            <div class="file-loading">
+                                <input id="documento" name="documento[]" type="file" multiple>;
+                            </div>
                         </div>
                     </div>
                 </div>

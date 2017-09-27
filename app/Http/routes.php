@@ -57,6 +57,14 @@ Route::get('/AsistenciaComision', function () {
     return view('Comisiones.AsistenciaComision');
 });
 
+Route::get('/ListadoPuntosComision', function () {
+    return view('Comisiones.ListadoPuntosComision');
+});
+
+Route::get('/discutir/{comision}/{id}', function () {
+    return view('Comisiones.AdminstrarPuntoComision');
+});
+
 
 
 /* Peticiones */

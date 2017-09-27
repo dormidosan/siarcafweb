@@ -18,7 +18,7 @@
                         <span class="info-box-icon bg-orange"><i class="fa fa-file-text-o"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-number">Puntos</span>
-                            <a href="#">Acceder</a>
+                            <a href="{{url("/ListadoPuntosComision")}}">Acceder</a>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
