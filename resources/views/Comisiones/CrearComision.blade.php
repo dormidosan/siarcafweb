@@ -35,7 +35,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Listado Comisiones</h3>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table id="listadoComisiones"
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead class="text-bold">

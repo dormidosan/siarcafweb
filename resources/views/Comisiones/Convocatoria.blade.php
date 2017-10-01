@@ -11,7 +11,7 @@
             <h3 class="box-title">Convocatoria de Comision</h3>
         </div>
         <div class="box-body">
-            <form id="convocatoria">
+            <form id="convocatoria" method="post" action="">
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -22,7 +22,7 @@
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
-                            <div class="input-group date">
+                            <div class="input-group date fecha">
                                 <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
@@ -61,23 +61,23 @@
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
-
 @endsection
 
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            $('#fecha').datepicker({
+            $('.input-group.date.fecha').datepicker({
                 format: "dd/mm/yyyy",
                 clearBtn: true,
                 language: "es",
                 autoclose: true,
-                todayHighlight: true
+                todayHighlight: true,
+                toggleActive: true
             });
 
             $('#hora').datetimepicker({
-                format: 'LT'
+                format: 'LT',
             });
         });
     </script>

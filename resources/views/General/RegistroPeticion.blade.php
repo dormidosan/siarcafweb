@@ -11,13 +11,15 @@
             <h3 class="box-title">Registrar Peticion</h3>
         </div>
         <div class="box-body">
-            <form id="registrarPeticion" name="registrarPeticion" method="post" action="">
+            <form id="registrar_peticion" name="registrar_peticion" method="post" action="{{ url('registrar_peticion') }}">
+			{{ csrf_field() }}
 
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+		   <input name="nombrexxx" type="text" class="form-control" id="nombre" placeholder="Ingrese el nombrexxx">
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-12">
@@ -58,9 +60,11 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <label for="documento">Seleccione documentos</label>
-                        <div class="file-loading">
-                            <input id="documento" name="documento[]" type="file" multiple>;
+                        <div class="form-group">
+                            <label for="documento">Seleccione documentos</label>
+                            <div class="file-loading">
+                                <input id="documento" name="documento[]" type="file" multiple>;
+                            </div>
                         </div>
                     </div>
                 </div>
