@@ -41,7 +41,6 @@
                 </div>
             </form>
             <br>
-            <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Documentos asociados</h3>

@@ -1,3 +1,5 @@
+<!-- Pantalla para crear una sesion plenaria -->
+
 @extends('layouts.app')
 
 @section("styles")
