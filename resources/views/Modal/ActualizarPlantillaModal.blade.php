@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="plantilla">Seleccione nueva plantilla</label>
                 <div class="file-loading">
-                    <input id="plantilla" name="plantilla" type="file">
+                    <input id="plantilla" name="plantilla" type="file" accept="application/pdf">
                 </div>
             </div>
         </div>

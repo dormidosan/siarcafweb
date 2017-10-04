@@ -64,7 +64,7 @@
         $(function () {
             $("#plantilla").fileinput({
                 theme: "explorer",
-                //uploadUrl: "/file-upload-batch/2",
+                previewFileType: "pdf",
                 language: "es",
                 minFileCount: 1,
                 maxFileCount: 1,
