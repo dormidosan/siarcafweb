@@ -151,6 +151,10 @@ Route::get('/Parametros', function(){
     return view('Administracion.Parametros');
 });
 
+Route::get('/ActualizarPlantilla', function(){
+    return view('Administracion.ActualizarPlantilla');
+});
+
 
 
 
