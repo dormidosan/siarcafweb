@@ -275,7 +275,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/Parametros") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
+                            <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
                             </li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Gestionar usuarios</a>
                             </li>

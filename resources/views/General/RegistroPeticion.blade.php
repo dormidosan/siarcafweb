@@ -11,7 +11,7 @@
             <h3 class="box-title">Registrar Peticion</h3>
         </div>
         <div class="box-body">
-            <form id="registrar_peticion" name="registrar_peticion" method="post" action="{{ url('registrar_peticion') }}">
+            <form id="registrar_peticion" name="registrar_peticion" method="post" action="{{ url('registrar_peticion') }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
                 <div class="row">
@@ -91,7 +91,7 @@
         $(function () {
             $("#documento").fileinput({
                 theme: "explorer",
-                uploadUrl: "/file-upload-batch/2",
+                //uploadUrl: "/file-upload-batch/2",
                 language: "es",
                 minFileCount: 1,
                 maxFileCount: 3,
