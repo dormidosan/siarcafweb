@@ -155,6 +155,9 @@ Route::get('/ActualizarPlantilla', function(){
     return view('Administracion.ActualizarPlantilla');
 });
 
+Route::get('/PeriodoAGU', function(){
+    return view('Administracion.PeriodAGU');
+});
 
 
 

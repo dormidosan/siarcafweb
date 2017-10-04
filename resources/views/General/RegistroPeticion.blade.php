@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label for="documento">Seleccione documentos</label>
                             <div class="file-loading">
-                                <input id="documento" name="documento[]" type="file" multiple>;
+                                <input id="documento" name="documento[]" type="file" multiple accept=".xls, .xlsx, .doc, .docx, .pdf">;
                             </div>
                         </div>
                     </div>
@@ -91,11 +91,11 @@
         $(function () {
             $("#documento").fileinput({
                 theme: "explorer",
-                //uploadUrl: "/file-upload-batch/2",
+                previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
                 minFileCount: 1,
                 maxFileCount: 3,
-                allowedFileExtensions: ['docx', 'pdf'],
+                allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
                 showUpload: false,
                 fileActionSettings: {
                     showRemove: true,

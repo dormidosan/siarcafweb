@@ -281,7 +281,7 @@
                             </li>
                             <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Perfiles de usuario</a>
                             </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+                            <li><a href="{{ url("/PeriodoAGU") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
                         </ul>
                     </li>
 
