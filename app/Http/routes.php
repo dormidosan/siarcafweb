@@ -159,6 +159,14 @@ Route::get('/PeriodoAGU', function(){
     return view('Administracion.PeriodAGU');
 });
 
+Route::get('/GestionarUsuarios', function(){
+    return view('Administracion.GestionarUsuario');
+});
+
+Route::get('/GestionarPerfiles', function(){
+    return view('Administracion.GestionarPerfiles');
+});
+
 
 
 /*post*/
