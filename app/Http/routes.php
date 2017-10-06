@@ -145,8 +145,11 @@ Route::get('/IniciarSesionPlenaria', function(){
     return view('Agenda.IniciarSesionPlenaria');
 });
 
-/* Routes Administracion */
+Route::get('/HistorialAgendas', function(){
+    return view('Agenda.HistorialAgendas');
+});
 
+/* Routes Administracion */
 Route::get('/Parametros', function(){
     return view('Administracion.Parametros');
 });
@@ -167,6 +170,9 @@ Route::get('/GestionarPerfiles', function(){
     return view('Administracion.GestionarPerfiles');
 });
 
+Route::get('/RegistrarUsuario', function(){
+    return view('Administracion.IngresarUsuarios');
+});
 
 
 /*post*/

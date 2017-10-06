@@ -150,7 +150,7 @@
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
+                            <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
                             </li>
                         </ul>
                     </li>
