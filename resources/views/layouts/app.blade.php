@@ -150,7 +150,7 @@
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
+                            <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
                             </li>
                         </ul>
                     </li>
@@ -277,11 +277,19 @@
                             <li><a href="{{ url("/Parametros") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
                             <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
                             </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Gestionar usuarios</a>
-                            </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Perfiles de usuario</a>
+                            <li class="treeview">
+                                <a href="#"><i class="fa fa-dot-circle-o"></i> Gestionar Usuarios
+                                    <span class="pull-right-container"><i
+                                                class="fa fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{url("/GestionarUsuarios")}}"><i class="fa fa-dot-circle-o"></i>Administracion Usuarios</a></li>
+                                    <li><a href="{{url("/RegistrarUsuario")}}"><i class="fa fa-dot-circle-o"></i>Registar Usuarios</a></li>
+                                    <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar Perfiles</a></li>
+                                </ul>
                             </li>
                             <li><a href="{{ url("/PeriodoAGU") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+
                         </ul>
                     </li>
 

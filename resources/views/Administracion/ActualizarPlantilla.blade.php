@@ -7,8 +7,15 @@
 
 @section("content")
     <div class="box box-danger">
-        <div class="box-header with-border text-center">
-            <!--Sección que controla la asistencia para las 12 facultades -->
+        <div class="box-header with-border">
+            <h3 class="box-title">Actualizar Plantillas AGU</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body text-center">
             <div class="panel panel-success">
                 <div class="panel-heading">Plantillas del Sistema</div>
                 <div class="panel-body">
@@ -48,6 +55,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @include("Modal.ActualizarPlantillaModal")
 @endsection
