@@ -99,7 +99,7 @@
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label for="propetario">Propetario</label>
-                            <select id="facultad" name="propetario" class="form-control">
+                            <select id="propetario" name="propetario" class="form-control">
                                 <option value="">-- Seleccione una opcion --</option>
                                 <option value="1">Si</option>
                                 <option value="2">No</option>
