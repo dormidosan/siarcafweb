@@ -81,7 +81,7 @@
                     <tbody>
                     <tr>                                     
                       <td>
-                        Nombre permiso
+                        Detalle dieta individual
                       </td>
                       <td>fecha</td>
                     
@@ -90,6 +90,16 @@
                     
                     </tr>
                    
+                   <tr>                                     
+                      <td>
+                        Detalle dieta Consolidado profesional no docente
+                      </td>
+                      <td>fecha</td>
+                    
+                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                    
+                    </tr>
                   </tbody></table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

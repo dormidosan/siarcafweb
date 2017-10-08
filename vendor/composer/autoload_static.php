@@ -86,7 +86,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
-            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
@@ -245,10 +244,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
-        'Doctrine\\Common\\Inflector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
-        ),
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
@@ -301,6 +296,13 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Inflector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -318,8 +320,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'Canvas' => __DIR__ . '/..' . '/dompdf/dompdf/include/canvas.cls.php',
         'Canvas_Factory' => __DIR__ . '/..' . '/dompdf/dompdf/include/canvas_factory.cls.php',
         'Cellmap' => __DIR__ . '/..' . '/dompdf/dompdf/include/cellmap.cls.php',
-        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'CreateAgendasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_002627_create_agendas_table.php',
         'CreateAsambleistaComisionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020901_create_asambleista_comisiones_table.php',
         'CreateAsambleistasTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_18_020832_create_asambleistas_table.php',

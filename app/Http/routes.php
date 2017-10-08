@@ -98,12 +98,17 @@ Route::get('/Reporte_planilla_dieta', function () {
 
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
 
+Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
+
+
 
 Route::get('/Reporte_consolidados_renta', function () {
     return view('Reportes.Reporte_consolidados_renta');
 });
 
 Route::get('/Reporte_consolidados_renta/{tipo}', 'ReportesController@Reporte_consolidados_renta');
+
+Route::get('/Reporte_consolidados_renta_docente/{tipo}', 'ReportesController@Reporte_consolidados_renta_docente');
 
 Route::get('/Reporte_constancias_renta', function () {
     return view('Reportes.Reporte_constancias_renta');

@@ -20,10 +20,6 @@ return array(
     'Canvas' => $vendorDir . '/dompdf/dompdf/include/canvas.cls.php',
     'Canvas_Factory' => $vendorDir . '/dompdf/dompdf/include/canvas_factory.cls.php',
     'Cellmap' => $vendorDir . '/dompdf/dompdf/include/cellmap.cls.php',
-<<<<<<< HEAD
-    'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
-=======
     'CreateAgendasTable' => $baseDir . '/database/migrations/2017_09_18_002627_create_agendas_table.php',
     'CreateAsambleistaComisionesTable' => $baseDir . '/database/migrations/2017_09_18_020901_create_asambleista_comisiones_table.php',
     'CreateAsambleistasTable' => $baseDir . '/database/migrations/2017_09_18_020832_create_asambleistas_table.php',
@@ -47,7 +43,6 @@ return array(
     'CreatePuntosTable' => $baseDir . '/database/migrations/2017_09_18_020509_create_puntos_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_09_18_002654_create_roles_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2017_09_18_020718_create_users_table.php',
->>>>>>> origin
     'DOMPDF' => $vendorDir . '/dompdf/dompdf/include/dompdf.cls.php',
     'DOMPDF_Exception' => $vendorDir . '/dompdf/dompdf/include/dompdf_exception.cls.php',
     'DOMPDF_Image_Exception' => $vendorDir . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',
@@ -597,10 +592,7 @@ return array(
     'Page_Cache' => $vendorDir . '/dompdf/dompdf/include/page_cache.cls.php',
     'Page_Frame_Decorator' => $vendorDir . '/dompdf/dompdf/include/page_frame_decorator.cls.php',
     'Page_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/page_frame_reflower.cls.php',
-<<<<<<< HEAD
     'PclZip' => $vendorDir . '/pclzip/pclzip/pclzip.lib.php',
-=======
->>>>>>> origin
     'Positioner' => $vendorDir . '/dompdf/dompdf/include/positioner.cls.php',
     'Renderer' => $vendorDir . '/dompdf/dompdf/include/renderer.cls.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',

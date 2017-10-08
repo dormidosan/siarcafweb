@@ -116,9 +116,10 @@
                                                
  <div id="p" style="position:fixed;text-align: center;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    CUADRO DE RETENCION DE RENTA, POR EL PAGO DE DIETAS DEL SECTOR PROFESIONAL NO DOCENTE<br/>
-    DETALLE DE DIETAS DE ASAMBLEISTAS DEL MES DE NOVIEMBRE DE 2016 :V
-    <hr  />  
+    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES DE MES :V<br/>
+    SECTOR PROFESIONAL NO DOCENTE
+    <hr  /> 
+    PERIODO 2015-2017 
   </div>   
                    
 </head>
@@ -132,11 +133,11 @@
                     <th>No. </th>                     
                     <th>SECTOR</th>                     
                     <th>NOMBRES</th>
-                    
-                    <th>No DE NIT</th>
-                    <th>TOTAL DEVENGADO</th>
-                    <th>DESCUENTO RENTA</th>
-                    <th>LIQUIDO A PAGAR</th>
+                    <th>1a. SESION</th>
+                    <th>2a. SESION</th>
+                    <th>3a. SESION</th>
+                    <th>4a. SESION</th>
+                    <th>TOTAL</th>
                     </tr>
                   </thead>
 
@@ -151,7 +152,7 @@
                       <td>FAC. CIENCIAS Y HUMANIDADES</td>
                     
                       <td> </td>
-                    
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -166,7 +167,7 @@
                       </td>
                       <td></td>
                     
-                     
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -182,55 +183,7 @@
                       </td>
                       <td></td>
                     
-                  
                       <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-               
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                     
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -246,7 +199,7 @@
                       </td>
                       <td>FAC. CIENCIAS Y HUMANIDADES</td>
                     
-               
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -262,7 +215,7 @@
                       </td>
                       <td></td>
                     
-                     
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -278,7 +231,7 @@
                       </td>
                       <td></td>
                     
-                    
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -294,7 +247,7 @@
                       </td>
                       <td>FAC. CIENCIAS Y HUMANIDADES</td>
                     
-                   
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -310,7 +263,7 @@
                       </td>
                       <td></td>
                     
-                   
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -326,7 +279,39 @@
                       </td>
                       <td></td>
                     
-                  
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td>$ -  </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
+                    
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                         PROF. NO DOCENTE
+                      </td>
+                      <td></td>
+                    
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -342,7 +327,23 @@
                       </td>
                       <td></td>
                     
-                
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td>$ -  </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                         PROF. NO DOCENTE
+                      </td>
+                      <td></td>
+                    
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -358,7 +359,7 @@
                       </td>
                       <td>FAC. CIENCIAS Y HUMANIDADES</td>
                     
-                   
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -374,7 +375,7 @@
                       </td>
                       <td></td>
                     
-                     
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -390,7 +391,7 @@
                       </td>
                       <td></td>
                     
-                     
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -406,70 +407,7 @@
                       </td>
                       <td></td>
                     
-                    
                       <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                     
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -485,7 +423,7 @@
                       </td>
                       <td>FAC. CIENCIAS Y HUMANIDADES</td>
                     
-                      
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -501,7 +439,71 @@
                       </td>
                       <td></td>
                     
-                   
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td>$ -  </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                         PROF. NO DOCENTE
+                      </td>
+                      <td></td>
+                    
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td>$ -  </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                         PROF. NO DOCENTE
+                      </td>
+                      <td></td>
+                    
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td>$ -  </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
+                    
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      
+                    </tr> 
+                       <tr>                                     
+                      <td>
+                        
+                      </td>
+                      <td>
+                         PROF. NO DOCENTE
+                      </td>
+                      <td></td>
+                    
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -517,7 +519,7 @@
                       </td>
                       <td></td>
                     
-                      
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -534,7 +536,7 @@
                       </td>
                       <td></td>
                     
-                  
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -551,7 +553,7 @@
                       </td>
                       <td>PASAN...</td>
                     
-                     
+                      <td>$ - </td>
                       <td>$ - </td>
                       <td>$ - </td>
                       <td>$ - </td>
