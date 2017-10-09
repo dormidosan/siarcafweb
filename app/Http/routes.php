@@ -20,9 +20,13 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 /* Routes generales */
+Route::get('BusquedaDocumentos',array('as'=>'BusquedaDocumentos','uses'=>'BuscarDocumentoController@busqueda'));
+Route::get('descargar_documento/{id}',array('as' =>'descargar_documento','uses' => 'BuscarDocumentoController@descargar_documento'));
+/*
 Route::get('/BusquedaDocumentos', function () {
     return view('General.BusquedaDocumentos');
 });
+*/
 
 /* Routes para Comisiones */
 Route::get('/CrearComision', function () {
@@ -175,6 +179,10 @@ Route::get('/RegistrarUsuario', function(){
 });
 
 
+
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
+
+
+Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
 
