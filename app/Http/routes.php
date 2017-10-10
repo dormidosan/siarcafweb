@@ -20,14 +20,16 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 /* Routes generales */
+Route::get('BusquedaDocumentos',array('as'=>'BusquedaDocumentos','uses'=>'BuscarDocumentoController@busqueda'));
+Route::get('descargar_documento/{id}',array('as' =>'descargar_documento','uses' => 'BuscarDocumentoController@descargar_documento'));
+/*
 Route::get('/BusquedaDocumentos', function () {
     return view('General.BusquedaDocumentos');
 });
+*/
 
 /* Routes para Comisiones */
-Route::get('/CrearComision', function () {
-    return view('Comisiones.CrearComision');
-});
+Route::get('/CrearComision','ComisionController@mostrarComisiones');
 
 Route::get('/AdministrarComisiones', function () {
     return view('Comisiones.AdministrarComision');
@@ -64,6 +66,8 @@ Route::get('/ListadoPuntosComision', function () {
 Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
+
+Route::post('crear_comision', 'ComisionController@crearComision')->name("crear_comision");
 
 
 
@@ -175,6 +179,10 @@ Route::get('/RegistrarUsuario', function(){
 });
 
 
+
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
+
+
+Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
 

@@ -8,6 +8,7 @@ class Comision extends Model
 {
     //
 	protected $table = 'comisiones';
+	public $timestamps = true;
 
 	public function peticiones()
     {
