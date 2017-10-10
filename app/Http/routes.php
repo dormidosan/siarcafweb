@@ -29,9 +29,7 @@ Route::get('/BusquedaDocumentos', function () {
 */
 
 /* Routes para Comisiones */
-Route::get('/CrearComision', function () {
-    return view('Comisiones.CrearComision');
-});
+Route::get('/CrearComision','ComisionController@mostrarComisiones');
 
 Route::get('/AdministrarComisiones', function () {
     return view('Comisiones.AdministrarComision');
@@ -68,6 +66,8 @@ Route::get('/ListadoPuntosComision', function () {
 Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
+
+Route::post('crear_comision', 'ComisionController@crearComision')->name("crear_comision");
 
 
 
