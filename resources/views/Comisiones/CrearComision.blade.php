@@ -3,6 +3,7 @@
 @section("styles")
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('content')
@@ -11,7 +12,18 @@
             <h3 class="box-title">Crear Comision</h3>
         </div>
         <div class="box-body">
-            <form id="crearComision">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <p>Por favor, corriga los siguientes errores:</p>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
@@ -24,8 +36,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button type="button" id="crear" name="crear" class="btn btn-primary"
-                                onclick="crear_comision()">
+                        <button type="submit" id="crear" name="crear" class="btn btn-primary">
                             Crear Comision
                         </button>
                     </div>
@@ -184,8 +195,10 @@
 
 @section("js")
     <!-- iCheck -->
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 @section("scripts")
@@ -205,18 +218,14 @@
 
     </script>
 
-    <script>
-        function crear_comision() {
-            var datos = "";
-            datos = $('#crearComision').serialize();
-            $.ajax({
-                type: 'POST',
-                url: "{{ route("crear_comision") }}",
-                data: datos,
-                success: function (response) {
-                    console.log(response.htmlRow)
-                }
-            });
-        }
-    </script>
+@endsection
+
+@section("lobibox")
+
+        @if(Session::has('success'))
+            <script>
+                notificacion("Exito","{{ Session::get('success') }}","success");
+            </script>
+        @endif
+
 @endsection

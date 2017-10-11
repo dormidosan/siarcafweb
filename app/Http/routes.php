@@ -29,7 +29,8 @@ Route::get('/BusquedaDocumentos', function () {
 */
 
 /* Routes para Comisiones */
-Route::get('/CrearComision','ComisionController@mostrarComisiones');
+
+Route::get('/CrearComision','ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 
 Route::get('/AdministrarComisiones', function () {
     return view('Comisiones.AdministrarComision');
@@ -128,7 +129,6 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 });
 
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
-
 
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 
