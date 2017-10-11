@@ -358,6 +358,8 @@
 
 @yield("js")
 @yield("scripts")
+@yield("lobibox")
+
 </body>
 
 </html>
