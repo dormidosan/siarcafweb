@@ -17,15 +17,6 @@ class ComisionController extends Controller
     }
 
     public function crearComision(ComisionRequest $request){
-        /*if($request->ajax()){
-            $comision = new Comision();
-            $comision->nombre = $request->get("nombre");
-            $comision->permanente = 0; //0: transitoria, 1: permanente
-            $comision->descripcion = $request->get("nombre");
-            $comision->activa = 1;
-            //$comision->setCreatedAt(Carbon::now(new \DateTimeZone("America/El_Salvador")));
-            $comision->save();
-        }*/
 
         $comision = new Comision();
         $comision->nombre = $request->get("nombre");

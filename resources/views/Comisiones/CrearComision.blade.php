@@ -218,22 +218,6 @@
 
     </script>
 
-    <script>
-        function crear_comision() {
-            var datos = "";
-            datos = $('#crearComision').serialize();
-            $.ajax({
-                type: 'POST',
-                url: "{{ route("crear_comision") }}",
-                data: datos,
-                success: function (response) {
-                    //console.log(response.htmlRow)
-                }
-            });
-        }
-
-
-    </script>
 @endsection
 
 @section("lobibox")
