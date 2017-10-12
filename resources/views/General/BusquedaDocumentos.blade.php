@@ -15,7 +15,8 @@
             <h3 class="box-title">Busqueda de Documentos</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="#">
+            <form id="buscarDocs" method="post" action="{{ url('buscar_documento') }}" >
+            {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
@@ -27,11 +28,20 @@
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label>Tipo de Documento</label>
+<!--
                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value="">--Seleccione una opcion --</option>
                                 <option value="acta">Acta</option>
                                 <option value="dictamen">Dictamen</option>
-                            </select>
+                                </select>
+-->
+                    {!! Form::select('tipo_documentos',$tipo_documentos,null,
+                    ['id'=>'tipo_documento',
+                     'class'=>'form-control',
+                     'required'=>'required',
+                     'placeholder' => 'Seleccione tipo documento...']) !!}
+ 
+                            
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
@@ -74,75 +84,45 @@
                     <th>Nombre Documento</th>
                     <th>Fecha Creacion</th>
                     <th>Opcion</th>
+                    <th>Opcion</th>
                 </tr>
                 </thead>
 
                 <tbody id="cuerpoTabla">
+
+ <!--
                 <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
+                    <td>Lo he dejado quemado para que</td>
+                    <td>no se vea solo :v</td>
                     <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
+                    <td>Opcion</td>
                 </tr>
+-->
+                
+            @forelse($documentos as $documento)
                 <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
-                <tr>
-                    <td>Documento 1</td>
-                    <td>01/01/2017</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                </tr>
+                        <td>
+                            <center>
+                            {!! $documento->nombre_documento !!}
+                            </center>
+                        </td>
+                        <td>
+                        {!! $documento->fecha_ingreso !!}
+                        </td>
+                        <td>
+                            <a class="btn btn-info" href="<?= $disco.$documento->path; ?>" role="button">Ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" href="descargar_documento/<?= $documento->id; ?>" role="button">Descargar</a>
+                        </td>
+                 </tr>
+
+
+            @empty
+                <p style="color: red ;">No hay criterios de busqueda</p>
+            @endforelse
+
+
                 </tbody>
 
             </table>
