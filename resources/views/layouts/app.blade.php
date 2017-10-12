@@ -235,6 +235,9 @@
                                     <li><a href="{{url("/Reporte_constancias_renta_JD")}}"><i
                                                     class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
                                     </li>
+                                    <li><a href="{{url("/Reporte_Convocatorias")}}"><i
+                                                    class="fa fa-dot-circle-o"></i>Convocatorias</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

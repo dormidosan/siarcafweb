@@ -14,7 +14,7 @@
 
 <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Reporte planilla de dietas</h3>
+            <h3 class="box-title">Reporte Convocatorias</h3>
         </div>
         <div class="box-body">
             <form id="buscarDocs" method="post" action="#">
@@ -81,35 +81,15 @@
                     <tbody>
                     <tr>                                     
                       <td>
-                        Detalle dieta individual
+                        Nombre permiso
                       </td>
                       <td>fecha</td>
                     
-                      <td><a href="{{url("/Reporte_planilla_dieta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_Convocatorias_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_Convocatorias_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                    
-                   <tr>                                     
-                      <td>
-                        Detalle dieta Consolidado profesional no docente
-                      </td>
-                      <td>fecha</td>
-                    
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
-                    </tr>
-                     <tr>                                     
-                      <td>
-                        Detalle dieta Consolidado profesional docente
-                      </td>
-                      <td>fecha</td>
-                    
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
-                    </tr>
                   </tbody></table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

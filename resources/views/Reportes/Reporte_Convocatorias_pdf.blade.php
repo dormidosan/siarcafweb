@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Nombre del reporte</title>
+    <title>Reporte Permisos Temporales</title>
   <style type="text/css">  
   #watermark {
     position: fixed;
@@ -23,7 +23,7 @@
      text-align: center;
   }
 
- #p {
+  #p {
   font-family: "ARIAL", serif;
   font-size: 12pt;
   font: bold;
@@ -33,17 +33,18 @@
 }
 
 #mp {
-  position: fixed;
-  font-family: "ARIAL", serif;
-  font-size: 10pt;
-  top: 9%;
+font-family: "ARIAL", serif;
+  font-size: 12pt;
+  font: bold;
+  top: 10%;
+  text-align: right;
+  aling-items: right;
 }
 
 #nt {
   position: fixed;
   font-family: "ARIAL", serif;
   font-size: 10pt;
-  font: bold;
   top: 15%;
 }
 
@@ -51,7 +52,9 @@
   position: fixed;
   font-family: "ARIAL", serif;
   font-size: 10pt;
-  top: 20%;
+  top: 15%;
+  text-align: left;
+  aling-items: left;
 }
 
 #cp1 {
@@ -94,6 +97,14 @@
   top: 50%;
 }
 
+#cp6{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 70%;
+}
+
 
 #footer{
   position: fixed;
@@ -110,32 +121,59 @@
   top: 88%;
 }
 
+
 </style>
-                                         
-<div >
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="20%" height="20%" style="position:absolute;">
+        
+<div style="position:fixed;" align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" >
 </div>
 
-                            
-                          
- <div id="p" style="position:relative;center: 250px; top:1%">
-    UNIVERSIDAD DE EL SALVADOR<br/> 
-    ASAMBLEA GENERAL UNIVERSITARIA<br/>
-  ASISTENCIAS PARA ASAMBLEISTAS EN SESIONES PLENARIAS PERIODO 2016-2017
-  </div>
-                            
-
-
+<div style="position:fixed;" align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="130" height="130" >
+</div>                                   
+                                               
+ <div id="p" style="position:fixed;text-align: center;">
+    Convocatoria<br/>
+    <br/>   
+  </div>   
+  <div id="mp" >
+    Fecha: ____________<br/>
+    <br/>
+     
+  </div> 
+                   
 </head>
   <body>
- 
+  <div id="cp" >
+    PARA: ________________________________________________<br/>
 
- 
+    DE: _________________________________________________<br/>
 
+    ASUNTO: _______________________________________________
+    <hr/>
+  </div> 
 
+ <div id="cp1" >
+    CUERPO DEL MENSAJE
 
+  </div> 
 
+ <div id="cp2" >
+    AGENDA PROPUESTAS:<br/>
+    1.<br/>
+    2.<br/>
+    3.<br/>
 
-  
+  </div> 
+<div id="cp6" >
+    "HACIA LA LIBERTAD POR LA CULTURA"
+  </div>
+
+<div id="footer" >
+  ING. AGR. NELSON BERNABÉ GRANADOS ALVARADO<br/>
+  PRESIDENTE<br/>
+  ASAMBLEA GENERAL UNIVERSITARIA<br/>
+  </div>
+
   </body>
 </html>
