@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Clases\Mensaje;
 use App\Comision;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComisionRequest;
 ;
@@ -16,7 +18,7 @@ class ComisionController extends Controller
         return view("Comisiones.CrearComision",['comisiones'=>$comisiones]);
     }
 
-    public function crearComision(ComisionRequest $request){
+    public function crear_comision(ComisionRequest $request){
 
         $comision = new Comision();
         $comision->nombre = $request->get("nombre");
@@ -27,6 +29,30 @@ class ComisionController extends Controller
 
         $request->session()->flash("success","Comision " . $comision->nombre ." agregada con exito");
         return redirect()->route("mostrar_comisiones");
+    }
 
+    public function actualizar_comision(Request $request)
+    {
+        if ($request->ajax()){
+            //se obtiene la comision que coincida con el id enviado
+            $comision = Comision::find($request->get("id"));
+            $respuesta = new \stdClass();
+
+            //se actualiza el estado de la comision, dependiendo de su previo estado
+            if ($comision->activa==1){
+                $comision->activa = 0;
+                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como inactiva con exito","success"))->toArray();
+            }
+            else{
+                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como activa con exito","success"))->toArray();
+                $comision->activa = 1;
+            }
+
+            //una vez efectuado el cambio, se realiza el cambio en la BD
+            $comision->save();
+
+            //se genera la respuesta json
+            return new JsonResponse($respuesta);
+        }
     }
 }
