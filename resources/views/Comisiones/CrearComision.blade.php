@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label>Nombre Comision</label>
+                            <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
                                    name="nombre">
                         </div>
@@ -54,7 +54,7 @@
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead class="text-bold">
                 <tr>
-                    <th>Nombre Documento</th>
+                    <th>Nombre de Comisión</th>
                     <th>Permanente</th>
                     <th>Integrantes</th>
                     <th>Estado</th>
@@ -170,9 +170,14 @@
                         </td>
                         <td>
                             @if($comision->permanente != 1)
-                                <input type="checkbox" id="#t1" name="t1" class="toogle" data-size="mini"
-                                       data-onstyle="success"
-                                       data-offstyle="danger" checked></i>
+                                @if($comision->activa == 1)
+                                    <input type="checkbox" id="esActiva" name="esActiva" class="toogle"
+                                           data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"
+                                           checked></i>
+                                @else
+                                    <input type="checkbox" id="id_comision" name="id_comision" class="toogle"
+                                           data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"></i>
+                                @endif
                             @endif
                         </td>
                         @if($comision->created_at)
@@ -205,16 +210,34 @@
     <script type="text/javascript">
 
         $(function () {
-            $('.cajetin').iCheck({
+            /*$('.cajetin').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 increaseArea: '20%' // optional
-            });
+            });*/
 
             $('.toogle').bootstrapToggle({
                 on: 'Activa',
-                off: 'Inactiva'
+                off: 'Inactiva',
+                onstyle: 'success',
+                offstyle: 'danger'
             });
         });
+
+        function cambiar_estado_comision(id) {
+            $.ajax({
+                //se envia un token, como medida de seguridad ante posibles ataques
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route("actualizar_comision") }}",
+                data: {"id": id},
+                success: function (response) {
+                    notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                }
+            });
+        }
+
 
     </script>
 
@@ -222,10 +245,10 @@
 
 @section("lobibox")
 
-        @if(Session::has('success'))
-            <script>
-                notificacion("Exito","{{ Session::get('success') }}","success");
-            </script>
-        @endif
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
 
 @endsection
