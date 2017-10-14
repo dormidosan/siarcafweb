@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Nombre del reporte</title>
+    <title>Reporte Permisos Temporales</title>
   <style type="text/css">  
   #watermark {
     position: fixed;
@@ -27,100 +27,135 @@
   font-family: "ARIAL", serif;
   font-size: 12pt;
   font: bold;
+  top: 5%;
+  text-align: center;
+  aling-items: center;
 }
+
+#mp {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 9%;
+}
+
+#nt {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 15%;
+}
+
+#cp {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 20%;
+}
+
+#cp1 {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 25%;
+}
+
+#cp2{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+ 
+  top: 30%;
+}
+
+#cp3{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 35%;
+}
+
+#cp4{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 40%;
+}
+
+#cp5{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 50%;
+}
+
+
+#footer{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 85%;
+}
+
+#footer1{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 88%;
+}
+
 
 </style>
                                          
-<div >
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" style="position:absolute;">
-</div>
-
-                            
-                          
- <div id="p" style="position:relative;left: 250px; top:1%">
- 
-    UNIVERSIDAD DE EL SALVADOR<br/>
-  
-  
-    ASAMBLEA GENERAL UNIVERSITARIA<br/>
-  
-  PERMISOS TEMPORALES PARA<br/>ASAMBLEISTAS EN SESIONES PLENARIAS
-
-
-  </div>
-                            
-
-
+                                               
+ <div id="p" style="position:fixed;text-align: center;">
+    Sesión Plenaria de Asamblea General Universitaria N°: _____ Fecha: ____________<br/>
+    Solicitud de PERMISO TEMPORAL<br/>
+     
+  </div>   
+                   
 </head>
   <body>
  
-  <div id="watermark">
-    <h1>
-    SOLO PARA FINES INFORMATIVOS
-  </h1>
-  </div>
+<div id="nt">
+                <table  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
+                   
+                  <thead>  <!-- ENCABEZADO TABLA-->
+                    <tr>                     
+                    <th>Nombre del solicitante</th>                     
+                    <th>Firma</th>                     
+                    <th>Motivo del permiso</th>
+                    <th>Hora Salida</th>
+                    <th>Firma del secretario de Junta Directiva en el que hace constar la hora en que regreso el/la Asambleista</th>
+                   
+                    </tr>
+                  </thead>
 
+                    <tbody>  <!-- CUERPO DE LA TABLA-->
+                          <tr>                                     
+                           <td>Asambleista: _____________ Delego a: _____________</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>Hora a la que se reincorporo el/la Asambleista: _________________________</td>              
+                          </tr> 
+                          <tr>                                     
+                           <td>Asambleista: _____________ Delego a: _____________</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>Hora a la que se reincorporo el/la Asambleista: _________________________</td>              
+                          </tr>                       
+                   </tbody>
 
+                </table>
+ </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--<div id="centrar">
-   TEXTO FRENTE A MARCA DE AGUA 
-  </div>
-    <main>
-      <div id="details" class="clearfix">
-        <div id="invoice">
-          <h1>INVOICE {{ $invoice }}</h1>
-          <div class="date">Date of Invoice: {{ $date }}</div>
-        </div>
-      </div>
-      <table id="asd" border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th class="no">#</th>
-            <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="total">TOTAL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="no">{{ $data['quantity'] }}</td>
-            <td class="desc">{{ $data['description'] }}</td>
-            <td class="unit">{{ $data['price'] }}</td>
-            <td class="total">{{ $data['total'] }} </td>
-          </tr>
- 
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td >TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
-      </table>-->
   </body>
 </html>
