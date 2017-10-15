@@ -44,8 +44,8 @@ class ComisionController extends Controller
                 $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como inactiva con exito","success"))->toArray();
             }
             else{
-                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como activa con exito","success"))->toArray();
                 $comision->activa = 1;
+                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como activa con exito","success"))->toArray();
             }
 
             //una vez efectuado el cambio, se realiza el cambio en la BD
