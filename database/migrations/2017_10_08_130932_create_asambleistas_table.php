@@ -17,12 +17,13 @@ class CreateAsambleistasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('periodo_id');
             $table->unsignedInteger('user_id');
-            $table->string('facultad', 25)->nullable();
-            $table->string('sector', 15)->nullable();
+            $table->string('facultad', 35)->nullable();
+            $table->string('sector', 20)->nullable();
             $table->string('propietario', 10)->nullable();
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->integer('activo')->nullable();
+            $table->string('ruta', 50)->nullable();
 
             $table->index(["user_id"], 'fk_asambleistas_users1_idx');
 

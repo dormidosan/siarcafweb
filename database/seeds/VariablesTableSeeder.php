@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+
+
 use Carbon\Carbon;
 
 class VariablesTableSeeder extends Seeder {
@@ -34,7 +36,7 @@ class VariablesTableSeeder extends Seeder {
 		'nombre_periodo'  => '2013-2015',
 		'inicio'  => '2013-06-02',
 		'fin'  => '2015-06-02',
-		'activo'  => '1'
+		'activo'  => '0'
 
 		));
 		
@@ -98,7 +100,7 @@ class VariablesTableSeeder extends Seeder {
 		));
 
 		// ------------------------------------------------------------------------ //
-
+/*
 		\DB::table('personas')->insert(array (
 		'primer_nombre'  => 'nombre1 ',
 		'segundo_nombre'  => 'nombre1',
@@ -539,7 +541,7 @@ class VariablesTableSeeder extends Seeder {
 
 
 
-
+*/
 
 
 		

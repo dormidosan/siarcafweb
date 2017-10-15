@@ -19,6 +19,8 @@ class CreatePeticionesTable extends Migration
             $table->string('nombre', 45)->nullable();
             $table->string('descripcion', 45)->nullable();
             $table->string('peticionario', 45)->nullable();
+            $table->string('direccion', 50)->nullable();
+            $table->string('telefono', 10)->nullable();
             $table->dateTime('fecha')->nullable();
             $table->string('correo', 45)->nullable();
             $table->boolean('resuelto')->nullable();
@@ -36,3 +38,6 @@ class CreatePeticionesTable extends Migration
         Schema::drop('peticiones');
     }
 }
+
+
+       
