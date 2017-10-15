@@ -64,99 +64,6 @@
                 </thead>
 
                 <tbody id="cuerpoTabla">
-                <!--<tr>
-                    <td>Comision de Legislacion</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de Presupuesto</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de Convenios</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin"></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision Temporal A</td>
-                    <td></td>
-                    <td>15</td>
-                    <td>
-
-                            <input type="checkbox" id="#t1" name="t1" class="toogle" data-size="mini"
-                                   data-onstyle="success"
-                                   data-offstyle="danger" checked disabled>
-
-                    </td>
-
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked disabled></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision Temporal</td>
-                    <td></td>
-                    <td>15</td>
-                    <td>
-
-                            <input type="checkbox" id="#t1" name="t1" class="toogle" data-size="mini"
-                                   data-onstyle="success" data-offstyle="danger" disabled>
-
-                    </td>
-
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>-->
                 @foreach($comisiones as $comision)
                     <tr>
                         <td>{{ $comision->nombre }}</td>
@@ -169,13 +76,13 @@
                             {{ $comision->cargos()->count() }}
                         </td>
                         <td>
-                            @if($comision->permanente != 1)
+                            @if($comision->permanente == 0)
                                 @if($comision->activa == 1)
-                                    <input type="checkbox" id="esActiva" name="esActiva" class="toogle"
+                                    <input type="checkbox" name="estado" class="toogle"
                                            data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"
                                            checked></i>
                                 @else
-                                    <input type="checkbox" id="id_comision" name="id_comision" class="toogle"
+                                    <input type="checkbox" name="estado" class="toogle"
                                            data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"></i>
                                 @endif
                             @endif
@@ -199,7 +106,6 @@
 @endsection
 
 @section("js")
-    <!-- iCheck -->
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
@@ -210,11 +116,6 @@
     <script type="text/javascript">
 
         $(function () {
-            /*$('.cajetin').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                increaseArea: '20%' // optional
-            });*/
-
             $('.toogle').bootstrapToggle({
                 on: 'Activa',
                 off: 'Inactiva',

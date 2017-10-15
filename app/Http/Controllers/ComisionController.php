@@ -41,11 +41,11 @@ class ComisionController extends Controller
             //se actualiza el estado de la comision, dependiendo de su previo estado
             if ($comision->activa==1){
                 $comision->activa = 0;
-                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como inactiva con exito","success"))->toArray();
+                $respuesta->mensaje = (new Mensaje("Exito","Comision: ". $comision->nombre." establecida como inactiva","warning"))->toArray();
             }
             else{
-                $respuesta->mensaje = (new Mensaje("Exito","Comision establecida como activa con exito","success"))->toArray();
                 $comision->activa = 1;
+                $respuesta->mensaje = (new Mensaje("Exito","Comision: ". $comision->nombre." establecida como activa","success"))->toArray();
             }
 
             //una vez efectuado el cambio, se realiza el cambio en la BD
