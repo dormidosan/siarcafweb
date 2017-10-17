@@ -188,7 +188,7 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a></li>
+                                    <li><a href="{{url("/Plantilla_Actas")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas JD</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas AGU</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Dictamenes</a></li>
@@ -234,6 +234,9 @@
                                     </li>
                                     <li><a href="{{url("/Reporte_constancias_renta_JD")}}"><i
                                                     class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
+                                    </li>
+                                    <li><a href="{{url("/Reporte_Convocatorias")}}"><i
+                                                    class="fa fa-dot-circle-o"></i>Convocatorias</a>
                                     </li>
                                 </ul>
                             </li>

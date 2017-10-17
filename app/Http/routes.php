@@ -97,6 +97,11 @@ Route::get('/Reporte_asistencias_sesion_plenaria', function () {
 
 Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Reporte_asistencias_sesion_plenaria');
 
+Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
+
+
+
+
 Route::get('/Reporte_bitacora_correspondencia', function () {
     return view('Reportes.Reporte_bitacora_correspondencia');
 });
@@ -110,12 +115,18 @@ Route::get('/Reporte_planilla_dieta', function () {
 
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
 
+Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
+
+
+Route::get('/Reporte_planilla_dieta_prof_Doc_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Doc_pdf');
 
 Route::get('/Reporte_consolidados_renta', function () {
     return view('Reportes.Reporte_consolidados_renta');
 });
 
 Route::get('/Reporte_consolidados_renta/{tipo}', 'ReportesController@Reporte_consolidados_renta');
+
+Route::get('/Reporte_consolidados_renta_docente/{tipo}', 'ReportesController@Reporte_consolidados_renta_docente');
 
 Route::get('/Reporte_constancias_renta', function () {
     return view('Reportes.Reporte_constancias_renta');
@@ -129,11 +140,29 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
 
+
+
+Route::get('/Plantilla_Actas', function () {
+    return view('Plantillas.Plantilla_actas');
+});
+
+Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
+
+
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales');
 });
+
+
+Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
+
+Route::get('/Reporte_Convocatorias', function () {
+    return view('Reportes.Reporte_Convocatorias');
+});
+
+
 
 /* Routes para Agenda */
 Route::get('/CrearSesionPlenaria', function () {
@@ -182,5 +211,7 @@ Route::get('/RegistrarUsuario', function () {
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
 
 
+
 Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
+
 

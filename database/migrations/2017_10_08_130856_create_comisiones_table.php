@@ -19,6 +19,7 @@ class CreateComisionesTable extends Migration
             $table->boolean('permanente')->nullable();
             $table->string('descripcion', 50)->nullable();
             $table->boolean('activa')->nullable();
+            $table->boolean('especial')->nullable();
             $table->timestamps();
         });
     }

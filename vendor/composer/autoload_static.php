@@ -10,8 +10,8 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -24,6 +24,12 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Z' => 
+        array (
+            'Zend\\Validator\\' => 15,
+            'Zend\\Stdlib\\' => 12,
+            'Zend\\Escaper\\' => 13,
         ),
         'X' => 
         array (
@@ -58,6 +64,8 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
             'Psy\\' => 4,
             'Psr\\Log\\' => 8,
             'PhpParser\\' => 10,
+            'PhpOffice\\PhpWord\\' => 18,
+            'PhpOffice\\Common\\' => 17,
         ),
         'M' => 
         array (
@@ -103,6 +111,18 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'Zend\\Validator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-validator/src',
+        ),
+        'Zend\\Stdlib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
+        ),
+        'Zend\\Escaper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -191,6 +211,15 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'PhpOffice\\PhpWord\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/PhpWord',
+            1 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',
+        ),
+        'PhpOffice\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/common/src/Common',
         ),
         'Monolog\\' => 
         array (
@@ -311,6 +340,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'CreateDocumentoPeticionTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130928_create_documento_peticion_table.php',
         'CreateDocumentoReunionTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130929_create_documento_reunion_table.php',
         'CreateDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130921_create_documentos_table.php',
+        'CreateFacultadesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130857_create_facultades_table.php',
         'CreateIntervencionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130941_create_intervenciones_table.php',
         'CreateModuloRolTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130919_create_modulo_rol_table.php',
         'CreateModulosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130904_create_modulos_table.php',
@@ -325,9 +355,11 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'CreatePuntosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130926_create_puntos_table.php',
         'CreateReunionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130923_create_reuniones_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130854_create_roles_table.php',
+        'CreateSectoresTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130910_create_sectores_table.php',
         'CreateSeguimientosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130913_create_seguimientos_table.php',
         'CreateTipoDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130900_create_tipo_documentos_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130916_create_users_table.php',
+        'CreateVersionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130924_create_versiones_table.php',
         'DOMPDF' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf.cls.php',
         'DOMPDF_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_exception.cls.php',
         'DOMPDF_Image_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',
@@ -878,6 +910,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'Page_Cache' => __DIR__ . '/..' . '/dompdf/dompdf/include/page_cache.cls.php',
         'Page_Frame_Decorator' => __DIR__ . '/..' . '/dompdf/dompdf/include/page_frame_decorator.cls.php',
         'Page_Frame_Reflower' => __DIR__ . '/..' . '/dompdf/dompdf/include/page_frame_reflower.cls.php',
+        'PclZip' => __DIR__ . '/..' . '/pclzip/pclzip/pclzip.lib.php',
         'PersonasTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PersonasTableSeeder.php',
         'Positioner' => __DIR__ . '/..' . '/dompdf/dompdf/include/positioner.cls.php',
         'Renderer' => __DIR__ . '/..' . '/dompdf/dompdf/include/renderer.cls.php',

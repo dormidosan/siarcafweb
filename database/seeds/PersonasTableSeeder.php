@@ -18,6 +18,8 @@ class PersonasTableSeeder extends Seeder
         $faker = Faker::create();
         $i=1;
         $p=1;
+        $facultad = 1;
+        $sector = 1 ;
     	for($j = 1 ; $j < 145 ; $j ++){
 
     	\DB::table('personas')->insert(array (
@@ -43,7 +45,7 @@ class PersonasTableSeeder extends Seeder
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
-
+/*
 		switch ($j) {
 			case 1:
 				$facultad="CIENCIAS Y HUMANIDADES";
@@ -107,12 +109,34 @@ class PersonasTableSeeder extends Seeder
 					break;
 				
 			}
+*/
+
+
+       if ($i>12){
+       	$i=1;
+       	$facultad++;
+       }
+
+       switch ($i) {
+				case 1:
+					$sector = "1";
+					break;
+				case 5:
+					$sector = "2";
+					break;
+				case 9:
+					$sector = "3";
+					break;
+				
+		}
+
+
 
 		\DB::table('asambleistas')->insert(array (
 		'user_id'  => $j,
 		'periodo_id'  => '2',
-		'facultad'  => $facultad,
-		'sector'  => $sector,
+		'facultad_id'  => $facultad,
+		'sector_id'  => $sector,
 		'propietario'  => $p,
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
@@ -124,9 +148,9 @@ class PersonasTableSeeder extends Seeder
 		
 		if ($p == 1) {
 			$p = 0;
-		} else {
-			$p = 1;
-		}
+			} else {
+				$p = 1;
+				}
 		$i++;
 
 
@@ -136,78 +160,33 @@ class PersonasTableSeeder extends Seeder
 
     	$i=1;
         $p=1;
+        $facultad = 1;
+        $sector = 1 ;
     	for($j = 1 ; $j < 25 ; $j ++){
 
+		if ($i>12){
+       	$i=1;
+       	$facultad++;
+       }
 
-		switch ($j) {
-			case 1:
-				$facultad="CIENCIAS Y HUMANIDADES";
-				$i=1;
-				break;
-			case 13:
-				$facultad="CIENCIAS AGRONOMICAS";
-				$i=1;
-				break;
-			case 25:
-				$facultad="CIENCIAS ECONOMICAS";
-				$i=1;
-				break;
-			case 37:
-				$facultad="ODONTOLOGIA";
-				$i=1;
-				break;
-			case 49:
-				$facultad="INGENIERIA  Y ARQUITECTURA";
-				$i=1;
-				break;
-			case 61:
-				$facultad="QUIMICA Y FARMACIA";
-				$i=1;
-				break;
-			case 73:
-				$facultad="MEDICINA";
-				$i=1;
-				break;
-			case 85:
-				$facultad="CIENCIAS NATURALES Y MATEMATICA";
-				$i=1;
-				break;
-			case 97:
-				$facultad="JURISPRUDENCIA Y CIENCIAS SOCIALES";
-				$i=1;
-				break;
-			case 109:
-				$facultad="MULTIDISCIPLINARIA DE OCCIDENTE";
-				$i=1;
-				break;
-			case 121:
-				$facultad="MULTIDISCIPLINARIA  PARACENTRAL";
-				$i=1;
-				break;
-			case 133:
-				$facultad="MULTIDISCIPLINARIA ORIENTAL";
-				$i=1;
-				break;
-			
-		}
-			switch ($i) {
+       switch ($i) {
 				case 1:
-					$sector = "Estudiantil";
+					$sector = "1";
 					break;
 				case 5:
-					$sector = "Docente";
+					$sector = "2";
 					break;
 				case 9:
-					$sector = "Personal no Docente";
+					$sector = "3";
 					break;
 				
-			}
+		}
 
 		\DB::table('asambleistas')->insert(array (
 		'user_id'  => $j,
 		'periodo_id'  => '1',
-		'facultad'  => $facultad,
-		'sector'  => $sector,
+		'facultad_id'  => $facultad,
+		'sector_id'  => $sector,
 		'propietario'  => $p,
 		'inicio'  => Carbon::create(2013, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2015, 6, 28, 0, 0, 0),
