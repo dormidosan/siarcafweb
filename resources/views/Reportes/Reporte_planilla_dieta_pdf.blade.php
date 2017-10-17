@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Nombre del reporte</title>
+    <title>Reporte Dieta</title>
   <style type="text/css">  
   #watermark {
     position: fixed;
@@ -27,100 +27,144 @@
   font-family: "ARIAL", serif;
   font-size: 12pt;
   font: bold;
+  top: 5%;
 }
+
+#mp {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 9%;
+}
+
+#nt {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 15%;
+}
+
+#cp {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 20%;
+}
+
+#cp1 {
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 25%;
+}
+
+#cp2{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+ 
+  top: 30%;
+}
+
+#cp3{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 35%;
+}
+
+#cp4{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 40%;
+}
+
+#cp5{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  
+  top: 50%;
+}
+
+
+#footer{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  font: bold;
+  top: 85%;
+}
+
+#footer1{
+  position: fixed;
+  font-family: "ARIAL", serif;
+  font-size: 10pt;
+  top: 88%;
+}
+
 
 </style>
                                          
-<div >
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" style="position:absolute;">
+<div style="position:fixed;" align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" >
 </div>
 
-                            
-                          
- <div id="p" style="position:relative;left: 250px; top:1%">
- 
+<div style="position:fixed;" align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="130" height="130" >
+</div>                                                   
+ <div id="p" style="position:fixed;text-align: center;">
     UNIVERSIDAD DE EL SALVADOR<br/>
-  
-  
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-  
-  PERMISOS TEMPORALES PARA<br/>ASAMBLEISTAS EN SESIONES PLENARIAS
-
-
-  </div>
-                            
-
-
+  </div>   
+  <div id="mp" style="text-align: center;">
+    CIUDAD UNIVERSITARIA, SAN SALVADOR, EL SALVADOR, C.A.  
+  </div>                    
 </head>
   <body>
  
-  <div id="watermark">
-    <h1>
-    SOLO PARA FINES INFORMATIVOS
-  </h1>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--<div id="centrar">
-   TEXTO FRENTE A MARCA DE AGUA 
-  </div>
-    <main>
-      <div id="details" class="clearfix">
-        <div id="invoice">
-          <h1>INVOICE {{ $invoice }}</h1>
-          <div class="date">Date of Invoice: {{ $date }}</div>
-        </div>
-      </div>
-      <table id="asd" border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th class="no">#</th>
-            <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="total">TOTAL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="no">{{ $data['quantity'] }}</td>
-            <td class="desc">{{ $data['description'] }}</td>
-            <td class="unit">{{ $data['price'] }}</td>
-            <td class="total">{{ $data['total'] }} </td>
-          </tr>
+ <div id="nt" style="text-align: left;">
+ NIT INSTITUCIONAL: 0614-110121-001-3
+ </div>  
  
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td >TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
-      </table>-->
+<div id="cp" style="text-align: left;">
+El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a):
+ </div>  
+
+<div id="cp1" style="text-align: left;">
+NIT No. ###-####-###-#<br/>
+NOMBRE: NOMBRE DEL ASAMBLEISTA
+ </div>  
+
+ <div id="cp2" style="text-align: left;">
+Por el pago de dietas de Junta Directiva de la AGU. del mes de mayo de 2017. son los que se desglosan de la siguiente manera.
+ </div>  
+
+<div id="cp3" style="text-align: left;">
+  TOTAL DEVENGADO:
+ </div> 
+
+<div id="cp4" style="text-align: left;">
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        $$.$$<pre/> <br/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido             $        $$.$$<pre/>
+ </div> 
+
+<div id="cp5" style="text-align: left;">
+ Y para los efectos de su declaración de impuestos sobre la Renta, se extiende la presente a los veintiséis días del mes de mayo de dos mil diecisiete.
+ </div> 
+
+<div id="footer" style="text-align: center;">
+Licda. Josefina Sibrián de Rodríguez
+ </div> 
+
+<div id="footer1" style="text-align: center;">
+Presidenta Asamblea General Universitaria
+ </div> 
+
   </body>
 </html>

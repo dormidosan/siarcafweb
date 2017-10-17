@@ -129,7 +129,7 @@
                         </a>
 
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/CrearComision") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
+                            <li><a href="{{ url("/comisiones") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
                             </li>
                             <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
@@ -150,7 +150,7 @@
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
+                            <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
                             </li>
                         </ul>
                     </li>
@@ -188,7 +188,7 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a></li>
+                                    <li><a href="{{url("/Plantilla_Actas")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas JD</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas AGU</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Dictamenes</a></li>
@@ -235,6 +235,9 @@
                                     <li><a href="{{url("/Reporte_constancias_renta_JD")}}"><i
                                                     class="fa fa-dot-circle-o"></i>Constancia Renta JD</a>
                                     </li>
+                                    <li><a href="{{url("/Reporte_Convocatorias")}}"><i
+                                                    class="fa fa-dot-circle-o"></i>Convocatorias</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -275,13 +278,21 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/Parametros") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
+                            <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
                             </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Gestionar usuarios</a>
+                            <li class="treeview">
+                                <a href="#"><i class="fa fa-dot-circle-o"></i> Gestionar Usuarios
+                                    <span class="pull-right-container"><i
+                                                class="fa fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{url("/GestionarUsuarios")}}"><i class="fa fa-dot-circle-o"></i>Administracion Usuarios</a></li>
+                                    <li><a href="{{url("/RegistrarUsuario")}}"><i class="fa fa-dot-circle-o"></i>Registar Usuarios</a></li>
+                                    <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar Perfiles</a></li>
+                                </ul>
                             </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Perfiles de usuario</a>
-                            </li>
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+                            <li><a href="{{ url("/PeriodoAGU") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+
                         </ul>
                     </li>
 
@@ -350,6 +361,8 @@
 
 @yield("js")
 @yield("scripts")
+@yield("lobibox")
+
 </body>
 
 </html>

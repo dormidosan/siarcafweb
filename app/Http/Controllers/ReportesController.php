@@ -76,9 +76,9 @@ class ReportesController extends Controller
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
+        $view =  \View::make('Reportes/Reporte_asistencias_sesion_plenaria_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
         if($tipo==1)
@@ -96,6 +96,33 @@ class ReportesController extends Controller
 
     }
 
+          public function Reporte_inasistencias_sesion_plenaria_pdf($tipo) 
+    {
+      
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Reportes/Reporte_inasistencias_sesion_plenaria_pdf', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
+    }
+
+
     
 
       public function Reporte_bitacora_correspondencia($tipo) 
@@ -104,7 +131,7 @@ class ReportesController extends Controller
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
+        $view =  \View::make('Reportes/Reporte_bitacora_correspondencia_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
@@ -132,7 +159,7 @@ class ReportesController extends Controller
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
@@ -150,9 +177,60 @@ class ReportesController extends Controller
         //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
+    } 
+
+     public function Reporte_planilla_dieta_prof_noDocpdf($tipo) 
+    {
+      
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_noDocpdf', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
     }
 
-    
+
+ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo) 
+    {
+      
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
+    }
 
 
       public function Reporte_consolidados_renta($tipo) 
@@ -161,9 +239,9 @@ class ReportesController extends Controller
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
+        $view =  \View::make('Reportes/Reporte_consolidados_renta_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
         if($tipo==1)
@@ -181,6 +259,33 @@ class ReportesController extends Controller
 
     }
     
+    
+    
+      public function Reporte_consolidados_renta_docente($tipo) 
+    {
+      
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Reportes/Reporte_consolidados_renta_docente_pdf', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
+    }
     
 
        public function Reporte_constancias_renta($tipo) 
@@ -237,6 +342,35 @@ class ReportesController extends Controller
 
 
     }
+
+     
+       public function Reporte_Convocatorias($tipo) 
+    {
+      
+        $data = $this->getData();
+        $date = date('Y-m-d');
+        $invoice = "2222";
+        $view =  \View::make('Reportes/Reporte_Convocatorias_pdf', compact('data', 'date', 'invoice'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($tipo==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($tipo==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
+
+
+    }
+
+    
 
    // public function listado(){
    // return view("Reportes.listado_reportes");

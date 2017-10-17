@@ -81,7 +81,7 @@
                     <tbody>
                     <tr>                                     
                       <td>
-                        Nombre permiso
+                        Asistencias a Sesiones plenarias
                       </td>
                       <td>fecha</td>
                     
@@ -89,6 +89,18 @@
                       <td><a href="{{url("/Reporte_asistencias_sesion_plenaria/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
+                     <tr>                                     
+                      <td>
+                        Inasistencias a Sesiones plenarias
+                      </td>
+                      <td>fecha</td>
+                    
+                      <td><a href="{{url("/Reporte_inasistencias_sesion_plenaria_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_inasistencias_sesion_plenaria_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                    
+                    </tr>
+
+                    
                    
                   </tbody></table>
                 </div><!-- /.box-body -->

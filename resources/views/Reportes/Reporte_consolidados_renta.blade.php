@@ -81,12 +81,22 @@
                     <tbody>
                     <tr>                                     
                       <td>
-                        Nombre permiso
+                        SECTOR PROFESIONAL NO DOCENTE
                       </td>
                       <td>fecha</td>
                     
                       <td><a href="{{url("/Reporte_consolidados_renta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
                       <td><a href="{{url("/Reporte_consolidados_renta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                    
+                    </tr>
+                     <tr>                                     
+                      <td>
+                        SECTOR DOCENTE
+                      </td>
+                      <td>fecha</td>
+                    
+                      <td><a href="{{url("/Reporte_consolidados_renta_docente/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta_docente/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                    

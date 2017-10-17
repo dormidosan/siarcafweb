@@ -3,6 +3,7 @@
 @section("styles")
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('content')
@@ -11,11 +12,23 @@
             <h3 class="box-title">Crear Comision</h3>
         </div>
         <div class="box-body">
-            <form id="crearComision" method="post" action="#">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <p>Por favor, corriga los siguientes errores:</p>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
+                {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label>Nombre Comision</label>
+                            <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
                                    name="nombre">
                         </div>
@@ -23,7 +36,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button type="submit" id="crearComision" name="crearComision" class="btn btn-primary">Crear
+                        <button type="submit" id="crear" name="crear" class="btn btn-primary">
+                            Crear Comision
                         </button>
                     </div>
                 </div>
@@ -40,7 +54,7 @@
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead class="text-bold">
                 <tr>
-                    <th>Nombre Documento</th>
+                    <th>Nombre de Comisión</th>
                     <th>Permanente</th>
                     <th>Integrantes</th>
                     <th>Estado</th>
@@ -50,86 +64,38 @@
                 </thead>
 
                 <tbody id="cuerpoTabla">
-                <tr>
-                    <td>Comision de Legislacion</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de Presupuesto</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de Convenios</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin"></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision Temporal A</td>
-                    <td></td>
-                    <td>15</td>
-                    <td><input type="checkbox" id="#t1" name="t1" class="toogle" data-size="mini" data-onstyle="success" data-offstyle="danger" checked></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td><input type="checkbox" class="cajetin" checked></td>
-                    <td>15</td>
-                    <td></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
-                <tr>
-                    <td>Comision Temporal</td>
-                    <td></td>
-                    <td>15</td>
-                    <td><input type="checkbox" id="#t1" name="t1" class="toogle" data-size="mini" data-onstyle="success" data-offstyle="danger"></td>
-                    <td>01/01/2017</td>
-                    <td>01/01/1999</td>
-                </tr>
+                @foreach($comisiones as $comision)
+                    <tr>
+                        <td>{{ $comision->nombre }}</td>
+                        <td>
+                            @if($comision->permanente == 1)
+                                <i class="fa fa-check text-success text-bold" aria-hidden="true"></i>
+                            @endif
+                        </td>
+                        <td>
+                            {{ $comision->cargos()->count() }}
+                        </td>
+                        <td>
+                            @if($comision->permanente == 0)
+                                @if($comision->activa == 1)
+                                    <input type="checkbox" name="estado" class="toogle"
+                                           data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"
+                                           checked></i>
+                                @else
+                                    <input type="checkbox" name="estado" class="toogle"
+                                           data-size="mini" onchange="cambiar_estado_comision({{ $comision->id }})"></i>
+                                @endif
+                            @endif
+                        </td>
+                        @if($comision->created_at)
+                            <td>{{ date_format($comision->created_at,"d/m/Y h:i:s") }}</td>
+                        @endif
+                        @if($comision->updated_at)
+                            <td>{{ date_format($comision->updated_at,"d/m/Y h:i:s") }}</td>
+                        @endif
+
+                    </tr>
+                @endforeach
                 </tbody>
 
             </table>
@@ -140,25 +106,50 @@
 @endsection
 
 @section("js")
-    <!-- iCheck -->
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
 
         $(function () {
-            $('.cajetin').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                increaseArea: '20%' // optional
-            });
-
             $('.toogle').bootstrapToggle({
                 on: 'Activa',
-                off: 'Inactiva'
+                off: 'Inactiva',
+                onstyle: 'success',
+                offstyle: 'danger'
             });
         });
 
+        function cambiar_estado_comision(id) {
+            $.ajax({
+                //se envia un token, como medida de seguridad ante posibles ataques
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route("actualizar_comision") }}",
+                data: {"id": id},
+                success: function (response) {
+                    notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                }
+            });
+        }
+
+
     </script>
+
+@endsection
+
+@section("lobibox")
+
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
+
 @endsection

@@ -11,27 +11,36 @@
             <h3 class="box-title">Registrar Peticion</h3>
         </div>
         <div class="box-body">
-            <form id="registrar_peticion" name="registrar_peticion" method="post" action="{{ url('registrar_peticion') }}">
+
+            <form id="registrar_peticion" name="registrar_peticion" method="post" action="{{ url('registrar_peticion') }}" enctype="multipart/form-data" >
+
 			{{ csrf_field() }}
 
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
-		   <input name="nombrexxx" type="text" class="form-control" id="nombre" placeholder="Ingrese el nombrexxx">
+
+                            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" required>
+
                         </div>
                     </div>
+					
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="mail">Correo</label>
-                            <input type="email" class="form-control" id="mail" placeholder="Ingrese correo electronico">
+
+                            <input name="correo" type="email" class="form-control" id="mail" placeholder="Ingrese correo electronico" required>
+
                         </div>
                     </div>
+					
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="tel">Telefono</label>
-                            <input type="tel" class="form-control" id="tel" placeholder="Ingrese telefono">
+
+                            <input name="telefono" type="tel" class="form-control" id="tel" placeholder="Ingrese telefono" required>
+
                         </div>
                     </div>
 
@@ -41,30 +50,38 @@
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="direccion">Direccion</label>
-                            <textarea type="text" class="form-control" id="direccion"
-                                      placeholder="Ingrese la direccion"></textarea>
+
+                            <textarea name="direccion" type="text" class="form-control" id="direccion"
+                                      placeholder="Ingrese la direccion" required></textarea>
+
                         </div>
                     </div>
                 </div>
-
+				
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="descripcion">Descripcion</label>
-                            <textarea type="text" class="form-control" id="descripcion"
-                                      placeholder="Ingrese una breve descripcion"></textarea>
+
+                            <textarea name="descripcion" type="text" class="form-control" id="descripcion"
+                                      placeholder="Ingrese una breve descripcion" required></textarea>
+
                         </div>
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-lg-12">
+
+                      
                         <div class="form-group">
                             <label for="documento">Seleccione documentos</label>
                             <div class="file-loading">
-                                <input id="documento" name="documento[]" type="file" multiple>;
+
+                                <input id="documento" name="documento[]" type="file" multiple  required>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -87,15 +104,16 @@
 
 
 @section("scripts")
+   
     <script type="text/javascript">
         $(function () {
             $("#documento").fileinput({
                 theme: "explorer",
-                uploadUrl: "/file-upload-batch/2",
+                previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
-                minFileCount: 1,
+                //minFileCount: 1,
                 maxFileCount: 3,
-                allowedFileExtensions: ['docx', 'pdf'],
+                allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
                 showUpload: false,
                 fileActionSettings: {
                     showRemove: true,
@@ -107,4 +125,5 @@
             });
         });
     </script>
+    
 @endsection
