@@ -129,7 +129,7 @@
                         </a>
 
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/CrearComision") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
+                            <li><a href="{{ url("/comisiones") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
                             </li>
                             <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
@@ -168,7 +168,7 @@
                             <li><a href="{{url("/asambleistas")}}"><i class="fa fa-dot-circle-o"></i>Listado de
                                     asambleistas</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Listado de asambleistas por
+                            <li><a href="{{url("/asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Listado de asambleistas por
                                     comision</a></li>
                             <li><a href="{{url("/asambleistasjunta")}}"><i class="fa fa-dot-circle-o"></i>Listado de
                                     asambleistas de JD</a></li>

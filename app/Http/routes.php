@@ -20,8 +20,8 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 
 /* Routes generales */
-Route::get('BusquedaDocumentos',array('as'=>'BusquedaDocumentos','uses'=>'BuscarDocumentoController@busqueda'));
-Route::get('descargar_documento/{id}',array('as' =>'descargar_documento','uses' => 'BuscarDocumentoController@descargar_documento'));
+Route::get('BusquedaDocumentos', array('as' => 'BusquedaDocumentos', 'uses' => 'BuscarDocumentoController@busqueda'));
+Route::get('descargar_documento/{id}', array('as' => 'descargar_documento', 'uses' => 'BuscarDocumentoController@descargar_documento'));
 /*
 Route::get('/BusquedaDocumentos', function () {
     return view('General.BusquedaDocumentos');
@@ -30,7 +30,7 @@ Route::get('/BusquedaDocumentos', function () {
 
 /* Routes para Comisiones */
 
-Route::get('/CrearComision','ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
+Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 
 Route::get('/AdministrarComisiones', function () {
     return view('Comisiones.AdministrarComision');
@@ -68,8 +68,8 @@ Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
 
-Route::post('crear_comision', 'ComisionController@crearComision')->name("crear_comision");
-
+Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
+Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
 
 
 
@@ -89,7 +89,6 @@ Route::get('/RegistrarPeticion', function () {
 Route::get('/MonitorearPeticion', function () {
     return view('General.MonitoreoPeticion');
 });
-
 
 
 /* Reportes */
@@ -175,47 +174,50 @@ Route::get('/Reporte_Convocatorias', function () {
 
 
 /* Routes para Agenda */
-Route::get('/CrearSesionPlenaria', function(){
+Route::get('/CrearSesionPlenaria', function () {
     return view('Agenda.CrearSesionPlenaria');
 });
 
-Route:: get('/GestionarAsistencia', function(){
+Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
 
-Route::get('/IniciarSesionPlenaria', function(){
+Route::get('/IniciarSesionPlenaria', function () {
     return view('Agenda.IniciarSesionPlenaria');
 });
 
-Route::get('/HistorialAgendas', function(){
+Route::get('/HistorialAgendas', function () {
     return view('Agenda.HistorialAgendas');
 });
 
 /* Routes Administracion */
-Route::get('/Parametros', function(){
+Route::get('/Parametros', function () {
     return view('Administracion.Parametros');
 });
 
-Route::get('/ActualizarPlantilla', function(){
+Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
 
-Route::get('/PeriodoAGU', function(){
+Route::get('/PeriodoAGU', function () {
     return view('Administracion.PeriodAGU');
 });
 
-Route::get('/GestionarUsuarios', function(){
+Route::get('/GestionarUsuarios', function () {
     return view('Administracion.GestionarUsuario');
 });
 
-Route::get('/GestionarPerfiles', function(){
+Route::get('/GestionarPerfiles', function () {
     return view('Administracion.GestionarPerfiles');
 });
 
-Route::get('/RegistrarUsuario', function(){
+Route::get('/RegistrarUsuario', function () {
     return view('Administracion.IngresarUsuarios');
 });
 
+
+/* Asambleistas */
+Route::get('/asambleistas_comision', "AsambleistaController@asambleistas_comision");
 
 
 /*post*/

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateComisionesTable extends Migration
+class CreateSectoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,10 @@ class CreateComisionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('comisiones', function (Blueprint $table) {
+        Schema::create('sectores', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombre', 50)->nullable();
-            $table->boolean('permanente')->nullable();
-            $table->string('descripcion', 50)->nullable();
-            $table->boolean('activa')->nullable();
-            $table->boolean('especial')->nullable();
+            $table->string('nombre', 45)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateComisionesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('comisiones');
+        Schema::drop('sectores');
     }
 }

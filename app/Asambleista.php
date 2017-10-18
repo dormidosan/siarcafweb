@@ -21,7 +21,7 @@ class Asambleista extends Model
 	
 	public function user()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
     }
 	
 	public function cargos()
@@ -34,10 +34,21 @@ class Asambleista extends Model
         return $this->hasMany('App\Asistencia');
     }
 	
-	public function periodo()
+    public function periodo()
     {
-        return $this->hasOne('App\Periodo');
+        return $this->belongsTo('App\Periodo');
     }
+
+    public function sector()
+    {
+        return $this->belongsTo('App\Sector');
+    }
+
+    public function facultad()
+    {
+        return $this->belongsTo('App\Facultad');
+    }
+
 
 
 }
