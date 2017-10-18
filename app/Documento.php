@@ -37,9 +37,6 @@ class Documento extends Model
         return $this->belongsTo('App\Periodo');
     }
 
-    public function versiones()
-    {
-        return $this->hasMany('App\Version');
-    }
+    
 
 }

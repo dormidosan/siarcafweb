@@ -19,9 +19,11 @@ class BuscarDocumentoController extends Controller
     //
 
     public function busqueda(){
+
     	 $tipo_documentos = TipoDocumento::lists('tipo','id');
+
     	 $documentos = Documento::where('tipo_documento_id','=',0)->get(); //->paginate(10); para obtener ningun resultado ya que se pinta en blanco
-    	 $disco = "../storage/documentos/";
+         $disco = "../storage/documentos/";
 
         return view('General.BusquedaDocumentos')
         ->with('documentos',$documentos)

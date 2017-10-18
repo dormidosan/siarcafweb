@@ -207,6 +207,10 @@ Route::get('/RegistrarUsuario', function () {
 });
 
 
+/* Asambleistas */
+Route::get('/asambleistas_comision', "AsambleistaController@asambleistas_comision");
+
+
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
 
