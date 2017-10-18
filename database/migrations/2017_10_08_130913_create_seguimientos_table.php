@@ -21,6 +21,7 @@ class CreateSeguimientosTable extends Migration
             $table->date('fin')->nullable();
             $table->boolean('activo')->nullable();
             $table->boolean('agendado')->nullable();
+            $table->string('descripcion', 150)->nullable();
 
             $table->index(["comision_id"], 'fk_seguimientos_comisiones1_idx');
 

@@ -62,12 +62,25 @@ class VariablesTableSeeder extends Seeder {
 		'nombre_rol'  => 'asambleista'
 
 		));
+
+
+
+		\DB::table('comisiones')->insert(array (
+		'nombre'  => 'junta directiva',
+		'permanente'  => '1',
+		'descripcion'  => 'comision de JD',
+		'activa'  => '1',
+		'especial'=> '1',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
 		
 		\DB::table('comisiones')->insert(array (
 		'nombre'  => 'comision asociaciones',
 		'permanente'  => '1',
 		'descripcion'  => 'comision de creacion de asociaciones',
 		'activa'  => '1',
+		'especial'=> '0',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -77,6 +90,7 @@ class VariablesTableSeeder extends Seeder {
 		'permanente'  => '1',
 		'descripcion'  => 'comision de creacion de reglamentos',
 		'activa'  => '1',
+		'especial'=> '0',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -86,6 +100,7 @@ class VariablesTableSeeder extends Seeder {
 		'permanente'  => '0',
 		'descripcion'  => 'comision de legislar la ues',
 		'activa'  => '1',
+		'especial'=> '0',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -95,9 +110,133 @@ class VariablesTableSeeder extends Seeder {
 		'permanente'  => '0',
 		'descripcion'  => 'comision de prespuesto y dinero',
 		'activa'  => '0',
+		'especial'=> '0',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
+
+
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'CIENCIAS Y HUMANIDADES',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'CIENCIAS AGRONOMICAS',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'CIENCIAS ECONOMICAS',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'ODONTOLOGIA',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'INGENIERIA  Y ARQUITECTURA',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'QUIMICA Y FARMACIA',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'MEDICINA',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'CIENCIAS NATURALES Y MATEMATICA',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'JURISPRUDENCIA Y CIENCIAS SOCIALES',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'MULTIDISCIPLINARIA DE OCCIDENTE',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'MULTIDISCIPLINARIA  PARACENTRAL',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+
+		\DB::table('facultades')->insert(array (
+		'nombre' => 'MULTIDISCIPLINARIA ORIENTAL',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('sectores')->insert(array (
+		'nombre' => 'Estudiantil',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('sectores')->insert(array (
+		'nombre' => 'Docente',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('sectores')->insert(array (
+		'nombre' => 'Profesional no docente',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+			
+				
+				
+			
+				
+				
+			
+				
+				
+			
+				
+			
+				
+				
+			
+
+
+
+
 
 		// ------------------------------------------------------------------------ //
 /*
