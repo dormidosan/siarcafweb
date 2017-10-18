@@ -10,7 +10,9 @@
             <h3 class="box-title">Listado de Asambleistas por Comision</h3>
         </div>
         <div class="box-body">
+
             @foreach($comisiones as $comision)
+                @php $i = 1 @endphp
                 <div class="panel panel-default ">
                     <div class="panel-heading text-bold text-capitalize">{{ $comision->nombre }}</div>
                     <div class="table-responsive">
@@ -25,7 +27,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php $i = 1 @endphp
                             @foreach($cargos as $cargo)
                                 @if($comision->id == $cargo->comision->id)
                                     <tr>
@@ -35,16 +36,15 @@
                                         <td>{{ $cargo->asambleista->sector->nombre }}</td>
                                         <td>{{ $cargo->cargo }}</td>
                                     </tr>
+                                    @php $i++ @endphp
                                 @endif
-                                @php $i++ @endphp
                             @endforeach
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             @endforeach
-
-            @php $i = 0 @endphp
         </div>
     </div>
 @endsection
