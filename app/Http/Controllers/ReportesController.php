@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\ReportesRequest;
+use Illuminate\Support\Facades\DB;
 
 class ReportesController extends Controller
 {
@@ -151,8 +152,22 @@ class ReportesController extends Controller
 
     }
 
-    
+  
+    public function buscar_planilla_dieta(ReportesRequest $request){
 
+       //dd($request->all());
+        $request->tipoDocumento
+        $request->nombre
+        $request->fecha1
+        $request->fecha2
+
+        $users = DB::table('users')->get();
+        foreach ($users as $user) {
+       $textrun3->addText($user->name);
+        }
+
+    }
+ 
       public function Reporte_planilla_dieta($tipo) 
     {
       

@@ -72,6 +72,15 @@ Route::post('crear_comision', 'ComisionController@crearComision')->name("crear_c
 
 
 
+
+
+
+Route::post('buscar_planilla_dieta', 'ReportesController@buscar_planilla_dieta')->name("buscar_planilla_dieta");
+
+
+
+
+
 /* Peticiones */
 Route::get('/RegistrarPeticion', function () {
     return view('General.RegistroPeticion');

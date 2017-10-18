@@ -17,24 +17,33 @@
             <h3 class="box-title">Reporte planilla de dietas</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="#">
+            <form id="buscarDocs" method="post" action="{{ url("buscar_planilla_dieta") }}">
+              {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Filtro</label>
+                            <label>Tipo</label>
                             
                              <select class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value="">--Seleccione una opcion --</option>
-                                <option value="User">Asambleista</option>
-                                <option value="Sesion">Sesion plenaria</option>
+                                <option value="0">Por Asambleista</option>
+                                <option value="1">Profesional Docente</option>
+                                <option value="2">Profesional no Docente</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label>Criterio de busqueda</label>
+                            <input type="text" class="form-control" placeholder="Criterio de busqueda" id="nombre"
+                                   name="nombre">                   
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha">Fecha inicial</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -42,7 +51,7 @@
                         <div class="form-group">
                             <label for="fecha">Fecha final</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -51,7 +60,7 @@
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                        <button  type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
                     </div>
                 </div>
             </form>
