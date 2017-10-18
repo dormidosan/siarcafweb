@@ -19,11 +19,6 @@ class Asambleista extends Model
         return $this->hasMany('App\Permiso');
     }
 	
-	public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-	
 	public function cargos()
     {
         return $this->hasMany('App\Cargo');
@@ -34,6 +29,13 @@ class Asambleista extends Model
         return $this->hasMany('App\Asistencia');
     }
 	
+    
+    //LLAVES FORANEAS
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function periodo()
     {
         return $this->belongsTo('App\Periodo');

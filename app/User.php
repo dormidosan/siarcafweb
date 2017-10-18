@@ -24,6 +24,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 	
+
+    public function asambleistas()
+    {
+        return $this->hasMany('App\Asambleista');
+    }
+
+    //LLAVES FORANEAS
 	public function persona()
     {
         return $this->belongsTo('App\Persona');
@@ -34,10 +41,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Rol');
     }
 	
-	public function asambleistas()
-    {
-        return $this->hasMany('App\Asambleista');
-    }
+	
 	
 	
 }

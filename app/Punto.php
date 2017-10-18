@@ -19,6 +19,7 @@ class Punto extends Model
         return $this->hasMany('App\Propuesta');
     }
 	
+    //LLAVES FORANEAS
 	public function agenda()
     {
         return $this->belongsTo('App\Agenda');

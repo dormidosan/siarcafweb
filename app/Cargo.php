@@ -9,7 +9,7 @@ class Cargo extends Model
     //
 	protected $table = 'cargos';
 
-
+    //LLAVES FORANEAS
 	public function comision()
     {
         return $this->belongsTo('App\Comision');

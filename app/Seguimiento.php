@@ -9,7 +9,7 @@ class Seguimiento extends Model
     //
 	protected $table = 'seguimientos';
 
-
+    //LLAVES FORANEAS
 	public function peticion()
     {
         return $this->belongsTo('App\Peticion');

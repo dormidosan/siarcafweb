@@ -108,6 +108,7 @@
                         </td>
                         <td>
                         {!! $documento->fecha_ingreso !!}
+                        {!! $documento->tipo_documento->tipo !!}
                         </td>
                         <td>
                             <a class="btn btn-info" href="<?= $disco.$documento->path; ?>" role="button">Ver</a>

@@ -15,6 +15,7 @@ class Reunion extends Model
         return $this->belongsToMany('App\Documento','documento_reunion')->withTimestamps();
     }
 	
+    //LLAVES FORANEAS
 	public function comision()
     {
         return $this->belongsTo('App\Comision');
