@@ -10,8 +10,8 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -87,7 +87,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
-            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
@@ -246,10 +245,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
-        'Doctrine\\Common\\Inflector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
-        ),
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
@@ -309,6 +304,13 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
             ),
         ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Inflector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -338,6 +340,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'CreateDocumentoPeticionTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130928_create_documento_peticion_table.php',
         'CreateDocumentoReunionTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130929_create_documento_reunion_table.php',
         'CreateDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130921_create_documentos_table.php',
+        'CreateFacultadesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130857_create_facultades_table.php',
         'CreateIntervencionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130941_create_intervenciones_table.php',
         'CreateModuloRolTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130919_create_modulo_rol_table.php',
         'CreateModulosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130904_create_modulos_table.php',
@@ -352,9 +355,11 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'CreatePuntosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130926_create_puntos_table.php',
         'CreateReunionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130923_create_reuniones_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130854_create_roles_table.php',
+        'CreateSectoresTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130910_create_sectores_table.php',
         'CreateSeguimientosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130913_create_seguimientos_table.php',
         'CreateTipoDocumentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130900_create_tipo_documentos_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130916_create_users_table.php',
+        'CreateVersionesTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130924_create_versiones_table.php',
         'DOMPDF' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf.cls.php',
         'DOMPDF_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_exception.cls.php',
         'DOMPDF_Image_Exception' => __DIR__ . '/..' . '/dompdf/dompdf/include/dompdf_image_exception.cls.php',
