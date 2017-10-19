@@ -51,6 +51,7 @@ class PeticionController extends Controller
 		$peticion->resuelto = 0;
 		
 		
+		
 
 		/*
 		if($request->hasFile('documento')){
