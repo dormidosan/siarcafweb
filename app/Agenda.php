@@ -21,9 +21,11 @@ class Agenda extends Model
         return $this->hasMany('App\Asistencia');
     }
 	
+
+    //LLAVE FORANEA
 	public function periodo()
     {
-        return $this->hasOne('App\Periodo');
+        return $this->belongsTo('App\Periodo');
     }
 
 

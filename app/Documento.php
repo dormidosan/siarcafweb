@@ -9,7 +9,7 @@ class Documento extends Model
     //
 	protected $table = 'documentos';
 	
-	protected $fillable = ['nombre_documento', 'tipo_documentos', 'fecha_ingreso', 'path'];
+	protected $fillable = ['nombre_documento', 'tipo_documento_id','periodo_id', 'fecha_ingreso', 'path'];
 
 	public function peticiones()
     {
@@ -20,7 +20,13 @@ class Documento extends Model
     {
         return $this->belongsToMany('App\Reunion','documento_reunion')->withTimestamps();
     }
+
+    public function versiones()
+    {
+        return $this->hasMany('App\Version');
+    }
 	
+    //LLAVES FORANEAS
 	public function tipo_documento()
     {
         return $this->belongsTo('App\TipoDocumento');
@@ -31,9 +37,6 @@ class Documento extends Model
         return $this->belongsTo('App\Periodo');
     }
 
-    public function versiones()
-    {
-        return $this->hasMany('App\Version');
-    }
+    
 
 }
