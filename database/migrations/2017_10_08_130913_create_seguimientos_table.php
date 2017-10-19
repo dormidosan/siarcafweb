@@ -17,7 +17,7 @@ class CreateSeguimientosTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('peticion_id');
             $table->unsignedInteger('comision_id');
-            $table->integer('estado_seguimiento_id');
+            $table->unsignedInteger('estado_seguimiento_id');
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->boolean('activo')->nullable();

@@ -15,7 +15,7 @@ class CreatePeticionesTable extends Migration
         Schema::create('peticiones', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('estado_peticion_id');
+            $table->unsignedInteger('estado_peticion_id');
             $table->string('codigo', 10)->nullable();
             $table->string('nombre', 45)->nullable();
             $table->string('descripcion', 45)->nullable();

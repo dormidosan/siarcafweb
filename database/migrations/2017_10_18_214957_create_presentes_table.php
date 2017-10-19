@@ -15,8 +15,8 @@ class CreatePresentesTable extends Migration
         Schema::create('presentes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('cargo_id');
-            $table->integer('reunion_id');
+            $table->unsignedInteger('cargo_id');
+            $table->unsignedInteger('reunion_id');
 			$table->timestamps();
 
             $table->index(["cargo_id"], 'fk_presentes_cargos1_idx');
