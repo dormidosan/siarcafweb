@@ -8,6 +8,14 @@ class Cargo extends Model
 {
     //
 	protected $table = 'cargos';
+	
+	
+	public function reuniones()
+    {
+        return $this->belongsToMany('App\Cargo','presentes')->withTimestamps();
+    }
+	
+	
 
     //LLAVES FORANEAS
 	public function comision()

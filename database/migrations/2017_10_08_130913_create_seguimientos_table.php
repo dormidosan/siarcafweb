@@ -16,7 +16,8 @@ class CreateSeguimientosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('peticion_id');
-            $table->unsignedInteger('comision_id')->nullable();
+            $table->unsignedInteger('comision_id');
+            $table->integer('estado_seguimiento_id');
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->boolean('activo')->nullable();
@@ -27,6 +28,8 @@ class CreateSeguimientosTable extends Migration
 
             $table->index(["peticion_id"], 'fk_seguimientos_peticiones1_idx');
 
+            $table->index(["estado_seguimiento_id"], 'fk_seguimientos_estado_seguimientos1_idx');
+
 
             $table->foreign('peticion_id', 'fk_seguimientos_peticiones1_idx')
                 ->references('id')->on('peticiones')
@@ -35,6 +38,11 @@ class CreateSeguimientosTable extends Migration
 
             $table->foreign('comision_id', 'fk_seguimientos_comisiones1_idx')
                 ->references('id')->on('comisiones')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('estado_seguimiento_id', 'fk_seguimientos_estado_seguimientos1_idx')
+                ->references('id')->on('estado_seguimientos')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             $table->timestamps();

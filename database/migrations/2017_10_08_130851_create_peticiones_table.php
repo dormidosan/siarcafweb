@@ -15,15 +15,24 @@ class CreatePeticionesTable extends Migration
         Schema::create('peticiones', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('estado_peticion_id');
             $table->string('codigo', 10)->nullable();
             $table->string('nombre', 45)->nullable();
             $table->string('descripcion', 45)->nullable();
             $table->string('peticionario', 45)->nullable();
-            $table->string('direccion', 50)->nullable();
-            $table->string('telefono', 10)->nullable();
             $table->dateTime('fecha')->nullable();
             $table->string('correo', 45)->nullable();
+            $table->string('telefono', 9)->nullable();
+            $table->string('direccion', 45)->nullable();
             $table->boolean('resuelto')->nullable();
+
+            $table->index(["estado_peticion_id"], 'fk_peticiones_estado_peticiones1_idx');
+
+
+            $table->foreign('estado_peticion_id', 'fk_peticiones_estado_peticiones1_idx')
+                ->references('id')->on('estado_peticiones')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             $table->timestamps();
         });
     }

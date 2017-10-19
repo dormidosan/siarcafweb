@@ -19,6 +19,10 @@ class Seguimiento extends Model
     {
         return $this->belongsTo('App\Comision');
     }
-
+	
+	public function estado_seguimiento()
+    {
+        return $this->belongsTo('App\EstadoSeguimiento');
+    }
 
 }

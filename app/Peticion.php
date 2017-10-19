@@ -29,5 +29,11 @@ class Peticion extends Model
         return $this->belongsToMany('App\Documento','documento_peticion')->withTimestamps();
     }
 
+	//LLAVES FORANEAS
+	
+	public function estado_peticion()
+    {
+        return $this->belongsTo('App\EstadoPeticion');
+    }
 
 }
