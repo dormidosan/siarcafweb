@@ -208,7 +208,9 @@ Route::get('/RegistrarUsuario', function () {
 
 
 /* Asambleistas */
-Route::get('/asambleistas_comision', "AsambleistaController@asambleistas_comision");
+Route::get('/listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
+Route::get('/listado_asambleistas_comision', "AsambleistaController@listado_asambleistas_comision");
+Route::get('/listado_asambleistas_junta', "AsambleistaController@listado_asambleistas_junta");
 
 
 /*post*/
