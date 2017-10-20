@@ -7,28 +7,20 @@
         </div>
         <div class="box-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                @foreach($comisiones as $comision)
+                @foreach($facultades as $facultad)
                     @php $i = 1 @endphp
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="comision{{$comision->id}}">
+                        <div class="panel-heading" role="tab" id="comision{{$facultad->id}}">
                             <h4 class="panel-title">
-                                <!-- used the next html line to display the element opened by default -->
-                            <!--
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$comision->id}}" aria-expanded="true" aria-controls="collapse{{$comision->id}}" class="text-capitalize">
-                                    {{ $comision->nombre }}
-                                    </a>
--->
                                 <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapse{{$comision->id}}" aria-expanded="false"
-                                   aria-controls="collapse{{$comision->id}}" class="text-capitalize">
-                                    {{ $comision->nombre }}
+                                   href="#collapse{{$facultad->id}}" aria-expanded="false"
+                                   aria-controls="collapse{{$facultad->id}}" class="text-capitalize">
+                                    {{ $facultad->nombre }}
                                 </a>
                             </h4>
                         </div>
-                        <!-- used the next html line to display the element opened by default -->
-                    <!-- <div id="collapse{{$comision->id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$comision->id}}"> -->
-                        <div id="collapse{{$comision->id}}" class="panel-collapse collapse " role="tabpanel"
-                             aria-labelledby="heading{{$comision->id}}">
+                        <div id="collapse{{$facultad->id}}" class="panel-collapse collapse " role="tabpanel"
+                             aria-labelledby="heading{{$facultad->id}}">
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table text-center">
@@ -42,9 +34,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if($comision->cargos()->count() > 0)
-                                            @foreach($cargos as $cargo)
-                                                @if($comision->id == $cargo->comision->id)
+                                        @if($facultad->asambleistas()->count() > 0)
+                                            @foreach($asambleistas as $asambleista)
+                                                @if($facultad->id == $asambleista->facultad->id)
                                                     <tr>
                                                         <td style="vertical-align: middle">{{ $i }}</td>
                                                         <td>
@@ -55,9 +47,13 @@
                                                                      alt="User Image">
                                                             </div>
                                                         </td>
-                                                        <td style="vertical-align: middle">{{ $cargo->asambleista->user->persona->primer_nombre . " " . $cargo->asambleista->user->persona->segundo_nombre . " " . $cargo->asambleista->user->persona->primer_apellido . " " . $cargo->asambleista->user->persona->segundo_apellido }}</td>
-                                                        <td style="vertical-align: middle">{{ $cargo->asambleista->sector->nombre }}</td>
-                                                        <td style="vertical-align: middle">{{ $cargo->cargo }}</td>
+                                                        <td style="vertical-align: middle">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</td>
+                                                        <td style="vertical-align: middle">{{ $asambleista->sector->nombre }}</td>
+                                                        @if($asambleista->propietario == 1)
+                                                            <td style="vertical-align: middle">Propetario</td>
+                                                        @else
+                                                            <td style="vertical-align: middle">Suplente</td>
+                                                        @endif
                                                     </tr>
                                                     @php $i++ @endphp
                                                 @endif

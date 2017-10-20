@@ -165,13 +165,13 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url("/asambleistas")}}"><i class="fa fa-dot-circle-o"></i>Listado de
+                            <li><a href="{{url("/listado_asambleistas_facultad")}}"><i class="fa fa-dot-circle-o"></i>Listado de
                                     asambleistas</a>
                             </li>
-                            <li><a href="{{url("/asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Listado de asambleistas por
+                            <li><a href="{{url("/listado_asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Asambleistas por
                                     comision</a></li>
-                            <li><a href="{{url("/asambleistasjunta")}}"><i class="fa fa-dot-circle-o"></i>Listado de
-                                    asambleistas de JD</a></li>
+                            <li><a href="{{url("/listado_asambleistas_junta")}}"><i class="fa fa-dot-circle-o"></i>
+                                    Asambleistas de JD</a></li>
                         </ul>
                     </li>
 
