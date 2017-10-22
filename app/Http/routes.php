@@ -119,7 +119,7 @@ Route::get('/Reporte_bitacora_correspondencia/{tipo}', 'ReportesController@Repor
 
 
 Route::get('/Reporte_planilla_dieta', function () {
-    return view('Reportes.Reporte_planilla_dieta');
+    return view('Reportes.Reporte_planilla_dieta',['resultados'=>NULL]);
 });
 
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');

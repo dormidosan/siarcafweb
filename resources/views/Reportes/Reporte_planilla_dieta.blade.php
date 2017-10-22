@@ -22,37 +22,55 @@
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Tipo</label>
+                            <label>Tipo </label>
                             
-                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                <option value="0">Por Asambleista</option>
-                                <option value="1">Profesional Docente</option>
-                                <option value="2">Profesional no Docente</option>
+                             <select required="true" class="form-control" id="tipoDocumento" name="tipoDocumento">
+                                <option value=""  >Seleccione una opcion</option>
+                                <option value="A" >Por Asambleista</option>
+                                <option value="D" >Consolidados Profesional Docente</option>
+                                <option value="ND">Consolidados Profesional no Docente</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Criterio de busqueda</label>
-                            <input type="text" class="form-control" placeholder="Criterio de busqueda" id="nombre"
+                            <label>Nombre</label>
+                            <input required="true" type="text" class="form-control" placeholder="Nombre" id="nombre"
                                    name="nombre">                   
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label for="fecha">Fecha inicial</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
+                            <label for="fecha1">Mes</label>
+
+                          <!-- <div class="input-group date fecha">
+                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>-->
+
+                            <select required="true" class="form-control" id="fecha1" name="fecha1">
+                                <option value="">Seleccione un mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+
                         </div>
                     </div>
+                    
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label for="fecha">Fecha final</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
+                            <label for="anio">Año</label>
+                            <input required="true" type="text" class="form-control" placeholder="Año" id="anio"
+                                   name="anio" onkeypress="return justNumbers(event);" maxlength="4" size="4">  
                         </div>
                     </div>
                    
@@ -74,13 +92,14 @@
  <div class="box box-solid box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Resultados de Busqueda</h3>
-        </div>
-        <div class="box-body">
+        </div        <div class="box-body">
+
+
                   <table class="table table-hover">
                    
                     <thead><tr>
                       
-                      <th>Nombre </th>
+                      <th>Nombre</th>
                       
                       <th>Fecha</th>
                       
@@ -88,38 +107,70 @@
                       <th>Descargar</th>
                     </tr></thead>
                     <tbody>
+
+
+@if(!($resultados==NULL))
+
+@php $i=0 @endphp
+
+
+@foreach($resultados as $result)
+@if($i==0)
                     <tr>                                     
                       <td>
-                        Detalle dieta individual
+                        @if($tipo=="A")
+                        {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
+                         @endif
+                         @if($tipo=="D")
+                         {{$i=1}}
+                        Consolidado de dietas sectro docente
+                             @endif
+                         @if($tipo=="ND")
+                         {{$i=1}}
+                         Consolidado de dietas sectro no docente
+                           @endif
                       </td>
-                      <td>fecha</td>
+                      <td>{{$result->mes}} {{$result->anio}} </td>
                     
-                      <td><a href="{{url("/Reporte_planilla_dieta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td>
+                        @if($tipo=="A")
+                        <a  href="{{url("/Reporte_planilla_dieta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                        @endif
+
+                        @if($tipo=="D")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                     
+                        @endif
+
+                        @if($tipo=="ND")
+                         <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                      
+                        @endif
+                      </td>
+                      
+                      <td>
+                        @if($tipo=="A")
+                        <a href="{{url("/Reporte_planilla_dieta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                        @endif 
+
+                        @if($tipo=="D")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                     
-                    </tr>
+                        @endif
+
+                        @if($tipo=="ND")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                    
-                   <tr>                                     
-                      <td>
-                        Detalle dieta Consolidado profesional no docente
+                        @endif
+
                       </td>
-                      <td>fecha</td>
-                    
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
-                     <tr>                                     
-                      <td>
-                        Detalle dieta Consolidado profesional docente
-                      </td>
-                      <td>fecha</td>
-                    
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
-                    </tr>
-                  </tbody></table>
+@endif
+@endforeach
+@endif
+                  </tbody>
+                </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
   
@@ -161,5 +212,14 @@ $('#fecha').datepicker({
                 format: 'LT',
             });
         });
+        
+        function justNumbers(e)
+        {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if ((keynum == 8) || (keynum == 46))
+        return true;
+         
+        return /\d/.test(String.fromCharCode(keynum));
+        }
     </script>
 @endsection
