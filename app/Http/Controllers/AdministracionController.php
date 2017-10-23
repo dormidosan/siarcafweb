@@ -60,7 +60,15 @@ class AdministracionController extends Controller
         $asambleista->facultad_id = $request->get("facultad");
         $asambleista->sector_id = $request->get("sector");
         $asambleista->propietario = $request->get("propietario");
-        $asambleista->inicio = Carbon::now();
+
+        $hoy = Carbon::now();
+        $inicio_periodo = Carbon::createFromFormat("Y-m-d",$periodo_activo->inicio);
+
+        if ($hoy > $inicio_periodo) {
+            $asambleista->inicio = $hoy;
+        } else {
+            $asambleista->inicio = $inicio_periodo;
+        }
         $asambleista->save();
 
         $request->session()->flash("success", "Usuario agregado con exito");
