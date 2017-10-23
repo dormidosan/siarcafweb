@@ -73,9 +73,13 @@ Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->na
 
 
 /* Peticiones */
+/*
 Route::get('/RegistrarPeticion', function () {
     return view('General.RegistroPeticion');
 });
+*/
+Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
+
 
 Route::get('/MonitorearPeticion', function () {
     return view('General.MonitoreoPeticion');

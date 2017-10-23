@@ -16,6 +16,10 @@ class VariablesTableSeeder extends Seeder {
 		));
 
 		\DB::table('tipo_documentos')->insert(array (
+			'tipo'  => 'atestado'
+		));
+
+		\DB::table('tipo_documentos')->insert(array (
 			'tipo'  => 'dictamen'
 		));
 
