@@ -287,7 +287,7 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li><a href="{{url("/GestionarUsuarios")}}"><i class="fa fa-dot-circle-o"></i>Administracion Usuarios</a></li>
-                                    <li><a href="{{url("/RegistrarUsuario")}}"><i class="fa fa-dot-circle-o"></i>Registar Usuarios</a></li>
+                                    <li><a href="{{url("/registrar_usuario")}}"><i class="fa fa-dot-circle-o"></i>Registar Usuarios</a></li>
                                     <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar Perfiles</a></li>
                                 </ul>
                             </li>

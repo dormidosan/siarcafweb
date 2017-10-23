@@ -60,7 +60,8 @@ class AsambleistaController extends Controller
             ->join("periodos","asambleistas.periodo_id","=","periodos.id")
             ->where("asambleistas.activo", "=", 1)
             ->where("comisiones.activa", "=", 1)
-            ->where("comisiones.nombre", "LIKE", "%junta directiva%")
+            //->where("comisiones.nombre", "LIKE", "%junta directiva%")
+            ->where("comisiones.nombre", "=", "junta directiva")
             ->where("periodos.activo", "=", 1)
             ->get();
 

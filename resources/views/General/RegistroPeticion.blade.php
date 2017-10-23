@@ -73,7 +73,6 @@
                 <div class="row">
                     <div class="col-lg-12">
 
-                      
                         <div class="form-group">
                             <label for="documento">Seleccione documentos</label>
                             <div class="file-loading">

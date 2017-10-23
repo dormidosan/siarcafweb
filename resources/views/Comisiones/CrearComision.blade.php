@@ -27,10 +27,11 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}" >
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
-                                   name="nombre">
+                                   name="nombre" value="{{old("nombre")}}">
+                            <span class="text-danger">{{ $errors->first('nombre') }}</span>
                         </div>
                     </div>
                 </div>
