@@ -16,7 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
 
-class UsuarioController extends Controller
+class AdministracionController extends Controller
 {
     //
     public function registrar_usuario()
@@ -27,7 +27,7 @@ class UsuarioController extends Controller
         return view("Administracion.RegistrarUsuarios", ["facultades" => $facultades, "sectores" => $sectores, "tipos_usuario" => $tipos_usuario]);
     }
 
-    public function guardar_usuario(Request $request)
+    public function guardar_usuario(UsuarioRequest $request)
     {
         //Se crea un objeto de tipo persona y se asocia lo que se recibe del form a su respectiva variable,
         //una vez ingresado la nueva persona, ya se tiene acceso a todos sus datos.
@@ -53,21 +53,14 @@ class UsuarioController extends Controller
         $usuario->save();
 
         $periodo_activo = Periodo::where("activo", "=", 1)->first();
+        //dd($periodo_activo);
         $asambleista = new Asambleista();
         $asambleista->user_id = $usuario->id;
         $asambleista->periodo_id = $periodo_activo->id;
         $asambleista->facultad_id = $request->get("facultad");
         $asambleista->sector_id = $request->get("sector");
         $asambleista->propietario = $request->get("propietario");
-
-        $hoy = Carbon::now();
-        $inicio_periodo = Carbon::createFromFormat("Y-m-d",$periodo_activo->inicio);
-
-        if ($hoy > $inicio_periodo) {
-            $asambleista->inicio = $hoy;
-        } else {
-            $asambleista->inicio = $inicio_periodo;
-        }
+        $asambleista->inicio = Carbon::now();
         $asambleista->save();
 
         $request->session()->flash("success", "Usuario agregado con exito");

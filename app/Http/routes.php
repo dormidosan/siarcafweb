@@ -202,8 +202,8 @@ Route::get('/GestionarPerfiles', function () {
     return view('Administracion.GestionarPerfiles');
 });
 
-Route::get('/registrar_usuario', "UsuarioController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
-Route::post('/guardar_usuario', "UsuarioController@guardar_usuario")->name("guardar_usuario");
+Route::get('/registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
+Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 
 
 /* Asambleistas */
