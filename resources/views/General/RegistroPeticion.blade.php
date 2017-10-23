@@ -6,7 +6,7 @@
 @endsection
 
 @section("content")
-    <div class="box box-solid box-default">
+    <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Registrar Peticion</h3>
         </div>
