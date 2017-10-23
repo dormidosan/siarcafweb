@@ -61,6 +61,7 @@ return array(
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'DietasTableSeeder' => $baseDir . '/database/seeds/DietasTableSeeder.php',
     'Encoding_Map' => $vendorDir . '/phenx/php-font-lib/classes/Encoding_Map.php',
+    'EstadosTableSeeder' => $baseDir . '/database/seeds/EstadosTableSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
