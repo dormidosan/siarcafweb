@@ -3,7 +3,7 @@
 @section("content")
     <div class="box box-danger ">
         <div class="box-header with-border">
-            <h3 class="box-title">Listado de Asambleistas por Comision</h3>
+            <h3 class="box-title">Listado de Asambleistas por Facultad</h3>
         </div>
         <div class="box-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
