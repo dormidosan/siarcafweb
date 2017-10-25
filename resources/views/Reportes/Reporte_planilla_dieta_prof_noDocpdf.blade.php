@@ -27,9 +27,10 @@
   font-family: "ARIAL", serif;
   font-size: 12pt;
   font: bold;
-  top: 5%;
+  top: 2%;
   text-align: center;
   aling-items: center;
+  text-transform: uppercase;
 }
 
 #mp {
@@ -51,7 +52,7 @@
   position: fixed;
   font-family: "ARIAL", serif;
   font-size: 10pt;
-  top: 20%;
+  top: 13%;
 }
 
 #cp1 {
@@ -116,16 +117,23 @@
                                                
  <div id="p" style="position:fixed;text-align: center;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES DE MES :V<br/>
+    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}}<br/>
     SECTOR PROFESIONAL NO DOCENTE
     <hr  /> 
-    PERIODO 2015-2017 
+    PERIODO {{$anio}}
   </div>   
                    
 </head>
   <body>
- 
-<div id="cp">
+
+ <!--@if(!($resultados==NULL))
+  @foreach($resultados as $result)
+  {{$result->nom_sect}} {{$result->nom_fact}} 
+   @endforeach
+  @endif
+-->
+<div id="cp" > <!--style="page-break-before: always;"-->
+
                 <table  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
                    
                   <thead>  <!-- ENCABEZADO TABLA-->
@@ -133,6 +141,7 @@
                     <th>No. </th>                     
                     <th>SECTOR</th>                     
                     <th>NOMBRES</th>
+                    <th>FACULTAD</th>
                     <th>1a. SESION</th>
                     <th>2a. SESION</th>
                     <th>3a. SESION</th>
@@ -142,407 +151,37 @@
                   </thead>
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                    <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
+                    @php $i=1 @endphp
+                     @foreach($resultados as $result)
+
                        <tr>                                     
                       <td>
-                       
+                       {{$i}}
                       </td>
                       <td>
                          PROF. NO DOCENTE
                       </td>
-                      <td></td>
+                      <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>
                     
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
+                      <td>{{$result->nom_fact}} </td>
+                      <td> - </td>
+                      <td> - </td>
+                      <td> - </td>
+                      <td> - </td>
+                      <td>$ -  </td>                      
                     </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> $ - </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td>FAC. CIENCIAS Y HUMANIDADES</td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> $ - </td>
-                      
-                    </tr> 
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                         PROF. NO DOCENTE
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td>$ -  </td>
-                      
-                    </tr> 
-                   
-                       <tr>                                     
-                      <td>
-                        
-                      </td>
-                      <td>
-                        
-                      </td>
-                      <td></td>
-                    
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      
-                    </tr> 
+                  
+                 @if($i>25)
+                 <div style="page-break-before: always;">
+
+                  
+                  
+
+                 </div> 
+                 @endif
+                       @php $i=$i+1 @endphp
+   @endforeach           
+                
 
                     <tr>                                     
                       <td>
@@ -564,7 +203,8 @@
                    </tbody>
 
                 </table>
+              
  </div>
-
+   
   </body>
 </html>

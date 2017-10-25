@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportesRequest;
 use Illuminate\Support\Facades\DB;
+use PHPJasperXML;
+use Response;
 
 class ReportesController extends Controller
 {
@@ -192,7 +194,7 @@ class ReportesController extends Controller
         ->where('dietas.anio','=', $request->anio)
         ->where('personas.primer_nombre','like', '%'.$request->nombre.'%')
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre')->get();
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->get();
 
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
@@ -257,89 +259,183 @@ class ReportesController extends Controller
       
 
 
+        $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
+        $verdescar=$parametros[0];
+        $id=$parametros[1];
+        $mes=$parametros[2];
+        $anio=$parametros[3];
 
 
+      
 
-        
+        $busqueda = DB::table('asambleistas')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->where('asambleistas.id','=', $id)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','sectores.nombre','personas.dui','personas.nit','personas.afp','personas.cuenta')->first();
+      
+       
 
-     
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_planilla_dieta_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
+        $nombre1=$busqueda->primer_nombre;
+        $nombre2=$busqueda->segundo_nombre;
+        $apellido1=$busqueda->primer_apellido;
+        $apellido2=$busqueda->segundo_apellido;
+
+        $sector=$busqueda->nombre;
+        $dui=$busqueda->dui;
+        $nit=$busqueda->nit;
+        $afp=$busqueda->afp;
+        $cuenta=$busqueda->cuenta;
+
+        $nombrecompleto=$nombre1.' '.$nombre2.' '.$apellido1.' '.$apellido2;
+
+      //  dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
+
+        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio'))->render();
+        $pdf =\App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-         if($tipo==1)
+         if($verdescar==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($verdescar==2)
+        {
+            return $pdf->download('reporte.pdf'); 
+        }
+        //return $pdf->stream('reporte.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('reporte.pdf'); // descargar el archivo pdf
+    } 
+
+public function Reporte_planilla_dieta_prof_Doc_pdf($tipo) 
+    {
+      
+      
+        $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
+        $verdescar=$parametros[0];
+        $mes=$parametros[1];
+        $anio=$parametros[2];
+
+
+      $resultados = DB::table('dietas')
+        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('dietas.mes','=', $mes)
+        ->where('dietas.anio','=', $anio)
+        ->where('sectores.id','=', 2)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre',
+                 'facultades.nombre')->get();
+
+
+        
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('resultados'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view);
+
+        if($verdescar==1)
+        {
+            return $pdf->stream('reporte');
+        }
+        if($verdescar==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
 
+        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
+        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
-        //return $pdf->stream('reporte.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('reporte.pdf'); // descargar el archivo pdf
+    }
 
-
-    } 
 
      public function Reporte_planilla_dieta_prof_noDocpdf($tipo) 
     {
       
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_noDocpdf', compact('data', 'date', 'invoice'))->render();
+        
+        $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
+        $verdescar=$parametros[0];
+        $mes=$parametros[1];
+        $anio=$parametros[2];
+
+
+
+        $server="localhost";
+        $db="siarcaf";
+        $user="root";
+        $pass="";
+        $version="0.8b";
+        $pgport=5432;
+        $pchartfolder="./class/pchart2";
+ 
+ 
+//display errors should be off in the php.ini file
+ini_set('display_errors', 0);
+ 
+//setting the path to the created jrxml file
+$xml =  simplexml_load_file("C:/xampp/htdocs/siarcaf/resources/views/Reportes/Reporte_planilla_dieta_prof_noDocpdf.jrxml");
+ 
+$PHPJasperXML = new PHPJasperXML();
+//$PHPJasperXML->debugsql=true;
+//$PHPJasperXML->arrayParameter=array("parameter1"=>1);
+$PHPJasperXML->xml_dismantle($xml);
+ 
+$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db);
+   
+
+
+if($verdescar==1)  //page output method I:standard output  D:Download file
+        {
+            $PHPJasperXML->outpage("I");
+        }
+        if($verdescar==2)
+        {
+            $PHPJasperXML->outpage("D");
+        }
+ 
+
+/*
+       $resultados = DB::table('dietas')
+        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('dietas.mes','=', $mes)
+        ->where('dietas.anio','=', $anio)
+        ->where('sectores.id','=', 3)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
+                 'facultades.nombre as nom_fact')->orderBy('nom_fact', 'desc')->get();
+        
+       
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_noDocpdf', compact('resultados','mes','anio'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        //$pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-        if($tipo==1)
+        if($verdescar==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($verdescar==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
+        */
 
     }
 
 
- public function Reporte_planilla_dieta_prof_Doc_pdf($tipo) 
-    {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
 
-        if($tipo==1)
-        {
-            return $pdf->stream('reporte');
-        }
-        if($tipo==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
-    }
+ 
 
 
       public function Reporte_consolidados_renta($tipo) 

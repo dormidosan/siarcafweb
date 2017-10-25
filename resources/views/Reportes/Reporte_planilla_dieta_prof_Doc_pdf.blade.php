@@ -125,6 +125,11 @@
   <body>
  
 <div id="cp">
+  @if(!($resultados==NULL))
+  @foreach($resultados as $result)
+  {{$result->primer_nombre}}
+   @endforeach
+  @endif
                 <table  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
                    
                   <thead>  <!-- ENCABEZADO TABLA-->

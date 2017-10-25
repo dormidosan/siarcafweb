@@ -134,32 +134,34 @@
                     
                       <td>
                         @if($tipo=="A")
-                        <a  href="{{url("/Reporte_planilla_dieta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                        <a  href="{{url("/Reporte_planilla_dieta/1 $result->asambleista_id $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+
+                      
                         @endif
 
                         @if($tipo=="D")
-                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1 $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a>
                      
                         @endif
 
                         @if($tipo=="ND")
-                         <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                         <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/1 $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a>
                       
                         @endif
                       </td>
                       
                       <td>
                         @if($tipo=="A")
-                        <a href="{{url("/Reporte_planilla_dieta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                        <a href="{{url("/Reporte_planilla_dieta/2 $result->asambleista_id $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                         @endif 
 
                         @if($tipo=="D")
-                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2 $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                     
                         @endif
 
                         @if($tipo=="ND")
-                        <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                        <a href="{{url("/Reporte_planilla_dieta_prof_noDocpdf/2 $result->mes $result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                    
                         @endif
 
