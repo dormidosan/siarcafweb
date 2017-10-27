@@ -82,9 +82,10 @@
                 <thead>
                 <tr>
                     <th>Nombre Documento</th>
+                    <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
-                    <th>Opcion</th>
-                    <th>Opcion</th>
+                    <th>Visualizar</th>
+                    <th>Descargar</th>
                 </tr>
                 </thead>
 
@@ -98,7 +99,7 @@
                     <td>Opcion</td>
                 </tr>
 -->
-                
+              
             @forelse($documentos as $documento)
                 <tr>
                         <td>
@@ -107,8 +108,10 @@
                             </center>
                         </td>
                         <td>
-                        {!! $documento->fecha_ingreso !!}
                         {!! $documento->tipo_documento->tipo !!}
+                        </td>
+                        <td>
+                        {!! $documento->fecha_ingreso !!}
                         </td>
                         <td>
                             <a class="btn btn-info" href="<?= $disco.$documento->path; ?>" role="button">Ver</a>

@@ -48,6 +48,11 @@ class EstadosTableSeeder extends Seeder
 		
 
 
+		\DB::table('estado_peticiones')->insert(array (
+		'estado'  => 'Recibida',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
 
 
         \DB::table('estado_peticiones')->insert(array (
