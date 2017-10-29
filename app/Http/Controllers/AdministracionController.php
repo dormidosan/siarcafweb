@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
+use App\Http\Requests\PeriodoRequest;
+use Illuminate\Routing\Redirector;
 
 class AdministracionController extends Controller
 {
@@ -73,7 +75,32 @@ class AdministracionController extends Controller
 
         $request->session()->flash("success", "Usuario agregado con exito");
         return redirect()->route("mostrar_formulario_registrar_usuario");
+    }
 
+    /*
+     * Funcion que esta asociada a un metodo GET, que muestra todos los periodos AGU
+     * hasta la fecha
+     */
+    public function mostrar_periodos_agu(){
+        $periodos = Periodo::orderBy("id","desc")->get();
+        return view("Administracion.PeriodosAGU",["periodos"=>$periodos]);
+    }
+
+    public function guardar_periodo(PeriodoRequest $request){
+
+        //retrieves the first record that match the condition
+        $periodo_activo = Periodo::where("activo",1)->first();
+
+        if(!empty($periodo_activo)){
+            $request->session()->flash("error", "Ya existe un periodo activo");
+            return redirect()->back();
+        }else{
+            $periodo = new Periodo();
+            $periodo->nombre_periodo = $request->get("nombre_periodo");
+            $periodo->inicio = Carbon::parse(date_format($request->get("inicio"),'Y-m-d'));
+            $request->session()->flash("success", "Periodo creado con exito");
+            return redirect()->route("periodos_agu");
+        }
 
     }
 }

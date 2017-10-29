@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section("content")
@@ -13,31 +14,32 @@
             <h3 class="box-title">Definir Periodo AGU</h3>
         </div>
         <div class="box-body">
-            <form id="periodo_agu" name="periodo_agu" method="post" action="">
+            <form id="periodo_agu" name="periodo_agu" method="post" action="{{ url("guardar_periodo") }}"
+                  enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('nombre_periodo') ? 'has-error' : '' }}">
                             <label for="nombre_periodo">Periodo</label>
-                            <input type="text" class="form-control" id="nombre_periodo" placeholder="Ingrese un nombre">
+                            <input type="text" class="form-control" id="nombre_periodo" name="nombre_periodo" placeholder="Ingrese un nombre">
+                            <span class="text-danger">{{ $errors->first('nombre_periodo') }}</span>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('inicio') ? 'has-error' : '' }}">
                             <label for="inicio">Fecha</label>
                             <div class="input-group date fecha">
-                                <input id="inicio" type="text" class="form-control" placeholder="dd/mm/yyyy"><span
+                                <input id="inicio" name="inicio" type="text" class="form-control" placeholder="dd/mm/yyyy"><span
                                         class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
+                            <span class="text-danger">{{ $errors->first('inicio') }}</span>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="excel">Subir Excel</label>
-                            <div>
-                                <input id="excel" name="excel" type="file" placeholder="Subir archivo"
-                                       accept=".xls,.xlsx">
-                            </div>
+                            <input id="excel" name="excel" type="file" placeholder="Subir archivo"
+                                   accept=".xls,.xlsx">
                         </div>
                     </div>
                 </div>
@@ -53,7 +55,6 @@
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Listado Periodos AGU</h3>
-
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -70,31 +71,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>2015-2017</td>
-                        <td><button id="descargar" name="descargar" class="btn  btn-xs btn-info">Descargar</button></td>
-                        <td><button name="finalizar" name="finalizar" class="btn btn-xs btn-danger">Finalizar</button></td>
-                    </tr>
-                    <tr>
-                        <td>2015-2017</td>
-                        <td><button id="descargar" name="descargar" class="btn  btn-xs btn-info">Descargar</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2015-2017</td>
-                        <td><button id="descargar" name="descargar" class="btn  btn-xs btn-info">Descargar</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2015-2017</td>
-                        <td><button id="descargar" name="descargar" class="btn  btn-xs btn-info">Descargar</button></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2015-2017</td>
-                        <td><button id="descargar" name="descargar" class="btn  btn-xs btn-info">Descargar</button></td>
-                        <td></td>
-                    </tr>
+                    @foreach($periodos as $periodo)
+                        <tr>
+                            <td>{{ $periodo->nombre_periodo }}</td>
+                            <td><a href="" class="btn btn-xs btn-info">Descargar</a></td>
+                            @if($periodo->activo)
+                                <td>
+                                    <button class="btn btn-xs btn-danger">Finalizar</button>
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -111,6 +98,8 @@
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 
@@ -132,14 +121,14 @@
                 theme: "explorer",
                 //uploadUrl: "/file-upload-batch/2",
                 language: "es",
-                minFileCount: 1,
+                //minFileCount: 1,
                 maxFileCount: 1,
                 allowedFileExtensions: ['xls', 'xlsx'],
                 showUpload: false,
-                showPreview: false,
                 showCaption: false,
+                showRemove: false,
                 fileActionSettings: {
-                    showRemove: true,
+                    showRemove: false,
                     showUpload: false,
                     showZoom: true,
                     showDrag: false
@@ -149,4 +138,17 @@
 
         });
     </script>
+@endsection
+
+
+@section("lobibox")
+    @if(Session::has('error'))
+        <script>
+            notificacion("Error", "{{ Session::get('error') }}", "error");
+        </script>
+    @elseif(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
 @endsection
