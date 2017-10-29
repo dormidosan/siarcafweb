@@ -208,10 +208,10 @@
 @endsection
 
 @section("js")
-    <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 @endsection

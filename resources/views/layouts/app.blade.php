@@ -291,7 +291,7 @@
                                     <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar Perfiles</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ url("/PeriodoAGU") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+                            <li><a href="{{ url("/periodos_agu") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
 
                         </ul>
                     </li>

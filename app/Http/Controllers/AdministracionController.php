@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asambleista;
+use App\Clases\Mensaje;
 use App\Facultad;
 use App\Periodo;
 use App\Persona;
@@ -10,11 +11,13 @@ use App\Rol;
 use App\Sector;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
+use App\Http\Requests\PeriodoRequest;
 
 class AdministracionController extends Controller
 {
@@ -62,7 +65,7 @@ class AdministracionController extends Controller
         $asambleista->propietario = $request->get("propietario");
 
         $hoy = Carbon::now();
-        $inicio_periodo = Carbon::createFromFormat("Y-m-d",$periodo_activo->inicio);
+        $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
 
         if ($hoy > $inicio_periodo) {
             $asambleista->inicio = $hoy;
@@ -73,7 +76,54 @@ class AdministracionController extends Controller
 
         $request->session()->flash("success", "Usuario agregado con exito");
         return redirect()->route("mostrar_formulario_registrar_usuario");
+    }
 
+    /*
+     * Funcion que esta asociada a un metodo GET, que muestra todos los periodos AGU
+     * hasta la fecha
+     */
+    public function mostrar_periodos_agu()
+    {
+        $periodos = Periodo::orderBy("id", "desc")->get();
+        return view("Administracion.PeriodosAGU", ["periodos" => $periodos]);
+    }
+
+    public function guardar_periodo(PeriodoRequest $request)
+    {
+
+        $periodo_activo = Periodo::where("activo", 1)->first();
+
+        if (!empty($periodo_activo)) {
+            $request->session()->flash("error", "Ya existe un periodo activo");
+            return redirect()->back();
+        } else {
+            $periodo = new Periodo();
+            $periodo->nombre_periodo = $request->get("nombre_periodo");
+            $periodo->inicio = Carbon::createFromFormat('d-m-Y', $request->get("inicio"));
+            $periodo->fin = Carbon::createFromFormat('d-m-Y', $request->get("inicio"))->addYear(2);
+            $periodo->activo = 1;
+            $periodo->save();
+            $request->session()->flash("success", "Periodo creado con exito");
+            return redirect()->route("periodos_agu");
+        }
+
+    }
+
+
+    public function finalizar_periodo(Request $request)
+    {
+
+        if ($request->ajax()) {
+            //se obtiene la comision que coincida con el id enviado
+            $periodo = Periodo::find($request->get("periodo_id"));
+            $periodo->activo = 0;
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito", "Periodo: " . $periodo->nombre_periodo . " finalizado", "success"))->toArray();
+            $periodo->save();
+
+            //se genera la respuesta json
+            return new JsonResponse($respuesta);
+        }
 
     }
 }

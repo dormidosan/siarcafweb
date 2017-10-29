@@ -194,9 +194,6 @@ Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
 
-Route::get('/PeriodoAGU', function () {
-    return view('Administracion.PeriodAGU');
-});
 
 Route::get('/GestionarUsuarios', function () {
     return view('Administracion.GestionarUsuario');
@@ -208,6 +205,9 @@ Route::get('/GestionarPerfiles', function () {
 
 Route::get('/registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
 Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
+Route::get('/periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
+Route::post('/guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
+Route::post('/finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
 
 
 /* Asambleistas */
@@ -218,9 +218,6 @@ Route::get('/listado_asambleistas_junta', "AsambleistaController@listado_asamble
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
-
-
-
 Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
 
 
