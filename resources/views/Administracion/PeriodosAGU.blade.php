@@ -21,7 +21,8 @@
                     <div class="col-lg-4">
                         <div class="form-group {{ $errors->has('nombre_periodo') ? 'has-error' : '' }}">
                             <label for="nombre_periodo">Periodo</label>
-                            <input type="text" class="form-control" id="nombre_periodo" name="nombre_periodo" placeholder="Ingrese un nombre">
+                            <input type="text" class="form-control" id="nombre_periodo" name="nombre_periodo"
+                                   placeholder="Ingrese un nombre">
                             <span class="text-danger">{{ $errors->first('nombre_periodo') }}</span>
                         </div>
                     </div>
@@ -29,7 +30,8 @@
                         <div class="form-group {{ $errors->has('inicio') ? 'has-error' : '' }}">
                             <label for="inicio">Fecha</label>
                             <div class="input-group date fecha">
-                                <input id="inicio" name="inicio" type="text" class="form-control" placeholder="dd/mm/yyyy"><span
+                                <input id="inicio" name="inicio" type="text" class="form-control"
+                                       placeholder="dd-mm-yyyy"><span
                                         class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                             <span class="text-danger">{{ $errors->first('inicio') }}</span>
@@ -65,6 +67,7 @@
                 <table class="text-center table">
                     <thead>
                     <tr>
+                        <th>Nombre</th>
                         <th>Periodo</th>
                         <th>Asambleistas</th>
                         <th>Acciones</th>
@@ -74,10 +77,13 @@
                     @foreach($periodos as $periodo)
                         <tr>
                             <td>{{ $periodo->nombre_periodo }}</td>
+                            <td>{{ substr($periodo->inicio,0,4) ." - ". substr($periodo->fin,0,4)}}</td>
                             <td><a href="" class="btn btn-xs btn-info">Descargar</a></td>
                             @if($periodo->activo)
                                 <td>
-                                    <button class="btn btn-xs btn-danger">Finalizar</button>
+                                    <button type="button" class="btn btn-xs btn-danger"
+                                            onclick="finalizar_periodo({{ $periodo->id }})">Finalizar
+                                    </button>
                                 </td>
                             @endif
                         </tr>
@@ -107,7 +113,7 @@
     <script type="text/javascript">
         $(function () {
             $('.input-group.date.fecha').datepicker({
-                format: "dd/mm/yyyy",
+                format: "d-m-yyyy",
                 clearBtn: true,
                 language: "es",
                 autoclose: true,
@@ -137,6 +143,26 @@
             });
 
         });
+
+        function finalizar_periodo(periodo_id) {
+            $.ajax({
+                //se envia un token, como medida de seguridad ante posibles ataques
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route("finalizar_periodo") }}",
+                data: {"periodo_id": periodo_id},
+                success: function (response) {
+                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                    setTimeout(function () {
+                        window.location.href = "{{ route("periodos_agu") }}"
+                    }, 900);
+
+                }
+            });
+
+        }
     </script>
 @endsection
 
