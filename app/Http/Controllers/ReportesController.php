@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportesRequest;
 use Illuminate\Support\Facades\DB;
 use PHPJasperXML;
+
 use Response;
 
 class ReportesController extends Controller
@@ -32,6 +33,7 @@ class ReportesController extends Controller
         if($tipo==1)
         {
             return $pdf->stream('reporte');
+
         }
         if($tipo==2)
         {
@@ -358,45 +360,44 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
      public function Reporte_planilla_dieta_prof_noDocpdf($tipo) 
     {
-      
-        
         $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
         $verdescar=$parametros[0];
         $mes=$parametros[1];
         $anio=$parametros[2];
-
-
-
         $server="localhost";
         $db="siarcaf";
         $user="root";
         $pass="";
         $version="0.8b";
         $pgport=5432;
-        $pchartfolder="./class/pchart2";
- 
- 
+        $pchartfolder="./class/pchart2"; 
 //display errors should be off in the php.ini file
-ini_set('display_errors', 0);
- 
+//ini_set('display_errors', 0);
 //setting the path to the created jrxml file
 $xml =  simplexml_load_file("C:/xampp/htdocs/siarcaf/resources/views/Reportes/Reporte_planilla_dieta_prof_noDocpdf.jrxml");
- 
 $PHPJasperXML = new PHPJasperXML();
 //$PHPJasperXML->debugsql=true;
-//$PHPJasperXML->arrayParameter=array("parameter1"=>1);
+//dd($mes12);
+
+$PHPJasperXML->arrayParameter=array("mes1"=>"'$mes'");
+
+
+//dd($sql);
+//$PHPJasperXML->sql = $sql;
 $PHPJasperXML->xml_dismantle($xml);
- 
-$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db);
-   
-
-
+$dbdriver="mysql";
+$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db,$dbdriver);
+//ob_end_clean();
+//dd($PHPJasperXML);
 if($verdescar==1)  //page output method I:standard output  D:Download file
         {
+           
             $PHPJasperXML->outpage("I");
+            //return Response::make($PHPJasperXML->outpage("I"));
         }
         if($verdescar==2)
         {
+            
             $PHPJasperXML->outpage("D");
         }
  

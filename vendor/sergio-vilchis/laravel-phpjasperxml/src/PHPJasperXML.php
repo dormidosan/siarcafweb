@@ -374,7 +374,7 @@ class PHPJasperXML {
     }
 
   public function default_handler($xml_path) {
-        foreach($xml_path as $k=>$out) {
+           foreach($xml_path as $k=>$out) {
 
             switch($k) {
                 case "staticText":
@@ -446,8 +446,11 @@ class PHPJasperXML {
                 default:
 
                     break;
+
+
             }
         };
+
     }
 
 
@@ -652,21 +655,28 @@ class PHPJasperXML {
 
         //$imagepath= substr($data->imageExpression, 1, -1);
         //$imagetype= substr($imagepath,-3);
+        $imagepath="C:/xampp/htdocs/siarcaf/public/images/Logo_UES.jpg";
+        //echo($imagepath);
 $data->hyperlinkReferenceExpression=$this->analyse_expression($data->hyperlinkReferenceExpression);
 $data->hyperlinkReferenceExpression=trim(str_replace(array(" ",'"'),"",$data->hyperlinkReferenceExpression));
+
 
         switch($data[scaleImage]) {
             case "FillFrame":
                 $this->pointer[]=array("type"=>"Image","path"=>$imagepath,"x"=>$data->reportElement["x"]+0,"y"=>$data->reportElement["y"]+0,"width"=>$data->reportElement["width"]+0,
                         "height"=>$data->reportElement["height"]+0,"imgtype"=>$imagetype,"link"=>$data->hyperlinkReferenceExpression,
                         "hidden_type"=>"image","linktarget"=>$data["hyperlinkTarget"]."");
+               // dd($this->pointer);
                 break;
             default:
+            
                 $this->pointer[]=array("type"=>"Image","path"=>$imagepath,"x"=>$data->reportElement["x"]+0,"y"=>$data->reportElement["y"]+0,"width"=>$data->reportElement["width"]+0,
                         "height"=>$data->reportElement["height"]+0,"imgtype"=>$imagetype,"link"=>$data->hyperlinkReferenceExpression,
                         "hidden_type"=>"image","linktarget"=>$data["hyperlinkTarget"]."");
+               // dd($this->pointer);
                 break;
         }
+        //
     }
 
     public function element_componentElement($data) {

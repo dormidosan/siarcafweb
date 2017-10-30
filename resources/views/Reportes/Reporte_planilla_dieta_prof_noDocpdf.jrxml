@@ -3,8 +3,11 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[select * from dietas]]>
+	<parameter name="mes1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from dietas d where d.mes = $P{mes1} order by d.mes desc;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -34,23 +37,34 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="34" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="130" splitType="Stretch">
+			<image scaleImage="RealHeight" isUsingCache="false" isLazy="true" onErrorType="Icon">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="241" y="10" width="95" height="107" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="b14034b4-0e72-4723-ba66-925d0ab2bf82"/>
+				<imageExpression><![CDATA["C:\\xampp\\htdocs\\siarcaf\\public\\images\\Logo_UES.jpg"]]></imageExpression>
+			</image>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="71" height="20" uuid="1a785fd2-90bf-48ba-92c5-f2f51422261a"/>
 				<text><![CDATA[id]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="0" width="71" height="20" uuid="b5d5ec07-c46e-49ea-819d-5346020282fa"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<text><![CDATA[asambleista_id]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="142" y="0" width="71" height="20" uuid="79580165-f02f-4c15-9c66-9454cdbf0963"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<text><![CDATA[mes]]></text>
 			</staticText>
 			<staticText>
@@ -98,7 +112,7 @@
 				<textFieldExpression><![CDATA[$F{junta_directiva}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="355" y="0" width="71" height="20" uuid="0d66892b-f4e2-43f0-b80e-69fd4e8f7c58"/>
+				<reportElement x="355" y="0" width="71" height="20" forecolor="#FF3333" uuid="0d66892b-f4e2-43f0-b80e-69fd4e8f7c58"/>
 				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
 			</textField>
 			<textField>
