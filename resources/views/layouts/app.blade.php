@@ -265,7 +265,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Trabajo de JD</a></li>
+                            <li><a href="{{ url('trabajo_junta_directiva') }}"><i class="fa fa-dot-circle-o"></i>Trabajo de JD</a></li>
                             </li>
                         </ul>
                     </li>

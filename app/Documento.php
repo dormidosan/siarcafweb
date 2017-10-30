@@ -25,6 +25,11 @@ class Documento extends Model
     {
         return $this->hasMany('App\Version');
     }
+
+    public function seguimiento()
+    {
+        return $this->hasOne('App\Seguimiento');
+    }
 	
     //LLAVES FORANEAS
 	public function tipo_documento()
