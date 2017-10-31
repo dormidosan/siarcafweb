@@ -131,7 +131,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/comisiones") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
                             </li>
-                            <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
+                            <li><a href="{{ url("/administrar_comisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
                             </li>
                         </ul>

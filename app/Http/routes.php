@@ -32,13 +32,9 @@ Route::get('/BusquedaDocumentos', function () {
 
 Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 
-Route::get('/AdministrarComisiones', function () {
-    return view('Comisiones.AdministrarComision');
-});
+Route::get('/administrar_comisiones','ComisionController@administrar_comisiones')->name("administrar_comisiones");
 
-Route::get('/AdministrarIntegrantes', function () {
-    return view('Comisiones.AdministrarIntegrantes');
-});
+Route::get('/administrar_integrantes_comision/{id}', 'ComisionController@administrar_integrantes_comision')->name("administrar_integrantes_comision");
 
 Route::get('/HistorialBitacoras', function () {
     return view('Comisiones.HistorialBitacoras');
@@ -104,8 +100,6 @@ Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Re
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
 
 
-
-
 Route::get('/Reporte_bitacora_correspondencia', function () {
     return view('Reportes.Reporte_bitacora_correspondencia');
 });
@@ -145,7 +139,6 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
 
 
-
 Route::get('/Plantilla_Actas', function () {
     return view('Plantillas.Plantilla_actas');
 });
@@ -165,7 +158,6 @@ Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Conv
 Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');
 });
-
 
 
 /* Routes para Agenda */
@@ -242,7 +234,6 @@ Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' =
 Route::get('lista_asignacion', array('as' => 'lista_asignacion', 'uses' => 'JuntaDirectivaController@lista_asignacion'));
 
 Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'JuntaDirectivaController@enlazar_comision'));
-
 
 
 /*post*/
