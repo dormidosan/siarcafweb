@@ -4,7 +4,7 @@
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
 @endsection
 
 @section("content")
