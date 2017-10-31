@@ -99,9 +99,6 @@ Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Re
 
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
 
-
-
-
 Route::get('/Reporte_bitacora_correspondencia', function () {
     return view('Reportes.Reporte_bitacora_correspondencia');
 });
@@ -173,8 +170,8 @@ Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
 
-Route::get('/IniciarSesionPlenaria', function () {
-    return view('Agenda.IniciarSesionPlenaria');
+Route::get('/ReestructurarAgenda', function () {
+    return view('Agenda.ReestructurarAgenda');
 });
 
 Route::get('/HistorialAgendas', function () {
@@ -209,7 +206,6 @@ Route::get('/RegistrarUsuario', function () {
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
-
 
 
 Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
