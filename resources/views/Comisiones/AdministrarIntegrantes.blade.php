@@ -3,7 +3,8 @@
 @section("styles")
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
 @endsection
 
@@ -125,7 +126,8 @@
 
             $('#nuevo').select2({
                 placeholder: 'Seleccione un asambleista',
-                language: "es"
+                language: "es",
+                width: '100%'
             });
         });
     </script>
