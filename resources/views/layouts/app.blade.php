@@ -131,7 +131,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/comisiones") }}"><i class="fa fa-dot-circle-o"></i> Crear Comision</a>
                             </li>
-                            <li><a href="{{ url("/AdministrarComisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
+                            <li><a href="{{ url("/administrar_comisiones") }}"><i class="fa fa-dot-circle-o"></i>Administrar
                                     Comision</a>
                             </li>
                         </ul>
@@ -265,7 +265,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/home") }}"><i class="fa fa-dot-circle-o"></i>Trabajo de JD</a></li>
+                            <li><a href="{{ url('trabajo_junta_directiva') }}"><i class="fa fa-dot-circle-o"></i>Trabajo de JD</a></li>
                             </li>
                         </ul>
                     </li>

@@ -25,4 +25,9 @@ class Seguimiento extends Model
         return $this->belongsTo('App\EstadoSeguimiento');
     }
 
+    public function documento()
+    {
+        return $this->belongsTo('App\Documento');
+    }
+
 }

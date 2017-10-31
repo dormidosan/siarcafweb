@@ -23,37 +23,16 @@
                 </thead>
 
                 <tbody id="cuerpoTabla">
-                <tr>
-                    <td>Comision de Legislacion</td>
-                    <td>15</td>
-                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de Presupuesto</td>
-                    <td>15</td>
-                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de Convenios</td>
-                    <td>15</td>
-                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td>15</td>
-                    <td><a class="btn btn-block btn-primary btn-xs" href="{{ url("AdministrarIntegrantes") }}">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-                <tr>
-                    <td>Comision de arte y cultura</td>
-                    <td>15</td>
-                    <td><a class="btn btn-block btn-primary btn-xs" href="#">Gestionar</a></td>
-                    <td><a class="btn btn-success btn-block btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a></td>
-                </tr>
-
+                @foreach($comisiones as $comision)
+                    <tr>
+                        <td>{{ $comision->nombre }}</td>
+                        <td>{{ $comision->cargos->count() }}</td>
+                        <td><a class="btn btn-primary btn-xs"
+                               href="{{ url("administrar_integrantes_comision/".$comision->id) }}">Gestionar</a></td>
+                        <td><a class="btn btn-success btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
 
             </table>

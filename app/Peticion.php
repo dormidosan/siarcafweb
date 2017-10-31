@@ -13,7 +13,8 @@ class Peticion extends Model
     {
         return $this->hasMany('App\Seguimiento');
     }
-	
+
+
 	public function puntos()
     {
         return $this->hasMany('App\Punto');
@@ -35,5 +36,7 @@ class Peticion extends Model
     {
         return $this->belongsTo('App\EstadoPeticion');
     }
+
+
 
 }

@@ -14,7 +14,19 @@ class EstadosTableSeeder extends Seeder
     public function run()
     {
         //
+    	\DB::table('estado_seguimientos')->insert(array (
+		'estado'  => 'creacion',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
         \DB::table('estado_seguimientos')->insert(array (
+		'estado'  => 'asignacion',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('estado_seguimientos')->insert(array (
 		'estado'  => 'no discutido',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
