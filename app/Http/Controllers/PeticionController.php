@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Documento;
 use App\Peticion;
 use App\Periodo;
+use App\Seguimiento;
+use App\EstadoSeguimiento;
 
 class PeticionController extends Controller
 {
@@ -44,7 +46,7 @@ class PeticionController extends Controller
 		$documentos_id = array();
 		//$documentos =  array();
 		$peticion = new Peticion();
-		
+		$seguimiento = new Seguimiento();
 
 /*
 		//PROPUESTA DE LARAVEL 
@@ -165,12 +167,60 @@ class PeticionController extends Controller
 		//$shop->products()->($product_id);
 		//dd($documento->fecha_ingreso);
 		//dd($ruta);
+		/*
+			$table->increments('id');
+            $table->unsignedInteger('peticion_id');
+            $table->unsignedInteger('comision_id');
+            $table->unsignedInteger('estado_seguimiento_id');
+            $table->unsignedInteger('documento_id')->nullable();
+            $table->date('inicio')->nullable();
+            $table->date('fin')->nullable();
+            $table->boolean('activo')->nullable();
+            $table->boolean('agendado')->nullable();
+            $table->string('descripcion', 150)->nullable();
+		*/
 		
 		
        //$documento->save();
         $peticion->save();
         //$peticion->documentos()->attach($documento);
 		$peticion->documentos()->sync($documentos_id);
+
+		
+		$seguimiento->peticion_id = $peticion->id;
+		
+		$seguimiento->comision_id = '1';
+
+		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+		$seguimiento->inicio = Carbon::now();
+		$seguimiento->fin = Carbon::now();
+		$seguimiento->activo = '0';
+		$seguimiento->agendado = '0';
+		//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+		$seguimiento->descripcion = 'creacion de peticion';
+		$seguimiento->save();
+
+		foreach ($documentos_id as $documento_seguimiento) {
+
+			$seguimiento = new Seguimiento();
+
+			$seguimiento->peticion_id = $peticion->id;
+			$seguimiento->comision_id = '1';
+
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+			$seguimiento->documento_id = $documento_seguimiento;
+			$seguimiento->inicio = Carbon::now();
+			$seguimiento->fin = Carbon::now();
+			$seguimiento->activo = '0';
+			$seguimiento->agendado = '0';
+
+			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+			$seguimiento->descripcion = 'documento de creacion de peticion';
+			$seguimiento->save();
+		}
+
+
+
 
         //dd(1);
 		return view('General.RegistroPeticion')
