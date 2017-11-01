@@ -26,7 +26,15 @@
                 @foreach($comisiones as $comision)
                     <tr>
                         <td>{{ $comision->nombre }}</td>
-                        <td>{{ $comision->cargos->count() }}</td>
+                        @php $contador = 0 @endphp
+                        @foreach($cargos as $cargo)
+                            @if($cargo->comision_id == $comision->id && $cargo->activo == 1)
+                                @php $contador++ @endphp
+                            @endif
+                        @endforeach
+                        <td>
+                            {{ $contador }}
+                        </td>
                         <td><a class="btn btn-primary btn-xs"
                                href="{{ url("administrar_integrantes_comision/".$comision->id) }}">Gestionar</a></td>
                         <td><a class="btn btn-success btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a>
