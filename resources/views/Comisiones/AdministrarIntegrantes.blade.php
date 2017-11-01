@@ -6,6 +6,7 @@
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section("content")
@@ -16,13 +17,22 @@
         </div>
         <div class="box-body">
 
-            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="">
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ url("agregar_asambleistas_comision") }}">
+                {{ csrf_field() }}
+                <div class="row hidden">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="nombre">Comision</label>
+                            <input type="text" id="comision_id" name="comision_id" class="form-control" value="{{ $comision->id }}">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="nombre">Asambleista</label>
-                            <select id="nuevo" name="nuevo[]" class="form-control" multiple="multiple">
-                                <option value="">-- Seleccione una Asambleista --</option>
+                            <select id="asambleistas" name="asambleistas[]" class="form-control" multiple="multiple">
                                 @foreach($asambleistas as $asambleista)
                                     <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
                                 @endforeach
@@ -58,9 +68,9 @@
                     @foreach($integrantes as $integrante)
                         <tr>
                             <td>{{ $integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido }}</td>
-                            <td>Estudiantil</td>
-                            <td>Ingenieria y Arquitectura</td>
-                            <td>Propetario</td>
+                            <td>{{ $integrante->asambleista->sector->nombre }}</td>
+                            <td>{{ $integrante->asambleista->facultad->nombre }}</td>
+                            <td>{{ $integrante->cargo }}</td>
                             <td>
                                 <button class="btn btn-danger btn-xs">Retirar</button>
                             </td>
@@ -88,6 +98,8 @@
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 
@@ -124,11 +136,22 @@
 
             });
 
-            $('#nuevo').select2({
+            $('#asambleistas').select2({
                 placeholder: 'Seleccione un asambleista',
                 language: "es",
                 width: '100%'
             });
         });
     </script>
+@endsection
+
+
+@section("lobibox")
+
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
+
 @endsection

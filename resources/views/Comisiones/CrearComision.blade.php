@@ -27,7 +27,7 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}" >
+                        <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
                                    name="nombre" value="{{old("nombre")}}">
@@ -73,8 +73,16 @@
                                 <i class="fa fa-check text-success text-bold" aria-hidden="true"></i>
                             @endif
                         </td>
+
+                        @php $contador = 0 @endphp
+
+                        @foreach($cargos as $cargo)
+                            @if($cargo->comision_id == $comision->id && $cargo->activo == 1)
+                                @php $contador++ @endphp
+                            @endif
+                        @endforeach
                         <td>
-                            {{ $comision->cargos()->count() }}
+                            {{ $contador }}
                         </td>
                         <td>
                             @if($comision->permanente == 0)
@@ -135,7 +143,7 @@
                 url: "{{ route("actualizar_comision") }}",
                 data: {"id": id},
                 success: function (response) {
-                    notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
                 }
             });
         }
