@@ -57,7 +57,6 @@ class ComisionController extends Controller
             ->whereNotIn("asambleistas.id", $asambleistas_ids)
             ->get();*/
 
-
         $asambleistas = Asambleista::where("asambleistas.activo", "=", 1)
             ->whereNotIn("asambleistas.id", $asambleistas_ids)
             ->get();
@@ -130,7 +129,27 @@ class ComisionController extends Controller
             $cargo->save();
         }
 
-        $request->session()->flash("success", "Asambleista(s) agregado(s) con exito");
+        $request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
         return redirect()->route("administrar_integrantes_comision",$request->get("comision_id"));
+    }
+
+    public function retirar_asambleista_comision(Request $request){
+
+        $asambleista_id = $request->get("asambleista_id");
+        $comision_id = $request->get("comision_id");
+
+        $asambleista_comision = Cargo::where("asambleista_id",$asambleista_id)
+            ->where("comision_id",$comision_id)
+            ->where("activo",1)
+            ->first();
+
+        $asambleista_comision->activo = 0;
+        $asambleista_comision->fin = Carbon::now();
+        $asambleista_comision->save();
+
+        $request->session()->flash("success", "Asambleista retirado de la comision con exito");
+        return redirect()->route("administrar_integrantes_comision",$request->get("comision_id"));
+
+
     }
 }

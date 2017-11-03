@@ -7,17 +7,15 @@
 
 
     <!-- Bootstrap & AdminLTE-->
-    <link rel="stylesheet" href="{{ asset('libs/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
 @yield("styles")
 
-
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'SIARCA') }}</title>
 
 </head>

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section("styles")
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
@@ -10,13 +16,11 @@
 @endsection
 
 @section("content")
-
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Administrar Integrantes de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
-
             <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ url("agregar_asambleistas_comision") }}">
                 {{ csrf_field() }}
                 <div class="row hidden">
@@ -49,7 +53,6 @@
                     </div>
                 </div>
             </form>
-
             <br>
             <div class="table-responsive">
                 <table id="listado"
@@ -72,7 +75,12 @@
                             <td>{{ $integrante->asambleista->facultad->nombre }}</td>
                             <td>{{ $integrante->cargo }}</td>
                             <td>
-                                <button class="btn btn-danger btn-xs">Retirar</button>
+                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ url("retirar_asambleista_comision") }}">
+                                    {{ csrf_field() }}
+                                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                                    <input class="hidden" id="asambleista_id" name="asambleista_id" value="{{$integrante->asambleista_id}}">
+                                    <button class="btn btn-danger btn-xs">Retirar</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -80,20 +88,11 @@
 
                 </table>
             </div>
-
         </div>
     </div>
 @endsection
 
-<style>
-    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
-</style>
-
 @section("js")
-    <!-- Datatables -->
     <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
@@ -101,7 +100,6 @@
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
-
 
 @section("scripts")
     <script type="text/javascript">
@@ -144,7 +142,6 @@
         });
     </script>
 @endsection
-
 
 @section("lobibox")
 
