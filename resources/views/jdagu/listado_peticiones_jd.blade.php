@@ -68,7 +68,7 @@
                             <!--
                              <a class="btn btn-info" href="#" role="button">Ver</a> 
                             -->
-                             <input type="submit" class="btn btn-info" name="Guardar" value="Ver">
+                             <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar" value="Ver">
                         </td>
                         
                  </tr>

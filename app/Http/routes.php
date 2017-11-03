@@ -67,6 +67,7 @@ Route::get('/discutir/{comision}/{id}', function () {
 Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
 Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
 Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
+Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
 
 
 /* Peticiones */
