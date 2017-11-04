@@ -71,6 +71,11 @@
                                                     </td>
                                                 </tr>
                                             @endif
+                                        @else
+                                            <tr>
+                                                <td colspan="5" class="">Esta comision no cuenta con asambleistas
+                                                </td>
+                                            </tr>
                                         @endif
                                         </tbody>
                                     </table>
