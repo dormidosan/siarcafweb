@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComisionRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -18,44 +19,18 @@ use Illuminate\Support\Facades\Input;
 class ComisionController extends Controller
 {
 
-                            /******************** METODOS GET *********************************/
-
-    //mostrar las comisiones activas e inactivas
-    public function mostrar_comisiones()
+    //funcion generica para obtener la comision, los integrantes de dicha comision y todos los asambleistas en la app
+    public function obtener_datos(Request $request)
     {
-        //se obtienen todas las comisiones en orden alfabetico
-        $comisiones = Comision::orderBy("nombre", "asc")->get();
-        $cargos = Cargo::all();
-        return view("Comisiones.CrearComision", ['comisiones' => $comisiones, 'cargos'=>$cargos]);
-    }
-
-    //mostrar las comisiones activas
-    public function administrar_comisiones()
-    {
-        $comisiones = Comision::where("activa", 1)->get();
-        $cargos = Cargo::all();
-        return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones,'cargos'=>$cargos]);
-    }
-
-    //mostrar listado de las comisiones, con su total de integrantes
-    public function administrar_integrantes_comision($id)
-    {
-        $comision = Comision::find($id);
+        $comision = Comision::find($request->get("comision_id"));
 
         //se obtiene todos los asambleistas que pertenecen a la comision
-        $resultados = Cargo::where("comision_id", $id)->where("activo",1)->get();
+        $resultados = Cargo::where("comision_id", $request->get("comision_id"))->where("activo", 1)->get();
         $asambleistas_ids = array();
 
         //array con los id de los asambleistas
         foreach ($resultados as $resultado)
             array_push($asambleistas_ids, $resultado->asambleista->id);
-
-        //se obtienen todos aquellos asambleistas que no pertencezcan a la comision y mostrarlos en el select
-        /*$asambleistas = Asambleista::join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
-            ->where("asambleistas.activo", "=", 1)
-            ->where("periodos.activo", "=", 1)
-            ->whereNotIn("asambleistas.id", $asambleistas_ids)
-            ->get();*/
 
         $asambleistas = Asambleista::where("asambleistas.activo", "=", 1)
             ->whereNotIn("asambleistas.id", $asambleistas_ids)
@@ -64,16 +39,43 @@ class ComisionController extends Controller
         //obtener los integrantes de la comision y que esten activos en el periodo activo
         $integrantes = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
             ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
-            ->where("cargos.comision_id", $id)
+            ->where("cargos.comision_id", $request->get("comision_id"))
             ->where("asambleistas.activo", 1)
             ->where("periodos.activo", 1)
-            ->where("cargos.activo",1)
+            ->where("cargos.activo", 1)
             ->get();
 
-        return view("Comisiones.AdministrarIntegrantes", ["comision" => $comision, "integrantes" => $integrantes, "asambleistas" => $asambleistas]);
+        return ["comision" => $comision, "integrantes" => $integrantes, "asambleistas" => $asambleistas];
     }
 
-                            /******************** METODOS POST *********************************/
+                                         /******************** METODOS GET *********************************/
+
+    //mostrar las comisiones activas e inactivas
+    public function mostrar_comisiones()
+    {
+        //se obtienen todas las comisiones en orden alfabetico
+        $comisiones = Comision::orderBy("nombre", "asc")->get();
+        $cargos = Cargo::all();
+        return view("Comisiones.CrearComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
+    }
+
+    //mostrar las comisiones activas
+    public function administrar_comisiones()
+    {
+        $comisiones = Comision::where("activa", 1)->get();
+        $cargos = Cargo::all();
+        return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
+    }
+
+
+                                          /******************** METODOS POST *********************************/
+
+    //mostrar listado de las comisiones, con su total de integrantes
+    public function gestionar_asambleistas_comision(Request $request)
+    {
+        $datos = $this->obtener_datos($request);
+        return view("Comisiones.AdministrarIntegrantes", ["comision" => $datos["comision"], "integrantes" => $datos["integrantes"], "asambleistas" => $datos["asambleistas"]]);
+    }
 
     //funcion que se encarga de crear una comision
     public function crear_comision(ComisionRequest $request)
@@ -115,11 +117,12 @@ class ComisionController extends Controller
     }
 
     //funcion para agregar asambleistas a una comision
-    public function agregar_asambleistas_comision(Request $request){
-
+    public function agregar_asambleistas_comision(Request $request)
+    {
         $asambleistas = $request->get("asambleistas");
+        $comision = Comision::find($request->get("comision_id"));
 
-        foreach ($asambleistas as $asambleista){
+        foreach ($asambleistas as $asambleista) {
             $cargo = new Cargo();
             $cargo->comision_id = $request->get("comision_id");
             $cargo->asambleista_id = $asambleista;
@@ -127,29 +130,42 @@ class ComisionController extends Controller
             $cargo->cargo = "Asambleista";
             $cargo->activo = 1;
             $cargo->save();
+            Cache::flush();
         }
 
-        $request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
-        return redirect()->route("administrar_integrantes_comision",$request->get("comision_id"));
+        //$request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
+        $request->session()->flash("success", "Asambleista(s) agregado(s) con exito ");
+
+        $datos = $this->obtener_datos($request);
+        return view("Comisiones.AdministrarIntegrantes", ["comision" => $datos["comision"], "integrantes" => $datos["integrantes"], "asambleistas" => $datos["asambleistas"]]);
     }
 
-    public function retirar_asambleista_comision(Request $request){
+    public function retirar_asambleista_comision(Request $request)
+    {
 
         $asambleista_id = $request->get("asambleista_id");
         $comision_id = $request->get("comision_id");
 
-        $asambleista_comision = Cargo::where("asambleista_id",$asambleista_id)
-            ->where("comision_id",$comision_id)
-            ->where("activo",1)
+        $asambleista_comision = Cargo::where("asambleista_id", $asambleista_id)
+            ->where("comision_id", $comision_id)
+            ->where("activo", 1)
             ->first();
 
         $asambleista_comision->activo = 0;
         $asambleista_comision->fin = Carbon::now();
         $asambleista_comision->save();
+        Cache::flush();
 
         $request->session()->flash("success", "Asambleista retirado de la comision con exito");
-        return redirect()->route("administrar_integrantes_comision",$request->get("comision_id"));
 
+        $datos = $this->obtener_datos($request);
+        return view("Comisiones.AdministrarIntegrantes", ["comision" => $datos["comision"], "integrantes" => $datos["integrantes"], "asambleistas" => $datos["asambleistas"]]);
+    }
+
+    public function trabajo_comision(Request $request)
+    {
+        $comision = Comision::find($request->get("comision_id"));
+        return view("Comisiones.TrabajoComision", ["comision" => $comision]);
 
     }
 }

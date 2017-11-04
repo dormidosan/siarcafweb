@@ -19,23 +19,27 @@
                     </thead>
                     <tbody>
                     @php $i = 1 @endphp
-                    @foreach($asambleistas as $asambleista)
-                        <tr>
-                            <td style="vertical-align: middle">{{ $i }}</td>
-                            <td>
-                                <div class="center-block">
-                                    <img src="{{ asset('images/default-user.png') }}"
-                                         class="img-responsives" width="70px"
-                                         style="margin-left: 25px !important; "
-                                         alt="User Image">
-                                </div>
-                            </td>
-                            <td style="vertical-align: middle">{{ $asambleista->asambleista->user->persona->primer_nombre . " " . $asambleista->asambleista->user->persona->segundo_nombre . " " . $asambleista->asambleista->user->persona->primer_apellido . " " . $asambleista->asambleista->user->persona->segundo_apellido }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->asambleista->sector->nombre }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->cargo }}</td>
-                        </tr>
-                        @php $i++ @endphp
-                    @endforeach
+                    @if(empty($asambleistas) != false)
+                        @foreach($asambleistas as $asambleista)
+                            <tr>
+                                <td style="vertical-align: middle">{{ $i }}</td>
+                                <td>
+                                    <div class="center-block">
+                                        <img src="{{ asset('images/default-user.png') }}"
+                                             class="img-responsives" width="70px"
+                                             style="margin-left: 25px !important; "
+                                             alt="User Image">
+                                    </div>
+                                </td>
+                                <td style="vertical-align: middle">{{ $asambleista->asambleista->user->persona->primer_nombre . " " . $asambleista->asambleista->user->persona->segundo_nombre . " " . $asambleista->asambleista->user->persona->primer_apellido . " " . $asambleista->asambleista->user->persona->segundo_apellido }}</td>
+                                <td style="vertical-align: middle">{{ $asambleista->asambleista->sector->nombre }}</td>
+                                <td style="vertical-align: middle">{{ $asambleista->cargo }}</td>
+                            </tr>
+                            @php $i++ @endphp
+                        @endforeach
+                    @else
+                        <tr class="text-center"><td colspan="5">No cuenta con asambleistas</td></tr>
+                    @endif
                     </tbody>
                 </table>
             </div>

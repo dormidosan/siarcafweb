@@ -12,6 +12,7 @@
             <h3 class="box-title">Crear Comision</h3>
         </div>
         <div class="box-body">
+            {{--
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <p>Por favor, corriga los siguientes errores:</p>
@@ -21,7 +22,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif--}}
 
             <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
                 {{ csrf_field() }}

@@ -34,8 +34,17 @@ Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostra
 
 Route::get('/administrar_comisiones','ComisionController@administrar_comisiones')->name("administrar_comisiones");
 
-Route::get('/administrar_integrantes_comision/{id}', 'ComisionController@administrar_integrantes_comision')->name("administrar_integrantes_comision");
+//Route::get('/administrar_integrantes_comision/{id}', 'ComisionController@administrar_integrantes_comision')->name("administrar_integrantes_comision");
 
+Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
+Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
+Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
+Route::post('trabajo_comision', 'ComisionController@trabajo_comision')->name("trabajo_comision");
+Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
+Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
+
+
+//rutas q aun no uso
 Route::get('/HistorialBitacoras', function () {
     return view('Comisiones.HistorialBitacoras');
 });
@@ -44,9 +53,7 @@ Route::get('/HistorialDictamenes', function () {
     return view('Comisiones.HistorialDictamenes');
 });
 
-Route::get('/TrabajoComision', function () {
-    return view('Comisiones.TrabajoComision');
-});
+Route::get('/TrabajoComision', function () {return view('Comisiones.TrabajoComision');});
 
 Route::get('/ConvocatoriaComision', function () {
     return view('Comisiones.Convocatoria');
@@ -64,10 +71,6 @@ Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
 
-Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
-Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
-Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
-Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
 
 
 /* Peticiones */

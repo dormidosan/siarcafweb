@@ -13,7 +13,7 @@
         </div>
 
         <div class="box-body">
-           
+
 
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-lg-offset-2">
@@ -54,13 +54,13 @@
 
                             <tbody>
                             @forelse($peticiones as $peticion)
-                            
+
 
                                 <tr>
-                                
+
                                         <td>
                                             <center>
-                                            {!! $peticion->nombre !!}                  
+                                            {!! $peticion->nombre !!}
                                             </center>
                                         </td>
                                         <td>
