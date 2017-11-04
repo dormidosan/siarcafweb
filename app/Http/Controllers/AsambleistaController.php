@@ -36,8 +36,9 @@ class AsambleistaController extends Controller
         $cargos = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
             ->join("comisiones", "cargos.comision_id", "=", "comisiones.id")
             ->join("periodos","asambleistas.periodo_id","=","periodos.id")
-            ->where("asambleistas.activo", "=", 1)
-            ->where("comisiones.activa", "=", 1)
+            ->where("asambleistas.activo", 1)
+            //->where("comisiones.activa",1)
+            ->where("cargos.activo",1)
             ->where("periodos.activo", "=", 1)
             ->get();
 
@@ -63,6 +64,7 @@ class AsambleistaController extends Controller
             //->where("comisiones.nombre", "LIKE", "%junta directiva%")
             ->where("comisiones.nombre", "=", "junta directiva")
             ->where("periodos.activo", "=", 1)
+            ->where("cargos.activo",1)
             ->get();
 
         //dd($asambleistas);

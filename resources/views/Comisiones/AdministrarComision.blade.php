@@ -2,7 +2,13 @@
 
 @section("styles")
     <!-- Datatables-->
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">.
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -10,41 +16,53 @@
         <div class="box-header with-border">
             <h3 class="box-title">Listado Comisiones</h3>
         </div>
-        <div class="box-body table-responsive">
-            <table id="listadoComisiones"
-                   class="table text-center">
-                <thead>
-                <tr>
-                    <th>Nombre Documento</th>
-                    <th>Numero Integrantes</th>
-                    <th>Integrantes</th>
-                    <th>Administracion</th>
-                </tr>
-                </thead>
-
-                <tbody id="cuerpoTabla">
-                @foreach($comisiones as $comision)
+        <div class="box-body">
+            <div class="table-responsive">
+                <table id="listadoComisiones"
+                       class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                    <thead>
                     <tr>
-                        <td>{{ $comision->nombre }}</td>
+                        <th>Nombre Documento</th>
+                        <th>Numero Integrantes</th>
+                        <th>Integrantes</th>
+                        <th>Administracion</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($comisiones as $comision)
                         @php $contador = 0 @endphp
                         @foreach($cargos as $cargo)
                             @if($cargo->comision_id == $comision->id && $cargo->activo == 1)
                                 @php $contador++ @endphp
                             @endif
                         @endforeach
-                        <td>
-                            {{ $contador }}
-                        </td>
-                        <td><a class="btn btn-primary btn-xs"
-                               href="{{ url("administrar_integrantes_comision/".$comision->id) }}">Gestionar</a></td>
-                        <td><a class="btn btn-success btn-xs" href="{{ url("TrabajoComision") }}">Acceder</a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-
-            </table>
-
+                        <tr>
+                            <td>{{ $comision->nombre }}</td>
+                            <td>
+                                {{ $contador }}
+                            </td>
+                            <td>
+                                <form id="gestionar_asambleistas_comision" name="gestionar_asambleistas_comision"
+                                      method="post" action="{{ url("gestionar_asambleistas_comision") }}">
+                                    {{ csrf_field() }}
+                                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                                    <button class="btn btn-primary btn-xs">Gestionar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form id="trabajo_comision" name="trabajo_comision" method="post"
+                                      action="{{ url("trabajo_comision") }}">
+                                    {{ csrf_field() }}
+                                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                                    <button class="btn btn-success btn-xs">Acceder</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -53,16 +71,7 @@
     <!-- Datatables -->
     <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-
 @endsection
-
-
-<style>
-    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
-</style>
 
 @section("scripts")
     <script type="text/javascript">
