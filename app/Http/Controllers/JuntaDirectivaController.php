@@ -28,8 +28,9 @@ class JuntaDirectivaController extends Controller
 
     public function listado_peticiones_jd(){
 
-    	$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
-    	
+    	//$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+    	$peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get();
+
         return view('jdagu.listado_peticiones_jd')
         ->with('peticiones',$peticiones);
     }
@@ -85,13 +86,13 @@ class JuntaDirectivaController extends Controller
 
 			$seguimiento->peticion_id = $peticion->id;
 			$seguimiento->comision_id = $comision->id;
-			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "asignacion")->first()->id;
 			$seguimiento->inicio = Carbon::now();
 			//$seguimiento->fin = Carbon::now();
 			$seguimiento->activo = '1';
 			$seguimiento->agendado = '0';
 			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
-			$seguimiento->descripcion = $descripcion;
+			$seguimiento->descripcion = "Asignado a ".$comision->nombre." - ".$descripcion;
 			$guardado = $seguimiento->save();
 			if($guardado){
 			$peticion->comisiones()->attach($id_comision); 	

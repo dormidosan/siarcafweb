@@ -11,19 +11,20 @@
             <h3 class="box-title">Convocatoria de Comision</h3>
         </div>
         <div class="box-body">
-            <form id="convocatoria" method="post" action="">
+            <form id="convocatoria" method="post" action="{{ url('mailing') }}">
+             {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="lugar">Lugar</label>
-                            <input type="text" id="lugar" class="form-control">
+                            <input name="lugar" type="text" id="lugar" class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +32,7 @@
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input type='text' id="hora" class="form-control" />
+                                <input name="hora" type='text' id="hora" class="form-control" />
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>
@@ -42,7 +43,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                          <label for="mensaje">Cuerpo del Mensaje</label>
-                        <textarea id="mensaje" class="form-control"></textarea>
+                        <textarea  name="mensaje" id="mensaje" class="form-control"></textarea>
                      </div>
                 </div>
                 <br>
