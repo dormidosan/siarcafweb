@@ -35,7 +35,7 @@
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Asambleistas</h3>
+                    <h3 class="panel-title">Listado Peticiones</h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -76,11 +76,19 @@
                                         {!! $peticion->peticionario !!}
                                         </td>
                                         <td>
+                                        @php
+                                        $i = ''
+                                        @endphp
                                         @foreach($peticion->seguimientos as $seguimiento)
-                                         @if($peticion->seguimientos->last() === $seguimiento)
-                                              {!! $seguimiento->comision->nombre !!}
+                                         @if($seguimiento->estado_seguimiento_id !== 1 and $seguimiento->estado_seguimiento_id !== 2) 
+                                              @php 
+                                              $i = $seguimiento->comision->nombre
+                                              @endphp
                                         @endif
                                         @endforeach
+                                        {!! $i !!}
+
+                                        
                                         
                                         </td>
                                         <td>
