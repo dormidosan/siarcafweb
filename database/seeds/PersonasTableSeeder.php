@@ -36,7 +36,7 @@ class PersonasTableSeeder extends Seeder
 		\DB::table('users')->insert(array (
 		'rol_id'  => '3 ',
 		'persona_id'  => $j,
-		'name'  => 'nombreusuario'.$j,
+		'name'  => 'name_user'.$j,
 		'password'  => bcrypt('123456'),
 		'fecha_registro'  => Carbon::now()->format('Y-m-d H:i:s'),
 		'ultimo_acceso'  => Carbon::now()->format('Y-m-d H:i:s'),

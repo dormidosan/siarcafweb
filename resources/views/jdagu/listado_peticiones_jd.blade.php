@@ -19,6 +19,7 @@
                        <th>Fecha de creación</th>
                        <th>Fecha actual</th>
                        <th>Peticionario</th>
+                       <th>Ultima asignacion</th>
                        <th>Visto anteriormente por</th>
                        <th>Acción</th>
                    </tr>
@@ -57,11 +58,32 @@
                         {!! $peticion->peticionario !!}
                         </td>
                         <td>
+                        @php
+                        $i = ''
+                        @endphp
                         @foreach($peticion->seguimientos as $seguimiento)
-                         @if($peticion->seguimientos->last() === $seguimiento)
-                              {!! $seguimiento->comision->nombre !!}
+                         @if($seguimiento->estado_seguimiento_id == 7) 
+                              @php 
+                              $i = $seguimiento->comision->nombre
+                              @endphp
                         @endif
                         @endforeach
+                        {!! $i !!}
+                        </td>
+                        <td>
+                        @php
+                        $i = ''
+                        @endphp
+                        @foreach($peticion->seguimientos as $seguimiento)
+                         @if($seguimiento->estado_seguimiento_id !== 1 and $seguimiento->estado_seguimiento_id !== 2) 
+                              @php 
+                              $i = $seguimiento->comision->nombre
+                              @endphp
+                        @endif
+                        @endforeach
+                        {!! $i !!}
+
+                        
                         
                         </td>
                         <td>

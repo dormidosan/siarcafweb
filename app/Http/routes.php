@@ -225,6 +225,8 @@ Route::get('crear_convocatoria', array('as' => 'crear_convocatoria', 'uses' => '
 
 Route::post('mailing', array('as' => 'mailing', 'uses' => 'MailController@mailing'));
 
+
+
 Route::get('trabajo_junta_directiva', array('as' => 'trabajo_junta_directiva', 'uses' => 'JuntaDirectivaController@trabajo_junta_directiva'));
 
 Route::get('listado_peticiones_jd', array('as' => 'listado_peticiones_jd', 'uses' => 'JuntaDirectivaController@listado_peticiones_jd'));
@@ -249,4 +251,8 @@ Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'Jun
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
 Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
 
-
+/*
+\Mail::send('welcome', [], function ($message){
+    $message->to('siarcaf@gmail.com')->subject('Testing mail');
+});
+*/
