@@ -322,7 +322,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         $anio=$parametros[2];
 
 
-      $resultados = DB::table('dietas')
+     $resultados = DB::table('dietas')
         ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
@@ -332,12 +332,12 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('dietas.anio','=', $anio)
         ->where('sectores.id','=', 2)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre',
-                 'facultades.nombre')->get();
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
+                 'facultades.nombre as nom_fact')->orderBy('nom_fact', 'desc')->get();
 
 
         
-        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('resultados'))->render();
+        $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('resultados','mes','anio'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
@@ -360,6 +360,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
      public function Reporte_planilla_dieta_prof_noDocpdf($tipo) 
     {
+        /* para jasper report
         $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
         $verdescar=$parametros[0];
         $mes=$parametros[1];
@@ -401,25 +402,29 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
             $PHPJasperXML->outpage("D");
         }
  
+*/
+        $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
+        $verdescar=$parametros[0];
+        $mes=$parametros[1];
+        $anio=$parametros[2];
 
-/*
        $resultados = DB::table('dietas')
         ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
         ->join('personas','users.persona_id','=','personas.id')
-        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        
         ->where('dietas.mes','=', $mes)
         ->where('dietas.anio','=', $anio)
         ->where('sectores.id','=', 3)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact')->orderBy('nom_fact', 'desc')->get();
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect'
+                 )->orderBy('primer_apellido', 'desc')->get();
         
        
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_noDocpdf', compact('resultados','mes','anio'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
         if($verdescar==1)
@@ -430,7 +435,7 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         {
             return $pdf->download('reporte.pdf'); 
         }
-        */
+        
 
     }
 

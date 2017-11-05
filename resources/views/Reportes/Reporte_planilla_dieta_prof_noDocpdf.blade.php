@@ -3,7 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte Dieta</title>
-  <style type="text/css">  
+
+  <style type="text/css" media="print">  
+  
+
   #watermark {
     position: fixed;
     top: 45%;
@@ -29,8 +32,8 @@
   font: bold;
   top: 2%;
   text-align: center;
-  aling-items: center;
   text-transform: uppercase;
+  text-align: center;
 }
 
 #mp {
@@ -52,7 +55,7 @@
   position: fixed;
   font-family: "ARIAL", serif;
   font-size: 10pt;
-  top: 13%;
+  top: 20%;
 }
 
 #cp1 {
@@ -115,33 +118,28 @@
 </style>
                                          
                                                
- <div id="p" style="position:fixed;text-align: center;">
+ <div id="p" >
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}}<br/>
+    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}} <br/>
     SECTOR PROFESIONAL NO DOCENTE
     <hr  /> 
     PERIODO {{$anio}}
   </div>   
+
                    
 </head>
   <body>
 
- <!--@if(!($resultados==NULL))
-  @foreach($resultados as $result)
-  {{$result->nom_sect}} {{$result->nom_fact}} 
-   @endforeach
-  @endif
--->
-<div id="cp" > <!--style="page-break-before: always;"-->
+ 
+ <!--style="page-break-before: always;"-->
 
-                <table  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
+                <table id="cp"  border="1" cellpadding="0" cellspacing="0" >
                    
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>No. </th>                     
                     <th>SECTOR</th>                     
                     <th>NOMBRES</th>
-                    <th>FACULTAD</th>
                     <th>1a. SESION</th>
                     <th>2a. SESION</th>
                     <th>3a. SESION</th>
@@ -151,38 +149,27 @@
                   </thead>
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                    @php $i=1 @endphp
+                      @php $i=1 @endphp
                      @foreach($resultados as $result)
-
-                       <tr>                                     
+                    <tr>                                     
                       <td>
-                       {{$i}}
+                         {{$i}}
                       </td>
                       <td>
-                         PROF. NO DOCENTE
+                        PROF. NO DOCENTE
                       </td>
-                      <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>
+                      <td>{{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}}{{$result->segundo_apellido}}</td>
                     
-                      <td>{{$result->nom_fact}} </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td>$ -  </td>                      
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      <td> </td>
+                      
                     </tr> 
-                  
-                 @if($i>25)
-                 <div style="page-break-before: always;">
-
-                  
-                  
-
-                 </div> 
-                 @endif
-                       @php $i=$i+1 @endphp
-   @endforeach           
-                
-
+                      
+  @php $i=$i+1 @endphp
+   @endforeach   
                     <tr>                                     
                       <td>
                         
@@ -202,9 +189,22 @@
 
                    </tbody>
 
-                </table>
+                
+
+<!--<div class="page">
+    First page
+</div>
+<div class="page">
+    Second page
+</div>-->
               
- </div>
-   
+ 
+  <!--  <div style="page-break-before: always;">
+    </div>   -->
   </body>
+  <script type="text/php">
+ $text = 'pagina: {PAGE_NUM} / {PAGE_COUNT}';
+ $font = Font_Metrics::get_font("helvetica", "bold");
+ $pdf->page_text(36, 18, $text, $font, 9);
+</script>
 </html>
