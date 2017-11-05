@@ -14,8 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
 
@@ -63,6 +61,8 @@ class AdministracionController extends Controller
         $asambleista->facultad_id = $request->get("facultad");
         $asambleista->sector_id = $request->get("sector");
         $asambleista->propietario = $request->get("propietario");
+        //setea al user como un asambleista activo
+        $asambleista->activo = 1;
 
         $hoy = Carbon::now();
         $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
@@ -90,8 +90,8 @@ class AdministracionController extends Controller
 
     public function guardar_periodo(PeriodoRequest $request)
     {
-
         $periodo_activo = Periodo::where("activo", 1)->first();
+
 
         if (!empty($periodo_activo)) {
             $request->session()->flash("error", "Ya existe un periodo activo");
@@ -106,15 +106,12 @@ class AdministracionController extends Controller
             $request->session()->flash("success", "Periodo creado con exito");
             return redirect()->route("periodos_agu");
         }
-
     }
 
 
     public function finalizar_periodo(Request $request)
     {
-
         if ($request->ajax()) {
-            //se obtiene la comision que coincida con el id enviado
             $periodo = Periodo::find($request->get("periodo_id"));
             $periodo->activo = 0;
             $respuesta = new \stdClass();
@@ -124,6 +121,5 @@ class AdministracionController extends Controller
             //se genera la respuesta json
             return new JsonResponse($respuesta);
         }
-
     }
 }

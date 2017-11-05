@@ -9,6 +9,7 @@
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 @foreach($comisiones as $comision)
                     @php $i = 1 @endphp
+
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="comision{{$comision->id}}">
                             <h4 class="panel-title">
@@ -43,8 +44,9 @@
                                         </thead>
                                         <tbody>
                                         @if($comision->cargos()->count() > 0)
+                                            @php $integrantes = false @endphp
                                             @foreach($cargos as $cargo)
-                                                @if($comision->id == $cargo->comision->id)
+                                                @if($comision->id == $cargo->comision->id && $cargo->activo == 1)
                                                     <tr>
                                                         <td style="vertical-align: middle">{{ $i }}</td>
                                                         <td>
@@ -60,14 +62,21 @@
                                                         <td style="vertical-align: middle">{{ $cargo->cargo }}</td>
                                                     </tr>
                                                     @php $i++ @endphp
+                                                    @php $integrantes = true @endphp
                                                 @endif
                                             @endforeach
+                                            @if($integrantes == false)
+                                                <tr>
+                                                    <td colspan="5" class="">Esta comision no cuenta con asambleistas
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @else
                                             <tr>
-                                                <td colspan="5" class="">Esta comision no cuenta con asambleistas</td>
+                                                <td colspan="5" class="">Esta comision no cuenta con asambleistas
+                                                </td>
                                             </tr>
                                         @endif
-
                                         </tbody>
                                     </table>
                                 </div>

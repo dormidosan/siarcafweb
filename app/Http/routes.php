@@ -32,14 +32,19 @@ Route::get('/BusquedaDocumentos', function () {
 
 Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 
-Route::get('/AdministrarComisiones', function () {
-    return view('Comisiones.AdministrarComision');
-});
+Route::get('/administrar_comisiones','ComisionController@administrar_comisiones')->name("administrar_comisiones");
 
-Route::get('/AdministrarIntegrantes', function () {
-    return view('Comisiones.AdministrarIntegrantes');
-});
+//Route::get('/administrar_integrantes_comision/{id}', 'ComisionController@administrar_integrantes_comision')->name("administrar_integrantes_comision");
 
+Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
+Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
+Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
+Route::post('trabajo_comision', 'ComisionController@trabajo_comision')->name("trabajo_comision");
+Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
+Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
+
+
+//rutas q aun no uso
 Route::get('/HistorialBitacoras', function () {
     return view('Comisiones.HistorialBitacoras');
 });
@@ -48,9 +53,7 @@ Route::get('/HistorialDictamenes', function () {
     return view('Comisiones.HistorialDictamenes');
 });
 
-Route::get('/TrabajoComision', function () {
-    return view('Comisiones.TrabajoComision');
-});
+Route::get('/TrabajoComision', function () {return view('Comisiones.TrabajoComision');});
 
 Route::get('/ConvocatoriaComision', function () {
     return view('Comisiones.Convocatoria');
@@ -68,8 +71,6 @@ Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
 
-Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
-Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
 
 
 /* Peticiones */
@@ -102,8 +103,6 @@ Route::get('/Reporte_asistencias_sesion_plenaria', function () {
 Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Reporte_asistencias_sesion_plenaria');
 
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
-
-
 
 
 Route::get('/Reporte_bitacora_correspondencia', function () {
@@ -145,7 +144,6 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
 
 
-
 Route::get('/Plantilla_Actas', function () {
     return view('Plantillas.Plantilla_actas');
 });
@@ -165,7 +163,6 @@ Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Conv
 Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');
 });
-
 
 
 /* Routes para Agenda */
@@ -244,7 +241,6 @@ Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' =
 Route::get('lista_asignacion', array('as' => 'lista_asignacion', 'uses' => 'JuntaDirectivaController@lista_asignacion'));
 
 Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'JuntaDirectivaController@enlazar_comision'));
-
 
 
 /*post*/

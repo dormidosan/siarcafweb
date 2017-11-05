@@ -10,7 +10,7 @@
             <h3 class="box-title">Trabajo de Comision</h3>
         </div>
         <div class="box-body">
-            <h4 class="text-center text-bold">Administrar Trabajo de NOMBRE DE LA COMISION</h4>
+            <h4 class="text-center text-bold">Administrar trabajo de {{ $comision->nombre }}</h4>
             <br>
             <div class="row ">
                 <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-1">
