@@ -16,6 +16,7 @@ class CreateEstadoPeticionesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('estado', 45)->nullable();
+            $table->string('nombre_estado', 45)->nullable();
             $table->timestamps();
         });
     }
