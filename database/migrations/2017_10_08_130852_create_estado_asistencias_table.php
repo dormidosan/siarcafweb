@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParametrosTable extends Migration
+class CreateEstadoAsistenciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateParametrosTable extends Migration
      */
     public function up()
     {
-        Schema::create('parametros', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('estado_asistencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('parametro', 45)->nullable();
-            $table->string('nombre_parametro', 45)->nullable();
-            $table->float('valor',4,2 )->nullable();
+            $table->string('estado', 45)->nullable();
+            $table->string('nombre_estado', 45)->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateParametrosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parametros');
+        Schema::drop('estado_asistencias');
     }
 }

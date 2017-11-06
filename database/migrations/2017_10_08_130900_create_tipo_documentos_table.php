@@ -16,6 +16,7 @@ class CreateTipoDocumentosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('tipo', 30)->nullable();
+            $table->string('nombre_tipo', 30)->nullable();
             $table->timestamps();
         });
     }
