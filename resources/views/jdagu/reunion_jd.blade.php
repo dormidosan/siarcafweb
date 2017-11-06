@@ -14,10 +14,10 @@
    <div class="box-body">
       <div class="row">
          <div class="col-lg-4 col-sm-12 col-lg-offset-2">
-            <button type="button" id="iniciar" name="iniciar" class="btn btn-warning btn-block">Peticiones</button>
+            <button type="button" id="iniciar" name="iniciar" class="btn btn-warning btn-block">Peticiones***</button>
          </div>
          <div class="col-lg-4 col-sm-12">
-            <button type="button" id="iniciar" name="iniciar" class="btn btn-info btn-block">Asistencia</button>
+            <button type="button" id="iniciar" name="iniciar" class="btn btn-info btn-block">Asistencia***</button>
          </div>
       </div>
       <br>

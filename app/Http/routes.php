@@ -228,6 +228,8 @@ Route::get('trabajo_junta_directiva', array('as' => 'trabajo_junta_directiva', '
 
 Route::get('listado_peticiones_jd', array('as' => 'listado_peticiones_jd', 'uses' => 'JuntaDirectivaController@listado_peticiones_jd'));
 
+Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' => 'JuntaDirectivaController@listado_reuniones_jd'));
+
 //Route::post('seguimiento_peticion_jd/{id_peticion}', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
