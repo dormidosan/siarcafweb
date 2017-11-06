@@ -91,7 +91,7 @@ class JuntaDirectivaController extends Controller
 			$seguimiento->activo = '1';
 			$seguimiento->agendado = '0';
 			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
-			$seguimiento->descripcion = "Control para la  ".$comision->nombre." - ".$descripcion;
+			$seguimiento->descripcion = "Inicio de control en: ".$comision->nombre." - ".$descripcion;
 			$guardado = $seguimiento->save();
 			if($guardado){
 			$peticion->comisiones()->attach($id_comision); 	
@@ -107,7 +107,7 @@ class JuntaDirectivaController extends Controller
 			$seguimiento->activo = '0';
 			$seguimiento->agendado = '0';
 			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
-			$seguimiento->descripcion = "Asignado a ".$comision->nombre." - ".$descripcion;
+			$seguimiento->descripcion = "Asignado a: ".$comision->nombre." - ".$descripcion;
 			$guardado = $seguimiento->save();
 			//if($guardado){
 			//$peticion->comisiones()->attach($id_comision); 	

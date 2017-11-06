@@ -67,13 +67,14 @@
       </div>
       <div class="panel panel-default">
          <div class="panel-heading">
-            <h3 class="panel-title">Documentos asociados</h3>
+            <h3 class="panel-title">Seguimiento paso a paso</h3>
          </div>
          <div class="panel-body">
             <div class="table-responsive">
                <table class="table table-hover text-center">
                   <thead>
                      <tr>
+                        <th>#</th>
                         <th>Nombre comision</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
@@ -83,8 +84,13 @@
                      </tr>
                   </thead>
                   <tbody id="cuerpoTabla" class="text-center">
+                  @php $contador = 1 @endphp
                      @forelse($peticion->seguimientos as $seguimiento)
                      <tr>
+                        <td>
+                          {!! $contador !!}
+                          @php $contador++ @endphp
+                        </td>
                         <td>{{ $seguimiento->comision->nombre }}</td>
                         <td>{{ $seguimiento->inicio }}</td>
                         <td>{{ $seguimiento->fin }}</td>

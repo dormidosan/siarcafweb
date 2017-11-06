@@ -17,7 +17,7 @@
             <div class="info-box">
                <span class="info-box-icon bg-orange"><i class="fa fa-file-text-o"></i></span>
                <div class="info-box-content">
-                  <span class="info-box-number">Peticiones</span>
+                  <span class="info-box-number">***Peticiones</span>
                   <a href="{{url('listado_peticiones_jd')}}">Acceder</a>
                </div>
                <!-- /.info-box-content -->
@@ -29,7 +29,7 @@
             <div class="info-box">
                <span class="info-box-icon bg-green"><i class="fa fa-book"></i></span>
                <div class="info-box-content">
-                  <span class="info-box-number">***Generar Bitacora</span>
+                  <span class="info-box-number">Generar Bitacora***</span>
                   <a href="#">Acceder</a>
                </div>
                <!-- /.info-box-content -->
@@ -54,7 +54,7 @@
             <div class="info-box">
                <span class="info-box-icon bg-red"><i class="fa fa-folder-o"></i></span>
                <div class="info-box-content">
-                  <span class="info-box-number">***Historial de Bitacoras</span>
+                  <span class="info-box-number">Historial de Bitacoras***</span>
                   <a href={{ url("/HistorialBitacoras") }}>Acceder</a>
                </div>
                <!-- /.info-box-content -->
@@ -79,7 +79,7 @@
             <div class="info-box">
                <span class="info-box-icon bg-maroon"><i class="fa fa-clone"></i></span>
                <div class="info-box-content">
-                  <span class="info-box-number">***Historial de Dictamenes</span>
+                  <span class="info-box-number">Historial de Dictamenes***</span>
                   <a href={{ url("/HistorialDictamenes") }}>Acceder</a>
                </div>
                <!-- /.info-box-content -->

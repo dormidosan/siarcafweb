@@ -50,15 +50,21 @@
                <table class="table table-hover text-center">
                   <thead>
                      <tr>
+                        <th>#</th>
                         <th>Nombre comision</th>
-                        <th>Fecha inicio</th>
-                        <th>Evento</th>
+                        <th>Fecha de asignacion</th>
                         <th>Descripcion</th>
                      </tr>
                   </thead>
+
                   <tbody id="cuerpoTabla">
+                     @php $contador =1 @endphp
                      @forelse($seguimientos as $seguimiento)
                      <tr>
+                        <td>
+                          {!! $contador !!}
+                          @php $contador++ @endphp
+                        </td>
                         <td>
                            <center>
                               {!! $seguimiento->comision->nombre !!}                  
@@ -66,9 +72,6 @@
                         </td>
                         <td>
                            {!! $seguimiento->inicio !!}  
-                        </td>
-                        <td>
-                           {!! "Asignacion a ".$seguimiento->comision->nombre !!}  
                         </td>
                         <td>
                            {!! $seguimiento->descripcion !!}  

@@ -39,6 +39,7 @@
                <table class="table text-center">
                   <thead>
                      <tr>
+                        <th>#</th>
                         <th>Peticion</th>
                         <th>Descripcion</th>
                         <th>Fecha de creación</th>
@@ -49,8 +50,13 @@
                      </tr>
                   </thead>
                   <tbody>
+                  @php $contador=1 @endphp
                      @forelse($peticiones as $peticion)
                      <tr>
+                        <td>
+                          {!! $contador !!}
+                          @php $contador++ @endphp
+                        </td>
                         <td>
                            <center>
                               {!! $peticion->nombre !!}

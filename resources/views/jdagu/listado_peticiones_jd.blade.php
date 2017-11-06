@@ -14,6 +14,7 @@
          <table class="table text-center table-bordered hover">
             <thead>
                <tr>
+                  <th>#</th>
                   <th>Peticion</th>
                   <th>Descripcion</th>
                   <th>Fecha de creación</th>
@@ -33,10 +34,15 @@
                       <td>Opcion</td>
                   </tr>
                   -->
+               @php $contador =1 @endphp
                @forelse($peticiones as $peticion)
                {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
                <tr>
                   {{ Form::hidden('id_peticion', $peticion->id) }}
+                  <td>
+                          {!! $contador !!}
+                          @php $contador++ @endphp
+                  </td>
                   <td>
                      <center>
                         {!! $peticion->nombre !!}                  
@@ -86,7 +92,7 @@
                      <!--
                         <a class="btn btn-info" href="#" role="button">Ver</a> 
                         -->
-                     <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar" value="Ver">
+                     <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar" value="***Ver">
                   </td>
                </tr>
                {!! Form::close() !!}
