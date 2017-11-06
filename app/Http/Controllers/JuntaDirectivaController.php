@@ -61,7 +61,7 @@ class JuntaDirectivaController extends Controller
     	$disco = "../storage/documentos/";
 
     	$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
-    	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');
+    	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');  // traer todas las comisiones menos la JD
     	$seguimientos = Seguimiento::where('peticion_id','=',$id_peticion)->where('activo', '=', 1)->get();
 
 		return view('jdagu.lista_asignacion')
@@ -75,28 +75,43 @@ class JuntaDirectivaController extends Controller
 		$id_peticion = $request->id_peticion;
 		$id_comision = $request->comisiones;
 		$descripcion = $request->descripcion;
-		$seguimiento = new Seguimiento();
+		
 		$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail();
 		$comision = Comision::where('id','=', $id_comision)->firstOrFail();
 
 
 		if (! $peticion->comisiones->contains($id_comision)) {
 
-			 
-
+			$seguimiento = new Seguimiento();
 			$seguimiento->peticion_id = $peticion->id;
 			$seguimiento->comision_id = $comision->id;
-			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "asignacion")->first()->id;
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "se")->first()->id; // SE Seguimiento
 			$seguimiento->inicio = Carbon::now();
 			//$seguimiento->fin = Carbon::now();
 			$seguimiento->activo = '1';
 			$seguimiento->agendado = '0';
 			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
-			$seguimiento->descripcion = "Asignado a ".$comision->nombre." - ".$descripcion;
+			$seguimiento->descripcion = "Control para la  ".$comision->nombre." - ".$descripcion;
 			$guardado = $seguimiento->save();
 			if($guardado){
 			$peticion->comisiones()->attach($id_comision); 	
 			}
+
+	
+			$seguimiento = new Seguimiento();
+			$seguimiento->peticion_id = $peticion->id;
+			$seguimiento->comision_id = $comision->id;
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "as")->first()->id; // AS Asignado
+			$seguimiento->inicio = Carbon::now();
+			$seguimiento->fin = Carbon::now();
+			$seguimiento->activo = '0';
+			$seguimiento->agendado = '0';
+			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+			$seguimiento->descripcion = "Asignado a ".$comision->nombre." - ".$descripcion;
+			$guardado = $seguimiento->save();
+			//if($guardado){
+			//$peticion->comisiones()->attach($id_comision); 	
+			//}
 			
 
 		}		
@@ -109,7 +124,7 @@ class JuntaDirectivaController extends Controller
 
 
 		$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
-    	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');
+    	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');  // traer todas las comisiones menos la JD
     	$seguimientos = Seguimiento::where('peticion_id','=',$id_peticion)->where('activo', '=', 1)->get();
 
 		return view('jdagu.lista_asignacion')

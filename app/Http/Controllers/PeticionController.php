@@ -191,7 +191,7 @@ class PeticionController extends Controller
 		
 		$seguimiento->comision_id = '1';
 
-		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id;  // CR estado creado
 		$seguimiento->inicio = Carbon::now();
 		$seguimiento->fin = Carbon::now();
 		$seguimiento->activo = '0';
@@ -207,7 +207,7 @@ class PeticionController extends Controller
 			$seguimiento->peticion_id = $peticion->id;
 			$seguimiento->comision_id = '1';
 
-			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id; // CR estado creado
 			$seguimiento->documento_id = $documento_seguimiento;
 			$seguimiento->inicio = Carbon::now();
 			$seguimiento->fin = Carbon::now();
