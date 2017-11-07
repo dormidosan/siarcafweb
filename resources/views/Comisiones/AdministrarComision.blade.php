@@ -22,7 +22,7 @@
                        class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                     <thead>
                     <tr>
-                        <th>Nombre Documento</th>
+                        <th>Nombre de Comision</th>
                         <th>Numero Integrantes</th>
                         <th>Integrantes</th>
                         <th>Administracion</th>

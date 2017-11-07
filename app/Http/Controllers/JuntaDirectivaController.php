@@ -20,8 +20,6 @@ class JuntaDirectivaController extends Controller
 {
     //
     public function trabajo_junta_directiva(){
-
-
         return view('jdagu.trabajo_junta_directiva');
     }
 
