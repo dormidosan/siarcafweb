@@ -9,6 +9,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Trabajo de Comision</h3>
         </div>
+
         <div class="box-body">
             <h4 class="text-center text-bold">Administrar trabajo de {{ $comision->nombre }}</h4>
             <br>
@@ -17,8 +18,13 @@
                     <div class="info-box">
                         <span class="info-box-icon bg-orange"><i class="fa fa-file-text-o"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-number">Puntos</span>
-                            <a href="{{url("/ListadoPuntosComision")}}">Acceder</a>
+                            <span class="info-box-number">Peticiones</span>
+                            <form id="listado_peticiones_comision" name="listado_peticiones_comision"
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
+                                {{ csrf_field() }}
+                                <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                                <a href="javascript:$('#listado_peticiones_comision').submit();">Acceder</a>
+                            </form>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -75,7 +81,7 @@
                         <span class="info-box-icon bg-yellow"><i class="fa fa-check-square-o"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-number">Asistencia</span>
+                            <span class="info-box-number">Reuniones</span>
                             <a href="{{url("/AsistenciaComision")}}">Acceder</a>
                         </div>
                         <!-- /.info-box-content -->
@@ -114,7 +120,7 @@
                 </tr>
                 </thead>
 
-                <tbody id="cuerpoTabla">
+                <tbody id="cuerpoTabla" class="text-red text-bold">
                 <tr>
                     <td>4</td>
                     <td>50</td>

@@ -67,6 +67,11 @@ class ComisionController extends Controller
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
     }
 
+    public function listado_peticiones_comision(Request $request){
+        $comision = $request->get("comision_id");
+        dd($comision);
+    }
+
 
                                           /******************** METODOS POST *********************************/
 
