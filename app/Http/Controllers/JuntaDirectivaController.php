@@ -14,6 +14,7 @@ use App\Peticion;
 use App\Comision;
 use App\Seguimiento;
 use App\EstadoSeguimiento;
+use App\Reunion;
 
 
 class JuntaDirectivaController extends Controller
@@ -31,6 +32,15 @@ class JuntaDirectivaController extends Controller
 
         return view('jdagu.listado_peticiones_jd')
         ->with('peticiones',$peticiones);
+    }
+
+    public function listado_reuniones_jd(){
+
+    	//$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+    	$reuniones = Reunion::where('id','!=',0)->where('comision_id','=','1')->orderBy('created_at','DESC')->get();
+
+        return view('jdagu.listado_reuniones_jd')
+        ->with('reuniones',$reuniones);
     }
 
     public function seguimiento_peticion_jd(Request $request,Redirector $redirect){
