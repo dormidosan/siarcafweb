@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DietasTableSeeder::class);
         $this->call(CargosTableSeeder::class);
         $this->call(EstadosTableSeeder::class);
+        $this->call(PeticionTableSeeder::class);
         
     }
 }

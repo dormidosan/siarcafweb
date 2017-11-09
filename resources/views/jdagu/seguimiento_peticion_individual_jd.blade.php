@@ -12,13 +12,7 @@
    </div>
    <div class="box-body">
       <div class="row">
-         <div class="col-lg-4 col-sm-12 col-md-4">
-            <div class="form-group">
-               <label>Nombre</label>
-               <input name="nombre" type="text" class="form-control" id="nombre"
-                  value="{{ $peticion->nombre }}" readonly>
-            </div>
-         </div>
+         
          <div class="col-lg-4 col-sm-12 col-md-4">
             <div class="form-group">
                <label>Fecha inicio</label>

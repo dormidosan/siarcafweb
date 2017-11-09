@@ -87,7 +87,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
-            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
@@ -246,10 +245,6 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
-        'Doctrine\\Common\\Inflector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
-        ),
         'Cron\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
@@ -307,6 +302,13 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
             'JakubOnderka\\PhpConsoleColor' => 
             array (
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
+            ),
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Inflector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
             ),
         ),
     );
@@ -917,6 +919,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'Page_Frame_Reflower' => __DIR__ . '/..' . '/dompdf/dompdf/include/page_frame_reflower.cls.php',
         'PclZip' => __DIR__ . '/..' . '/pclzip/pclzip/pclzip.lib.php',
         'PersonasTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PersonasTableSeeder.php',
+        'PeticionTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PeticionTableSeeder.php',
         'Positioner' => __DIR__ . '/..' . '/dompdf/dompdf/include/positioner.cls.php',
         'Renderer' => __DIR__ . '/..' . '/dompdf/dompdf/include/renderer.cls.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',

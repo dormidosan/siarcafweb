@@ -13,7 +13,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Peticion</th>
+                        <th>Codigo</th>
                         <th>Descripcion</th>
                         <th>Fecha de creación</th>
                         <th>Fecha actual</th>
@@ -43,7 +43,7 @@
                             </td>
                             <td>
                                 <center>
-                                    {!! $peticion->nombre !!}
+                                    {!! $peticion->codigo !!}
                                 </center>
                             </td>
                             <td>
