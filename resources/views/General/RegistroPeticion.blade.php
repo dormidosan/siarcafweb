@@ -18,14 +18,7 @@
             {{ csrf_field() }}
 
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-
-                            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" required>
-
-                        </div>
-                    </div>
+                  
                     
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -157,12 +150,7 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input name="nombre" type="text" class="form-control" id="nombre" value="{{ $peticion->nombre }}" readonly>
-                        </div>
-                    </div>
+                    
                     
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
