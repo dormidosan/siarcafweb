@@ -20,7 +20,7 @@
                         <div class="info-box-content">
                             <span class="info-box-number">Peticiones</span>
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
                                 {{ csrf_field() }}
                                 <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                 <a href="javascript:$('#listado_peticiones_comision').submit();">Acceder</a>
