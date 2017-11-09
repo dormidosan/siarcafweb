@@ -611,6 +611,7 @@ return array(
     'Page_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/page_frame_reflower.cls.php',
     'PclZip' => $vendorDir . '/pclzip/pclzip/pclzip.lib.php',
     'PersonasTableSeeder' => $baseDir . '/database/seeds/PersonasTableSeeder.php',
+    'PeticionTableSeeder' => $baseDir . '/database/seeds/PeticionTableSeeder.php',
     'Positioner' => $vendorDir . '/dompdf/dompdf/include/positioner.cls.php',
     'Renderer' => $vendorDir . '/dompdf/dompdf/include/renderer.cls.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',

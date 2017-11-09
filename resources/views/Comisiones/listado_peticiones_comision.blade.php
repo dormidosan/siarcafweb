@@ -1,11 +1,13 @@
 @extends('layouts.app')
+
 @section('styles')
     <link rel="stylesheet" href="{{ asset('') }}">
 @endsection
+
 @section("content")
-    <div class="box box-danger box-solid">
+    <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Puntos de Comision</h3>
+            <h3 class="box-title">Puntos de {{ $comision->nombre }}</h3>
         </div>
         <div class="box-body">
             <div class="table-responsive">
@@ -13,7 +15,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Codigo</th>
+                        <th>Peticion</th>
                         <th>Descripcion</th>
                         <th>Fecha de creación</th>
                         <th>Fecha actual</th>
@@ -23,41 +25,16 @@
                         <th>Acción</th>
                     </tr>
                     </thead>
-                    <tbody id="cuerpoTabla">
-                    <!--
-                       <tr>
-                           <td>Lo he dejado quemado para que</td>
-                           <td>no se vea solo :v</td>
-                           <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                           <td>Opcion</td>
-                       </tr>
-                       -->
+                    <tbody>
                     @php $contador =1 @endphp
-                    @forelse($peticiones as $peticion)
-                        {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
+                    @foreach($peticiones as $peticion)
                         <tr>
-                            {{ Form::hidden('id_peticion', $peticion->id) }}
-                            <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
-                            </td>
-                            <td>
-                                <center>
-                                    {!! $peticion->codigo !!}
-                                </center>
-                            </td>
-                            <td>
-                                {!! $peticion->descripcion !!}
-                            </td>
-                            <td>
-                                {!! $peticion->fecha !!}
-                            </td>
-                            <td>
-                                {!! Carbon\Carbon::now() !!}
-                            </td>
-                            <td>
-                                {!! $peticion->peticionario !!}
-                            </td>
+                            <td>{!! $contador !!}</td>
+                            <td>{{ $peticion->nombre }}</td>
+                            <td>{{ $peticion->descripcion }}</td>
+                            <td>{{ $peticion->fecha }}</td>
+                            <td>{{ \Carbon\Carbon::now() }}</td>
+                            <td>{{ $peticion->peticionario }}</td>
                             <td>
                                 {{-- Ultima asignacion --}}
                                 @php
@@ -87,27 +64,29 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                       value="***Ver">
+                                <form id="ver_peticion_comision" target="_blank">
+                                    {{ csrf_field() }}
+                                    <input type="submit" class="btn btn-info btn-xs btn-block" value="Ver">
+                                </form>
                             </td>
+                            @php $contador++ @endphp
                         </tr>
-                        {!! Form::close() !!}
-                    @empty
-                        <p style="color: red ;">No hay criterios de busqueda</p>
-                    @endforelse
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 @endsection
+
 @section("js")
     <script src="{{ asset('') }}"></script>
 @endsection
+
+
 @section("scripts")
     <script type="text/javascript">
         $(function () {
         });
     </script>
 @endsection
-
