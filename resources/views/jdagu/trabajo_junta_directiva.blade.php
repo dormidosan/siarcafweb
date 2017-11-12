@@ -68,7 +68,7 @@
                <span class="info-box-icon bg-yellow"><i class="fa fa-check-square-o"></i></span>
                <div class="info-box-content">
                   <span class="info-box-number">Reuniones</span>
-                  <a href="{{url('reunion_jd')}}">Acceder</a>
+                  <a href="{{url('listado_reuniones_jd')}}">Acceder</a>
                </div>
                <!-- /.info-box-content -->
             </div>

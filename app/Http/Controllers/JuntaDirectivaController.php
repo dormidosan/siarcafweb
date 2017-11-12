@@ -64,6 +64,9 @@ class JuntaDirectivaController extends Controller
         ->with('peticiones',$peticiones);
 	}
 
+
+
+
 	public function asignar_comision_jd(Request $request,Redirector $redirect){
     	$id_peticion = $request->id_peticion;
     	$disco = "../storage/documentos/";

@@ -34,7 +34,7 @@
                   -->
                @php $contador =1 @endphp
                @forelse($reuniones as $reunion)
-             {!! Form::open(['route'=>['#'],'method'=> 'POST']) !!}
+             {!! Form::open(['route'=>['reunion_jd'],'method'=> 'POST']) !!}
                <tr>
                   {{ Form::hidden('id_reunion', $reunion->id) }}
                   <td>
@@ -62,7 +62,7 @@
                      <!--
                         <a class="btn btn-info" href="#" role="button">Ver</a> 
                         -->
-                     @if($reunion->activa == 1)
+                     @if($reunion->vigente == 1)
                      <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar" value="***Ver">
                      @else
                      <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar" value="***Ver" disabled="disabled">

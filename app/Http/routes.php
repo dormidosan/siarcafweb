@@ -176,7 +176,9 @@ Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' 
 //Route::post('seguimiento_peticion_jd/{id_peticion}', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::get('seguimiento_peticion_individual_jd', array('as' => 'seguimiento_peticion_individual_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_individual_jd'));
-Route::get('reunion_jd', array('as' => 'reunion_jd', 'uses' => 'JuntaDirectivaController@reunion_jd'));
+Route::post('reunion_jd', array('as' => 'reunion_jd', 'uses' => 'JuntaDirectivaController@reunion_jd'));
+//Route::post('reunion_activa_jd', array('as' => 'reunion_activa_jd', 'uses' => 'JuntaDirectivaController@reunion_activa_jd'));
+
 Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' => 'JuntaDirectivaController@asignar_comision_jd'));
 Route::get('lista_asignacion', array('as' => 'lista_asignacion', 'uses' => 'JuntaDirectivaController@lista_asignacion'));
 Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'JuntaDirectivaController@enlazar_comision'));
