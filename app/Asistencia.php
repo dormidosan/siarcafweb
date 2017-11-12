@@ -10,7 +10,7 @@ class Asistencia extends Model
 	protected $table = 'asistencias';
 
 
-	
+	//LLAVES FORANEAS
 	public function agenda()
     {
         return $this->belongsTo('App\Agenda');

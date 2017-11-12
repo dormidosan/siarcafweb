@@ -15,6 +15,12 @@ class Reunion extends Model
         return $this->belongsToMany('App\Documento','documento_reunion')->withTimestamps();
     }
 	
+	public function cargos()
+    {
+        return $this->belongsToMany('App\Cargo','presentes')->withTimestamps();
+    }
+	
+    //LLAVES FORANEAS
 	public function comision()
     {
         return $this->belongsTo('App\Comision');

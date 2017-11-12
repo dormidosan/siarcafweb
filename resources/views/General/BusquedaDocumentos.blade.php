@@ -82,9 +82,10 @@
                 <thead>
                 <tr>
                     <th>Nombre Documento</th>
+                    <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
-                    <th>Opcion</th>
-                    <th>Opcion</th>
+                    <th>Visualizar</th>
+                    <th>Descargar</th>
                 </tr>
                 </thead>
 
@@ -98,13 +99,16 @@
                     <td>Opcion</td>
                 </tr>
 -->
-                
+              
             @forelse($documentos as $documento)
                 <tr>
                         <td>
                             <center>
                             {!! $documento->nombre_documento !!}
                             </center>
+                        </td>
+                        <td>
+                        {!! $documento->tipo_documento->tipo !!}
                         </td>
                         <td>
                         {!! $documento->fecha_ingreso !!}

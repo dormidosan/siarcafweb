@@ -11,6 +11,6 @@ class Facultad extends Model
 
 	public function asambleistas()
     {
-        return $this->hasMany('App\Asambleistas');
+        return $this->hasMany('App\Asambleista');
     }
 }

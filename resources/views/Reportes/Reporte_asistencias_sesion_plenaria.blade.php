@@ -17,7 +17,8 @@
             <h3 class="box-title">Reporte asistencias a sesiones plenarias</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="#">
+            <form id="buscarDocs" method="post" action="{{ url("buscar_asistencias") }}">
+              {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
@@ -51,7 +52,7 @@
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                        <button type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
                     </div>
                 </div>
             </form>

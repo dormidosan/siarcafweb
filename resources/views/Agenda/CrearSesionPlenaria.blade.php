@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-lg-6 text-center">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-primary">Iniciar Sesión Plenaria</button>
+                                <button type="button" class="btn btn-primary" onclick="mostrarModal()">Iniciar Sesión Plenaria</button>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
+                            <a class="btn btn-block btn-primary btn-xs" href="{{ url("GestionarAsistencia") }}">Ciencias Agónómicas</a>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-md-3">
                             <button type="button" class="btn btn-primary">Facultad 1</button>
@@ -155,7 +155,7 @@
     </div>
 
     </div>
-
+    @include("Modal.IniciarSesionPlenariaModal")
 @endsection
 
 @section("js")
@@ -197,5 +197,9 @@
 
             });
         });
+ /*Esta función permite mostrar el modal*/
+    function mostrarModal() {
+      $("#iniciarSesionPlenaria").modal('show')
+      }
     </script>
 @endsection

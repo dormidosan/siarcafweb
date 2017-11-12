@@ -13,7 +13,8 @@ class Peticion extends Model
     {
         return $this->hasMany('App\Seguimiento');
     }
-	
+
+
 	public function puntos()
     {
         return $this->hasMany('App\Punto');
@@ -28,6 +29,14 @@ class Peticion extends Model
     {
         return $this->belongsToMany('App\Documento','documento_peticion')->withTimestamps();
     }
+
+	//LLAVES FORANEAS
+	
+	public function estado_peticion()
+    {
+        return $this->belongsTo('App\EstadoPeticion');
+    }
+
 
 
 }

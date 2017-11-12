@@ -1,28 +1,46 @@
 @extends('layouts.app')
 
 @section("styles")
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section("content")
-
-    <div class="box box-solid box-default">
+    <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Administrar Integrantes de Comision</h3>
+            <h3 class="box-title">Administrar Integrantes de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ url("agregar_asambleistas_comision") }}">
+                {{ csrf_field() }}
+                <div class="row hidden">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="nombre">Comision</label>
+                            <input type="text" id="comision_id" name="comision_id" class="form-control" value="{{ $comision->id }}">
+                        </div>
+                    </div>
+                </div>
 
-            <form id="AgregarAsambleista" name="AgregarAsambleista" class="">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="nombre">Asambleista</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el nombre del Asambleista"
-                                   id="nombre"
-                                   name="nombre">
+                            <select id="asambleistas" name="asambleistas[]" class="form-control" multiple="multiple">
+                                @foreach($asambleistas as $asambleista)
+                                    <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -35,10 +53,10 @@
                     </div>
                 </div>
             </form>
-
             <br>
             <div class="table-responsive">
-                <table id="listado" class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                <table id="listado"
+                       class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                     <thead>
                     <tr>
                         <th>Nombre</th>
@@ -50,46 +68,38 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>Jonatan Benjamin Lopez Henriquez</td>
-                        <td>Estudiantil</td>
-                        <td>Ingenieria y Arquitectura</td>
-                        <td>Propetario</td>
-                        <td>
-                            <button class="btn btn-danger btn-block btn-xs">Retirar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jonatan Benjamin Lopez Henriquez</td>
-                        <td>Estudiantil</td>
-                        <td>Ingenieria y Arquitectura</td>
-                        <td>Propetario</td>
-                        <td>
-                            <button class="btn btn-danger btn-block btn-xs">Retirar</button>
-                        </td>
-                    </tr>
+                    @foreach($integrantes as $integrante)
+                        <tr>
+                            <td>{{ $integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido }}</td>
+                            <td>{{ $integrante->asambleista->sector->nombre }}</td>
+                            <td>{{ $integrante->asambleista->facultad->nombre }}</td>
+                            <td>{{ $integrante->cargo }}</td>
+                            <td>
+                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ url("retirar_asambleista_comision") }}">
+                                    {{ csrf_field() }}
+                                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                                    <input class="hidden" id="asambleista_id" name="asambleista_id" value="{{$integrante->asambleista_id}}">
+                                    <button class="btn btn-danger btn-xs">Retirar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
 
                 </table>
             </div>
-
         </div>
     </div>
 @endsection
 
-<style>
-    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
-</style>
-
 @section("js")
-    <!-- Datatables -->
     <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
-
 
 @section("scripts")
     <script type="text/javascript">
@@ -123,6 +133,22 @@
                 responsive: true
 
             });
+
+            $('#asambleistas').select2({
+                placeholder: 'Seleccione un asambleista',
+                language: "es",
+                width: '100%'
+            });
         });
     </script>
+@endsection
+
+@section("lobibox")
+
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
+
 @endsection

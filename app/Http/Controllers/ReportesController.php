@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportesRequest;
+use App\Http\Requests\ReportesPermisosTemporalesRequest;
+use App\Http\Requests\BuscarBitacoraCorrespRequest;
 use Illuminate\Support\Facades\DB;
 use PHPJasperXML;
-
 use Response;
+use App\Asambleista;
+use Carbon\Carbon;
+use App\Peticion;
 
 class ReportesController extends Controller
 {
@@ -21,29 +25,59 @@ class ReportesController extends Controller
 
     public function Reporte_permisos_temporales($tipo) 
     {
+
+
+dd($tipo);
+/*
+        $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
+        $verdescar=$parametros[0];
+        $id=$parametros[1];
+        $mes=$parametros[2];
+        $anio=$parametros[3];
+
+*/
+/*
       
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_temporales_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
+
+        $busqueda = DB::table('asambleistas')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->where('asambleistas.id','=', $id)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','sectores.nombre','personas.dui','personas.nit','personas.afp','personas.cuenta')->first();
+      
+       
+
+        $nombre1=$busqueda->primer_nombre;
+        $nombre2=$busqueda->segundo_nombre;
+        $apellido1=$busqueda->primer_apellido;
+        $apellido2=$busqueda->segundo_apellido;
+
+        $sector=$busqueda->nombre;
+        $dui=$busqueda->dui;
+        $nit=$busqueda->nit;
+        $afp=$busqueda->afp;
+        $cuenta=$busqueda->cuenta;
+
+        $nombrecompleto=$nombre1.' '.$nombre2.' '.$apellido1.' '.$apellido2;
+
+        dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
+
+        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio'))->render();
+        $pdf =\App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-        if($tipo==1)
+         if($verdescar==1)
         {
             return $pdf->stream('reporte');
-
         }
-        if($tipo==2)
+        if($verdescar==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
+*/
     }
 
     public function Reporte_permisos_permanentes($tipo) 
@@ -254,8 +288,115 @@ class ReportesController extends Controller
      return view("Reportes.Reporte_planilla_dieta",['resultados'=>NULL]);
     }
 
+
+       public function buscar_permisos_temporales(ReportesPermisosTemporalesRequest $request){
+
+        
+      //  dd($request->all());
+
+
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;
+        
+        $fechafinal=str_replace('/','-',$fechafinal);
+       // $fechainicial=date('Y-m-d');
+       //$fechafinal=date('Y-m-d');
+        dd($fechafinal);
+if($request->nombre==''){
+
+
+        $resultados = DB::table('asambleistas')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('permisos','permisos.asambleista_id','=','asambleistas.id')
+        ->whereBetween('permisos.fecha_permiso', [$fechainicial,$fechafinal])
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre')->limit(1)->get();
+        DB::enableQueryLog();
+        $log = DB::getQueryLog();
+        var_dump($log);
+      // dd($resultados);
+/*
+        $resultados = Asambleista::join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('permisos','permisos.asambleista_id','=','asambleistas.id')
+        ->where('permisos.fecha_permiso','=>', $fechainicial)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre')->limit(1)->get();*/
+/*
+->where('permisos.fecha_permiso','=>', $fechainicial)
+        ->where('permisos.fecha_permiso','=<', $fechafinal)
+ $resultados = DB::table('dietas')
+        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->limit(1)->get();
+
+*/
+
+if(!($resultados==NULL)){
+         return view("Reportes.Reporte_permisos_temporales")
+         ->with('resultados',$resultados);
+}
+
+}
+
+else{
+        $resultados = DB::table('dietas')
+        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')        
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->limit(1)->get();
+
+
+if(!($resultados==NULL)){
+         return view("Reportes.Reporte_permisos_temporales")
+         ->with('resultados',$resultados)
+         ->with('tipo',$request->tipoDocumento);
+}
+
+}
+
+
+      return view("Reportes.Reporte_permisos_temporales",['resultados'=>NULL]);
+    }
+
+
+
     
- 
+
+
+
+ public function buscar_bitacora_correspondencia(BuscarBitacoraCorrespRequest $request){
+
+$resultados = DB::table('peticiones')->get();
+
+//dd($resultados);
+
+if(!($resultados==NULL)){
+         return view("Reportes.Reporte_bitacora_correspondencia")
+         ->with('resultados',$resultados);
+}
+
+return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
       public function Reporte_planilla_dieta($tipo) 
     {
       

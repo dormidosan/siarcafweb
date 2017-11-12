@@ -15,9 +15,8 @@ class CreateParametrosTable extends Migration
         Schema::create('parametros', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('iva', 45)->nullable();
-            $table->string('renta', 45)->nullable();
-            $table->string('p_asistencia', 45)->nullable();
+            $table->string('parametro', 45)->nullable();
+            $table->float('valor',4,2 )->nullable();
             $table->timestamps();
         });
     }

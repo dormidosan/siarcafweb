@@ -20,6 +20,7 @@ class CreateCargosTable extends Migration
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->string('cargo', 15)->nullable();
+            $table->boolean('activo')->nullable();
 
             $table->index(["asambleista_id"], 'fk_asambleista_comision_asambleistas1_idx');
 

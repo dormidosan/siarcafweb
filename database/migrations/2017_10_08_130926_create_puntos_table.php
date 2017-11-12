@@ -16,7 +16,7 @@ class CreatePuntosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('agenda_id');
-            $table->unsignedInteger('peticion_id');
+            $table->unsignedInteger('peticion_id')->nullable();
             $table->string('descripcion', 45)->nullable();
             $table->char('romano', 4)->nullable();
             $table->smallInteger('numero')->nullable();

@@ -10,7 +10,7 @@ class Propuesta extends Model
 	protected $table = 'propuestas';
 
 	
-	
+    //LLAVES FORANEAS	
 	public function punto()
     {
         return $this->belongsTo('App\Punto');

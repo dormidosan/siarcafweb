@@ -12,6 +12,7 @@
             <h3 class="box-title">Crear Comision</h3>
         </div>
         <div class="box-body">
+            {{--
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <p>Por favor, corriga los siguientes errores:</p>
@@ -21,16 +22,17 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif--}}
 
             <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
-                                   name="nombre">
+                                   name="nombre" value="{{old("nombre")}}">
+                            <span class="text-danger">{{ $errors->first('nombre') }}</span>
                         </div>
                     </div>
                 </div>
@@ -72,8 +74,16 @@
                                 <i class="fa fa-check text-success text-bold" aria-hidden="true"></i>
                             @endif
                         </td>
+
+                        @php $contador = 0 @endphp
+
+                        @foreach($cargos as $cargo)
+                            @if($cargo->comision_id == $comision->id && $cargo->activo == 1)
+                                @php $contador++ @endphp
+                            @endif
+                        @endforeach
                         <td>
-                            {{ $comision->cargos()->count() }}
+                            {{ $contador }}
                         </td>
                         <td>
                             @if($comision->permanente == 0)
@@ -134,7 +144,7 @@
                 url: "{{ route("actualizar_comision") }}",
                 data: {"id": id},
                 success: function (response) {
-                    notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
                 }
             });
         }

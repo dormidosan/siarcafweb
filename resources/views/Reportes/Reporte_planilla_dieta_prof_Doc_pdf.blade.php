@@ -157,10 +157,6 @@
                       <td> - </td>
                       <td>$ -  </td>                      
                     </tr>                 
-                               
-                             
-                 
-                
                        @php $i=$i+1 @endphp
    @endforeach          
     <tr>                                     

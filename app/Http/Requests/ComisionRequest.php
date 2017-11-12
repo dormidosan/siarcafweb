@@ -36,7 +36,9 @@ class ComisionRequest extends Request
     public function messages()
     {
         return [
-            'nombre.required' => 'El nombre de la comision es requerido'
+            'nombre.required' => 'El nombre de la comision es requerido',
+            'nombre.max' => 'El nombre de la comision no debe de exceder los 50 caracteres'
+
         ];
     }
 }

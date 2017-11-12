@@ -2309,6 +2309,14 @@
                 "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
                 "shasum": ""
             },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "^6.1"
+            },
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -2330,7 +2338,7 @@
                 "php",
                 "zip"
             ],
-            "time": "2014-06-05T11:42:24+00:00"
+            "time": "2017-06-22T19:01:19+00:00"
         },
         {
             "name": "phenx/php-font-lib",
