@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="box box-solid box-default">
+    <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Trabajo de Comision</h3>
         </div>
@@ -23,7 +23,7 @@
                                   method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
                                 {{ csrf_field() }}
                                 <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
-                                <a href="javascript:$('#listado_peticiones_comision').submit();">Acceder</a>
+                                <button type="submit" class="btn btn-xs btn-info">Acceder</button>
                             </form>
                         </div>
                         <!-- /.info-box-content -->
@@ -60,6 +60,23 @@
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
+
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="text-center">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <h3 class="profile-username text-center">Peticiones</h3>
+                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                </div>
 
                 <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-1">
                     <div class="info-box">
