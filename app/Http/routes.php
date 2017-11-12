@@ -39,8 +39,10 @@ Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asa
 Route::post('trabajo_comision', 'ComisionController@trabajo_comision')->name("trabajo_comision");
 Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
 Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
-Route::post('/listado_peticiones_comision', 'ComisionController@listado_peticiones_comision')->name("listado_peticiones_comision");
+Route::post('listado_peticiones_comision', 'ComisionController@listado_peticiones_comision')->name("listado_peticiones_comision");
 Route::post('seguimiento_peticion_comision', 'ComisionController@seguimiento_peticion_comision')->name("seguimiento_peticion_comision");
+Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_comision')->name("listado_reuniones_comision");
+Route::post('reunion_comision', 'ComisionController@reunion_comision')->name("reunion_comision");
 
 
 //rutas q aun no uso
