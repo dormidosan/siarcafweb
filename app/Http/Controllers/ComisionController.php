@@ -7,6 +7,7 @@ use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Peticion;
+use App\Reunion;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ComisionController extends Controller
         return ["comision" => $comision, "integrantes" => $integrantes, "asambleistas" => $asambleistas];
     }
 
-                                         /******************** METODOS GET *********************************/
+    /******************** METODOS GET *********************************/
 
     //mostrar las comisiones activas e inactivas
     public function mostrar_comisiones()
@@ -68,15 +69,15 @@ class ComisionController extends Controller
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
     }
 
-    public function listado_peticiones_comision(Request $request){
+    /******************** METODOS POST *********************************/
+
+    public function listado_peticiones_comision(Request $request)
+    {
         //obtengo una comision
         $comision = Comision::find($request->get("comision_id"));
         $peticiones = $comision->peticiones;
-        return view("Comisiones.listado_peticiones_comision",["comision"=>$comision,"peticiones"=>$peticiones]);
+        return view("Comisiones.listado_peticiones_comision", ["comision" => $comision, "peticiones" => $peticiones]);
     }
-
-
-                                          /******************** METODOS POST *********************************/
 
     //mostrar listado de las comisiones, con su total de integrantes
     public function gestionar_asambleistas_comision(Request $request)
@@ -177,7 +178,9 @@ class ComisionController extends Controller
 
     }
 
-    public function seguimiento_peticion_comision(){
+    public function listado_reuniones_comision(Request $request){
+        $reuniones = Reunion::where('id','!=',0)->where('comision_id',$request->comision_id)->orderBy('created_at','DESC')->get();
 
+        return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones]);
     }
 }

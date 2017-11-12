@@ -6,13 +6,12 @@
 <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
 @endsection
 @section("content")
-<div class="box box-danger box-solid">
+<div class="box box-danger">
    <div class="box-header">
       <h3 class="box-title">Seguimiento</h3>
    </div>
    <div class="box-body">
       <div class="row">
-         
          <div class="col-lg-4 col-sm-12 col-md-4">
             <div class="form-group">
                <label>Fecha inicio</label>
