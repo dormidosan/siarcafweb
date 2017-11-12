@@ -61,7 +61,7 @@
                     <div class="col-sm-3 col-lg-3 text-center">
                         <div class="form-group {{ $errors->has('foto') ? 'has-error' : '' }}">
                             <div class="kv-avatar">
-                                <input id="foto" name="foto" type="file" accept="image/png, image/jpeg">
+                                <input id="foto" name="foto" type="file" accept="image/*">
                                 <span class="text-danger">{{ $errors->first('foto') }}</span>
                             </div>
                         </div>

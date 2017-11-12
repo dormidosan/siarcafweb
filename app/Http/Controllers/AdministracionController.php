@@ -39,7 +39,10 @@ class AdministracionController extends Controller
         $persona->segundo_apellido = $request->get("segundo_apellido");
         $persona->dui = $request->get("dui");
         $persona->nit = $request->get("nit");
+
         //sentencia para agregar la foto
+        //$persona->foto = $request->get("foto");
+
         $persona->afp = $request->get("afp");
         $persona->cuenta = $request->get("cuenta");
         $persona->save();
