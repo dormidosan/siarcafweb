@@ -17,9 +17,16 @@ class CreateReunionesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('comision_id');
             $table->unsignedInteger('periodo_id');
+
+            $table->string('codigo', 10)->nullable();
+            $table->string('lugar', 30)->nullable();
+            $table->date('convocatoria')->nullable();
+
             $table->dateTime('inicio')->nullable();
             $table->dateTime('fin')->nullable();
+            $table->boolean('vigente')->nullable();
             $table->boolean('activa')->nullable();
+
 
             $table->index(["comision_id"], 'fk_bitacora_comision_comisiones1_idx');
 

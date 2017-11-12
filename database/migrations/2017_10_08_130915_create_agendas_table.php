@@ -16,7 +16,7 @@ class CreateAgendasTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('periodo_id');
-            $table->integer('codigo')->nullable();
+            $table->string('codigo',15)->nullable();
             $table->date('fecha')->nullable();
             $table->boolean('trascendental')->nullable();
             $table->boolean('vigente')->nullable();

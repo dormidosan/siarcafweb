@@ -19,8 +19,9 @@ class CreateAsistenciasTable extends Migration
             $table->unsignedInteger('asambleista_id');
             $table->unsignedInteger('estado_asistencia_id');
 
-            $table->dateTime('entrada')->nullable();
-            $table->dateTime('salida')->nullable();
+            $table->Time('entrada')->nullable();
+            $table->Time('salida')->nullable();
+            $table->boolean('propietario')->nullable();
 
             $table->index(["asambleista_id"], 'fk_asistencias_asambleistas1_idx');
 

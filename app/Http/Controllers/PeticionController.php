@@ -219,6 +219,9 @@ class PeticionController extends Controller
 			$seguimiento->save();
 		}
 
+
+		// La JD siempre debe tener el seguimiento para la peticion
+
 		$seguimiento = new Seguimiento();
 
 		$seguimiento->peticion_id = $peticion->id;
@@ -226,6 +229,7 @@ class PeticionController extends Controller
 		$seguimiento->comision_id = '1';
 
 		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "se")->first()->id;  // CR estado creado
+		// La JD siempre debe tener el seguimiento para la peticion
 		$seguimiento->inicio = Carbon::now();
 		$seguimiento->fin = Carbon::now();
 		$seguimiento->activo = '0';
@@ -239,6 +243,7 @@ class PeticionController extends Controller
 		$seguimiento->peticion_id = $peticion->id;
 		$seguimiento->comision_id ='1';
 		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "as")->first()->id; // AS Asignado
+		// La JD siempre debe tener el seguimiento para la peticion
 		$seguimiento->inicio = Carbon::now();
 		$seguimiento->fin = Carbon::now();
 		$seguimiento->activo = '0';
