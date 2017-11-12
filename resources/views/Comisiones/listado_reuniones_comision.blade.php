@@ -64,7 +64,7 @@
                                                     class="fa fa-eye"></i> Ver
                                         </button>
                                     @else
-                                        <button type="submit" class="btn btn-info btn-xs btn-block disabled"><i
+                                        <button type="submit" class="btn btn-info btn-xs btn-block" disabled><i
                                                     class="fa fa-eye"></i> Ver
                                         </button>
                                     @endif
