@@ -308,6 +308,7 @@ class PeticionTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
+
 		\DB::table('comision_peticion')->insert(array (
 		'comision_id'  => $h,
 		'peticion_id'  => '6',
@@ -315,11 +316,9 @@ class PeticionTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
+
 		}
 		
-
-
-
 
     }
 }
