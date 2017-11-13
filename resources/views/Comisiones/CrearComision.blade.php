@@ -30,9 +30,13 @@
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
-                            <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
-                                   name="nombre" value="{{old("nombre")}}">
+                            <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre" name="nombre" value="{{old("nombre")}}">
                             <span class="text-danger">{{ $errors->first('nombre') }}</span>
+                        </div>
+                        <div class="form-group ">
+                            <label>codigo Comision <span class="text-red text-bold">*</span></label>
+                            <input type="text" class="form-control" placeholder="Ingrese un codigo" id="codigo" name="codigo" >
+                            <span class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -56,6 +60,7 @@
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead class="text-bold">
                 <tr>
+                    <th>Codigo</th>
                     <th>Nombre de Comisión</th>
                     <th>Permanente</th>
                     <th>Integrantes</th>
@@ -68,7 +73,9 @@
                 <tbody id="cuerpoTabla">
                 @foreach($comisiones as $comision)
                     <tr>
+                        <td>{{ $comision->codigo }}</td>
                         <td>{{ $comision->nombre }}</td>
+
                         <td>
                             @if($comision->permanente == 1)
                                 <i class="fa fa-check text-success text-bold" aria-hidden="true"></i>

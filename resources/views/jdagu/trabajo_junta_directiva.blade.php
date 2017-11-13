@@ -43,7 +43,7 @@
                <span class="info-box-icon bg-aqua"><i class="fa fa-envelope"></i></span>
                <div class="info-box-content">
                   <span class="info-box-number">Convocatorias</span>
-                  <a href="{{ url("ConvocatoriaComision") }}">Acceder</a>
+                  <a href="{{ url('convocatoria_jd') }}">Acceder</a>
                </div>
                <!-- /.info-box-content -->
             </div>

@@ -171,7 +171,8 @@ Route::get('trabajo_junta_directiva', function () {
 });
 */
 Route::get('crear_convocatoria', array('as' => 'crear_convocatoria', 'uses' => 'MailController@crear_convocatoria'));
-Route::post('mailing', array('as' => 'mailing', 'uses' => 'MailController@mailing'));
+Route::get('convocatoria_jd', array('as' => 'convocatoria_jd', 'uses' => 'MailController@convocatoria_jd'));
+Route::post('mailing_jd', array('as' => 'mailing_jd', 'uses' => 'MailController@mailing_jd'));
 Route::get('trabajo_junta_directiva', array('as' => 'trabajo_junta_directiva', 'uses' => 'JuntaDirectivaController@trabajo_junta_directiva'));
 Route::get('listado_peticiones_jd', array('as' => 'listado_peticiones_jd', 'uses' => 'JuntaDirectivaController@listado_peticiones_jd'));
 Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' => 'JuntaDirectivaController@listado_reuniones_jd'));

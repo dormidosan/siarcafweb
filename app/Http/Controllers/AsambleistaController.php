@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Storage;
 
 class AsambleistaController extends Controller
 {
@@ -24,7 +25,9 @@ class AsambleistaController extends Controller
                         ->where("periodos.activo","=",1)
                         ->get();
         //dd($asambleistas);
-        return view("Asambleistas.ListadoAsambleistaFacultad",["facultades"=>$facultades,"asambleistas"=>$asambleistas]);
+        $fotos = "../storage/fotos/";
+
+        return view("Asambleistas.ListadoAsambleistaFacultad",["facultades"=>$facultades,"asambleistas"=>$asambleistas,"fotos"=>$fotos]);
     }
 
     //Muestra todos los asambleistas de un periodo activo por comision

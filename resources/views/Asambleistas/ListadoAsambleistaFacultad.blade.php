@@ -41,7 +41,7 @@
                                                         <td style="vertical-align: middle">{{ $i }}</td>
                                                         <td>
                                                             <div class="center-block">
-                                                                <img src="{{ asset('images/default-user.png') }}"
+                                                                <img src="{!!$fotos!!}{!!$asambleista->user->persona->foto!!}"
                                                                      class="img-responsives" width="70px"
                                                                      style="margin-left: 25px !important; "
                                                                      alt="User Image">

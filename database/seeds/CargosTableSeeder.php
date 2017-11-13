@@ -40,7 +40,7 @@ class CargosTableSeeder extends Seeder
 		));
 
 
-    	for($j = 3 ; $j < 27 ; $j ++){
+    	for($j = 3 ; $j < 6 ; $j ++){
 
     	\DB::table('cargos')->insert(array (
 		'comision_id'  => '1',

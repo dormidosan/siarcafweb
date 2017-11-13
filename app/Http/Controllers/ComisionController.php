@@ -90,6 +90,7 @@ class ComisionController extends Controller
     public function crear_comision(ComisionRequest $request)
     {
         $comision = new Comision();
+        $comision->codigo = $request->get("codigo");
         $comision->nombre = $request->get("nombre");
         $comision->permanente = 0; //0: transitoria, 1: permanente
         $comision->descripcion = $request->get("nombre");
