@@ -10,7 +10,7 @@
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Consultar Bitacoras</h3>
+            <h3 class="box-title">Historial de  Bitacoras</h3>
         </div>
         <div class="box-body">
             <form id="crearbuscar" name="buscar" method="post" action="#">

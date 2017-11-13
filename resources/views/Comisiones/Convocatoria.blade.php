@@ -6,9 +6,9 @@
 @endsection
 
 @section("content")
-    <div class="box box-solid box-default">
+    <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Convocatoria de Comision</h3>
+            <h3 class="box-title">Generar Convocatoria</h3>
         </div>
         <div class="box-body">
             <form id="convocatoria" method="post" action="{{ url('mailing') }}">

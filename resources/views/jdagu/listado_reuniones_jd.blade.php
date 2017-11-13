@@ -47,15 +47,14 @@
                                 {!! $reunion->fin !!}
                             </td>
                             <td>
-                                <!--
-                                   <a class="btn btn-info" href="#" role="button">Ver</a>
-                                   -->
                                 @if($reunion->vigente == 1)
-                                    <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                           value="***Ver">
+                                    <button type="submit" class="btn btn-primary btn-xs btn-block"><i
+                                                class="fa fa-eye"></i> Ver
+                                    </button>
                                 @else
-                                    <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                           value="***Ver" disabled="disabled">
+                                    <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Ver
+                                    </button>
                                 @endif
                             </td>
                         </tr>
