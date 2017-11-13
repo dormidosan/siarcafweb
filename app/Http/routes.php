@@ -45,6 +45,7 @@ Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_
 Route::post('reunion_comision', 'ComisionController@reunion_comision')->name("reunion_comision");
 
 
+
 //rutas q aun no uso
 Route::get('/HistorialBitacoras', function () {
     return view('Comisiones.HistorialBitacoras');

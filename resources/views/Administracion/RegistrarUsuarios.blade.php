@@ -61,7 +61,9 @@
                     <div class="col-sm-3 col-lg-3 text-center">
                         <div class="form-group {{ $errors->has('foto') ? 'has-error' : '' }}">
                             <div class="kv-avatar">
-                                <input id="foto" name="foto" type="file" accept="image/*">
+                                <div class="file-loading">
+                                    <input id="foto" name="foto" type="file" accept="image/*">
+                                </div>
                                 <span class="text-danger">{{ $errors->first('foto') }}</span>
                             </div>
                         </div>
@@ -237,7 +239,7 @@
                 defaultPreviewContent: '<img src="{{ asset('images/default-user.png') }}" alt="Your Avatar" class="img-responsive">',
                 //layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
                 layoutTemplates: {main2: '{preview} ' + ' {remove} {browse}'},
-                allowedFileExtensions: ["jpg", "png", "gif"],
+                allowedFileExtensions: ["jpg", "png", "gif","jpeg"],
                 fileActionSettings: {
                     showRemove: false,
                     showUpload: false,
