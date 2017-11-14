@@ -38,10 +38,16 @@
                     <button type="button" id="iniciar" name="iniciar" class="btn btn-success btn-block">Iniciar</button>
                 </div>
 -->
+                 {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!}
+                
+
+                {{ Form::hidden('id_reunion', $reunion->id) }}
+                {{ Form::hidden('id_comision', $comision->id) }}
                 <div class="col-lg-4 col-sm-12">
-                    <button type="button" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Finalizar
+                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar
                     </button>
                 </div>
+                {!! Form::close() !!}
             </div>
             <br>
             <div class="panel panel-default">

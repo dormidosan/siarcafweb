@@ -77,7 +77,7 @@ class JuntaDirectivaController extends Controller
     	$cargos = Cargo::where('comision_id','=',$request->id_comision)->where('activo', '=', 1)->get();
     	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
     	$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
-		dd($cargos);
+		//dd($cargos);
     	return view('jdagu.lista_presentes_jd')
         ->with('cargos',$cargos)
         ->with('reunion',$reunion)
@@ -85,7 +85,23 @@ class JuntaDirectivaController extends Controller
 
 	}
 
-	
+	public function finalizar_reunion_jd(Request $request,Redirector $redirect){
+
+    	//$cargos = Cargo::where('comision_id','=',$request->id_comision)->where('activo', '=', 1)->get();
+    	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    	$reunion->activa = '0';
+    	$reunion->vigente = '0';
+    	$reunion->save();
+    	//$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+		//dd($cargos);
+    	$reuniones = Reunion::where('id','!=',0)->where('comision_id','=',$request->id_comision)->orderBy('created_at','DESC')->get();
+
+        return view('jdagu.listado_reuniones_jd')
+        ->with('reuniones',$reuniones);
+
+	}
+
+
 
 	public function asignar_comision_jd(Request $request,Redirector $redirect){
     	$id_peticion = $request->id_peticion;
