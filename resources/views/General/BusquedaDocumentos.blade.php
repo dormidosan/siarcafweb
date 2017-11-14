@@ -9,55 +9,49 @@
 @endsection
 
 @section('content')
-
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Busqueda de Documentos</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="{{ url('buscar_documento') }}" >
-            {{ csrf_field() }}
+
+            <form id="buscarDocs" method="post" action="{{ url('buscar_documento') }}">
+                {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Numero</label>
-                            <input type="text" class="form-control" placeholder="Ingrese numero" id="numero"
-                                   name="numero">
+                            <label>Nombre Documento</label>
+                            <input type="text" class="form-control" placeholder="Ingrese nombre" id="nombre_documento"
+                                   name="nombre_documento">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+                    <div class="col-lg-3 col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Tipo de Documento</label>
-<!--
-                            <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                <option value="acta">Acta</option>
-                                <option value="dictamen">Dictamen</option>
-                                </select>
--->
-                    {!! Form::select('tipo_documentos',$tipo_documentos,null,
-                    ['id'=>'tipo_documento',
-                     'class'=>'form-control',
-                     'required'=>'required',
-                     'placeholder' => 'Seleccione tipo documento...']) !!}
- 
-                            
+                            <select id="tipo_documento" name="tipo_documento" class="form-control" required>
+                                <option value="">--Seleccione una opcion--</option>
+                                @foreach($tipo_documentos as $tipo_documento)
+                                    <option value="{{ $tipo_documento->id }}">{{ $tipo_documento->tipo}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+
+                    <div class="col-lg-3 col-sm-12 col-md-3">
                         <label>Periodo AGU</label>
                         <select class="form-control" id="periodo" name="periodo">
                             <option value="">--Seleccione una opcion --</option>
-                            <option value="">2017-</option>
-                            <option value="">2015-2017</option>
-                            <option value="">2013-2015</option>
+                            @foreach($periodos as $periodo)
+                                <option value="{{ $periodo->id }}">{{ $periodo->nombre_periodo }}</option>
+                            @endforeach
                         </select>
                     </div>
+
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label>Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Ingrese una palabra clave"
-                                   id="descripcion" name="descripcion">
+                            <textarea type="text" class="form-control" placeholder="Ingrese palabras clave"
+                                      id="descripcion" name="descripcion"></textarea>
                         </div>
                     </div>
                 </div>
@@ -69,7 +63,6 @@
                 </div>
             </form>
         </div>
-        <!-- /.box-body -->
     </div>
 
     <div class="box box-solid box-default">
@@ -78,7 +71,7 @@
         </div>
         <div class="box-body table-responsive">
             <table id="resultadoDocs"
-                   class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                   class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
                     <th>Nombre Documento</th>
@@ -91,46 +84,31 @@
 
                 <tbody id="cuerpoTabla">
 
- <!--
-                <tr>
-                    <td>Lo he dejado quemado para que</td>
-                    <td>no se vea solo :v</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                    <td>Opcion</td>
-                </tr>
--->
-              
-            @forelse($documentos as $documento)
-                <tr>
+                @foreach($documentos as $documento)
+                    <tr>
                         <td>
-                            <center>
                             {!! $documento->nombre_documento !!}
-                            </center>
+
                         </td>
                         <td>
-                        {!! $documento->tipo_documento->tipo !!}
+                            {!! $documento->tipo_documento->tipo !!}
                         </td>
                         <td>
-                        {!! $documento->fecha_ingreso !!}
+                            {!! $documento->fecha_ingreso !!}
                         </td>
                         <td>
-                            <a class="btn btn-info" href="<?= $disco.$documento->path; ?>" role="button">Ver</a>
+                            <a class="btn btn-primary btn-xs btn-block" href="<?= $disco . $documento->path; ?>"
+                               role="button"><i class="fa fa-eye"></i> Ver</a>
                         </td>
                         <td>
-                            <a class="btn btn-success" href="descargar_documento/<?= $documento->id; ?>" role="button">Descargar</a>
+                            <a class="btn btn-success btn-xs btn-block"
+                               href="descargar_documento/<?= $documento->id; ?>" role="button"><i
+                                        class="fa fa-download"></i> Descargar</a>
                         </td>
-                 </tr>
-
-
-            @empty
-                <p style="color: red ;">No hay criterios de busqueda</p>
-            @endforelse
-
-
+                    </tr>
+                @endforeach
                 </tbody>
-
             </table>
-
         </div>
     </div>
 
@@ -184,5 +162,17 @@
 
             });
         });
+    </script>
+
+    <script>
+        var currentOption = null;
+        for(var i=0; i!=document.querySelector("#tipo_documento").querySelectorAll("option").length; i++)
+        {
+            currentOption = document.querySelector("#tipo_documento").querySelectorAll("option")[i];
+            if(currentOption.getAttribute("value") == "{{ old("tipo_documento") }}")
+            {
+                currentOption.setAttribute("selected","selected");
+            }
+        }
     </script>
 @endsection
