@@ -15,6 +15,7 @@ use App\Comision;
 use App\Seguimiento;
 use App\EstadoSeguimiento;
 use App\Reunion;
+use App\Cargo;
 
 
 class JuntaDirectivaController extends Controller
@@ -60,9 +61,31 @@ class JuntaDirectivaController extends Controller
     public function reunion_jd(Request $request,Redirector $redirect){
     	$peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
     	
+    	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    	$reunion->activa = '1';
+    	$reunion->save();
+    	$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
 		return view('jdagu.reunion_jd')
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
         ->with('peticiones',$peticiones);
 	}
+
+	public function presentes_jd(Request $request,Redirector $redirect){
+
+    	$cargos = Cargo::where('comision_id','=',$request->id_comision)->where('activo', '=', 1)->get();
+    	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    	$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+		dd($cargos);
+    	return view('jdagu.lista_presentes_jd')
+        ->with('cargos',$cargos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision);
+
+	}
+
+	
 
 	public function asignar_comision_jd(Request $request,Redirector $redirect){
     	$id_peticion = $request->id_peticion;

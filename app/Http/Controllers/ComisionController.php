@@ -64,7 +64,10 @@ class ComisionController extends Controller
     //mostrar las comisiones activas
     public function administrar_comisiones()
     {
-        $comisiones = Comision::where("activa", 1)->get();
+        //obtener las comisiones, omitiendo la JD
+        $comisiones = Comision::where("activa", 1)
+            ->where("id","!=",1)
+            ->get();
         $cargos = Cargo::all();
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
     }
@@ -183,5 +186,13 @@ class ComisionController extends Controller
         $reuniones = Reunion::where('id','!=',0)->where('comision_id',$request->comision_id)->orderBy('created_at','DESC')->get();
 
         return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones]);
+    }
+
+    //PENDIENTE DE TRAER LAS PETICIONES
+    public function reunion_comision(Request $request){
+        $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+
+        return view('Comisiones.reunion_comision')
+            ->with('peticiones',$peticiones);
     }
 }

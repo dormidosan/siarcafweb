@@ -95,7 +95,7 @@ dd($destinos);
       $reunion->activa = '0';
       //date('j-m-y'); Carbon::now()->format('Y-m-d H:i:s')
       $reunion->save();
-      dd($reunion);
+      //dd($reunion);
       foreach ($cargos as $cargo) {
         $destinatario = $cargo->asambleista->user->email;
         $nombre = $cargo->asambleista->user->persona->primer_nombre." ".$cargo->asambleista->user->persona->segundo_nombre;

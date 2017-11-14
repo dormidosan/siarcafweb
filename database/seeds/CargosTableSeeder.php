@@ -25,6 +25,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Coordinador",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -35,6 +36,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Secretario",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -48,6 +50,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Asambleista",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -60,6 +63,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Coordinador",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -70,6 +74,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Secretario",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -83,6 +88,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Asambleista",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));

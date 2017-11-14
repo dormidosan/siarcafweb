@@ -45,6 +45,7 @@ Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_
 Route::post('reunion_comision', 'ComisionController@reunion_comision')->name("reunion_comision");
 
 
+
 //rutas q aun no uso
 Route::get('/HistorialBitacoras', function () {
     return view('Comisiones.HistorialBitacoras');
@@ -180,6 +181,9 @@ Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' 
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::get('seguimiento_peticion_individual_jd', array('as' => 'seguimiento_peticion_individual_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_individual_jd'));
 Route::post('reunion_jd', array('as' => 'reunion_jd', 'uses' => 'JuntaDirectivaController@reunion_jd'));
+
+Route::post('presentes_jd', array('as' => 'presentes_jd', 'uses' => 'JuntaDirectivaController@presentes_jd'));
+Route::post('presentes_jd', array('as' => 'presentes_jd', 'uses' => 'JuntaDirectivaController@presentes_jd'));
 //Route::post('reunion_activa_jd', array('as' => 'reunion_activa_jd', 'uses' => 'JuntaDirectivaController@reunion_activa_jd'));
 
 Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' => 'JuntaDirectivaController@asignar_comision_jd'));

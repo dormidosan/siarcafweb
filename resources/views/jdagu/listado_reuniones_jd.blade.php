@@ -25,6 +25,7 @@
                         {!! Form::open(['route'=>['reunion_jd'],'method'=> 'POST']) !!}
                         <tr>
                             {{ Form::hidden('id_reunion', $reunion->id) }}
+                            {{ Form::hidden('id_comision', '1') }}
                             <td>
                                 {!! $contador !!}
                                 @php $contador++ @endphp
@@ -47,15 +48,30 @@
                                 {!! $reunion->fin !!}
                             </td>
                             <td>
-                                <!--
-                                   <a class="btn btn-info" href="#" role="button">Ver</a>
-                                   -->
                                 @if($reunion->vigente == 1)
-                                    <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                           value="***Ver">
+                                    <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Ver
+                                    </button>
+                                    </td> <td>
+                                    <button type="submit" class="btn btn-success btn-xs btn-block"><i
+                                                class="fa fa-eye"></i> Iniciar
+                                    </button>
+                                    </td> <td>
+                                    <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Continuar
+                                    </button>
                                 @else
-                                    <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                           value="***Ver" disabled="disabled">
+                                    <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Ver
+                                    </button>
+                                    </td> <td>
+                                    <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Iniciar
+                                    </button>
+                                    </td> <td>
+                                    <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                class="fa fa-eye"></i> Continuar
+                                    </button>
                                 @endif
                             </td>
                         </tr>
