@@ -17,10 +17,10 @@ class CreateReunionesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('comision_id');
             $table->unsignedInteger('periodo_id');
-            $table->string('codigo', 10)->nullable();
+            $table->string('codigo', 15)->nullable();
             
             $table->string('lugar', 30)->nullable();
-            $table->date('convocatoria')->nullable();
+            $table->dateTime('convocatoria')->nullable();
 
             $table->dateTime('inicio')->nullable();
             $table->dateTime('fin')->nullable();

@@ -15,6 +15,7 @@ use App\User;
 use App\Comision;
 use App\Reunion;
 use App\Periodo;
+use DateTime;
 
 class MailController extends Controller
 {
@@ -79,7 +80,22 @@ dd($destinos);
 
       $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
       $cargos = $comision->cargos;
-      
+
+
+      $reunion = new Reunion();
+      //dd($request->fecha);
+      $reunion->comision_id = $request->id_comision;      
+      $reunion->periodo_id = Periodo::latest()->first()->id;
+      $reunion->codigo = $comision->codigo." ".DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y'); 
+      $reunion->lugar = $request->lugar;
+      $reunion->convocatoria = DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+      //$reunion->inicio
+      //$reunion->fin           .''.date('H:i:s', strtotime($request->hora))
+      $reunion->vigente = '1';
+      $reunion->activa = '0';
+      //date('j-m-y'); Carbon::now()->format('Y-m-d H:i:s')
+      $reunion->save();
+      dd($reunion);
       foreach ($cargos as $cargo) {
         $destinatario = $cargo->asambleista->user->email;
         $nombre = $cargo->asambleista->user->persona->primer_nombre." ".$cargo->asambleista->user->persona->segundo_nombre;
@@ -90,19 +106,7 @@ dd($destinos);
                   });
       }
       
-    dd();
-      $reunion = new Reunion();
-
-      $reunion->comision_id = $request->id_comision;      
-      $reunion->periodo_id = Periodo::latest()->first()->id;
-      $reunion->codigo
-      $reunion->lugar
-      $reunion->convocatoria
-      //$reunion->inicio
-      //$reunion->fin
-      $reunion->vigente
-      $reunion->activa
-
+    
 
       Session::flash('message','Mensaje enviado correctamente');
 
