@@ -26,15 +26,19 @@ class AsambleistaController extends Controller
                         ->get();
         //dd($asambleistas);
         $fotos = "../storage/fotos/";
+        $disco = "../storage/documentos/";
 
-        return view("Asambleistas.ListadoAsambleistaFacultad",["facultades"=>$facultades,"asambleistas"=>$asambleistas,"fotos"=>$fotos]);
+        return view("Asambleistas.ListadoAsambleistaFacultad",["facultades"=>$facultades,"asambleistas"=>$asambleistas,"fotos"=>$fotos,"disco"=>$disco]);
     }
 
     //Muestra todos los asambleistas de un periodo activo por comision
     public function listado_asambleistas_comision()
     {
+
         //recuperar las comisiones que estan activas en el periodo vigente
-        $comisiones = Comision::where("activa", 1)->get();
+        $comisiones = Comision::where('activa','=', 1)->where('codigo','!=','jda')->get();
+
+        
 
         //se obtiene todos los asambleistas activos que pertenecen a una comision activa en el periodo vigente
         $cargos = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
@@ -46,21 +50,26 @@ class AsambleistaController extends Controller
             ->where("periodos.activo", "=", 1)
             ->get();
 
-        return view("Asambleistas.ListadoAsambleistasComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
+        $fotos = "../storage/fotos/";
+        $disco = "../storage/documentos/";
+
+        return view("Asambleistas.ListadoAsambleistasComision", ['comisiones' => $comisiones, 'cargos' => $cargos,"fotos"=>$fotos,"disco"=>$disco]);
 
     }
 
     //Muestra asambleistas de un periodo activo que pertenecen a la JD
     public function listado_asambleistas_junta()
-    {
+    {   
+        
         //recuperar las comisiones que estan activas en el periodo vigente
-        $comisiones = Comision::where("activa", 1)
-                        ->where("nombre","junta directiva")
+        $comisiones = Comision::where('activa','=',1)
+                        ->where('codigo','=','jda')
                         ->get();
+
 
         //se obtiene todos los asambleistas que pertenecen a una comision activa y que estos esten
         //activos
-        $asambleistas = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+        $cargos = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
             ->join("comisiones", "cargos.comision_id", "=", "comisiones.id")
             ->join("periodos","asambleistas.periodo_id","=","periodos.id")
             ->where("asambleistas.activo", "=", 1)
@@ -70,9 +79,12 @@ class AsambleistaController extends Controller
             ->where("periodos.activo", "=", 1)
             ->where("cargos.activo",1)
             ->get();
-
         //dd($asambleistas);
-        return view("Asambleistas.ListadoAsambleistasJunta",["asambleistas"=>$asambleistas]);
+        //dd($asambleistas);
+        $fotos = "../storage/fotos/";
+        $disco = "../storage/documentos/";
+
+        return view("Asambleistas.ListadoAsambleistasJunta",["cargos"=>$cargos,"fotos"=>$fotos,"disco"=>$disco]);
 
     }
 }

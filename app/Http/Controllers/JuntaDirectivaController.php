@@ -58,6 +58,40 @@ class JuntaDirectivaController extends Controller
     }
 
 
+    public function agendar_plenaria(Request $request,Redirector $redirect){
+
+    //dd($request->all());    
+    $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
+    $peticion->agendado = 1;
+    $peticion->save();
+
+     
+    $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+    $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get();
+
+
+    return view('jdagu.reunion_jd')
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
+	}
+
+	public function iniciar_reunion_jd(Request $request,Redirector $redirect){
+    	$peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+    	
+    	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    	$reunion->activa = '1';
+    	$reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
+    	$reunion->save();
+    	$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+		return view('jdagu.reunion_jd')
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
+	}
+/*
     public function reunion_jd(Request $request,Redirector $redirect){
     	$peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
     	
@@ -71,7 +105,7 @@ class JuntaDirectivaController extends Controller
         ->with('comision',$comision)
         ->with('peticiones',$peticiones);
 	}
-
+*/
 	public function presentes_jd(Request $request,Redirector $redirect){
 
     	$cargos = Cargo::where('comision_id','=',$request->id_comision)->where('activo', '=', 1)->get();
@@ -91,6 +125,7 @@ class JuntaDirectivaController extends Controller
     	$reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
     	$reunion->activa = '0';
     	$reunion->vigente = '0';
+    	$reunion->fin = Carbon::now()->format('Y-m-d H:i:s');
     	$reunion->save();
     	//$comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
 		//dd($cargos);
@@ -108,12 +143,16 @@ class JuntaDirectivaController extends Controller
     	$disco = "../storage/documentos/";
 
     	$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
     	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');  // traer todas las comisiones menos la JD
     	$seguimientos = Seguimiento::where('peticion_id','=',$id_peticion)->where('activo', '=', 1)->get();
 
 		return view('jdagu.lista_asignacion')
         ->with('comisiones',$comisiones)
         ->with('seguimientos',$seguimientos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
         ->with('peticion',$peticion);
 	}
 
@@ -156,10 +195,11 @@ class JuntaDirectivaController extends Controller
 			//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
 			$seguimiento->descripcion = "Asignado a: ".$comision->nombre." - ".$descripcion;
 			$guardado = $seguimiento->save();
+
 			//if($guardado){
 			//$peticion->comisiones()->attach($id_comision); 	
 			//}
-			
+			$peticion->comision = 1;
 
 		}		
 
@@ -170,7 +210,7 @@ class JuntaDirectivaController extends Controller
 		// 
 
 
-		$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
+		//$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
     	$comisiones = Comision::where('id','!=', '1')->pluck('nombre','id');  // traer todas las comisiones menos la JD
     	$seguimientos = Seguimiento::where('peticion_id','=',$id_peticion)->where('activo', '=', 1)->get();
 

@@ -23,6 +23,21 @@ class PersonasTableSeeder extends Seeder
     	for($j = 1 ; $j < 145 ; $j ++){
 
 
+    	if ( $j < 6) {
+
+    	\DB::table('personas')->insert(array (
+		'primer_nombre'  => $faker->firstName,
+		'segundo_nombre'  => $faker->firstName,
+		'primer_apellido'  => $faker->lastname,
+		'segundo_apellido'  => $faker->lastname,
+		'dui'  => $faker->unique()->ean8,
+		'nit'  => $faker->unique()->isbn13,
+		'foto' => 'foto_agu3.jpg',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+    	
+    	} else {
     	if (($j % 3 )==0) {
     	\DB::table('personas')->insert(array (
 		'primer_nombre'  => $faker->firstName,
@@ -36,6 +51,7 @@ class PersonasTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
     	} else {
+
     	\DB::table('personas')->insert(array (
 		'primer_nombre'  => $faker->firstName,
 		'segundo_nombre'  => $faker->firstName,
@@ -47,17 +63,50 @@ class PersonasTableSeeder extends Seeder
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
+
+    	}
     	}
     	
 
     	
+    	
+
+    	
 
 
+    	if ($j == 1) {
+    	\DB::table('users')->insert(array (
+		'rol_id'  => '3 ',
+		'persona_id'  => $j,
+		'name'  => 'name_user'.$j,
+		'password'  => bcrypt('123456'),
+		'fecha_registro'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'ultimo_acceso'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'email'  => 'metahuargen@gmail.com',
+		'activo'  => '1',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+    	}
+
+    	if ($j == 2) {
+    	\DB::table('users')->insert(array (
+		'rol_id'  => '3 ',
+		'persona_id'  => $j,
+		'name'  => 'name_user'.$j,
+		'password'  => bcrypt('123456'),
+		'fecha_registro'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'ultimo_acceso'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'email'  => 'siarcaf@gmail.com',
+		'activo'  => '1',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+    	}
 
 
-
-
-		\DB::table('users')->insert(array (
+    	if ($j > 2) {
+    	\DB::table('users')->insert(array (
 		'rol_id'  => '3 ',
 		'persona_id'  => $j,
 		'name'  => 'name_user'.$j,
@@ -69,6 +118,9 @@ class PersonasTableSeeder extends Seeder
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
+    	}
+
+		
 /*
 		switch ($j) {
 			case 1:
@@ -165,6 +217,7 @@ class PersonasTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'activo'  => '1',
+		'ruta'  => '0b17d8a78c9516c900892e6a0ad52808.pdf',
 		'created_at' => Carbon::create(2015, 5, 1, 0, 0, 0),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -215,6 +268,7 @@ class PersonasTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2013, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'activo'  => '0',
+		'ruta'  => '0b17d8a78c9516c900892e6a0ad52808.pdf',
 		'created_at' => Carbon::create(2013, 5, 1, 0, 0, 0),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
