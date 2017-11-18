@@ -320,7 +320,7 @@ class AgendaTableSeeder extends Seeder
 		'codigo'  =>  'JD 26',
 		'lugar'  =>  'sala de reuniones',
 		'convocatoria'  =>  Carbon::create(2017, 11,10, 8, 0)->subDay()->format('Y-m-d H:i:s'), 
-		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
+		//'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
 		//'fin'     => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->format('Y-m-d H:i:s'),
 		'vigente'  => '1', 
 		'activa'  => '0', 
@@ -365,7 +365,7 @@ class AgendaTableSeeder extends Seeder
 		'codigo'  =>  'CO AS 26',
 		'lugar'  =>  'sala de reuniones',
 		'convocatoria'  =>  Carbon::create(2017, 11,10, 8, 0)->subDay()->format('Y-m-d H:i:s'),
-		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
+		//'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
 		//'fin'     => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->format('Y-m-d H:i:s'),
 		'vigente'  => '1', 
 		'activa'  => '0', 
@@ -422,9 +422,9 @@ class AgendaTableSeeder extends Seeder
 		'comision_id'  => '3',
 		'periodo_id'  =>  '2',
 		'codigo'  =>  'CO RE 24',
-		'lugar'  =>  'sala de reuniones',
+		'lugar'  =>  'sala de reuniones academica',
 		'convocatoria'  =>  Carbon::create(2017, 11,10, 8, 0)->subDay()->format('Y-m-d H:i:s'),
-		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
+		//'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'), 
 		//'fin'     => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->format('Y-m-d H:i:s'),
 		'vigente'  => '1', 
 		'activa'  => '0', 
@@ -432,11 +432,6 @@ class AgendaTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->addSeconds(6)->format('Y-m-d H:i:s')
 		));
 
-
-
-
-
-
-
     }
+
 }

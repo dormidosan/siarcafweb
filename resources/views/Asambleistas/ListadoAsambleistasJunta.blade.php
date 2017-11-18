@@ -15,25 +15,34 @@
                         <th>Asambleista</th>
                         <th>Sector</th>
                         <th>Cargo</th>
+                        <th>Hoja de vida</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php $i = 1 @endphp
-                    @if(empty($asambleistas) != false)
-                        @foreach($asambleistas as $asambleista)
+                    @if(empty($cargos) != true)
+                        @foreach($cargos as $cargo)
                             <tr>
                                 <td style="vertical-align: middle">{{ $i }}</td>
                                 <td>
                                     <div class="center-block">
-                                        <img src="{{ asset('images/default-user.png') }}"
-                                             class="img-responsives" width="70px"
-                                             style="margin-left: 25px !important; "
-                                             alt="User Image">
+                                        <img src="{!!$fotos!!}{!!$cargo->asambleista->user->persona->foto!!}"
+                                            class="img-responsives" width="70px"
+                                            style="margin-left: 25px !important; "
+                                            alt="User Image">
                                     </div>
                                 </td>
-                                <td style="vertical-align: middle">{{ $asambleista->asambleista->user->persona->primer_nombre . " " . $asambleista->asambleista->user->persona->segundo_nombre . " " . $asambleista->asambleista->user->persona->primer_apellido . " " . $asambleista->asambleista->user->persona->segundo_apellido }}</td>
-                                <td style="vertical-align: middle">{{ $asambleista->asambleista->sector->nombre }}</td>
-                                <td style="vertical-align: middle">{{ $asambleista->cargo }}</td>
+                                <td style="vertical-align: middle">{{ $cargo->asambleista->user->persona->primer_nombre . " " . $cargo->asambleista->user->persona->segundo_nombre . " " . $cargo->asambleista->user->persona->primer_apellido . " " . $cargo->asambleista->user->persona->segundo_apellido }}</td>
+                                <td style="vertical-align: middle">{{ $cargo->asambleista->sector->nombre }}</td>
+                                <td style="vertical-align: middle">{{ $cargo->cargo }}</td>
+                                <td style="vertical-align: middle">   
+                                         <a class="btn btn-info btn-xs"
+                                            href="<?= $disco . $cargo->asambleista->ruta; ?>"
+                                            role="button">Ver</a>
+                                         <a class="btn btn-success btn-xs"
+                                            href="descargar_documento/<?= $cargo->asambleista->ruta; ?>"
+                                            role="button">Descargar</a>
+                                      </td>
                             </tr>
                             @php $i++ @endphp
                         @endforeach
