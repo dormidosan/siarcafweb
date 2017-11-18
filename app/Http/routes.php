@@ -19,14 +19,6 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-/* Routes generales */
-Route::get('BusquedaDocumentos', array('as' => 'BusquedaDocumentos', 'uses' => 'BuscarDocumentoController@busqueda'));
-Route::get('descargar_documento/{id}', array('as' => 'descargar_documento', 'uses' => 'BuscarDocumentoController@descargar_documento'));
-/*
-Route::get('/BusquedaDocumentos', function () {
-    return view('General.BusquedaDocumentos');
-});
-*/
 
 /* Routes para Comisiones */
 
@@ -188,10 +180,15 @@ Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'Jun
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
-Route::post('buscar_documento', 'BuscarDocumentoController@buscar_documento');
 
 /*
+ *
 \Mail::send('welcome', [], function ($message){
     $message->to('siarcaf@gmail.com')->subject('Testing mail');
 });
 */
+
+/* Routes generales */
+Route::get('busqueda', 'DocumentoController@busqueda')->name("busqueda");
+Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name("buscar_documentos");
+Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
