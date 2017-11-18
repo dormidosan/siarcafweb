@@ -24,7 +24,8 @@ class CargosTableSeeder extends Seeder
 		'asambleista_id'  => '1',
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
-		'cargo'  => "Coordinador",
+		'cargo'  => "Presidente",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -34,20 +35,33 @@ class CargosTableSeeder extends Seeder
 		'asambleista_id'  => '2',
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
-		'cargo'  => "Secretario",
+		'cargo'  => "Vice Presidente",
+		'activo' => '1',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('cargos')->insert(array (
+		'comision_id'  => '1',
+		'asambleista_id'  => '2',
+		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
+		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
+		'cargo'  => "Secretario JD",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
 
-    	for($j = 3 ; $j < 27 ; $j ++){
+    	for($j = 4 ; $j < 6 ; $j ++){
 
     	\DB::table('cargos')->insert(array (
 		'comision_id'  => '1',
 		'asambleista_id'  => $j,
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
-		'cargo'  => "Asambleista",
+		'cargo'  => "Vocal",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -60,6 +74,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Coordinador",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -70,6 +85,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Secretario",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -83,6 +99,7 @@ class CargosTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'cargo'  => "Asambleista",
+		'activo' => '1',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));

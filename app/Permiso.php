@@ -15,5 +15,10 @@ class Permiso extends Model
         return $this->belongsTo('App\Asambleista');
     }
 
+    public function delegado()
+    {
+        return $this->belongsTo('App\Asambleista','delegado_id');
+    }
+
 
 }

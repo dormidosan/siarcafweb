@@ -116,7 +116,7 @@
                 <ul class="sidebar-menu tree" data-widget="tree">
                     <li class="header">Menu de Opciones</li>
 
-                    <li><a href="{{ url('/BusquedaDocumentos')}}"><i class="fa fa-book"></i>
+                    <li><a href="{{ url('busqueda')}}"><i class="fa fa-book"></i>
                             <span>Buscar documento</span></a>
                     </li>
 

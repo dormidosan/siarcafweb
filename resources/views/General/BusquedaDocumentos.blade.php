@@ -15,7 +15,7 @@
         </div>
         <div class="box-body">
 
-            <form id="buscarDocs" method="post" action="{{ url('buscar_documento') }}">
+            <form id="buscarDocs" method="post" action="{{ url('buscar_documentos') }}">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-6 col-sm-12 col-md-6">
@@ -26,14 +26,15 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-12 col-md-3">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('tipo_documento') ? 'has-error' : '' }}">
                             <label>Tipo de Documento</label>
-                            <select id="tipo_documento" name="tipo_documento" class="form-control" required>
+                            <select id="tipo_documento" name="tipo_documento" class="form-control" >
                                 <option value="">--Seleccione una opcion--</option>
                                 @foreach($tipo_documentos as $tipo_documento)
                                     <option value="{{ $tipo_documento->id }}">{{ $tipo_documento->tipo}}</option>
                                 @endforeach
                             </select>
+                            <span class="text-danger">{{ $errors->first('tipo_documento') }}</span>
                         </div>
                     </div>
 
@@ -77,8 +78,10 @@
                     <th>Nombre Documento</th>
                     <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
+                    <th>Accion</th>
+                    <!--
                     <th>Visualizar</th>
-                    <th>Descargar</th>
+                    <th>Descargar</th>-->
                 </tr>
                 </thead>
 
@@ -97,14 +100,17 @@
                             {!! $documento->fecha_ingreso !!}
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-xs btn-block" href="<?= $disco . $documento->path; ?>"
+                            <a class="btn btn-primary btn-sm" href="<?= $disco . $documento->path; ?>"
                                role="button"><i class="fa fa-eye"></i> Ver</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-success btn-xs btn-block"
+                            <a class="btn btn-success btn-sm    "
                                href="descargar_documento/<?= $documento->id; ?>" role="button"><i
                                         class="fa fa-download"></i> Descargar</a>
                         </td>
+                        <!--<td>
+                            <a class="btn btn-success btn-xs btn-block"
+                               href="descargar_documento/<?= $documento->id; ?>" role="button"><i
+                                        class="fa fa-download"></i> Descargar</a>
+                        </td>-->
                     </tr>
                 @endforeach
                 </tbody>

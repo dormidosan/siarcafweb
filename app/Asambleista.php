@@ -19,6 +19,11 @@ class Asambleista extends Model
         return $this->hasMany('App\Permiso');
     }
 	
+    public function delegado()
+    {
+        return $this->hasOne('App\Permiso');
+    }
+
 	public function cargos()
     {
         return $this->hasMany('App\Cargo');

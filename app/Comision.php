@@ -12,7 +12,7 @@ class Comision extends Model
 
 	public function peticiones()
     {
-        return $this->belongsToMany('App\Peticion');
+        return $this->belongsToMany('App\Peticion','comision_peticion')->withTimestamps();
     }
 	
 	public function cargos()

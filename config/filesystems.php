@@ -58,7 +58,11 @@ return [
             'driver' => 'local',
             'root' => storage_path('documentos'),
         ],
-
+		
+		'fotos' => [
+            'driver' => 'local',
+            'root' => storage_path('fotos'),
+        ],
 
         's3' => [
             'driver' => 's3',

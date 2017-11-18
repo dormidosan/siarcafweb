@@ -40,7 +40,12 @@ class PeticionTableSeeder extends Seeder
 
 
 
-		for ($i=1; $i < 10; $i++) { 
+		for ($i=1; $i < 10; $i++) {
+		$c = 0;
+		if($i>5){
+			$c = 1;
+		}
+
 		\DB::table('peticiones')->insert(array (
 		'estado_peticion_id'  => '1',
 		'codigo'  => $i.'-1234ABC',
@@ -51,6 +56,8 @@ class PeticionTableSeeder extends Seeder
 		'telefono'  => $faker->tollFreePhoneNumber ,
 		'direccion'  =>  $faker->address,
 		'resuelto'  => '0',
+		'agendado'  => '0',
+		'comision'  => $c,
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -126,8 +133,8 @@ class PeticionTableSeeder extends Seeder
 		//'documento_id'  => '1',
 		//'reunion_id'  => '1',
 		'inicio'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'activo'  => '0',
+		//'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de JD prueba por seed',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -163,8 +170,8 @@ class PeticionTableSeeder extends Seeder
 		//'documento_id'  => '1',
 		//'reunion_id'  => '1',
 		'inicio'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'activo'  => '0',
+		//'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de comision '.$h.' prueba por seed',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -206,8 +213,8 @@ class PeticionTableSeeder extends Seeder
 		//'documento_id'  => '1',
 		//'reunion_id'  => '1',
 		'inicio'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'activo'  => '0',
+		//'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de comision '.$h.' prueba por seed',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -246,8 +253,8 @@ class PeticionTableSeeder extends Seeder
 		//'documento_id'  => '1',
 		//'reunion_id'  => '1',
 		'inicio'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'activo'  => '0',
+		//'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de comision '.$h.' prueba por seed',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -285,8 +292,8 @@ class PeticionTableSeeder extends Seeder
 		//'documento_id'  => '1',
 		//'reunion_id'  => '1',
 		'inicio'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'activo'  => '0',
+		//'fin'  => Carbon::now()->format('Y-m-d H:i:s'),
+		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de comision '.$h.' prueba por seed',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -308,6 +315,7 @@ class PeticionTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
+
 		\DB::table('comision_peticion')->insert(array (
 		'comision_id'  => $h,
 		'peticion_id'  => '6',
@@ -315,11 +323,9 @@ class PeticionTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
+
 		}
 		
-
-
-
 
     }
 }

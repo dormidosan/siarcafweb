@@ -70,6 +70,7 @@ class VariablesTableSeeder extends Seeder {
 
 
 		\DB::table('comisiones')->insert(array (
+		'codigo'  => 'jda',
 		'nombre'  => 'junta directiva',
 		'permanente'  => '1',
 		'descripcion'  => 'comision de JD',
@@ -80,6 +81,7 @@ class VariablesTableSeeder extends Seeder {
 		));
 		
 		\DB::table('comisiones')->insert(array (
+		'codigo'  => 'aso',
 		'nombre'  => 'comision asociaciones',
 		'permanente'  => '1',
 		'descripcion'  => 'comision de creacion de asociaciones',
@@ -90,6 +92,7 @@ class VariablesTableSeeder extends Seeder {
 		));
 		
 		\DB::table('comisiones')->insert(array (
+		'codigo'  => 'reg',
 		'nombre'  => 'comision reglamentos',
 		'permanente'  => '1',
 		'descripcion'  => 'comision de creacion de reglamentos',
@@ -100,6 +103,7 @@ class VariablesTableSeeder extends Seeder {
 		));
 		
 		\DB::table('comisiones')->insert(array (
+		'codigo'  => 'leg',
 		'nombre'  => 'comision legislacion',
 		'permanente'  => '0',
 		'descripcion'  => 'comision de legislar la ues',
@@ -110,6 +114,7 @@ class VariablesTableSeeder extends Seeder {
 		));
 		
 		\DB::table('comisiones')->insert(array (
+		'codigo'  => 'pre',
 		'nombre'  => 'comision presupuestos',
 		'permanente'  => '0',
 		'descripcion'  => 'comision de prespuesto y dinero',
