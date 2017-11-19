@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Periodo;
+use App\Peticion;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Routing\Redirector;
@@ -18,30 +19,51 @@ class DocumentoController extends Controller
     public function busqueda()
     {
         $tipo_documentos = TipoDocumento::all();
-        $documentos = Documento::all(); //->paginate(10); para obtener ningun resultado ya que se pinta en blanco
-        //dd($documentos);
         $periodos = Periodo::all();
-        $disco = "../storage/documentos/";
-        return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
+        return view('General.BusquedaDocumentos', ["tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
     }
 
     public function buscar_documentos(Request $request)
     {
+        //se obtienen los inputs
         $nombre_documento = $request->get("nombre_documento");
         $tipo_documento = $request->get("tipo_documento");
         $periodo = $request->get("periodo");
         $descripcion = $request->get("descripcion");
 
-        //dd($request->all());
-        $documentos = Documento::where('tipo_documento_id', '=', $tipo_documento)
-            ->where("nombre_documento","LIKE",$nombre_documento."%")
-            ->get();
-
+        //variables generales
         $disco = "../storage/documentos/";
         $tipo_documentos = TipoDocumento::all();
         $periodos = Periodo::all();
 
-        //return redirect()->route("busqueda");
+        if ($tipo_documento == "1"){
+            if (empty($periodo)){
+                $documentos = Documento::where('tipo_documento_id', '=', $tipo_documento)
+                    ->where("nombre_documento", "LIKE", "%". $nombre_documento . "%")
+                    ->get();
+            }else{
+                $documentos = Documento::where('tipo_documento_id', '=', $tipo_documento)
+                    ->where("nombre_documento", "LIKE", "%". $nombre_documento . "%")
+                    ->where("periodo_id", $periodo)
+                    ->get();
+            }
+        }else{
+            if (empty($periodo)){
+                $documentos = Documento::join("seguimientos","seguimientos.documento_id","=","documentos.id")
+                    ->join("peticiones","seguimientos.peticion_id","=","peticiones.id")
+                    ->where("documentos.tipo_documento_id",$tipo_documento)
+                    ->where("peticiones.descripcion", "LIKE", "%". $descripcion . "%")
+                    ->get();
+            }else{
+                $documentos = Documento::join("seguimientos","seguimientos.documento_id","=","documentos.id")
+                    ->join("peticiones","seguimientos.peticion_id","=","peticiones.id")
+                    ->where("documentos.tipo_documento_id",$tipo_documento)
+                    ->where("peticiones.descripcion", "LIKE", "%". $descripcion . "%")
+                    ->where("documentos.periodo_id",$periodo)
+                    ->get();
+            }
+        }
+
         return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
     }
 

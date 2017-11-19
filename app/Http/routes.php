@@ -194,6 +194,6 @@ Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
 */
 
 /* Routes generales */
-Route::get('busqueda', 'DocumentoController@busqueda')->name("busqueda");
-Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name("buscar_documentos");
+Route::get('busqueda', 'DocumentoController@busqueda')->name('busqueda');
+Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name('buscar_documentos');
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");

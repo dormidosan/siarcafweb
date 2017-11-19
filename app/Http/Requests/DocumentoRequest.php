@@ -24,9 +24,10 @@ class DocumentoRequest extends Request
     public function rules()
     {
         return [
-            'tipo_documento'=>'required'//
+            'tipo_documento' => "required",
         ];
     }
+
 
     /**
      * Get the error messages that apply to the request
@@ -36,7 +37,7 @@ class DocumentoRequest extends Request
     public function messages()
     {
         return [
-            'tipo_documento.required' => 'El tipo de documento es requerido',
+            'tipo_documento.required' => "Seleccione una opcion",
         ];
     }
 }
