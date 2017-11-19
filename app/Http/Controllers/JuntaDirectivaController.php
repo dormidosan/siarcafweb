@@ -14,6 +14,7 @@ use App\Peticion;
 use App\Comision;
 use App\Seguimiento;
 use App\EstadoSeguimiento;
+use App\EstadoPeticion;
 use App\Reunion;
 use App\Cargo;
 
@@ -63,6 +64,7 @@ class JuntaDirectivaController extends Controller
     //dd($request->all());    
     $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
     $peticion->agendado = 1;
+    $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'aa')->first()->id;
     $peticion->save();
 
      

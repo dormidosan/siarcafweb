@@ -27,6 +27,7 @@ class DocumentoController extends Controller
 
     public function buscar_documentos(Request $request)
     {
+       
         $nombre_documento = $request->get("nombre_documento");
         $tipo_documento = $request->get("tipo_documento");
         $periodo = $request->get("periodo");
