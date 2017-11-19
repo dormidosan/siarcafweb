@@ -36,32 +36,22 @@ class DocumentoController extends Controller
         $tipo_documentos = TipoDocumento::all();
         $periodos = Periodo::all();
 
-        if ($tipo_documento == "1"){
-            if (empty($periodo)){
-                $documentos = Documento::where('tipo_documento_id', '=', $tipo_documento)
-                    ->where("nombre_documento", "LIKE", "%". $nombre_documento . "%")
-                    ->get();
-            }else{
-                $documentos = Documento::where('tipo_documento_id', '=', $tipo_documento)
-                    ->where("nombre_documento", "LIKE", "%". $nombre_documento . "%")
-                    ->where("periodo_id", $periodo)
-                    ->get();
-            }
-        }else{
-            if (empty($periodo)){
-                $documentos = Documento::join("seguimientos","seguimientos.documento_id","=","documentos.id")
-                    ->join("peticiones","seguimientos.peticion_id","=","peticiones.id")
-                    ->where("documentos.tipo_documento_id",$tipo_documento)
-                    ->where("peticiones.descripcion", "LIKE", "%". $descripcion . "%")
-                    ->get();
-            }else{
-                $documentos = Documento::join("seguimientos","seguimientos.documento_id","=","documentos.id")
-                    ->join("peticiones","seguimientos.peticion_id","=","peticiones.id")
-                    ->where("documentos.tipo_documento_id",$tipo_documento)
-                    ->where("peticiones.descripcion", "LIKE", "%". $descripcion . "%")
-                    ->where("documentos.periodo_id",$periodo)
-                    ->get();
-            }
+
+        if (empty($periodo)) {
+            $documentos = Documento::join("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
+                ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
+                ->where("documentos.tipo_documento_id", $tipo_documento)
+                ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
+                ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
+                ->get();
+        } else {
+            $documentos = Documento::join("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
+                ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
+                ->where("documentos.tipo_documento_id", $tipo_documento)
+                ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
+                ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
+                ->where("documentos.periodo_id", $periodo)
+                ->get();
         }
 
         return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
