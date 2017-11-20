@@ -15,7 +15,7 @@
         </div>
         <div class="box-body">
 
-            <form id="buscarDocs" name="buscarDocs" action="{{ route('buscar_documentos')}}" method="post">
+            <form id="buscarDocs" action="{{ url('buscar_documentos')}}" method="post">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-6 col-sm-12 col-md-6">
@@ -31,7 +31,8 @@
                             <select id="tipo_documento" name="tipo_documento" class="form-control" required>
                                 <option value="">--Seleccione una opcion--</option>
                                 @foreach($tipo_documentos as $tipo_documento)
-                                    <option value="{{ $tipo_documento->id }}">{{ $tipo_documento->tipo}}</option>
+                                    <option value="{{ $tipo_documento->id }}"
+                                            @if (old('tipo_documento') == $tipo_documento->id) selected="selected" @endif>{{ $tipo_documento->tipo}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger">{{ $errors->first('tipo_documento') }}</span>

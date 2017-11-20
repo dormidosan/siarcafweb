@@ -17,7 +17,6 @@ class CreatePresentesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('cargo_id');
             $table->unsignedInteger('reunion_id');
-            $table->dateTime('entrada')->nullable();
 			$table->timestamps();
 
             $table->index(["cargo_id"], 'fk_presentes_cargos1_idx');

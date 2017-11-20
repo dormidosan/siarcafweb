@@ -21,9 +21,4 @@ class Asistencia extends Model
         return $this->belongsTo('App\Asambleista');
     }
 
-    public function estado_asistencia()
-    {
-        return $this->belongsTo('App\EstadoAsistencia');
-    }
-
 }
