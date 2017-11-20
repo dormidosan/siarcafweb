@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('') }}">
+@section("styles")
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section("content")
@@ -33,6 +33,7 @@
                             <td></td>
                             <td>
                                 <form id="registar_asistencia" name="registrar_asistencia" action="{{ route("registrar_asistencia") }}" method="post">
+                                    <input type="hidden" id="cargo" name="cargo" value="{{ $cargo->id }}">
                                     <input type="hidden" id="comision" name="comision" value="{{ $comision->id }}">
                                     <input type="hidden" id="reunion" name="reunion" value="{{ $reunion->id }}">
                                     <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Registrar Asistencia</button>
@@ -48,14 +49,16 @@
     </div>
 @endsection
 
+
 @section("js")
-    <script src="{{ asset('') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
-
-@section("scripts")
-    <script type="text/javascript">
-        $(function () {
-        });
-    </script>
+@section("lobibox")
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
 @endsection

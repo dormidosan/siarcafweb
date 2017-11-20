@@ -129,6 +129,15 @@ class JuntaDirectivaController extends Controller
 
     public function registrar_asistencia(Request $request){
 
+        $presente = new Presente();
+        $presente->cargo_id = $request->get("cargo");
+        $presente->comision_id = $request->get("comision");
+        $presente->reunion_id = $request->get("reunion");
+        $presente->entrada = Carbon::now();
+        $presente->save();
+        $request->session()->flash("success", "Asistencia registrada con exito");
+
+        return redirect()->route("asistencia_jd");
 
     }
 
