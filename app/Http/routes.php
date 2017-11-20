@@ -176,8 +176,7 @@ Route::post('iniciar_reunion_jd', array('as' => 'iniciar_reunion_jd', 'uses' => 
 
 Route::post('asistencia_jd', array('as' => 'asistencia_jd', 'uses' => 'JuntaDirectivaController@asistencia_jd'));
 Route::post('finalizar_reunion_jd', array('as' => 'finalizar_reunion_jd', 'uses' => 'JuntaDirectivaController@finalizar_reunion_jd'));
-Route::get('registrar_asistencia', 'JuntaDirectivaController@registrar_asistencia')->name('registrar_asistencia');
-//Route::post('reunion_activa_jd', array('as' => 'reunion_activa_jd', 'uses' => 'JuntaDirectivaController@reunion_activa_jd'));
+
 
 Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' => 'JuntaDirectivaController@asignar_comision_jd'));
 Route::post('agendar_plenaria', array('as' => 'agendar_plenaria', 'uses' => 'JuntaDirectivaController@agendar_plenaria'));
@@ -186,7 +185,7 @@ Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'Jun
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
-
+Route::post('registrar_asistencia', 'JuntaDirectivaController@registrar_asistencia')->name('registrar_asistencia');
 /*
  *
 \Mail::send('welcome', [], function ($message){
