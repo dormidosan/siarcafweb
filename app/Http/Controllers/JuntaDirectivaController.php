@@ -76,8 +76,9 @@ class JuntaDirectivaController extends Controller
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
         $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get();
 
-
+        $todos_puntos = 1;
         return view('jdagu.reunion_jd')
+            ->with('todos_puntos',$todos_puntos)
             ->with('reunion', $reunion)
             ->with('comision', $comision)
             ->with('peticiones', $peticiones);
@@ -93,10 +94,29 @@ class JuntaDirectivaController extends Controller
         $reunion->save();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
 
+        $todos_puntos = 1;
         return view('jdagu.reunion_jd')
+            ->with('todos_puntos',$todos_puntos)
             ->with('reunion', $reunion)
             ->with('comision', $comision)
             ->with('peticiones', $peticiones);
+    }
+
+    public function puntos_agendados(Request $request,Redirector $redirect){
+        //dd();
+
+        $peticiones = Peticion::where('agendado','=',1)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+        $todos_puntos = 2;
+        return view('jdagu.reunion_jd')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
     }
 
     /*
