@@ -31,6 +31,13 @@
                             <td>{{ $cargo->asambleista->user->persona->primer_nombre . ' ' . $cargo->asambleista->user->persona->segundo_nombre . ' ' . $cargo->asambleista->user->persona->primer_apellido . ' ' .  $cargo->asambleista->user->persona->segundo_apellido}}</td>
                             <td>{{ $cargo->cargo }}</td>
                             <td>
+                                @if(empty($asistencias)!=true)
+                                    @foreach($asistencias as $asistencia)
+                                        @if($asistencia->cargo->id == $cargo->id)
+                                            {{ $asistencia->entrada }}
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 <form id="registar_asistencia" name="registrar_asistencia"

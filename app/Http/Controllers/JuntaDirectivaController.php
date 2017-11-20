@@ -127,7 +127,8 @@ class JuntaDirectivaController extends Controller
 
     }
 
-    public function registrar_asistencia(Request $request){
+    public function registrar_asistencia(Request $request)
+    {
 
         $presente = new Presente();
         $presente->cargo_id = $request->get("cargo");
@@ -140,13 +141,15 @@ class JuntaDirectivaController extends Controller
         $reunion = Reunion::where('id', '=', $request->reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->comision)->firstOrFail();
 
-        $asistencia = Presente::where('cargo_id',$request->get("cargo"))->get();
+        $asistencias = Presente::where('reunion_id', $request->get("reunion"))
+            ->get();
 
+        //dd($asistencia);
         return view('jdagu.asistencia_reunion_JD')
             ->with('cargos', $cargos)
             ->with('reunion', $reunion)
             ->with('comision', $comision)
-            ->with('asistencia', $asistencia);
+            ->with('asistencias', $asistencias);
 
     }
 
