@@ -173,6 +173,7 @@ Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' 
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::get('seguimiento_peticion_individual_jd', array('as' => 'seguimiento_peticion_individual_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_individual_jd'));
 Route::post('iniciar_reunion_jd', array('as' => 'iniciar_reunion_jd', 'uses' => 'JuntaDirectivaController@iniciar_reunion_jd'));
+Route::post('puntos_agendados', array('as' => 'puntos_agendados', 'uses' => 'JuntaDirectivaController@puntos_agendados'));
 
 Route::post('presentes_jd', array('as' => 'presentes_jd', 'uses' => 'JuntaDirectivaController@presentes_jd'));
 Route::post('finalizar_reunion_jd', array('as' => 'finalizar_reunion_jd', 'uses' => 'JuntaDirectivaController@finalizar_reunion_jd'));
