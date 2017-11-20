@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Presente;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
@@ -115,7 +116,6 @@ class JuntaDirectivaController extends Controller
     */
     public function asistencia_jd(Request $request)
     {
-
         $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
@@ -129,6 +129,24 @@ class JuntaDirectivaController extends Controller
 
     public function registrar_asistencia(Request $request){
 
+        $presente = new Presente();
+        $presente->cargo_id = $request->get("cargo");
+        $presente->reunion_id = $request->get("reunion");
+        $presente->entrada = Carbon::now();
+        $presente->save();
+        $request->session()->flash("success", "Asistencia registrada con exito");
+
+        $cargos = Cargo::where('comision_id', '=', $request->comision)->where('activo', '=', 1)->get();
+        $reunion = Reunion::where('id', '=', $request->reunion)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->comision)->firstOrFail();
+
+        $asistencia = Presente::where('cargo_id',$request->get("cargo"))->get();
+
+        return view('jdagu.asistencia_reunion_JD')
+            ->with('cargos', $cargos)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('asistencia', $asistencia);
 
     }
 
