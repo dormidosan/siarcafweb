@@ -30,6 +30,39 @@
                 </div>
             </div>
             <br>
+            <br>
+            
+        <div class="row">
+            <!--
+            -<-?-p-hp $-t-odos_puntos=1; ?>
+                <div class="col-lg-4 col-sm-12 col-lg-offset-2">
+                    <button type="button" id="iniciar" name="iniciar" class="btn btn-success btn-block">Iniciar</button>
+                </div>
+--> 
+            <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+            {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+            @if($todos_puntos == 1)
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled" >Reunion JD***</button>
+            @else
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"  >Reunion JD***</button>
+            @endif
+            {!! Form::close() !!}
+            </div>
+             
+            
+            
+            <div class="col-lg-4 col-lg-offset-2 col-sm-12">
+            {!! Form::open(['route'=>['puntos_agendados'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+            @if($todos_puntos == 2)
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled">Puntos Plenaria***</button>
+            @else
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Puntos Plenaria***</button>
+            @endif
+            {!! Form::close() !!}    
+            </div>
+            
+            
+        </div>
 
             <div class="panel panel-default">
                 <div class="panel-heading">
