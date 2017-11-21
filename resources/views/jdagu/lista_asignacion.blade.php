@@ -6,14 +6,7 @@
         <h3 class="box-title">Puntos de Comision</h3>
     </div>
     <div class="box-body">
-        {!! Form::open(['route'=>['agendar_plenaria'],'method'=> 'POST']) !!} 
-        {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }} {{ Form::hidden('id_peticion', $peticion->id) }}
-        {!! $peticion->id !!}
-            <div class="col-lg-4 col-sm-12">
-                <button type="submit" id="agendar" name="agendar" class="btn btn-info btn-block">Agendar
-                </button>
-            </div>
-        {!! Form::close() !!}
+       
         <form class="form-group" id="enlazar_comision" name="enlazar_comision" method="post" action="{{ url('enlazar_comision') }}" enctype="multipart/form-data">
             {{ csrf_field() }} {{ Form::hidden('id_peticion', $peticion->id) }}
             <div class="row">

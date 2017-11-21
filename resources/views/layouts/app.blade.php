@@ -276,7 +276,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url("/Parametros") }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
+                            <li><a href="{{ url('parametros') }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
                             <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
                             </li>
                             <li class="treeview">

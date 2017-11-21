@@ -133,9 +133,14 @@ Route::get('/HistorialAgendas', function () {
 });
 
 /* Routes Administracion */
-Route::get('/Parametros', function () {
+/*
+Rou-t-e-::-g-et('/Parametros', function () {
     return view('Administracion.Parametros');
 });
+*/
+
+
+
 Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
@@ -150,7 +155,8 @@ Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->nam
 Route::get('/periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
 Route::post('/guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('/finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
-
+Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
+Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 
 /* Asambleistas */
 Route::get('/listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
