@@ -25,35 +25,71 @@
 
                     <tbody>
                     @php $contador = 1 @endphp
-                    @foreach($cargos as $cargo)
-                        <tr>
-                            <td>{{$contador}}</td>
-                            <td>{{ $cargo->asambleista->user->persona->primer_nombre . ' ' . $cargo->asambleista->user->persona->segundo_nombre . ' ' . $cargo->asambleista->user->persona->primer_apellido . ' ' .  $cargo->asambleista->user->persona->segundo_apellido}}</td>
-                            <td>{{ $cargo->cargo }}</td>
-                            <td>
-                                @if(empty($asistencias)!=true)
-                                    @foreach($asistencias as $asistencia)
-                                        @if($asistencia->cargo->id == $cargo->id)
-                                            {{ $asistencia->entrada }}
-                                        @endif
-                                    @endforeach
+
+                    @if($asistencias->isEmpty() == true)
+                        @foreach($cargos as $cargo)
+                            <tr>
+                                <td>{{$contador}}</td>
+                                <td>{{ $cargo->asambleista->user->persona->primer_nombre . ' ' . $cargo->asambleista->user->persona->segundo_nombre . ' ' . $cargo->asambleista->user->persona->primer_apellido . ' ' .  $cargo->asambleista->user->persona->segundo_apellido}}</td>
+                                <td>{{ $cargo->cargo }}</td>
+                                <td></td>
+                                <td>
+                                    <form id="registar_asistencia" name="registrar_asistencia"
+                                          action="{{ route("registrar_asistencia") }}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="cargo" name="cargo" value="{{ $cargo->id }}">
+                                        <input type="hidden" id="comision" name="comision" value="{{ $comision->id }}">
+                                        <input type="hidden" id="reunion" name="reunion" value="{{ $reunion->id }}">
+                                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i>
+                                            Registrar Asistencia
+                                        </button>
+                                    </form>
+                                </td>
+                            @php $contador++ @endphp
+                        @endforeach
+                    @else
+                        @foreach($cargos as $cargo)
+                            @php $encontrado = false @endphp
+                            @php $hora = "" @endphp
+                            <tr>
+                                <td>{{$contador}}</td>
+                                <td>{{ $cargo->asambleista->user->persona->primer_nombre . ' ' . $cargo->asambleista->user->persona->segundo_nombre . ' ' . $cargo->asambleista->user->persona->primer_apellido . ' ' .  $cargo->asambleista->user->persona->segundo_apellido}}</td>
+                                <td>{{ $cargo->cargo }}</td>
+                                @foreach($asistencias as $asistencia)
+                                    @if($asistencia->cargo->id == $cargo->id)
+                                        @php $encontrado = true @endphp
+                                        @php $hora = $asistencia->entrada @endphp
+                                    @endif
+                                @endforeach
+
+                                @if($encontrado == true)
+                                    <td>{{ $hora }}</td>
+                                    <td class="text-success"><i class="fa fa-check-square-o"></i> Presente</td>
+                                @else
+                                    <td></td>
+                                    <td>
+                                        <form id="registar_asistencia" name="registrar_asistencia"
+                                              action="{{ route("registrar_asistencia") }}" method="post">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" id="cargo" name="cargo" value="{{ $cargo->id }}">
+                                            <input type="hidden" id="comision" name="comision"
+                                                   value="{{ $comision->id }}">
+                                            <input type="hidden" id="reunion" name="reunion"
+                                                   value="{{ $reunion->id }}">
+                                            <button type="submit" class="btn btn-sm btn-success"><i
+                                                        class="fa fa-check"></i>
+                                                Registrar Asistencia
+                                            </button>
+                                        </form>
+                                    </td>
                                 @endif
-                            </td>
-                            <td>
-                                <form id="registar_asistencia" name="registrar_asistencia"
-                                      action="{{ route("registrar_asistencia") }}" method="post">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" id="cargo" name="cargo" value="{{ $cargo->id }}">
-                                    <input type="hidden" id="comision" name="comision" value="{{ $comision->id }}">
-                                    <input type="hidden" id="reunion" name="reunion" value="{{ $reunion->id }}">
-                                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i>
-                                        Registrar Asistencia
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @php $contador++ @endphp
-                    @endforeach
+
+                            </tr>
+                            @php $contador++ @endphp
+                        @endforeach
+                    @endif
+
+
                     </tbody>
                 </table>
             </div>

@@ -139,11 +139,14 @@ class JuntaDirectivaController extends Controller
         $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
-        //dd($cargos);
+        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))
+            ->get();
+        //dd($asistencias);
         return view('jdagu.asistencia_reunion_JD')
             ->with('cargos', $cargos)
             ->with('reunion', $reunion)
-            ->with('comision', $comision);
+            ->with('comision', $comision)
+            ->with('asistencias', $asistencias);
 
     }
 
@@ -155,6 +158,7 @@ class JuntaDirectivaController extends Controller
         $presente->reunion_id = $request->get("reunion");
         $presente->entrada = Carbon::now();
         $presente->save();
+
         $request->session()->flash("success", "Asistencia registrada con exito");
 
         $cargos = Cargo::where('comision_id', '=', $request->comision)->where('activo', '=', 1)->get();
