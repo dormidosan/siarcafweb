@@ -42,12 +42,14 @@ class PeticionTableSeeder extends Seeder
 
 		for ($i=1; $i < 10; $i++) {
 		$c = 0;
+		$est = '1';
 		if($i>5){
 			$c = 1;
+			$est = '3';
 		}
 
 		\DB::table('peticiones')->insert(array (
-		'estado_peticion_id'  => '1',
+		'estado_peticion_id'  => $est,
 		'codigo'  => $i.'-1234ABC',
 		'descripcion'  => 'Prueba por seed',
 		'peticionario'  => 'peticionario'.' '.$i,
