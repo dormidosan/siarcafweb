@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte Permisos Temporales</title>
-  <style type="text/css">  
+  <style type="text/css" media="print">  
   #watermark {
     position: fixed;
     top: 45%;
@@ -44,7 +44,7 @@
   font-family: "ARIAL", serif;
   font-size: 10pt;
   
-  top: 15%;
+  top: 25%;
 }
 
 #cp {
@@ -114,9 +114,9 @@
 </style>
                                          
                                                
- <div id="p" style="position:fixed;text-align: center;">
-    Sesión Plenaria de Asamblea General Universitaria N°: _____ Fecha: ____________<br/>
-    Solicitud de PERMISO DEFINITIVO<br/>
+ <div id="p" >
+    Sesión Plenaria de Asamblea General Universitaria {{$fechainicial}} AL {{$fechafinal}}<br/>
+    Solicitudes de PERMISOS DEFINITIVOS<br/>
      
   </div>   
                    
@@ -131,31 +131,26 @@
                     <th>Nombre del solicitante</th>                     
                     <th>Firma</th>                     
                     <th>Motivo del permiso</th>
-                    <th>Hora Salida</th>
-                 
+                    <th>Fecha de permiso</th>
+                    <th>Inicio</th>
+                    <th>Finalización</th>
                    
                     </tr>
                   </thead>
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
+ @foreach($resultados as $result)
                           <tr>                                     
                            <td><pre>
-Asambleista: _____________ <br/>
+Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}} <br/>
 Delego a: _____________</pre></td>
                            <td>_______________</td>
-                           <td><pre>          </pre></td>
-                           <td><pre>          </pre></td>
-                                  
+                           <td><pre>{{$result->motivo}}</pre></td>
+                           <td><pre>{{substr($result->fecha_permiso, 0, 9)}}</pre></td>
+                           <td><pre>{{$result->inicio}}</pre></td>
+                           <td><pre>{{$result->fin}}</pre></td>      
                           </tr> 
-                          <tr>                                     
-                           <td><pre>
-Asambleista: _____________ <br/>
-Delego a: _____________</pre></td>
-                           <td>_______________</td>
-                           <td><pre>          </pre></td>
-                           <td><pre>          </pre></td>
-                               
-                          </tr>                       
+  @endforeach                                                
                    </tbody>
 
                 </table>
@@ -166,48 +161,5 @@ Delego a: _____________</pre></td>
 
 
 
-
-
-
-
-
-
-
-  <!--<div id="centrar">
-   TEXTO FRENTE A MARCA DE AGUA 
-  </div>
-    <main>
-      <div id="details" class="clearfix">
-        <div id="invoice">
-          <h1>INVOICE {{ $invoice }}</h1>
-          <div class="date">Date of Invoice: {{ $date }}</div>
-        </div>
-      </div>
-      <table id="asd" border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr>
-            <th class="no">#</th>
-            <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="total">TOTAL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="no">{{ $data['quantity'] }}</td>
-            <td class="desc">{{ $data['description'] }}</td>
-            <td class="unit">{{ $data['price'] }}</td>
-            <td class="total">{{ $data['total'] }} </td>
-          </tr>
- 
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td >TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
-      </table>-->
   </body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte Permisos Temporales</title>
-  <style type="text/css">  
+  <style type="text/css" media="print">  
   #watermark {
     position: fixed;
     top: 45%;
@@ -117,7 +117,7 @@
  <div id="p" >
     CORRESPONDENCIA RECIBIDA SESIÓN ORDINARIA DE JUNTA DIRECTIVA DE LA<br/>
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    ACTA No. ___ /JD-AGU/201_-201_ FECHA: ___DE____DE 201_     
+    DEL {{$fechainicial}} AL {{$fechafinal}}   
   </div>   
   <hr/>     
 </head>
@@ -131,29 +131,29 @@
                     <th>No.</th>                     
                     <th>FECHA DE INGRESO</th>                     
                     <th>PROCEDENCIA</th>
-                    <th>DIRIGIDO A:</th>
-                    <th>ASUNTO</th>
+                    <th>DESCRIPCION</th>
+                    <th>TELEFONO</th>
+                    <th>CODIGO</th>
                     <th>RESOLUCION POR J.D</th>
                     </tr>
                   </thead>
-
+                   
                     <tbody>  <!-- CUERPO DE LA TABLA-->
+                     @php $i=1 @endphp
+                     @foreach($resultados as $result)
+
                           <tr>                                     
-                           <td>1</td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>   
-                           <td></td>             
+                           <td>{{$i}}</td>
+                           <td>{{$result->fecha}}</td>
+                           <td>{{$result->peticionario}}</td>
+                           <td>{{$result->descripcion}}</td>
+                           <td>{{$result->telefono}}</td>   
+                           <td>{{$result->codigo}}</td>   
+                           <td></td>         
                           </tr> 
-                          <tr>                                     
-                           <td>2</td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>    
-                           <td></td>            
-                          </tr>                       
+                         
+                   @php $i=$i+1 @endphp
+                    @endforeach  
                    </tbody>
 
                 </table>

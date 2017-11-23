@@ -133,7 +133,7 @@
  </div>  
  
 <div id="cp" style="text-align: left;">
-El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a):
+El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): {{$horasreunion[0]->suma}}
  </div>  
 
 <div id="cp1" style="text-align: left;">

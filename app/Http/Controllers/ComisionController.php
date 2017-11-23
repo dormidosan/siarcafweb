@@ -6,6 +6,7 @@ use App\Asambleista;
 use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
+use App\Peticion;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -65,6 +66,13 @@ class ComisionController extends Controller
         $comisiones = Comision::where("activa", 1)->get();
         $cargos = Cargo::all();
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
+    }
+
+    public function listado_peticiones_comision(Request $request){
+        //obtengo una comision
+        $comision = Comision::find($request->get("comision_id"));
+        $peticiones = $comision->peticiones;
+        return view("Comisiones.listado_peticiones_comision",["comision"=>$comision,"peticiones"=>$peticiones]);
     }
 
 
@@ -166,6 +174,10 @@ class ComisionController extends Controller
     {
         $comision = Comision::find($request->get("comision_id"));
         return view("Comisiones.TrabajoComision", ["comision" => $comision]);
+
+    }
+
+    public function seguimiento_peticion_comision(){
 
     }
 }

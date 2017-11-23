@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportesRequest;
 use App\Http\Requests\ReportesPermisosTemporalesRequest;
+use App\Http\Requests\ReportesPermisosPermanentesRequest;
 use App\Http\Requests\BuscarBitacoraCorrespRequest;
 use Illuminate\Support\Facades\DB;
 use PHPJasperXML;
@@ -14,6 +15,7 @@ use Response;
 use App\Asambleista;
 use Carbon\Carbon;
 use App\Peticion;
+
 
 class ReportesController extends Controller
 {
@@ -82,20 +84,39 @@ dd($tipo);
 
     public function Reporte_permisos_permanentes($tipo) 
     {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
+
+      //dd($tipo);
+      $parametros = explode(' ', $tipo);
+        $tipodes=$parametros[0];
+        $fechainicial=$parametros[1];
+        $fechafinal=$parametros[2];
+
+
+$resultados = DB::table('permisos')
+->join('asambleistas','permisos.asambleista_id','=','asambleistas.id')
+->join('users','asambleistas.user_id','=','users.id')   
+->join('personas','users.persona_id','=','personas.id')
+->where
+([
+  ['permisos.fecha_permiso','>=',$fechainicial],
+  ['permisos.fecha_permiso','<=',$fechafinal]
+])
+->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+'personas.segundo_nombre','personas.dui','personas.nit','personas.afp','personas.cuenta','permisos.motivo',
+'permisos.fecha_permiso','permisos.inicio','permisos.fin')
+->get();
+
+
+        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('resultados','fechainicial','fechafinal'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-        if($tipo==1)
+        if($tipodes==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($tipodes==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
@@ -166,19 +187,35 @@ dd($tipo);
       public function Reporte_bitacora_correspondencia($tipo) 
     {
       
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_bitacora_correspondencia_pdf', compact('data', 'date', 'invoice'))->render();
+      //dd($tipo);
+
+         $parametros = explode(' ', $tipo);
+
+  
+         $tipodes=$parametros[0];
+         $fechainicial=$parametros[1];
+         $fechafinal= $parametros[2];
+
+
+        $resultados = DB::table('peticiones')
+        ->where
+        ([
+        ['peticiones.fecha','>=',$fechainicial],
+        ['peticiones.fecha','<=',$fechafinal]
+        ])
+        ->get();
+
+        $view =  \View::make('Reportes/Reporte_bitacora_correspondencia_pdf', 
+                  compact('resultados', 'fechainicial', 'fechafinal'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
 
-        if($tipo==1)
+        if($tipodes==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($tipodes==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
@@ -373,43 +410,71 @@ if(!($resultados==NULL)){
 
  public function buscar_bitacora_correspondencia(BuscarBitacoraCorrespRequest $request){
 
-$resultados = DB::table('peticiones')->get();
+$fechainicial=$request->fecha1;
+//dd($fechainicial);
+//$fechainicial=str_replace('/','-',$fechainicial);
+//$fecha = DateTime::createFromFormat('Y-m-d', $fechainicial);
+//$fechainicial = $fecha->format('Y-m-d');
 
+/*$fecha1conver= explode('/', $fechainicial); si sirve
+$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
+$fechainicial = date('Y-m-d', strtotime($fechatrans));*/
+
+//dd($this->convertirfecha($fechainicial));
+
+//$fechainicial =strtotime($fechainicial);
+$fechafinal=$request->fecha2;
+
+//$fechafinal=str_replace('/','-',$fechafinal);
+//$fechafinal = date('Y-m-d', strtotime($fechafinal));
+
+
+
+$resultados = DB::table('peticiones')
+->where
+([
+  ['peticiones.fecha','>=',$this->convertirfecha($fechainicial)],
+  ['peticiones.fecha','<=',$this->convertirfecha($fechafinal)]
+])
+->limit(1)
+->get();
+
+
+
+
+/*$resultados = DB::table('peticiones')
+->where('peticiones.id','=',1)
+->get();*/
+
+//dd($fechainicial);
+//dd($request->all());
 //dd($resultados);
 
 if(!($resultados==NULL)){
+    $uno=$this->convertirfecha($fechainicial);
+    $dos=$this->convertirfecha($fechafinal);
          return view("Reportes.Reporte_bitacora_correspondencia")
+         ->with('fechainicial',$uno)
+         ->with('fechafinal',$dos)
          ->with('resultados',$resultados);
 }
 
 return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
+
+
+
  }
-
-
-
-
-
-
-
-
-
-
 
 
 
       public function Reporte_planilla_dieta($tipo) 
     {
       
-
-
         $parametros = explode(' ', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
         $verdescar=$parametros[0];
         $id=$parametros[1];
         $mes=$parametros[2];
         $anio=$parametros[3];
-
-
-      
 
         $busqueda = DB::table('asambleistas')
         ->join('users','asambleistas.user_id','=','users.id')
@@ -417,9 +482,66 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
         ->join('personas','users.persona_id','=','personas.id')
         ->where('asambleistas.id','=', $id)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','sectores.nombre','personas.dui','personas.nit','personas.afp','personas.cuenta')->first();
+                 'personas.segundo_nombre','sectores.nombre','personas.dui',
+                 'personas.nit','personas.afp','personas.cuenta')->first();
       
-       
+
+
+        $horasreunion=DB::table('reuniones')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
+        ->where('reuniones.id','=',1) //por el momento solo filtro por el id 
+        ->where('reuniones.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
+        ->get();
+
+
+        $horasasistencia=DB::table('asistencias')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(entrada,salida)))/3600) as suma') 
+        ->where('asistencias.asambleista_id','=',1) 
+        ->where('asistencias.id','=',1)//por el momento solo filtro por el id 
+        ->get();
+
+        $porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
+
+        $verificar=DB::table('asistencias')
+        ->where('asistencias.asambleista_id','=',1) 
+        ->where('asistencias.agenda_id','=',2)//por el momento solo filtro por el id 
+        ->get();
+
+foreach ($verificar as $var) {
+  //1 permiso temporal
+  //2 permiso permanente
+  //3 normal (sin permisos)
+  //4 cambio
+if($var->estado_asistencia_id==1){
+
+dd($var);
+
+
+
+}
+
+if($var->estado_asistencia_id==2){
+
+// si es permamente no deberia tener derecho a dieta retornar mensaje que posee permiso permanente
+
+}
+
+if($var->estado_asistencia_id==4){
+
+
+
+}
+
+
+}
+
+
+
+
+
+    //dd($horasreunion);
+    //dd($horasasistencia);
+     
 
         $nombre1=$busqueda->primer_nombre;
         $nombre2=$busqueda->segundo_nombre;
@@ -434,9 +556,9 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
 
         $nombrecompleto=$nombre1.' '.$nombre2.' '.$apellido1.' '.$apellido2;
 
-      //  dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
+        //dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
 
-        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio'))->render();
+        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio','horasreunion'))->render();
         $pdf =\App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view);
@@ -683,6 +805,7 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         if($tipo==1)
         {
             return $pdf->stream('reporte');
+
         }
         if($tipo==2)
         {
@@ -720,6 +843,65 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
+    }
+
+    public function buscar_permisos_permanentes(ReportesPermisospermanentesRequest $request){
+
+
+
+$fechainicial=$request->fecha1;
+//dd($fechainicial);
+//$fechainicial=str_replace('/','-',$fechainicial);
+//$fecha = DateTime::createFromFormat('Y-m-d', $fechainicial);
+//$fechainicial = $fecha->format('Y-m-d');
+
+/*$fecha1conver= explode('/', $fechainicial); si sirve
+$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
+$fechainicial = date('Y-m-d', strtotime($fechatrans));*/
+
+//dd($this->convertirfecha($fechainicial));
+
+//$fechainicial =strtotime($fechainicial);
+$fechafinal=$request->fecha2;
+
+//$fechafinal=str_replace('/','-',$fechafinal);
+//$fechafinal = date('Y-m-d', strtotime($fechafinal));
+
+
+
+$resultados = DB::table('permisos')
+->where
+([
+  ['permisos.fecha_permiso','>=',$this->convertirfecha($fechainicial)],
+  ['permisos.fecha_permiso','<=',$this->convertirfecha($fechafinal)]
+])
+->limit(1)
+->get();
+
+
+
+
+/*$resultados = DB::table('peticiones')
+->where('peticiones.id','=',1)
+->get();*/
+
+//dd($fechainicial);
+//dd($request->all());
+//dd($resultados);
+
+if(!($resultados==NULL)){
+    $uno=$this->convertirfecha($fechainicial);
+    $dos=$this->convertirfecha($fechafinal);
+         return view("Reportes.Reporte_permisos_permanentes")
+         ->with('fechainicial',$uno)
+         ->with('fechafinal',$dos)
+         ->with('resultados',$resultados);
+}
+
+
+
+
+return view("Reportes.Reporte_permisos_permanentes",['resultados'=>NULL]);
     }
 
     
@@ -817,6 +999,16 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
     {
         //
     }
+
+    public function convertirfecha($fecha){
+
+$fecha1conver= explode('/', $fecha);
+$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
+$fechainicial = date('Y-m-d', strtotime($fechatrans));
+
+        return $fechainicial;
+    }
+
 
     public function numero_mes($mesnum)
     {

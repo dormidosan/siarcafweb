@@ -23,16 +23,16 @@
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha">Fecha inicial</label>
-                            <div class="input-group date fecha">
-                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            <div class="input-group date fecha" >
+                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control" ><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha">Fecha final</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            <div class="input-group date fecha" >
+                                <input required="false" id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -59,12 +59,8 @@
         <div class="box-body">
                   <table class="table table-hover">
                    
-                    <thead><tr>
-                      
-                      <th>Nombre </th>
-                      
-                      <th>Fecha</th>
-                      
+                    <thead><tr>                
+                      <th>Nombre </th>                  
                       <th>Ver</th>
                       <th>Descargar</th>
                     </tr></thead>
@@ -74,12 +70,9 @@
                     <tr>                                     
                       <td>
                         BITACORA CORRESPONDENCIA
-                      </td>
-                      <td>fecha</td>
-                    
-                      <td><a href="{{url("/Reporte_bitacora_correspondencia/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_bitacora_correspondencia/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
+                      </td>                            
+                      <td><a href="{{url("/Reporte_bitacora_correspondencia/1 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_bitacora_correspondencia/2 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>                   
                     </tr>
                     @endforeach
                    @endif

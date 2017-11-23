@@ -6,13 +6,7 @@
 @endsection
 
 @section('content')
-
-             
-
-
-
-
-<div class="box box-danger">
+    <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">PLantilla de Actas</h3>
         </div>
@@ -22,8 +16,8 @@
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label>Filtro</label>
-                            
-                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
+
+                            <select class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value="">--Seleccione una opcion --</option>
                                 <option value="User">Asambleista</option>
                                 <option value="Sesion">Sesion plenaria</option>
@@ -34,7 +28,8 @@
                         <div class="form-group">
                             <label for="fecha">Fecha inicial</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -42,16 +37,18 @@
                         <div class="form-group">
                             <label for="fecha">Fecha final</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar
+                        </button>
                     </div>
                 </div>
             </form>
@@ -59,57 +56,58 @@
         <!-- /.box-body -->
     </div>
 
-
-
-
- <div class="box box-solid box-default">
+    <div class="box box-solid box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Resultados de Busqueda</h3>
         </div>
         <div class="box-body">
-                  <table class="table table-hover">
-                   
-                    <thead><tr>
-                      
-                      <th>Nombre </th>
-                      
-                      <th>Fecha</th>
-                      
-                      
-                      <th>Descargar</th>
-                    </tr></thead>
-                    <tbody>
-                    <tr>                                     
-                      <td>
+            <table class="table table-hover">
+
+                <thead>
+                <tr>
+
+                    <th>Nombre</th>
+
+                    <th>Fecha</th>
+
+
+                    <th>Descargar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
                         Nombre permiso
-                      </td>
-                      <td>fecha</td>
-                    
-                
-                      <td><a href="{{url("/Plantilla_actas/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
-                    </tr>
-                   
-                  </tbody></table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-  
-   <script>
-$('#fecha').datepicker({
-              format: "dd/mm/yyyy",
-                clearBtn: true,
-                language: "es",
-                autoclose: true,
-                todayHighlight: true
-            });
+                    </td>
+                    <td>fecha</td>
 
 
-  </script>
-        
+                    <td><a href="{{url("/Plantilla_actas/2")}}" class="btn btn-block btn-success btn-xs">DESCARGAR</a>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+    <script>
+        $('#fecha').datepicker({
+            format: "dd/mm/yyyy",
+            clearBtn: true,
+            language: "es",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+
+    </script>
+
 @endsection
 
- 
- @section("js")
+
+@section("js")
     <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>

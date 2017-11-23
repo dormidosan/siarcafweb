@@ -19,6 +19,8 @@ class CreateSeguimientosTable extends Migration
             $table->unsignedInteger('comision_id');
             $table->unsignedInteger('estado_seguimiento_id');
             $table->unsignedInteger('documento_id')->nullable();
+            $table->unsignedInteger('reunion_id')->nullable();
+            
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->boolean('activo')->nullable();
@@ -32,6 +34,8 @@ class CreateSeguimientosTable extends Migration
             $table->index(["estado_seguimiento_id"], 'fk_seguimientos_estado_seguimientos1_idx');
 
             $table->index(["documento_id"], 'fk_seguimientos_documentos1_idx');
+
+            $table->index(["reunion_id"], 'fk_seguimientos_reunion1_idx');
 
 
             $table->foreign('peticion_id', 'fk_seguimientos_peticiones1_idx')
@@ -51,6 +55,11 @@ class CreateSeguimientosTable extends Migration
 
             $table->foreign('documento_id', 'fk_seguimientos_documentos1_idx')
                 ->references('id')->on('documentos')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('reunion_id', 'fk_seguimientos_reunion1_idx')
+                ->references('id')->on('reuniones')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 

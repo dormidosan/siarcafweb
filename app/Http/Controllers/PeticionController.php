@@ -68,7 +68,7 @@ class PeticionController extends Controller
 		// O USANDO LA MANERA TOSCA ANTIGUA
         $peticion->estado_peticion_id = '1'; // NUEVAS PETICIONES EN ESTADO RECIBIDO
 		$peticion->codigo = hash("crc32", microtime(), false); 
-		$peticion->nombre = $request->nombre;
+		//$peticion->nombre = $request->nombre;
 		$peticion->descripcion = $request->descripcion;
 		$peticion->peticionario = $request->peticionario;;
 		$peticion->fecha = Carbon::now();
@@ -187,18 +187,18 @@ class PeticionController extends Controller
 		$peticion->documentos()->sync($documentos_id);
 
 		
-		$seguimiento->peticion_id = $peticion->id;
-		
-		$seguimiento->comision_id = '1';
 
-		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+
+		$seguimiento->peticion_id = $peticion->id;
+		$seguimiento->comision_id = '1';
+		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id;  // CR estado creado
 		$seguimiento->inicio = Carbon::now();
 		$seguimiento->fin = Carbon::now();
 		$seguimiento->activo = '0';
 		$seguimiento->agendado = '0';
-		//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
 		$seguimiento->descripcion = 'creacion de peticion';
 		$seguimiento->save();
+
 
 		foreach ($documentos_id as $documento_seguimiento) {
 
@@ -207,7 +207,7 @@ class PeticionController extends Controller
 			$seguimiento->peticion_id = $peticion->id;
 			$seguimiento->comision_id = '1';
 
-			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "creacion")->first()->id;
+			$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id; // CR estado creado
 			$seguimiento->documento_id = $documento_seguimiento;
 			$seguimiento->inicio = Carbon::now();
 			$seguimiento->fin = Carbon::now();
@@ -220,6 +220,37 @@ class PeticionController extends Controller
 		}
 
 
+		// La JD siempre debe tener el seguimiento para la peticion
+
+		$seguimiento = new Seguimiento();
+
+		$seguimiento->peticion_id = $peticion->id;
+		
+		$seguimiento->comision_id = '1';
+
+		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "se")->first()->id;  // CR estado creado
+		// La JD siempre debe tener el seguimiento para la peticion
+		$seguimiento->inicio = Carbon::now();
+		$seguimiento->fin = Carbon::now();
+		$seguimiento->activo = '0';
+		$seguimiento->agendado = '0';
+		//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+		$seguimiento->descripcion = "Inicio de control en: JD";
+		$seguimiento->save();
+
+
+		$seguimiento = new Seguimiento();
+		$seguimiento->peticion_id = $peticion->id;
+		$seguimiento->comision_id ='1';
+		$seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "as")->first()->id; // AS Asignado
+		// La JD siempre debe tener el seguimiento para la peticion
+		$seguimiento->inicio = Carbon::now();
+		$seguimiento->fin = Carbon::now();
+		$seguimiento->activo = '0';
+		$seguimiento->agendado = '0';
+		//$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+		$seguimiento->descripcion = "Asignado a: JD";
+		$guardado = $seguimiento->save();
 
 
         //dd(1);

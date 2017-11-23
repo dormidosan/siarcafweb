@@ -17,7 +17,7 @@ class CreatePeticionesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('estado_peticion_id');
             $table->string('codigo', 10)->nullable();
-            $table->string('nombre', 45)->nullable();
+            //$table->string('nombre', 45)->nullable();
             $table->string('descripcion', 45)->nullable();
             $table->string('peticionario', 45)->nullable();
             $table->dateTime('fecha')->nullable();

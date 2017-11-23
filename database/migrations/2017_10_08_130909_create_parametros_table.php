@@ -16,6 +16,7 @@ class CreateParametrosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('parametro', 45)->nullable();
+            $table->string('nombre_parametro', 45)->nullable();
             $table->float('valor',4,2 )->nullable();
             $table->timestamps();
         });
