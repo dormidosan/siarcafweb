@@ -7,6 +7,7 @@ use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Peticion;
+use App\Reunion;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ComisionController extends Controller
         return ["comision" => $comision, "integrantes" => $integrantes, "asambleistas" => $asambleistas];
     }
 
-                                         /******************** METODOS GET *********************************/
+    /******************** METODOS GET *********************************/
 
     //mostrar las comisiones activas e inactivas
     public function mostrar_comisiones()
@@ -63,20 +64,23 @@ class ComisionController extends Controller
     //mostrar las comisiones activas
     public function administrar_comisiones()
     {
-        $comisiones = Comision::where("activa", 1)->get();
+        //obtener las comisiones, omitiendo la JD
+        $comisiones = Comision::where("activa", 1)
+            ->where("id","!=",1)
+            ->get();
         $cargos = Cargo::all();
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
     }
 
-    public function listado_peticiones_comision(Request $request){
+    /******************** METODOS POST *********************************/
+
+    public function listado_peticiones_comision(Request $request)
+    {
         //obtengo una comision
         $comision = Comision::find($request->get("comision_id"));
         $peticiones = $comision->peticiones;
-        return view("Comisiones.listado_peticiones_comision",["comision"=>$comision,"peticiones"=>$peticiones]);
+        return view("Comisiones.listado_peticiones_comision", ["comision" => $comision, "peticiones" => $peticiones]);
     }
-
-
-                                          /******************** METODOS POST *********************************/
 
     //mostrar listado de las comisiones, con su total de integrantes
     public function gestionar_asambleistas_comision(Request $request)
@@ -89,6 +93,7 @@ class ComisionController extends Controller
     public function crear_comision(ComisionRequest $request)
     {
         $comision = new Comision();
+        $comision->codigo = $request->get("codigo");
         $comision->nombre = $request->get("nombre");
         $comision->permanente = 0; //0: transitoria, 1: permanente
         $comision->descripcion = $request->get("nombre");
@@ -177,7 +182,17 @@ class ComisionController extends Controller
 
     }
 
-    public function seguimiento_peticion_comision(){
+    public function listado_reuniones_comision(Request $request){
+        $reuniones = Reunion::where('id','!=',0)->where('comision_id',$request->comision_id)->orderBy('created_at','DESC')->get();
 
+        return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones]);
+    }
+
+    //PENDIENTE DE TRAER LAS PETICIONES
+    public function reunion_comision(Request $request){
+        $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+
+        return view('Comisiones.reunion_comision')
+            ->with('peticiones',$peticiones);
     }
 }

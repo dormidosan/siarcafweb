@@ -15,6 +15,7 @@ class CreateComisionesTable extends Migration
         Schema::create('comisiones', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('codigo', 5)->nullable();
             $table->string('nombre', 50)->nullable();
             $table->boolean('permanente')->nullable();
             $table->string('descripcion', 50)->nullable();

@@ -9,55 +9,51 @@
 @endsection
 
 @section('content')
-
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Busqueda de Documentos</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="{{ url('buscar_documento') }}" >
-            {{ csrf_field() }}
+
+            <form id="buscarDocs" action="{{ url('buscar_documentos')}}" method="post">
+                {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label>Numero</label>
-                            <input type="text" class="form-control" placeholder="Ingrese numero" id="numero"
-                                   name="numero">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="form-group ">
+                            <label>Nombre Documento</label>
+                            <input type="text" class="form-control" placeholder="Ingrese nombre" id="nombre_documento"
+                                   name="nombre_documento">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
+                    <div class="col-lg-3 col-sm-12 col-md-3">
+                        <div class="form-group {{ $errors->has('tipo_documento') ? 'has-error' : '' }}">
                             <label>Tipo de Documento</label>
-<!--
-                            <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                <option value="acta">Acta</option>
-                                <option value="dictamen">Dictamen</option>
-                                </select>
--->
-                    {!! Form::select('tipo_documentos',$tipo_documentos,null,
-                    ['id'=>'tipo_documento',
-                     'class'=>'form-control',
-                     'required'=>'required',
-                     'placeholder' => 'Seleccione tipo documento...']) !!}
- 
-                            
+                            <select id="tipo_documento" name="tipo_documento" class="form-control" required>
+                                <option value="">--Seleccione una opcion--</option>
+                                @foreach($tipo_documentos as $tipo_documento)
+                                    <option value="{{ $tipo_documento->id }}"
+                                            @if (old('tipo_documento') == $tipo_documento->id) selected="selected" @endif>{{ $tipo_documento->tipo}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger">{{ $errors->first('tipo_documento') }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+
+                    <div class="col-lg-3 col-sm-12 col-md-3">
                         <label>Periodo AGU</label>
                         <select class="form-control" id="periodo" name="periodo">
                             <option value="">--Seleccione una opcion --</option>
-                            <option value="">2017-</option>
-                            <option value="">2015-2017</option>
-                            <option value="">2013-2015</option>
+                            @foreach($periodos as $periodo)
+                                <option value="{{ $periodo->id }}">{{ $periodo->nombre_periodo }}</option>
+                            @endforeach
                         </select>
                     </div>
+
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label>Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Ingrese una palabra clave"
-                                   id="descripcion" name="descripcion">
+                            <textarea type="text" class="form-control" placeholder="Ingrese palabras clave"
+                                      id="descripcion" name="descripcion"></textarea>
                         </div>
                     </div>
                 </div>
@@ -69,7 +65,6 @@
                 </div>
             </form>
         </div>
-        <!-- /.box-body -->
     </div>
 
     <div class="box box-solid box-default">
@@ -78,59 +73,40 @@
         </div>
         <div class="box-body table-responsive">
             <table id="resultadoDocs"
-                   class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                   class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
+                    <th>Nº</th>
                     <th>Nombre Documento</th>
                     <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
-                    <th>Visualizar</th>
-                    <th>Descargar</th>
+                    <th>Accion</th>
                 </tr>
                 </thead>
 
                 <tbody id="cuerpoTabla">
 
- <!--
-                <tr>
-                    <td>Lo he dejado quemado para que</td>
-                    <td>no se vea solo :v</td>
-                    <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                    <td>Opcion</td>
-                </tr>
--->
-              
-            @forelse($documentos as $documento)
-                <tr>
-                        <td>
-                            <center>
-                            {!! $documento->nombre_documento !!}
-                            </center>
-                        </td>
-                        <td>
-                        {!! $documento->tipo_documento->tipo !!}
-                        </td>
-                        <td>
-                        {!! $documento->fecha_ingreso !!}
-                        </td>
-                        <td>
-                            <a class="btn btn-info" href="<?= $disco.$documento->path; ?>" role="button">Ver</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-success" href="descargar_documento/<?= $documento->id; ?>" role="button">Descargar</a>
-                        </td>
-                 </tr>
-
-
-            @empty
-                <p style="color: red ;">No hay criterios de busqueda</p>
-            @endforelse
-
-
+                @if(empty($documentos) != true)
+                    @php $i=1 @endphp
+                    @foreach($documentos as $documento)
+                        <tr>
+                            <td>{{ $i }}</td>
+                            <td>{{ $documento->nombre_documento }}</td>
+                            <td>{{ $documento->tipo_documento->tipo }}</td>
+                            <td>{{ $documento->fecha_ingreso }}</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" href="<?= $disco . $documento->path; ?>"
+                                   role="button"><i class="fa fa-eye"></i> Ver</a>
+                                <a class="btn btn-success btn-sm    "
+                                   href="descargar_documento/<?= $documento->id; ?>" role="button"><i
+                                            class="fa fa-download"></i> Descargar</a>
+                            </td>
+                        </tr>
+                        @php $i++ @endphp
+                    @endforeach
+                @endif
                 </tbody>
-
             </table>
-
         </div>
     </div>
 
@@ -150,6 +126,11 @@
         margin-right: 0;
         margin-left: 0;
     }
+
+    table.dataTable thead > tr > th {
+        padding-right: 0 !important;
+    }
+
 </style>
 
 @section("scripts")
@@ -180,9 +161,12 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                responsive: true
+                responsive: true,
+                columnDefs: [ { orderable: false, targets: [0,4] },  ],
+                order: [[ 1, 'asc' ]]
 
             });
         });
     </script>
+
 @endsection

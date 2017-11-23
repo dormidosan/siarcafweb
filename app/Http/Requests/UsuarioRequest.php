@@ -33,8 +33,7 @@ class UsuarioRequest extends Request
             'correo' => "required|max:45|email",
             'afp' => "required|min:12|max:12",
             'cuenta' => "required|min:10|max:10",
-            //'foto' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'foto' => 'required|mimes:jpeg,png,jpg',
+            'foto' => 'required|mimes:jpeg,png,jpg|max:2048',
             'tipo_usuario' => 'required',
             'sector' => 'required',
             'facultad' => 'required',
@@ -57,6 +56,9 @@ class UsuarioRequest extends Request
             'primer_apellido.max' => "El primer nombre no debe exceder los 15 caracteres",
             'segundo_apellido.max' => "El primer nombre no debe exceder los 15 caracteres",
             'correo.email' => "El correo ingresado no es un formato valido",
+            'foto.required' => 'Ingrese una fotografia del nuevo usuario',
+            'foto.mimes' => 'Solo JPG, PNG o JPEG son formatos validos'
+
 
         ];
     }

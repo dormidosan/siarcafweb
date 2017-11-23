@@ -25,6 +25,8 @@ class CreatePeticionesTable extends Migration
             $table->string('telefono', 9)->nullable();
             $table->string('direccion', 45)->nullable();
             $table->boolean('resuelto')->nullable();
+            $table->boolean('agendado')->nullable();
+            $table->boolean('comision')->nullable();
 
             $table->index(["estado_peticion_id"], 'fk_peticiones_estado_peticiones1_idx');
 

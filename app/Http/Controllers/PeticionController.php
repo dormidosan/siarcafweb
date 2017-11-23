@@ -76,6 +76,8 @@ class PeticionController extends Controller
 		$peticion->telefono = $request->telefono;
 		$peticion->direccion = $request->direccion;
 		$peticion->resuelto = 0;
+		$peticion->agendado = 0;
+		$peticion->comision = 0;
 		
 		
 		

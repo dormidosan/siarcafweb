@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Periodo;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
@@ -16,44 +17,34 @@ use App\Documento;
 
 class BuscarDocumentoController extends Controller
 {
-    //
 
-    public function busqueda(){
-
-    	 $tipo_documentos = TipoDocumento::lists('tipo','id');
-
-    	 $documentos = Documento::where('tipo_documento_id','=',0)->get(); //->paginate(10); para obtener ningun resultado ya que se pinta en blanco
-         $disco = "../storage/documentos/";
-
-        return view('General.BusquedaDocumentos')
-        ->with('documentos',$documentos)
-        ->with('disco',$disco)
-        ->with('tipo_documentos',$tipo_documentos);
+    public function busqueda()
+    {
+        $tipo_documentos = TipoDocumento::all();
+        $documentos = Documento::where('tipo_documento_id','=',0)->get(); //->paginate(10); para obtener ningun resultado ya que se pinta en blanco
+        $periodos = Periodo::all();
+        $disco = "../storage/documentos/";
+        return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
     }
 
-    public function buscar_documento(Request $request,Redirector $redirect)
+    public function buscar_documento(Request $request, Redirector $redirect)
     {
-		// SOLO BUSCAR POR TIPO ACTUALMENTE
-
-    	$tipo_documentos = TipoDocumento::lists('tipo','id');
-    	$documentos = Documento::where('tipo_documento_id','=',$request->tipo_documentos)->get(); //->paginate(10); //obtiene los documentos con este tipo
-    	$disco = "../storage/documentos/";
-    	//dd($documentos);
-		//dd($request->all());
-
-		return view('General.BusquedaDocumentos')
-		->with('documentos',$documentos)
-		->with('disco',$disco)
-        ->with('tipo_documentos',$tipo_documentos);
+        // SOLO BUSCAR POR TIPO ACTUALMENTE
+        //dd($request->all());
+        $tipo_documentos = TipoDocumento::all();
+        $periodos = Periodo::all();
+        //SELECT * FROM documentos WHERE nombre_documento LIKE '%%' AND tipo_documento_id = 2;
+        $documentos = Documento::where('tipo_documento_id', '=', $request->tipo_documento)->get();
+        $disco = "../storage/documentos/";
+        return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
     }
 
     public function descargar_documento($id)
     {
-    	$documento= Documento::find($id);
-    	$ruta_documento = "../storage/documentos/".$documento->path;
-    	return response()->download($ruta_documento);
+        $documento = Documento::find($id);
+        $ruta_documento = "../storage/documentos/" . $documento->path;
+        return response()->download($ruta_documento);
     }
-
 }
 
 

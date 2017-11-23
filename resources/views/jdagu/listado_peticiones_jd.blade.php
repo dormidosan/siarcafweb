@@ -3,9 +3,9 @@
     <link rel="stylesheet" href="{{ asset('') }}">
 @endsection
 @section("content")
-    <div class="box box-danger box-solid">
+    <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Puntos de Comision</h3>
+            <h3 class="box-title">Listado de Peticiones JD</h3>
         </div>
         <div class="box-body">
             <div class="table-responsive">
@@ -87,8 +87,8 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <input type="submit" class="btn btn-info btn-xs btn-block" name="Guardar"
-                                       value="***Ver">
+                                <button type="submit" class="btn btn-primary btn-sm pull-right">
+                                    <i class="fa fa-eye"></i> Ver
                             </td>
                         </tr>
                         {!! Form::close() !!}
