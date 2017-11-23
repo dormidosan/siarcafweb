@@ -17,55 +17,36 @@
                         <th>Acción</th>
                     </tr>
                     </thead>
-
+                    
                     <tbody id="cuerpoTabla">
+                    @forelse($parametros as $parametro)
+                    {!! Form::open(['route'=>['almacenar_parametro'],'method'=> 'POST','id'=>$parametro->id]) !!}
                     <tr>
-                        <td>Parametro 1</td>
-                        <td>0</td>
+                        <input type="hidden" name="id_parametro" id="id_parametro" value="{{$parametro->id}}">
+                        <td>{!! $parametro->nombre_parametro !!}</td>
+                        <td>{!! $parametro->valor !!}</td>
                         <td>
-                            <input type="text" id="valor1" name="valor1" class="form-control input-sm"
-                                   placeholder="Ingrese un valor">
+                            <input type="number" id="nuevo_valor" name="nuevo_valor"  onchange="setTwoNumberDecimal" min="0" max="100" step="0.01" value="{{$parametro->valor}}" >
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm " id="actualizarValor" name="actualizarValor">Actualizar</button>
+                            <button type="submit" class="btn btn-success">Actualizar</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Parametro 2</td>
-                        <td>0</td>
-                        <td>
-                            <input type="text" id="valor1" name="valor1" class="form-control input-sm"
-                                   placeholder="Ingrese un valor">
-                        </td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" id="actualizarValor" name="actualizarValor">Actualizar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Parametro 3</td>
-                        <td>0.13</td>
-                        <td>
-                            <input type="text" id="valor1" name="valor1" class="form-control input-sm"
-                                   placeholder="Ingrese un valor">
-                        </td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" id="actualizarValor" name="actualizarValor">Actualizar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Parametro 4</td>
-                        <td>0</td>
-                        <td>
-                            <input type="text" id="valor1" name="valor1" class="form-control input-sm"
-                                   placeholder="Ingrese un valor">
-                        </td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" id="actualizarValor" name="actualizarValor">Actualizar</button>
-                        </td>
-                    </tr>
+                    {!! Form::close() !!}
+                    @empty
+
+                    @endforelse
+                    
                     </tbody>
+                    
                 </table>
             </div>
         </div>
     </div>
 @endsection
+<script type="text/javascript">
+    function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}
+
+</script>
