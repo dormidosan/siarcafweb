@@ -10,6 +10,7 @@ use App\Persona;
 use App\Rol;
 use App\Sector;
 use App\User;
+use App\Parametro;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -125,4 +126,33 @@ class AdministracionController extends Controller
             return new JsonResponse($respuesta);
         }
     }
+
+    public function parametros(Request $request)
+    {
+        $parametros = Parametro::all();
+        
+        return view('Administracion.Parametros')
+        ->with('parametros',$parametros);
+       
+    }
+
+    public function almacenar_parametro(Request $request)
+    {
+
+
+        //dd($request->all());
+        $parametro = Parametro::where('id','=',$request->id_parametro)->firstOrFail();
+        $parametro->valor = $request->nuevo_valor;
+        $parametro->save();
+
+
+        $parametros = Parametro::all();
+        
+        return view('Administracion.Parametros')
+        ->with('parametros',$parametros);
+       
+    }
+
+
+
 }

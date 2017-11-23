@@ -18,6 +18,7 @@ class CreateAgendasTable extends Migration
             $table->unsignedInteger('periodo_id');
             $table->string('codigo',15)->nullable();
             $table->date('fecha')->nullable();
+            $table->string('lugar', 30)->nullable();
             $table->boolean('trascendental')->nullable();
             $table->boolean('vigente')->nullable();
             $table->dateTime('inicio')->nullable();

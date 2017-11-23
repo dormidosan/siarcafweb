@@ -133,9 +133,14 @@ Route::get('/HistorialAgendas', function () {
 });
 
 /* Routes Administracion */
-Route::get('/Parametros', function () {
+/*
+Rou-t-e-::-g-et('/Parametros', function () {
     return view('Administracion.Parametros');
 });
+*/
+
+
+
 Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
@@ -150,7 +155,8 @@ Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->nam
 Route::get('/periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
 Route::post('/guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('/finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
-
+Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
+Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 
 /* Asambleistas */
 Route::get('/listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
@@ -169,6 +175,11 @@ Route::post('mailing_jd', array('as' => 'mailing_jd', 'uses' => 'MailController@
 Route::get('trabajo_junta_directiva', array('as' => 'trabajo_junta_directiva', 'uses' => 'JuntaDirectivaController@trabajo_junta_directiva'));
 Route::get('listado_peticiones_jd', array('as' => 'listado_peticiones_jd', 'uses' => 'JuntaDirectivaController@listado_peticiones_jd'));
 Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' => 'JuntaDirectivaController@listado_reuniones_jd'));
+
+Route::post('listado_sesion_plenaria', array('as' => 'listado_sesion_plenaria', 'uses' => 'JuntaDirectivaController@listado_sesion_plenaria'));
+Route::post('agregar_puntos_jd', array('as' => 'agregar_puntos_jd', 'uses' => 'JuntaDirectivaController@agregar_puntos_jd'));
+
+
 //Route::post('seguimiento_peticion_jd/{id_peticion}', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::get('seguimiento_peticion_individual_jd', array('as' => 'seguimiento_peticion_individual_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_individual_jd'));

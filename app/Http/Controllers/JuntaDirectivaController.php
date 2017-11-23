@@ -17,6 +17,8 @@ use App\Seguimiento;
 use App\EstadoSeguimiento;
 use App\Reunion;
 use App\Cargo;
+use App\EstadoPeticion;
+use App\Agenda;
 
 
 class JuntaDirectivaController extends Controller
@@ -63,44 +65,56 @@ class JuntaDirectivaController extends Controller
     }
 
 
-    public function agendar_plenaria(Request $request, Redirector $redirect)
-    {
+    public function agendar_plenaria(Request $request,Redirector $redirect){
 
-        //dd($request->all());
-        $peticion = Peticion::where('id', '=', $request->id_peticion)->firstOrFail();
+    //dd($request->all());    
+    $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
+    if ($peticion->agendado == 1) {
+        $peticion->agendado = 0;
+        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 're')->first()->id;    
+    }else{
         $peticion->agendado = 1;
-        $peticion->save();
-
-
-        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
-        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
-        $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get();
-
-        $todos_puntos = 1;
-        return view('jdagu.reunion_jd')
-            ->with('todos_puntos',$todos_puntos)
-            ->with('reunion', $reunion)
-            ->with('comision', $comision)
-            ->with('peticiones', $peticiones);
+        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'aa')->first()->id;    
     }
 
-    public function iniciar_reunion_jd(Request $request, Redirector $redirect)
-    {
-        $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+    
 
-        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+
+
+    $peticion->save();
+
+     
+    $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+    $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+    $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+
+    $todos_puntos = 1;
+
+    return view('jdagu.reunion_jd')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
+    }
+
+    public function iniciar_reunion_jd(Request $request,Redirector $redirect){
+        $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
         $reunion->activa = '1';
         $reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
         $reunion->save();
-        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
 
         $todos_puntos = 1;
         return view('jdagu.reunion_jd')
-            ->with('todos_puntos',$todos_puntos)
-            ->with('reunion', $reunion)
-            ->with('comision', $comision)
-            ->with('peticiones', $peticiones);
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
     }
+
+
 
     public function puntos_agendados(Request $request,Redirector $redirect){
         //dd();
@@ -119,6 +133,42 @@ class JuntaDirectivaController extends Controller
         ->with('peticiones',$peticiones);
     }
 
+
+    public function listado_sesion_plenaria(Request $request,Redirector $redirect){
+
+        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get(); // Primero ordenar por el estado, despues los estados 
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+
+        $todos_puntos = 3;
+        return view('jdagu.listado_sesion_plenaria')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('agendas',$agendas);
+    }
+
+    
+    
+    public function agregar_puntos_jd(Request $request,Redirector $redirect){
+        //dd();
+
+        $peticiones = Peticion::where('agendado','=',1)->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+
+        $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+
+        $todos_puntos = 3;
+        return view('jdagu.asignacion_puntos')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)   ////////////
+        ->with('comision',$comision) ////////////
+        ->with('agenda',$agenda)
+        ->with('peticiones',$peticiones);
+    }
     /*
         public function reunion_jd(Request $request,Redirector $redirect){
             $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
@@ -139,11 +189,14 @@ class JuntaDirectivaController extends Controller
         $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
-        //dd($cargos);
+        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))
+            ->get();
+        //dd($asistencias);
         return view('jdagu.asistencia_reunion_JD')
             ->with('cargos', $cargos)
             ->with('reunion', $reunion)
-            ->with('comision', $comision);
+            ->with('comision', $comision)
+            ->with('asistencias', $asistencias);
 
     }
 
@@ -155,6 +208,7 @@ class JuntaDirectivaController extends Controller
         $presente->reunion_id = $request->get("reunion");
         $presente->entrada = Carbon::now();
         $presente->save();
+
         $request->session()->flash("success", "Asistencia registrada con exito");
 
         $cargos = Cargo::where('comision_id', '=', $request->comision)->where('activo', '=', 1)->get();
@@ -256,6 +310,8 @@ class JuntaDirectivaController extends Controller
             //$peticion->comisiones()->attach($id_comision);
             //}
             $peticion->comision = 1;
+            $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', "co")->first()->id; // AS Asignado
+            $peticion->save();
 
         }
 

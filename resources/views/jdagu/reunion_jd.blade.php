@@ -60,6 +60,16 @@
             @endif
             {!! Form::close() !!}    
             </div>
+
+            <div class="col-lg-4 col-lg-offset-3 col-sm-12">
+            {!! Form::open(['route'=>['listado_sesion_plenaria'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+            @if($todos_puntos == 3)
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Listado Sesion Plenaria</button>
+            @else
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Listado Sesion Plenaria</button>
+            @endif
+            {!! Form::close() !!}    
+            </div>
             
             
         </div>
@@ -70,6 +80,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
+                    
                         <table class="table text-center table-striped table-bordered table-hover table-condensed">
                             <thead>
                             <tr>
@@ -85,11 +96,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php $contador=1 @endphp @forelse($peticiones as $peticion) @if ($peticion->agendado == 1)
+                            @php $contador=1 @endphp @forelse($peticiones as $peticion) 
+                            @if ($peticion->agendado == 1)
                                 <tr class="success">
                             @else
                                 <tr>
-                                    @endif
+                            @endif
                                     <td>{!! $contador !!} @php $contador++ @endphp</td>
                                     <td>{!! $peticion->agendado !!}</td>
                                     <td>{!! $peticion->nombre !!}</td>
@@ -113,7 +125,12 @@
                                         {{ Form::hidden('id_reunion', $reunion->id) }}
                                         {{ Form::hidden('id_comision', $comision->id) }}
                                         {!! $peticion->id !!}
+                                        @if($peticion->agendado == 1)
+                                        <button type="submit" class="btn btn-default" disabled="disabled">Asignar comision/plenaria</button>
+                                        @else
                                         <button type="submit" class="btn btn-success">Asignar comision/plenaria</button>
+                                        @endif
+
                                         {!! Form::close() !!}
                                     </td>
 
@@ -125,7 +142,13 @@
                                                value="{{$comision->id}}">
                                         <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                                         {!! $peticion->id !!}
+                                        @if($peticion->comision == 1)
+                                        <button type="submit" class="btn btn-default" disabled="disabled">Agendar Plenaria</button>
+                                        @elseif($peticion->agendado == 1)
+                                        <button type="submit" class="btn btn-danger" >Retirar Plenaria</button>
+                                        @else
                                         <button type="submit" class="btn btn-success">Agendar Plenaria</button>
+                                        @endif
                                         {!! Form::close() !!}
                                     </td>
 
@@ -142,6 +165,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+
+
+
                     </div>
                 </div>
             </div>
