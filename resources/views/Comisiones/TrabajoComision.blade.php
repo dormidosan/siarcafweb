@@ -4,6 +4,20 @@
     <link rel="stylesheet" href="{{ asset('') }}">
 @endsection
 
+@section('breadcrumb')
+    <section class="content-header">
+        <h1>
+            Trabajo de Comision
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Administrar Comision</a></li>
+            <li class="active">Trabajo de Comision</li>
+        </ol>
+    </section>
+@endsection
+
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">

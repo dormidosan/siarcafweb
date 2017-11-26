@@ -149,7 +149,8 @@
                             <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
                             </li>
-                            <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de agendas</a>
+                            <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de
+                                    agendas</a>
                             </li>
                         </ul>
                     </li>
@@ -164,10 +165,12 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url("/listado_asambleistas_facultad")}}"><i class="fa fa-dot-circle-o"></i>Listado de
+                            <li><a href="{{url("/listado_asambleistas_facultad")}}"><i class="fa fa-dot-circle-o"></i>Listado
+                                    de
                                     asambleistas</a>
                             </li>
-                            <li><a href="{{url("/listado_asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Asambleistas por
+                            <li><a href="{{url("/listado_asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Asambleistas
+                                    por
                                     comision</a></li>
                             <li><a href="{{url("/listado_asambleistas_junta")}}"><i class="fa fa-dot-circle-o"></i>
                                     Asambleistas de JD</a></li>
@@ -187,7 +190,8 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/Plantilla_Actas")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a></li>
+                                    <li><a href="{{url("/Plantilla_Actas")}}"><i class="fa fa-dot-circle-o"></i>Acuerdos</a>
+                                    </li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas JD</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Actas AGU</a></li>
                                     <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Dictamenes</a></li>
@@ -252,7 +256,8 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/RegistrarPeticion") }}"><i class="fa fa-dot-circle-o"></i> Registrar
                                     Peticiones</a></li>
-                            <li><a href="{{ url("/MonitorearPeticion") }}"><i class="fa fa-dot-circle-o"></i>Monitorear Peticion</a>
+                            <li><a href="{{ url("/MonitorearPeticion") }}"><i class="fa fa-dot-circle-o"></i>Monitorear
+                                    Peticion</a>
                             </li>
                         </ul>
                     </li>
@@ -264,7 +269,8 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('trabajo_junta_directiva') }}"><i class="fa fa-dot-circle-o"></i>Trabajo de JD</a></li>
+                            <li><a href="{{ url('trabajo_junta_directiva') }}"><i class="fa fa-dot-circle-o"></i>Trabajo
+                                    de JD</a></li>
                             </li>
                         </ul>
                     </li>
@@ -277,7 +283,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ url('parametros') }}"><i class="fa fa-dot-circle-o"></i>Parametros</a></li>
-                            <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar plantillas</a>
+                            <li><a href="{{ url("/ActualizarPlantilla") }}"><i class="fa fa-dot-circle-o"></i>Actualizar
+                                    plantillas</a>
                             </li>
                             <li class="treeview">
                                 <a href="#"><i class="fa fa-dot-circle-o"></i> Gestionar Usuarios
@@ -285,12 +292,16 @@
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{url("/GestionarUsuarios")}}"><i class="fa fa-dot-circle-o"></i>Administracion Usuarios</a></li>
-                                    <li><a href="{{url("/registrar_usuario")}}"><i class="fa fa-dot-circle-o"></i>Registar Usuarios</a></li>
-                                    <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar Perfiles</a></li>
+                                    <li><a href="{{url("/GestionarUsuarios")}}"><i class="fa fa-dot-circle-o"></i>Administracion
+                                            Usuarios</a></li>
+                                    <li><a href="{{url("/registrar_usuario")}}"><i class="fa fa-dot-circle-o"></i>Registar
+                                            Usuarios</a></li>
+                                    <li><a href="{{url("/GestionarPerfiles")}}"><i class="fa fa-dot-circle-o"></i>Gestionar
+                                            Perfiles</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ url("/periodos_agu") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a></li>
+                            <li><a href="{{ url("/periodos_agu") }}"><i class="fa fa-dot-circle-o"></i>Periodo AGU</a>
+                            </li>
 
                         </ul>
                     </li>
@@ -305,12 +316,20 @@
 
     <!-- MAIN CONTENT-->
     <div class="content-wrapper">
-        <!--<section class="content-header">
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
-            </ol>
-        </section>-->
+
+        @section("breadcrumb")
+            <section class="content-header">
+                <h1>
+                    Dashboard
+                    <small>Version 2.0</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ol>
+            </section>
+        @show
+
         <section class="content">
             <div class="row" style="margin: 0 0.1px 0 0.1px !important;">
                 <div class="panel panel-danger">
@@ -332,8 +351,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             @yield('content')

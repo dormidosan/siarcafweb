@@ -2,13 +2,26 @@
 
 @section("styles")
     <!-- Datatables-->
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">.
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
             margin-right: 0;
             margin-left: 0;
         }
     </style>
+@endsection
+
+@section('breadcrumb')
+    <section class="content-header">
+        <h1>
+            Administrar Comision
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li class="active">Administrar Comision</li>
+        </ol>
+    </section>
 @endsection
 
 @section('content')
