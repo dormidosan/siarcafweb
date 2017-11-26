@@ -104,7 +104,7 @@
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
                             <form id="listado_reunione_comision" name="listado_reuniones_comision"
-                                  method="post" action="{{ url("listado_reuniones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-group fa-4x text-maroon"></i>
