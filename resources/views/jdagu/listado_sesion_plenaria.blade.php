@@ -26,7 +26,7 @@
             <div class="col-lg-4 col-lg-offset-1 col-sm-12">
             {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
        
-                <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"  >Regresar Reunion JD***</button>
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"  >Regresar a - Reunion JD</button>
        
             {!! Form::close() !!}
             </div>

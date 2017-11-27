@@ -6,9 +6,23 @@
 
 @section("content")
     <div class="box box-danger">
+
         <div class="box-header with-border">
             <h3 class="box-title">Asistencia a Reunion de Junta Directiva</h3>
         </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
+                    {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"  >Regresar a - Reunion JD</button>
+                {!! Form::close() !!}
+                </div>
+
+             
+            </div>
+        </div>
+        
 
         <div class="box-body">
             <div class="table-responsive">

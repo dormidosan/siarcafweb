@@ -14,6 +14,10 @@
         </div>
         <div class="box-body">
             <div class="row">
+
+                <div class="col-lg-4 col-lg-offset-3 col-sm-12">
+                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('listado_reuniones_jd') }}" >Regresar a - Listado de reuniones</a> 
+                </div>
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
                     {!! Form::open(['route'=>['asistencia_jd'],'method'=> 'POST']) !!}
                     {{ Form::hidden('id_reunion', $reunion->id) }}
@@ -21,6 +25,7 @@
                     <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Asistencia</button>
                     {!! Form::close() !!}
                 </div>
+
 
                 <div class="col-lg-4 col-lg-offset-2 col-sm-12">
                     {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}

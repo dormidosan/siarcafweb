@@ -18,7 +18,7 @@
                     {!! Form::open(['route'=>['listado_sesion_plenaria'],'method'=> 'POST']) !!} 
                     {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
                    
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Listado Sesion Plenaria</button>
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Regresar a - Listado de Sesion Plenaria</button>
                   
                     {!! Form::close() !!}    
                     </div>

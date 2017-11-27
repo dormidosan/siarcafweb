@@ -318,8 +318,7 @@ class JuntaDirectivaController extends Controller
         $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
-        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))
-            ->get();
+        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))->get();
         //dd($asistencias);
         return view('jdagu.asistencia_reunion_JD')
             ->with('cargos', $cargos)
