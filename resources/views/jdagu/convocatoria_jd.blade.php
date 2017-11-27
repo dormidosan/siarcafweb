@@ -11,6 +11,15 @@
             <h3 class="box-title">Convocatoria de Comision</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('trabajo_junta_directiva') }}" >Regresar a - Trabajo de JD</a>
+                </div>
+
+             
+            </div>
+       </div>
+        <div class="box-body">
             <form id="convocatoria" method="post" action="{{ url('mailing_jd') }}">
              {{ csrf_field() }}
               {{ Form::hidden('id_comision', '1') }}

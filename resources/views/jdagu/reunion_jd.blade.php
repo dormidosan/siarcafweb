@@ -49,7 +49,7 @@
             @if($todos_puntos == 1)
                 <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled" >Reunion JD***</button>
             @else
-                <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"  >Reunion JD***</button>
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"  >Reunion JD</button>
             @endif
             {!! Form::close() !!}
             </div>
@@ -61,7 +61,7 @@
             @if($todos_puntos == 2)
             <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled">Puntos Plenaria***</button>
             @else
-            <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Puntos Plenaria***</button>
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Puntos Plenaria</button>
             @endif
             {!! Form::close() !!}    
             </div>

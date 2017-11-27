@@ -14,7 +14,7 @@
                         <div class="text-center">
                             <i class="fa fa-file-text-o fa-4x text-info"></i>
                         </div>
-                        <h3 class="profile-username text-center">***NO ENTRAR*** Peticiones</h3>
+                        <h3 class="profile-username text-center">Peticiones</h3>
                         <a href="{{url('listado_peticiones_jd')}}" class="btn btn-info btn-block btn-sm"><b>Acceder</b></a>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <div class="text-center">
                             <i class="fa fa-envelope fa-4x text-green"></i>
                         </div>
-                        <h3 class="profile-username text-center">***NO ENTRAR***Convocatorias</h3>
+                        <h3 class="profile-username text-center">Convocatorias</h3>
                         <a href="{{ url('convocatoria_jd') }}" class="btn btn-success btn-block btn-sm"><b>Acceder</b></a>
                     </div>
                 </div>

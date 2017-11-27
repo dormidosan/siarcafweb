@@ -8,6 +8,15 @@
             <h3 class="box-title">Listado de Peticiones JD</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('trabajo_junta_directiva') }}" >Regresar a - Trabajo de JD</a>
+                </div>
+
+             
+            </div>
+        </div>
+        <div class="box-body">
             <div class="table-responsive">
                 <table class="table text-center table-bordered hover">
                     <thead>
