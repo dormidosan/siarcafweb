@@ -1,5 +1,20 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <section class="content-header">
+        <h1>
+            Reuniones de Comision
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Administrar Comision</a></li>
+            <li><a href="javascript:history.back()">Trabajo de Comision</a></li>
+            <li class="active">Reuniones Comision</li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
@@ -16,41 +31,62 @@
                         <th>Convocatoria</th>
                         <th>Fecha inicio</th>
                         <th>Fecha fin</th>
-                        <th>Accion</th>
+                        <th colspan="3">Accion</th>
                     </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
-                    <!--
-                       <tr>
-                           <td>Lo he dejado quemado para que</td>
-                           <td>no se vea solo :v</td>
-                           <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                           <td>Opcion</td>
-                       </tr>
-                       -->
                     @php $contador =1 @endphp
                     @forelse($reuniones as $reunion)
-                        <form id="reunion_comision" name="reunion_comision" method="post" action="{{ url("reunion_comision") }}" class="text-center">
+                        <form id="iniciar_reunion_comision" name="iniciar_reunion_comision" method="post"
+                              action="{{ url("iniciar_reunion_comision") }}" class="text-center">
                             <tr>
                                 <td class="hidden">{{ csrf_field() }}</td>
-                                <td class="hidden"><input type="hidden" id="id_reunion" name="id_reunion" value="{{ $reunion->id }}"></td>
+                                <td class="hidden">
+                                    <input type="hidden" id="id_reunion" name="id_reunion" value="{{ $reunion->id }}">
+                                </td>
+                                <td class="hidden">
+                                    <input type="hidden" id="id_comision" name="id_comision" value="{{ $comision->id }}">
+                                </td>
                                 <td>{{ $contador }} @php $contador++ @endphp</td>
                                 <td>{{ $reunion->codigo }}</td>
                                 <td>{{ $reunion->lugar }}</td>
                                 <td>{{ $reunion->convocatoria }}</td>
                                 <td>{{ $reunion->inicio }}</td>
                                 <td>{{ $reunion->fin }}</td>
-                                <td>
-                                    @if($reunion->vigente == 1)
-                                        <button type="submit" class="btn btn-primary btn-xs btn-block"><i
-                                                    class="fa fa-eye"></i> Ver
-                                        </button>
-                                    @else
+                                @if($reunion->vigente == 1)
+                                    <td>
                                         <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
                                                     class="fa fa-eye"></i> Ver
                                         </button>
-                                    @endif
-                                </td>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success btn-xs btn-block"><i
+                                                    class="fa fa-eye"></i>
+                                            Iniciar
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                    class="fa fa-eye"></i> Continuar
+                                        </button>
+                                    </td>
+                                @else
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
+                                                    class="fa fa-eye"></i> Ver
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                    class="fa fa-eye"></i> Iniciar
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                                    class="fa fa-eye"></i> Continuar
+                                        </button>
+                                    </td>
+                                @endif
                             </tr>
                         </form>
                     @empty

@@ -4,6 +4,20 @@
     <link rel="stylesheet" href="{{ asset('') }}">
 @endsection
 
+@section('breadcrumb')
+    <section class="content-header">
+        <h1>
+            Trabajo de Comision
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Administrar Comision</a></li>
+            <li class="active">Trabajo de Comision</li>
+        </ol>
+    </section>
+@endsection
+
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
@@ -90,7 +104,7 @@
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
                             <form id="listado_reunione_comision" name="listado_reuniones_comision"
-                                  method="post" action="{{ url("listado_reuniones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-group fa-4x text-maroon"></i>

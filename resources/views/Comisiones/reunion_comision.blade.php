@@ -1,16 +1,12 @@
 @extends('layouts.app')
 
-@section('styles')
-<link rel="stylesheet" href="{{ asset('') }}">
-@endsection
-
 @section("content")
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Reunion de Comision</h3>
         </div>
         <div class="box-body">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-4 col-sm-12 col-lg-offset-2">
                     <button type="button" id="iniciar" name="iniciar" class="btn btn-warning btn-block">Peticiones***
                     </button>
@@ -28,6 +24,22 @@
                 <div class="col-lg-4 col-sm-12">
                     <button type="button" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Finalizar
                     </button>
+                </div>
+            </div>--}}
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                    {!! Form::open(['route'=>['asistencia_comision'],'method'=> 'POST']) !!}
+                    {{ Form::hidden('id_reunion', $reunion->id) }}
+                    {{ Form::hidden('id_comision', $comision->id) }}
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Asistencia</button>
+                    {!! Form::close() !!}
+                </div>
+
+                <div class="col-lg-4 col-lg-offset-2 col-sm-12">
+                    {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar
+                    </button>
+                    {!! Form::close() !!}
                 </div>
             </div>
             <br>
@@ -47,7 +59,7 @@
                                 <th>Fecha actual</th>
                                 <th>Peticionario</th>
                                 <th>Visto anteriormente por</th>
-                                <th>Acción</th>
+                                <th colspan="3">Acción</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,9 +71,7 @@
                                         @php $contador++ @endphp
                                     </td>
                                     <td>
-                                        <center>
                                             {!! $peticion->nombre !!}
-                                        </center>
                                     </td>
                                     <td>
                                         {!! $peticion->descripcion !!}
@@ -124,15 +134,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section("js")
-    <script src="{{ asset('') }}"></script>
-@endsection
-
-
-@section("scripts")
-    <script type="text/javascript">
-        $(function () {});
-    </script>
 @endsection
