@@ -78,7 +78,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php $contador=1 @endphp 
+                            @php 
+                                $contador=1; 
+                                $ultimo = $puntos->last();
+                            @endphp 
                             @forelse($puntos as $punto) 
                             @if ($punto->id == $actualizado)
                                 <tr class="success">
@@ -112,12 +115,14 @@
                                         <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
                                         <input type="hidden" name="id_reunion"  id="id_reunion"  value="{{$reunion->id}}">
                                         <input type="hidden" name="restar"  id="restar"  value="1">
-                                        
-                                        
-                                        
-                                        <button type="submit" class="btn btn-success">Subir</button>
-                                        
+                                        @if($punto->numero == 1)
+                                            <button type="submit" class="btn btn-default" disabled="disabled">Subir</button>
+                                        @else
+                                            <button type="submit" class="btn btn-success" >Subir</button>        
+                                        @endif
                                         {!! Form::close() !!}
+                                    
+                                        
 
                                         {!! Form::open(['route'=>['nuevo_orden'],'method'=> 'POST','id'=>$punto->id.'1']) !!}
                                         <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
@@ -125,10 +130,13 @@
                                         <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
                                         <input type="hidden" name="id_reunion"  id="id_reunion"  value="{{$reunion->id}}">
                                         <input type="hidden" name="restar"  id="restar"  value="0">
+                                        @if($ultimo == $punto)
+                                            <button type="submit" class="btn btn-default" disabled="disabled">Bajar</button>
+                                        @else
+                                            <button type="submit" class="btn btn-danger">Bajar</button>
+
+                                        @endif
                                         
-                                        
-                                        
-                                        <button type="submit" class="btn btn-success">Bajar</button>
                                         
                                         {!! Form::close() !!}
                                     </td>
