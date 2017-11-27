@@ -178,6 +178,10 @@ Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' 
 
 Route::post('listado_sesion_plenaria', array('as' => 'listado_sesion_plenaria', 'uses' => 'JuntaDirectivaController@listado_sesion_plenaria'));
 Route::post('agregar_puntos_jd', array('as' => 'agregar_puntos_jd', 'uses' => 'JuntaDirectivaController@agregar_puntos_jd'));
+Route::post('crear_punto_plenaria', array('as' => 'crear_punto_plenaria', 'uses' => 'JuntaDirectivaController@crear_punto_plenaria'));
+Route::post('ordenar_puntos_jd', array('as' => 'ordenar_puntos_jd', 'uses' => 'JuntaDirectivaController@ordenar_puntos_jd'));
+Route::post('nuevo_orden', array('as' => 'nuevo_orden', 'uses' => 'JuntaDirectivaController@nuevo_orden'));
+
 
 
 //Route::post('seguimiento_peticion_jd/{id_peticion}', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));

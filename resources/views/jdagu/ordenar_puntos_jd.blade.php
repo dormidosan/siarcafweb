@@ -38,7 +38,7 @@
             <div class="col-lg-4 col-lg-offset-1 col-sm-12">
             {!! Form::open(['route'=>['agregar_puntos_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
                 <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
-                <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled" >Agregar puntos</button>
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"  >Agregar puntos</button>
          
             {!! Form::close() !!}
             </div>
@@ -48,7 +48,7 @@
             <div class="col-lg-4 col-lg-offset-2 col-sm-12">
             {!! Form::open(['route'=>['ordenar_puntos_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
             <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
-            <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Ordenar puntos</button>
+            <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block" disabled="disabled">Ordenar puntos</button>
        
             {!! Form::close() !!}    
             </div>
@@ -68,33 +68,32 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>agendado</th>
-                                <th>Peticion</th>
-                                <th>Descripcion</th>
-                                <th>Fecha de creación</th>
-                                <th>Fecha actual</th>
+                                <th>Romano</th>
                                 <th>Peticionario</th>
+                                <th>Descripcion</th>
+                                <th>Fecha peticion</th>
+                                <th>Fecha actual</th>
                                 <th>Visto anteriormente por</th>
                                 <th>Acción</th>
                             </tr>
                             </thead>
                             <tbody>
                             @php $contador=1 @endphp 
-                            @forelse($peticiones as $peticion) 
-                            @if ($peticion->agendado == 1)
+                            @forelse($puntos as $punto) 
+                            @if ($punto->id == $actualizado)
                                 <tr class="success">
                             @else
                                 <tr>
                             @endif
+                         
                                     <td>{!! $contador !!} @php $contador++ @endphp</td>
-                                    <td>{!! $peticion->agendado !!}</td>
-                                    <td>{!! $peticion->nombre !!}</td>
-                                    <td>{!! $peticion->descripcion !!}</td>
-                                    <td>{!! $peticion->fecha !!}</td>
+                                    <td>{!! $punto->romano !!} {!! $punto->numero !!}</td>
+                                    <td>{!! $punto->peticion->peticionario !!}</td>
+                                    <td>{!! $punto->descripcion !!}</td>
+                                    <td>{!! $punto->peticion->fecha !!}</td>
                                     <td>{!! Carbon\Carbon::now() !!}</td>
-                                    <td>{!! $peticion->peticionario !!}</td>
                                     <td>
-                                        {{-- Visto anteriormente por --}} @php $i = '' @endphp @foreach($peticion->seguimientos as $seguimiento) @if($seguimiento->estado_seguimiento->estado !== 'cr' and $seguimiento->estado_seguimiento->estado !== 'se' and $seguimiento->estado_seguimiento->estado !== 'as') @php $i = $seguimiento->comision->nombre @endphp @endif @endforeach {!! $i !!}
+                                        {{-- Visto anteriormente por --}} @php $i = '' @endphp @foreach($punto->peticion->seguimientos as $seguimiento) @if($seguimiento->estado_seguimiento->estado !== 'cr' and $seguimiento->estado_seguimiento->estado !== 'se' and $seguimiento->estado_seguimiento->estado !== 'as') @php $i = $seguimiento->comision->nombre @endphp @endif @endforeach {!! $i !!}
                                     </td>
                                     <td>
                                 
@@ -107,18 +106,30 @@
                                     </td>
 
                                     <td>
-                                        {!! Form::open(['route'=>['crear_punto_plenaria'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
+                                        {!! Form::open(['route'=>['nuevo_orden'],'method'=> 'POST','id'=>$punto->id.'2']) !!}
                                         <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
-                                        <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                                        <input type="hidden" name="id_punto"    id="id_punto"    value="{{$punto->id}}">
                                         <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                        <input type="hidden" name="id_reunion"  id="id_reunion"  value="{{$reunion->id}}">
+                                        <input type="hidden" name="restar"  id="restar"  value="1">
                                         
                                         
-                                        @if($peticion->asignado_agenda == 1)
-                                        <button type="submit" class="btn btn-danger" >Retirar Plenaria</button>
-                                        @else
-                                        <button type="submit" class="btn btn-success">Agendar Plenaria</button>
-                                        @endif
+                                        
+                                        <button type="submit" class="btn btn-success">Subir</button>
+                                        
+                                        {!! Form::close() !!}
+
+                                        {!! Form::open(['route'=>['nuevo_orden'],'method'=> 'POST','id'=>$punto->id.'1']) !!}
+                                        <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
+                                        <input type="hidden" name="id_punto"    id="id_punto"    value="{{$punto->id}}">
+                                        <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                                        <input type="hidden" name="id_reunion"  id="id_reunion"  value="{{$reunion->id}}">
+                                        <input type="hidden" name="restar"  id="restar"  value="0">
+                                        
+                                        
+                                        
+                                        <button type="submit" class="btn btn-success">Bajar</button>
+                                        
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

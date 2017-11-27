@@ -27,7 +27,7 @@ class Punto extends Model
 	
 	public function peticion()
     {
-        return $this->belongsTo('App\Peticion');
+        return $this->belongsTo('App\Peticion','peticion_id');
     }
 
 

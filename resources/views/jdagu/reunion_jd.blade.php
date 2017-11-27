@@ -145,7 +145,11 @@
                                         @if($peticion->comision == 1)
                                         <button type="submit" class="btn btn-default" disabled="disabled">Agendar Plenaria</button>
                                         @elseif($peticion->agendado == 1)
-                                        <button type="submit" class="btn btn-danger" >Retirar Plenaria</button>
+                                            @if($peticion->asignado_agenda == 1)
+                                                <button type="submit" class="btn btn-danger" disabled="disabled">Retirar Plenaria</button>
+                                            @else
+                                                <button type="submit" class="btn btn-danger" >Retirar Plenaria</button>
+                                            @endif
                                         @else
                                         <button type="submit" class="btn btn-success">Agendar Plenaria</button>
                                         @endif

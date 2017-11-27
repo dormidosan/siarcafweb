@@ -59,6 +59,7 @@ class PeticionTableSeeder extends Seeder
 		'direccion'  =>  $faker->address,
 		'resuelto'  => '0',
 		'agendado'  => '0',
+		'asignado_agenda'  => '0',
 		'comision'  => $c,
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
