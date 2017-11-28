@@ -11,6 +11,15 @@
       <h3 class="box-title">Seguimiento</h3>
    </div>
    <div class="box-body">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('listado_peticiones_jd') }}" >Regresar a - Listado de peticiones JD</a>
+                </div>
+
+             
+            </div>
+   </div>
+   <div class="box-body">
       <div class="row">
          <div class="col-lg-4 col-sm-12 col-md-4">
             <div class="form-group">

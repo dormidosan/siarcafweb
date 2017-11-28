@@ -19,6 +19,7 @@ use App\Reunion;
 use App\Cargo;
 use App\EstadoPeticion;
 use App\Agenda;
+use App\Punto;
 
 
 class JuntaDirectivaController extends Controller
@@ -154,7 +155,7 @@ class JuntaDirectivaController extends Controller
     public function agregar_puntos_jd(Request $request,Redirector $redirect){
         //dd();
 
-        $peticiones = Peticion::where('agendado','=',1)->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+        $peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
 
         $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
         $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
@@ -166,9 +167,137 @@ class JuntaDirectivaController extends Controller
         ->with('todos_puntos',$todos_puntos)
         ->with('reunion',$reunion)   ////////////
         ->with('comision',$comision) ////////////
-        ->with('agenda',$agenda)
+        ->with('agenda',$agenda)  // a que agenda del viernes agendare este punto
         ->with('peticiones',$peticiones);
     }
+
+    public function crear_punto_plenaria(Request $request,Redirector $redirect){
+        //dd();   
+        $agenda   = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
+        $peticion = Peticion::where('id', '=', $request->id_peticion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+        $reunion  = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+
+        if ($peticion->asignado_agenda == 0) {
+            $ultimo_punto = Punto::where('agenda_id','=',$agenda->id)->max('numero');
+            //dd($ultimo_punto);
+            $punto = new Punto();
+            $punto->peticion_id = $peticion->id;
+            $punto->agenda_id = $agenda->id;
+            $punto->descripcion = $peticion->descripcion;
+            $punto->numero = $ultimo_punto + 1;
+            $punto->romano = $this->getRomanNumerals($ultimo_punto + 1); 
+            $punto->activo = 1;
+            $punto->retirado = 0;
+            $punto->save();
+
+            $peticion->asignado_agenda = 1;
+            $peticion->save();
+        } else {
+            $punto_eliminado = Punto::where('peticion_id','=',$peticion->id)->where('agenda_id','=',$agenda->id)->firstOrFail();
+            $punto_eliminado->delete();
+
+            $peticion->asignado_agenda = 0;
+            $peticion->save();
+
+            $puntos_desordenados = Punto::where('agenda_id','=',$agenda->id)->orderBy('numero','ASC')->get();
+            $contador = 1;
+            foreach ($puntos_desordenados as $punto_desorden) { 
+                $punto_desorden->numero = $contador;
+                $punto_desorden->romano = $this->getRomanNumerals($contador);
+                $punto_desorden->save();
+                $contador++;
+            }
+
+            //ordenar numeros y roman o s
+            //dd($puntos_eliminados);
+            //dd();
+        }
+        
+        $peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+        $todos_puntos = 3;
+        return view('jdagu.asignacion_puntos')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)   ////////////
+        ->with('comision',$comision) ////////////
+        ->with('agenda',$agenda)  // a que agenda del viernes agendare este punto
+        ->with('peticiones',$peticiones);
+    }
+
+    public function ordenar_puntos_jd(Request $request,Redirector $redirect){
+        //dd();
+        $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+        $puntos = Punto::where('agenda_id','=',$agenda->id)->orderBy('numero','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+        //$peticiones = Peticion::where('asignado_agenda','=',1)->orderBy('created_at','ASC')->firstOrFail(); // Primero ordenar por el estado, despues los estados 
+        
+        $todos_puntos = 3;
+        $actualizado = 0;
+        return view('jdagu.ordenar_puntos_jd')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)   ////////////
+        ->with('comision',$comision) ////////////
+        ->with('agenda',$agenda)  // a que agenda del viernes agendare este punto
+        ->with('actualizado',$actualizado)
+        ->with('puntos',$puntos);
+    }
+
+    public function nuevo_orden(Request $request,Redirector $redirect){
+        //dd();
+        $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+        $punto = Punto::where('id','=',$request->id_punto)->firstOrFail();
+        $actualizado = 0;
+
+        if ($request->restar == 1) {
+            $punto_anterior = Punto::where('agenda_id','=',$agenda->id)->where('numero','=',($punto->numero - 1) )->first();
+            if ($punto_anterior) {
+                $punto->numero  = $punto->numero - 1;
+                $punto->romano  = $this->getRomanNumerals($punto->numero);
+                $punto->save();
+                $punto_anterior->numero = $punto_anterior->numero + 1;
+                $punto_anterior->romano  = $this->getRomanNumerals($punto_anterior->numero);
+                $punto_anterior->save();    
+                $actualizado = $punto->id;
+            }
+            
+        } else {
+            $punto_siguiente = Punto::where('agenda_id','=',$agenda->id)->where('numero','=',($punto->numero + 1) )->first();
+            if ($punto_siguiente) {
+                $punto->numero  = $punto->numero + 1;
+                $punto->romano  = $this->getRomanNumerals($punto->numero);
+                $punto->save();
+                $punto_siguiente->numero = $punto_siguiente->numero - 1;
+                $punto_siguiente->romano  = $this->getRomanNumerals($punto_siguiente->numero);
+                $punto_siguiente->save();    
+                $actualizado = $punto->id;
+            }
+        }
+        
+        
+
+
+
+
+        $puntos = Punto::where('agenda_id','=',$agenda->id)->orderBy('numero','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+        //$peticiones = Peticion::where('asignado_agenda','=',1)->orderBy('created_at','ASC')->firstOrFail(); // Primero ordenar por el estado, despues los estados 
+        
+        $todos_puntos = 3;
+        return view('jdagu.ordenar_puntos_jd')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)   ////////////
+        ->with('comision',$comision) ////////////
+        ->with('agenda',$agenda)  // a que agenda del viernes agendare este punto
+        ->with('actualizado',$actualizado)
+        ->with('puntos',$puntos);
+    }
+
+    
+    
+    
     /*
         public function reunion_jd(Request $request,Redirector $redirect){
             $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
@@ -189,8 +318,7 @@ class JuntaDirectivaController extends Controller
         $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
-        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))
-            ->get();
+        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))->get();
         //dd($asistencias);
         return view('jdagu.asistencia_reunion_JD')
             ->with('cargos', $cargos)
@@ -331,6 +459,47 @@ class JuntaDirectivaController extends Controller
             ->with('seguimientos', $seguimientos)
             ->with('peticion', $peticion);
     }
+
+
+    public function getRomanNumerals($decimalInteger) {
+             $n = intval($decimalInteger);
+             $res = '';
+
+             $roman_numerals = array(
+                'M'  => 1000,
+                'CM' => 900,
+                'D'  => 500,
+                'CD' => 400,
+                'C'  => 100,
+                'XC' => 90,
+                'L'  => 50,
+                'XL' => 40,
+                'X'  => 10,
+                'IX' => 9,
+                'V'  => 5,
+                'IV' => 4,
+                'I'  => 1);
+
+             foreach ($roman_numerals as $roman => $numeral) 
+             {
+              $matches = intval($n / $numeral);
+              $res .= str_repeat($roman, $matches);
+              $n = $n % $numeral;
+             }
+
+             return $res;
+    }
+
+            
+
+
+
+
+
+
+
+
+
 
 
 }
