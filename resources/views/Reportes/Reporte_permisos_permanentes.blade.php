@@ -17,24 +17,14 @@
             <h3 class="box-title">Reporte permisos permanentes</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="#">
+            <form id="buscarDocs" method="post" action="{{ url("buscar_permisos_permanentes") }}">
+                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label>Filtro</label>
-                            
-                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                <option value="User">Asambleista</option>
-                                <option value="Sesion">Sesion plenaria</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha">Fecha inicial</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -42,7 +32,7 @@
                         <div class="form-group">
                             <label for="fecha">Fecha final</label>
                             <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input required="true" id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -51,7 +41,7 @@
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                        <button  type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -79,18 +69,22 @@
                       <th>Descargar</th>
                     </tr></thead>
                     <tbody>
+                @if(!($resultados==NULL))              
+                @foreach($resultados as $result)
                     <tr>                                     
                       <td>
                         Nombre permiso
                       </td>
                       <td>fecha</td>
                     
-                      <td><a href="{{url("/Reporte_permisos_permanentes/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_permisos_permanentes/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_permisos_permanentes/1 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_permisos_permanentes/2 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
-                   
-                  </tbody></table>
+                @endforeach
+                   @endif    
+                  </tbody>
+                 </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
   

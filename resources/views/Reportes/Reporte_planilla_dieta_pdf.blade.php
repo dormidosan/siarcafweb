@@ -133,16 +133,16 @@
  </div>  
  
 <div id="cp" style="text-align: left;">
-El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a):
+El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): {{$horasreunion[0]->suma}}
  </div>  
 
 <div id="cp1" style="text-align: left;">
-NIT No. ###-####-###-#<br/>
-NOMBRE: NOMBRE DEL ASAMBLEISTA
+NIT No. {{$nit}}<br/>
+NOMBRE: {{$nombrecompleto}}
  </div>  
 
  <div id="cp2" style="text-align: left;">
-Por el pago de dietas de Junta Directiva de la AGU. del mes de mayo de 2017. son los que se desglosan de la siguiente manera.
+Por el pago de dietas de Junta Directiva de la AGU. del mes de {{$mes}} de {{$anio}}. son los que se desglosan de la siguiente manera.
  </div>  
 
 <div id="cp3" style="text-align: left;">

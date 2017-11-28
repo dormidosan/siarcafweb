@@ -59,6 +59,17 @@ Route::get('/discutir/{comision}/{id}', function () {
 });
 
 
+
+Route::post('buscar_planilla_dieta', 'ReportesController@buscar_planilla_dieta')->name("buscar_planilla_dieta");
+
+Route::post('buscar_permisos_temporales', 'ReportesController@buscar_permisos_temporales')->name("buscar_permisos_temporales");
+
+Route::post('buscar_bitacora_correspondencia', 'ReportesController@buscar_bitacora_correspondencia')->name("buscar_bitacora_correspondencia");
+
+Route::post('buscar_permisos_permanentes', 'ReportesController@buscar_permisos_permanentes')->name("buscar_permisos_permanentes");
+
+Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name("buscar_asistencias");
+
 /* Peticiones */
 /*
 Route::get('/RegistrarPeticion', function () {
@@ -74,20 +85,20 @@ Route::get('/MonitorearPeticion', function () {
 /* Reportes */
 
 Route::get('/Reporte_permisos_permanentes', function () {
-    return view('Reportes.Reporte_permisos_permanentes');
+    return view('Reportes.Reporte_permisos_permanentes',['resultados'=>NULL]);
 });
 Route::get('/Reporte_permisos_permanentes/{tipo}', 'ReportesController@Reporte_permisos_permanentes');
 Route::get('/Reporte_asistencias_sesion_plenaria', function () {
-    return view('Reportes.Reporte_asistencias_sesion_plenaria');
+    return view('Reportes.Reporte_asistencias_sesion_plenaria',['resultados'=>NULL]);
 });
 Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Reporte_asistencias_sesion_plenaria');
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
 Route::get('/Reporte_bitacora_correspondencia', function () {
-    return view('Reportes.Reporte_bitacora_correspondencia');
+    return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
 });
 Route::get('/Reporte_bitacora_correspondencia/{tipo}', 'ReportesController@Reporte_bitacora_correspondencia');
 Route::get('/Reporte_planilla_dieta', function () {
-    return view('Reportes.Reporte_planilla_dieta');
+    return view('Reportes.Reporte_planilla_dieta',['resultados'=>NULL]);
 });
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
@@ -111,7 +122,7 @@ Route::get('/Plantilla_Actas', function () {
 Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 Route::get('/Reporte_permisos_temporales', function () {
-    return view('Reportes.Reporte_permisos_temporales');
+    return view('Reportes.Reporte_permisos_temporales',['resultados'=>NULL]);
 });
 Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
 Route::get('/Reporte_Convocatorias', function () {
