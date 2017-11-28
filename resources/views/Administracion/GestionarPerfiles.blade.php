@@ -5,6 +5,17 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Administracion</a></li>
+            <li><a>Gestionar Usuarios</a></li>
+            <li><a class="active">Gestionar Perfiles</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">

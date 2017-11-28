@@ -4,27 +4,33 @@
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a href="{{ route("listado_reuniones_jd") }}">Listado de Reuniones</a></li>
+            <li><a href="javascript:document.getElementById('iniciar_reunion_jd').submit();">Reunion {{ $reunion->codigo }}</a></li>
+            <li class="active">Asistencia Reunion JD</li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
 
         <div class="box-header with-border">
             <h3 class="box-title">Asistencia a Reunion de Junta Directiva</h3>
         </div>
+
         <div class="box-body">
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
-                    {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"  >Regresar a - Reunion JD</button>
+            <div class="hidden">
+                {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST','id'=>'iniciar_reunion_jd']) !!}
+                {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"  >Regresar a - Reunion JD</button>
                 {!! Form::close() !!}
-                </div>
-
-             
             </div>
-        </div>
-        
-
-        <div class="box-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead>

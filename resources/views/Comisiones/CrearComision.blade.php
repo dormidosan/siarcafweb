@@ -1,22 +1,27 @@
-@extends('layouts.app') @section("styles")
+@extends('layouts.app')
+
+@section("styles")
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}"> @endsection @section('content')
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+@endsection
+
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a class="active">Crear Comision</a></li>
+        </ol>
+    </section>
+@endsection
+
+@section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Crear Comision</h3>
         </div>
         <div class="box-body">
-            {{-- @if ($errors->any())
-            <div class="alert alert-danger">
-                <p>Por favor, corriga los siguientes errores:</p>
-                <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif--}}
 
             <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
                 {{ csrf_field() }}

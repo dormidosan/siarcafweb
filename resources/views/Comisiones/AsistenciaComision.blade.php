@@ -6,6 +6,20 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:history.back()">Trabajo de Comision</a></li>
+            <li><a href="javascript:history.back()">Listado de Reuniones</a></li>
+            <li><a href="javascript:history.back()">Reunion {{$reunion->codigo}}</a></li>
+            <li class="active">Reunion {{$reunion->codigo}}</li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header with-border">

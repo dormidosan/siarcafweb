@@ -5,14 +5,11 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="content-header">
-        <h1>
-            Trabajo de Comision
-        </h1>
+    <section>
         <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Comisiones</a></li>
-            <li><a href="{{ route("administrar_comisiones") }}">Administrar Comision</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
             <li class="active">Trabajo de Comision</li>
         </ol>
     </section>
@@ -32,7 +29,7 @@
                     <div class="box box-info">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-file-text-o fa-4x text-info"></i>
@@ -49,7 +46,7 @@
                     <div class="box box-danger">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-book fa-4x text-red"></i>
@@ -68,7 +65,7 @@
                     <div class="box box-success">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-envelope fa-4x text-green"></i>
@@ -85,7 +82,7 @@
                     <div class="box box-warning">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-folder-open-o fa-4x text-warning"></i>
@@ -104,7 +101,7 @@
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
                             <form id="listado_reunione_comision" name="listado_reuniones_comision"
-                                  method="post" action="{{ url("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
+                                  method="post" action="{{ url("listado_reuniones_comision") }}" {{-- --}}>
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-group fa-4x text-maroon"></i>
@@ -121,7 +118,7 @@
                     <div class="box" style="border-top-color: #39CCCC">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}" target="_blank">
+                                  method="post" action="{{ url("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-clone fa-4x text-teal"></i>

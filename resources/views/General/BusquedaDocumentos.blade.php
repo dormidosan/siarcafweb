@@ -9,13 +9,10 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="content-header">
-        <h1>
-            Buscar Documento
-        </h1>
+    <section>
         <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
-            <li class="active">Buscar Documentos</li>
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li class="active">Busqueda de Documentos</li>
         </ol>
     </section>
 @endsection

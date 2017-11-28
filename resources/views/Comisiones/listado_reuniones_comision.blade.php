@@ -1,16 +1,13 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-    <section class="content-header">
-        <h1>
-            Reuniones de Comision
-        </h1>
+    <section>
         <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Comisiones</a></li>
-            <li><a href="{{ route("administrar_comisiones") }}">Administrar Comision</a></li>
-            <li><a href="javascript:history.back()">Trabajo de Comision</a></li>
-            <li class="active">Reuniones Comision</li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
+            <li class="active">Listado de Reuniones</li>
         </ol>
     </section>
 @endsection
@@ -21,6 +18,16 @@
             <h3 class="box-title">Listado de Reuniones</h3>
         </div>
         <div class="box-body">
+            <!-- forms utilizados para retornar a paginas previas con breadcrumbs !-->
+            <div class="hidden">
+                <form id="trabajo_comision" name="trabajo_comision" method="post"
+                      action="{{ url("trabajo_comision") }}">
+                    {{ csrf_field() }}
+                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                    <button class="btn btn-success btn-xs">Acceder</button>
+                </form>
+
+            </div>
             <div class="table-responsive">
                 <table class="table text-center table-bordered hover">
                     <thead>

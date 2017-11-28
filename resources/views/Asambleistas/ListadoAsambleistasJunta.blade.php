@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Asambleistas</a></li>
+            <li><a class="active">Listado Asambleistas de Junta Directiva</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger ">
         <div class="box-header with-border">
@@ -47,7 +57,7 @@
                             @php $i++ @endphp
                         @endforeach
                     @else
-                        <tr class="text-center"><td colspan="5">No cuenta con asambleistas</td></tr>
+                        <tr class="text-center"><td colspan="6">No cuenta con asambleistas</td></tr>
                     @endif
                     </tbody>
                 </table>

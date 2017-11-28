@@ -1,21 +1,26 @@
 @extends('layouts.app')
+
 @section('styles')
     <link rel="stylesheet" href="{{ asset('') }}">
 @endsection
+
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a class="active">Listado de Peticiones JD</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
             <h3 class="box-title">Listado de Peticiones JD</h3>
         </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('trabajo_junta_directiva') }}" >Regresar a - Trabajo de JD</a>
-                </div>
 
-             
-            </div>
-        </div>
         <div class="box-body">
             <div class="table-responsive">
                 <table class="table text-center table-bordered hover">
