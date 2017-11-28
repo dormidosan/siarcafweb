@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Presente;
-use Illuminate\Http\Request;
+
 
 use Carbon\Carbon;
-
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use App\Peticion;
 use App\Comision;
 use App\Seguimiento;
@@ -20,6 +20,7 @@ use App\Cargo;
 use App\EstadoPeticion;
 use App\Agenda;
 use App\Punto;
+use App\Presente;
 
 
 class JuntaDirectivaController extends Controller

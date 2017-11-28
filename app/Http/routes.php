@@ -118,10 +118,17 @@ Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');
 });
 
-/* Routes para Agenda */
-Route::get('/CrearSesionPlenaria', function () {
-    return view('Agenda.CrearSesionPlenaria');
+/* Routes para Agenda 
+R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {
+    return view('Agenda.sesion_plenaria');
 });
+*/
+Route::get('sesion_plenaria', array('as' => 'sesion_plenaria', 'uses' => 'AgendaController@sesion_plenaria'));
+
+Route::post('iniciar_sesion_plenaria', array('as' => 'iniciar_sesion_plenaria', 'uses' => 'AgendaController@iniciar_sesion_plenaria'));
+
+
+
 Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
