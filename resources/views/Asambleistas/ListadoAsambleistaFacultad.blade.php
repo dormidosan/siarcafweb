@@ -1,4 +1,16 @@
-@extends('layouts.app') @section("content")
+@extends('layouts.app')
+
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Asambleistas</a></li>
+            <li><a class="active">Listado Asambleistas por Facultad</a></li>
+        </ol>
+    </section>
+@endsection
+
+@section("content")
 <div class="box box-danger ">
     <div class="box-header with-border">
         <h3 class="box-title">Listado de Asambleistas por Facultad</h3>
@@ -59,7 +71,7 @@
                                    </tr>
                                    @php $i++ @endphp @endif @endforeach @else
                                    <tr>
-                                      <td colspan="5" class="">Esta comision no cuenta con asambleistas</td>
+                                      <td colspan="6" class="">Esta comision no cuenta con asambleistas</td>
                                    </tr>
                                    @endif
                                 </tbody>

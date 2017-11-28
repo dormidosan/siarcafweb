@@ -5,20 +5,23 @@
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a class="active">Convocatoria</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-solid box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Convocatoria de Comision</h3>
         </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"  href="{{ url('trabajo_junta_directiva') }}" >Regresar a - Trabajo de JD</a>
-                </div>
 
-             
-            </div>
-       </div>
         <div class="box-body">
             <form id="convocatoria" method="post" action="{{ url('mailing_jd') }}">
              {{ csrf_field() }}

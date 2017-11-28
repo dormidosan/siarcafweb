@@ -317,18 +317,6 @@
     <!-- MAIN CONTENT-->
     <div class="content-wrapper">
 
-        @section("breadcrumb")
-            <section class="content-header">
-                <h1>
-                    Pagina Principal
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-home"></i> Inicio</a></li>
-                    <li class="active">Pagina Principal</li>
-                </ol>
-            </section>
-        @show
-
         <section class="content">
             <div class="row" style="margin: 0 0.1px 0 0.1px !important;">
                 <div class="panel panel-danger">
@@ -351,6 +339,15 @@
                     </div>
                 </div>
             </div>
+
+            @section("breadcrumb")
+                <section class="">
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-home"></i> Inicio</a></li>
+                        <li class="active">Pagina Principal</li>
+                    </ol>
+                </section>
+            @show
 
             @yield('content')
 

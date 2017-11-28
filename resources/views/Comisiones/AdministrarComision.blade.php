@@ -12,14 +12,11 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="content-header">
-        <h1>
-            Administrar Comision
-        </h1>
+    <section>
         <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i>Inicio</a></li>
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Comisiones</a></li>
-            <li class="active">Administrar Comision</li>
+            <li class="active">Listado Comisiones</li>
         </ol>
     </section>
 @endsection
