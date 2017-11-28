@@ -222,6 +222,22 @@ $('#fecha').datepicker({
         return true;
          
         return /\d/.test(String.fromCharCode(keynum));
-        }
+        };
+        function cambiar_estado_comision(id) {
+        $.ajax({
+            //se envia un token, como medida de seguridad ante posibles ataques
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            type: 'POST',
+            url: "{{ route('actualizar_comision') }}",
+            data: {
+                "id": id
+            },
+            success: function(response) {
+                notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+            }
+        });
+    }
     </script>
 @endsection

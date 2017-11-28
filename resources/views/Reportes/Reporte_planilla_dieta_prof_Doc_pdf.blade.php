@@ -123,7 +123,7 @@
 </head>
   <body>
               
-                </table>
+               
  
    <table id="cp"  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">                 
                   <thead>  <!-- ENCABEZADO TABLA-->

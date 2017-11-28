@@ -86,7 +86,7 @@
 
                     <tr>                                     
                       <td>
-                      {{$i=1}}  REPORTE PERMISOS TEMPORALES 
+                       REPORTE PERMISOS TEMPORALES 
                       </td>
                       <td>
                        

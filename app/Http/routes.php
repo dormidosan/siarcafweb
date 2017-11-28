@@ -68,7 +68,7 @@ Route::post('buscar_bitacora_correspondencia', 'ReportesController@buscar_bitaco
 
 Route::post('buscar_permisos_permanentes', 'ReportesController@buscar_permisos_permanentes')->name("buscar_permisos_permanentes");
 
-
+Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name("buscar_asistencias");
 
 /* Peticiones */
 /*
@@ -89,7 +89,7 @@ Route::get('/Reporte_permisos_permanentes', function () {
 });
 Route::get('/Reporte_permisos_permanentes/{tipo}', 'ReportesController@Reporte_permisos_permanentes');
 Route::get('/Reporte_asistencias_sesion_plenaria', function () {
-    return view('Reportes.Reporte_asistencias_sesion_plenaria');
+    return view('Reportes.Reporte_asistencias_sesion_plenaria',['resultados'=>NULL]);
 });
 Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Reporte_asistencias_sesion_plenaria');
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
