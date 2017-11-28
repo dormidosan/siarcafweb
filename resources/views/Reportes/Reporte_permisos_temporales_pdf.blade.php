@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte Permisos Temporales</title>
-  <style type="text/css">  
+  <style type="text/css" media="print">  
   #watermark {
     position: fixed;
     top: 45%;
@@ -44,7 +44,7 @@
   font-family: "ARIAL", serif;
   font-size: 10pt;
   
-  top: 15%;
+  top: 30%;
 }
 
 #cp {
@@ -114,7 +114,7 @@
 </style>
                                          
                                                
- <div id="p" style="position:fixed;text-align: center;">
+ <div id="p" >
     Sesión Plenaria de Asamblea General Universitaria N°: _____ Fecha: ____________<br/>
     Solicitud de PERMISO TEMPORAL<br/>
      
@@ -130,7 +130,7 @@
                     <tr>                     
                     <th>Nombre del solicitante</th>                     
                     <th>Firma</th>                     
-                    <th>Motivo del permiso</th>
+               
                     <th>Hora Salida</th>
                     <th>Firma del secretario de Junta Directiva en el que hace constar la hora en que regreso el/la Asambleista</th>
                    
@@ -138,20 +138,15 @@
                   </thead>
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
+                      @foreach($resultados as $result)
                           <tr>                                     
-                           <td>Asambleista: _____________ Delego a: _____________</td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>Hora a la que se reincorporo el/la Asambleista: _________________________</td>              
+                           <td>Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}}  <br/>Delego a: _____________</td>
+                           <td><pre>_________________</pre></td>
+                          
+                           <td>{{$result->salida}}</td>
+                           <td>Hora a la que se reincorporo el/la Asambleista: {{$result->entrada}}</td>              
                           </tr> 
-                          <tr>                                     
-                           <td>Asambleista: _____________ Delego a: _____________</td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>Hora a la que se reincorporo el/la Asambleista: _________________________</td>              
-                          </tr>                       
+                       @endforeach                        
                    </tbody>
 
                 </table>

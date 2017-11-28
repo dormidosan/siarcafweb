@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Nombre del reporte</title>
-  <style type="text/css">  
+  <style type="text/css" media="print">  
   #watermark {
     position: fixed;
     top: 45%;
@@ -51,7 +51,7 @@
   position: fixed;
   font-family: "ARIAL", serif;
   font-size: 10pt;
-  top: 20%;
+  top: 30%;
 }
 
 #cp1 {
@@ -112,16 +112,15 @@
 
 </style>
                                          
-<div >
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="20%" height="20%" style="position:absolute;">
-</div>
+
 
                             
                           
- <div id="p" style="position:relative;center: 250px; top:1%">
+ <div id="p" >
     UNIVERSIDAD DE EL SALVADOR<br/> 
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-  ASISTENCIAS PARA ASAMBLEISTAS EN SESIONES PLENARIAS PERIODO 2016-2017
+  ASISTENCIAS PARA ASAMBLEISTAS EN SESIONES PLENARIAS PERIODO {{$nombreperiodo}} <br/>
+  SECTOR {{$sector}}
   </div>
                             
 
@@ -129,7 +128,52 @@
 </head>
   <body>
  
+  <table id="cp"  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">                 
+                  <thead>  <!-- ENCABEZADO TABLA-->
+                    <tr>                     
+                    <th>No. </th>                     
+                    <th>PROPIETARIO Ó <br/>SUPLENTE</th>                     
+                    <th>NOMBRES</th>
+                    <th>FACULTAD</th>
+                    <th>1a</th>
+                    <th>2a</th>
+                    <th>FIRMA ASAMBLEISTA</th>
+                  
+                    <th>Hora entrada</th>
+                    <th>ESPACIO RESERVADO PARA SECRETARIO AGU</th>
+                    </tr>
+                  </thead>
+                    <tbody>  <!-- CUERPO DE LA TABLA-->
+                    @php $i=1 @endphp
+                     @foreach($resultados as $result)
+                       <tr>                                     
+                      <td>
+                       {{$i}}
+                      </td>
+                      @if($result->propietario==1)
+                      <td>
+                         PROPIETARIO
+                      </td>
+                      @else
+                      <td>
+                         SUPLENTE
+                      </td>                      
+                      @endif
+                      <td>{{$result->primer_nombre}} {{$result->primer_apellido}}</td>                   
+                      <td>{{$result->nombre}}</td>
+                      <td>  </td>
+                      <td>  </td>
+                      <td>  </td>
+                           
+                      <td> {{$result->entrada}} </td>
+                      <td>  </td>                 
+                    </tr>                 
+                       @php $i=$i+1 @endphp
+   @endforeach          
+ 
+                   </tbody>
 
+                </table>       
  
 
 
