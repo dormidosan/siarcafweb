@@ -77,8 +77,8 @@
                       </td>
                       <td>fecha</td>
                     
-                      <td><a href="{{url("/Reporte_permisos_permanentes/1 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_permisos_permanentes/2 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_permisos_permanentes/1.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_permisos_permanentes/2.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                 @endforeach
