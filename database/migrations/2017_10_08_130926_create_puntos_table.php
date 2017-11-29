@@ -18,8 +18,10 @@ class CreatePuntosTable extends Migration
             $table->unsignedInteger('agenda_id');
             $table->unsignedInteger('peticion_id')->nullable();
             $table->string('descripcion', 45)->nullable();
-            $table->char('romano', 4)->nullable();
             $table->smallInteger('numero')->nullable();
+            $table->char('romano', 4)->nullable();
+            $table->boolean('activo')->nullable();
+            $table->boolean('retirado')->nullable();
 
             $table->index(["peticion_id"], 'fk_puntos_peticiones1_idx');
 

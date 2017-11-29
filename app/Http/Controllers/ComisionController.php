@@ -7,16 +7,14 @@ use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Peticion;
+use App\Presente;
 use App\Reunion;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComisionRequest;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 
-;
 
 class ComisionController extends Controller
 {
@@ -184,15 +182,71 @@ class ComisionController extends Controller
 
     public function listado_reuniones_comision(Request $request){
         $reuniones = Reunion::where('id','!=',0)->where('comision_id',$request->comision_id)->orderBy('created_at','DESC')->get();
+        $comision = Comision::find($request->get("comision_id"));
 
-        return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones]);
+        return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones, "comision"=>$comision]);
     }
 
-    //PENDIENTE DE TRAER LAS PETICIONES
-    public function reunion_comision(Request $request){
+
+    public function iniciar_reunion_comision(Request $request){
+
         $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
 
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $reunion->activa = '1';
+        $reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
+        $reunion->save();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+        $todos_puntos = 1;
+
         return view('Comisiones.reunion_comision')
+            ->with('todos_puntos',$todos_puntos)
+            ->with('reunion',$reunion)
+            ->with('comision',$comision)
             ->with('peticiones',$peticiones);
+    }
+
+    public function asistencia_comision(Request $request)
+    {
+        $cargos = Cargo::where('comision_id', '=', $request->id_comision)->where('activo', '=', 1)->get();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
+        $asistencias = Presente::where('reunion_id', $request->get("id_reunion"))
+            ->get();
+        //dd($asistencias);
+        return view('Comisiones.asistencia_reunion_comision')
+            ->with('cargos', $cargos)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('asistencias', $asistencias);
+
+    }
+
+    public function registrar_asistencia_comision(Request $request)
+    {
+
+        $presente = new Presente();
+        $presente->cargo_id = $request->get("cargo");
+        $presente->reunion_id = $request->get("reunion");
+        $presente->entrada = Carbon::now();
+        $presente->save();
+
+        $request->session()->flash("success", "Asistencia registrada con exito");
+
+        $cargos = Cargo::where('comision_id', '=', $request->comision)->where('activo', '=', 1)->get();
+        $reunion = Reunion::where('id', '=', $request->reunion)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->comision)->firstOrFail();
+
+        $asistencias = Presente::where('reunion_id', $request->get("reunion"))
+            ->get();
+
+        //dd($asistencia);
+        return view('Comisiones.asistencia_reunion_comision')
+            ->with('cargos', $cargos)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('asistencias', $asistencias);
+
     }
 }

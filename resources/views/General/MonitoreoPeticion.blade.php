@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
-@section("styles")
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Peticiones</a></li>
+            <li><a class="active">Monitoreo de Peticion</a></li>
+        </ol>
+    </section>
 @endsection
 
 @section("content")

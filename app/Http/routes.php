@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("inicio");
 
 Route::auth();
 
@@ -24,7 +24,6 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 Route::get('/administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
-
 Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
 Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
 Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
@@ -34,8 +33,9 @@ Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asamblei
 Route::post('listado_peticiones_comision', 'ComisionController@listado_peticiones_comision')->name("listado_peticiones_comision");
 Route::post('seguimiento_peticion_comision', 'ComisionController@seguimiento_peticion_comision')->name("seguimiento_peticion_comision");
 Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_comision')->name("listado_reuniones_comision");
-Route::post('reunion_comision', 'ComisionController@reunion_comision')->name("reunion_comision");
-
+Route::post('iniciar_reunion_comision', 'ComisionController@iniciar_reunion_comision')->name("iniciar_reunion_comision");
+Route::post('asistencia_comision', array('as' => 'asistencia_comision', 'uses' => 'ComisionController@asistencia_comision'));
+Route::post('registrar_asistencia_comision', 'ComisionController@registrar_asistencia_comision')->name('registrar_asistencia_comision');
 
 
 //rutas q aun no uso
@@ -144,9 +144,12 @@ Route::get('/HistorialAgendas', function () {
 });
 
 /* Routes Administracion */
-Route::get('/Parametros', function () {
+/*
+Rou-t-e-::-g-et('/Parametros', function () {
     return view('Administracion.Parametros');
 });
+*/
+
 Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
@@ -161,7 +164,8 @@ Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->nam
 Route::get('/periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
 Route::post('/guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('/finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
-
+Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
+Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 
 /* Asambleistas */
 Route::get('/listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
@@ -169,18 +173,21 @@ Route::get('/listado_asambleistas_comision', "AsambleistaController@listado_asam
 Route::get('/listado_asambleistas_junta', "AsambleistaController@listado_asambleistas_junta");
 
 /* Junta Directiva*/
-/*
-Route::get('trabajo_junta_directiva', function () {
-    return view('Comisiones.TrabajoComision');
-});
-*/
+
 Route::get('crear_convocatoria', array('as' => 'crear_convocatoria', 'uses' => 'MailController@crear_convocatoria'));
 Route::get('convocatoria_jd', array('as' => 'convocatoria_jd', 'uses' => 'MailController@convocatoria_jd'));
 Route::post('mailing_jd', array('as' => 'mailing_jd', 'uses' => 'MailController@mailing_jd'));
 Route::get('trabajo_junta_directiva', array('as' => 'trabajo_junta_directiva', 'uses' => 'JuntaDirectivaController@trabajo_junta_directiva'));
 Route::get('listado_peticiones_jd', array('as' => 'listado_peticiones_jd', 'uses' => 'JuntaDirectivaController@listado_peticiones_jd'));
 Route::get('listado_reuniones_jd', array('as' => 'listado_reuniones_jd', 'uses' => 'JuntaDirectivaController@listado_reuniones_jd'));
-//Route::post('seguimiento_peticion_jd/{id_peticion}', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
+
+Route::post('listado_sesion_plenaria', array('as' => 'listado_sesion_plenaria', 'uses' => 'JuntaDirectivaController@listado_sesion_plenaria'));
+Route::post('agregar_puntos_jd', array('as' => 'agregar_puntos_jd', 'uses' => 'JuntaDirectivaController@agregar_puntos_jd'));
+Route::post('crear_punto_plenaria', array('as' => 'crear_punto_plenaria', 'uses' => 'JuntaDirectivaController@crear_punto_plenaria'));
+Route::post('ordenar_puntos_jd', array('as' => 'ordenar_puntos_jd', 'uses' => 'JuntaDirectivaController@ordenar_puntos_jd'));
+Route::post('nuevo_orden', array('as' => 'nuevo_orden', 'uses' => 'JuntaDirectivaController@nuevo_orden'));
+
+
 Route::post('seguimiento_peticion_jd', array('as' => 'seguimiento_peticion_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_jd'));
 Route::get('seguimiento_peticion_individual_jd', array('as' => 'seguimiento_peticion_individual_jd', 'uses' => 'JuntaDirectivaController@seguimiento_peticion_individual_jd'));
 Route::post('iniciar_reunion_jd', array('as' => 'iniciar_reunion_jd', 'uses' => 'JuntaDirectivaController@iniciar_reunion_jd'));
@@ -188,7 +195,6 @@ Route::post('puntos_agendados', array('as' => 'puntos_agendados', 'uses' => 'Jun
 
 Route::post('asistencia_jd', array('as' => 'asistencia_jd', 'uses' => 'JuntaDirectivaController@asistencia_jd'));
 Route::post('finalizar_reunion_jd', array('as' => 'finalizar_reunion_jd', 'uses' => 'JuntaDirectivaController@finalizar_reunion_jd'));
-
 
 Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' => 'JuntaDirectivaController@asignar_comision_jd'));
 Route::post('agendar_plenaria', array('as' => 'agendar_plenaria', 'uses' => 'JuntaDirectivaController@agendar_plenaria'));
