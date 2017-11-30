@@ -89,8 +89,8 @@
                       </td>
                       <td>{{$result->fecha}}</td>
                     
-                      <td><a href="{{url("/Reporte_asistencias_sesion_plenaria/1 $tipo $result->id $result->fecha $result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_asistencias_sesion_plenaria/2 $tipo $result->id $result->fecha $result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_asistencias_sesion_plenaria/1.$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_asistencias_sesion_plenaria/2_$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                     
