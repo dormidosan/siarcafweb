@@ -115,7 +115,7 @@
                                          
                                                
  <div id="p" >
-    Sesión Plenaria de Asamblea General Universitaria N°: _____ Fecha: ____________<br/>
+    Sesión Plenaria de Asamblea General Universitaria Fecha: {{$fecha}}<br/>
     Solicitud de PERMISO TEMPORAL<br/>
      
   </div>   

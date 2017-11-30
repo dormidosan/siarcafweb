@@ -71,8 +71,8 @@
                       <td>
                         BITACORA CORRESPONDENCIA
                       </td>                            
-                      <td><a href="{{url("/Reporte_bitacora_correspondencia/1 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_bitacora_correspondencia/2 $fechainicial $fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>                   
+                      <td><a href="{{url("/Reporte_bitacora_correspondencia/1.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_bitacora_correspondencia/2.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>                   
                     </tr>
                     @endforeach
                    @endif

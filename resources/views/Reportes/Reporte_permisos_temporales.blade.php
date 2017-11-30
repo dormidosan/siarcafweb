@@ -20,15 +20,7 @@
             <form id="buscarDocs" method="post" action="{{ url("buscar_permisos_temporales") }}">
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                                                        
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Nombre" id="nombre"
-                                   name="nombre">  
-                        
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha">Fecha inicial</label>
@@ -89,11 +81,11 @@
                        REPORTE PERMISOS TEMPORALES 
                       </td>
                       <td>
-                       
+                       {{$result->fecha}}
                       </td>
                     
-                      <td><a href="{{url("/Reporte_permisos_temporales/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_permisos_temporales/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_permisos_temporales/1.$result->id.$result->periodo_id.$result->fecha")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_permisos_temporales/2.$result->id.$result->periodo_id.$result->fecha")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                     

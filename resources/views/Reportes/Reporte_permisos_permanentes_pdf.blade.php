@@ -146,7 +146,7 @@ Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}} <br/>
 Delego a: _____________</pre></td>
                            <td>_______________</td>
                            <td><pre>{{$result->motivo}}</pre></td>
-                           <td><pre>{{substr($result->fecha_permiso, 0, 9)}}</pre></td>
+                           <td><pre>{{substr($result->fecha_permiso, 0, 10)}}</pre></td>
                            <td><pre>{{$result->inicio}}</pre></td>
                            <td><pre>{{$result->fin}}</pre></td>      
                           </tr> 
