@@ -87,7 +87,7 @@ return array(
         /**
          * Whether to enable font subsetting or not.
          */
-        "DOMPDF_ENABLE_FONTSUBSETTING" => false,
+        "DOMPDF_ENABLE_FONT_SUBSETTING" => false,
 
         /**
          * The PDF rendering backend to use
@@ -209,7 +209,7 @@ return array(
          *
          * @var bool
          */
-        "DOMPDF_ENABLE_PHP" => true,
+        "DOMPDF_ENABLE_PHP" => false,
 
         /**
          * Enable inline Javascript
