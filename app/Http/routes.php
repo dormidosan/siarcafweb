@@ -134,9 +134,19 @@ R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {
     return view('Agenda.sesion_plenaria');
 });
 */
+Route::group(['prefix' => 'plenarias'], function() {
 Route::get('sesion_plenaria', array('as' => 'sesion_plenaria', 'uses' => 'AgendaController@sesion_plenaria'));
-
 Route::post('iniciar_sesion_plenaria', array('as' => 'iniciar_sesion_plenaria', 'uses' => 'AgendaController@iniciar_sesion_plenaria'));
+Route::post('discutir_punto_plenaria', array('as' => 'discutir_punto_plenaria', 'uses' => 'AgendaController@discutir_punto_plenaria'));
+Route::post('agregar_propuesta', array('as' => 'agregar_propuesta', 'uses' => 'AgendaController@agregar_propuesta'));
+Route::post('modificar_propuesta', array('as' => 'modificar_propuesta', 'uses' => 'AgendaController@modificar_propuesta'));
+Route::post('guardar_votacion', array('as' => 'guardar_votacion', 'uses' => 'AgendaController@guardar_votacion'));
+
+});
+
+
+
+
 
 
 
@@ -222,3 +232,5 @@ Route::post('registrar_asistencia', 'JuntaDirectivaController@registrar_asistenc
 Route::get('busqueda', 'DocumentoController@busqueda')->name('busqueda');
 Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name('buscar_documentos');
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
+
+Route::resource('photo','PhotoController');

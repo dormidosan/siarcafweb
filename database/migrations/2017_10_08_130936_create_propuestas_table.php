@@ -22,6 +22,9 @@ class CreatePropuestasTable extends Migration
             $table->smallInteger('abstencion')->nullable();
             $table->smallInteger('nulo')->nullable();
             $table->smallInteger('ronda')->nullable();
+            $table->boolean('activa')->nullable();
+            $table->boolean('votado')->nullable();
+            $table->smallInteger('pareja')->nullable();
 
             $table->index(["punto_id"], 'fk_propuestas_puntos1_idx');
 
