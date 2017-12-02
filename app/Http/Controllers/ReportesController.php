@@ -16,6 +16,8 @@ use Response;
 use App\Asambleista;
 use Carbon\Carbon;
 use App\Peticion;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 class ReportesController extends Controller
@@ -29,7 +31,17 @@ class ReportesController extends Controller
     public function Reporte_permisos_temporales($tipo) 
     {
 
-        
+   
+
+
+
+
+
+
+
+
+
+
 
         $parametros = explode('.', $tipo);
         $tipodes=$parametros[0];
@@ -58,25 +70,12 @@ class ReportesController extends Controller
         ->get();
         
 
-/*
-
-
-       $resultados=DB::table('asistencias')
-        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->where('asistencias.agenda_id','=',2)//por el momento solo filtro por el id
-        ->where('asistencias.estado_asistencia_id','=',1)//1 por ser permisos temporales 
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida')
-        ->get();
-*/
 
        
         $view =  \View::make('Reportes/Reporte_permisos_temporales_pdf', compact('resultados','fecha'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        //$pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipodes==1)
         {
@@ -89,56 +88,6 @@ class ReportesController extends Controller
 
 
 
-/*
-        $parametros = explode('.', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
-        $verdescar=$parametros[0];
-        $id=$parametros[1];
-        $mes=$parametros[2];
-        $anio=$parametros[3];
-
-*/
-/*
-      
-
-        $busqueda = DB::table('asambleistas')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('sectores','asambleistas.sector_id','=','sectores.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->where('asambleistas.id','=', $id)
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','sectores.nombre','personas.dui','personas.nit','personas.afp','personas.cuenta')->first();
-      
-       
-
-        $nombre1=$busqueda->primer_nombre;
-        $nombre2=$busqueda->segundo_nombre;
-        $apellido1=$busqueda->primer_apellido;
-        $apellido2=$busqueda->segundo_apellido;
-
-        $sector=$busqueda->nombre;
-        $dui=$busqueda->dui;
-        $nit=$busqueda->nit;
-        $afp=$busqueda->afp;
-        $cuenta=$busqueda->cuenta;
-
-        $nombrecompleto=$nombre1.' '.$nombre2.' '.$apellido1.' '.$apellido2;
-
-        dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
-
-        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio'))->render();
-        $pdf =\App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
-
-         if($verdescar==1)
-        {
-            return $pdf->stream('reporte');
-        }
-        if($verdescar==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-*/
     }
 
     public function Reporte_permisos_permanentes($tipo) 
@@ -169,8 +118,7 @@ $resultados = DB::table('permisos')
 
         $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('resultados','fechainicial','fechafinal'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipodes==1)
         {
@@ -272,8 +220,7 @@ $resultados = DB::table('permisos')
 
         $view =  \View::make('Reportes/Reporte_asistencias_sesion_plenaria_pdf', compact('resultados','sector','nombreperiodo'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipodes==1)
         {
@@ -298,8 +245,7 @@ $resultados = DB::table('permisos')
         $invoice = "2222";
         $view =  \View::make('Reportes/Reporte_inasistencias_sesion_plenaria_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipo==1)
         {
@@ -344,7 +290,7 @@ $resultados = DB::table('permisos')
                   compact('resultados', 'fechainicial', 'fechafinal'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
         if($tipodes==1)
         {
@@ -817,7 +763,7 @@ if($porcAsistencia<80){
         $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio','horasreunion'))->render();
         $pdf =\App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
          if($verdescar==1)
         {
@@ -858,8 +804,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('resultados','mes','anio'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($verdescar==1)
         {
@@ -943,8 +888,7 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
        
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_noDocpdf', compact('resultados','mes','anio'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($verdescar==1)
         {
@@ -971,8 +915,7 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         $invoice = "2222";
         $view =  \View::make('Reportes/Reporte_consolidados_renta_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+       $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipo==1)
         {
@@ -997,10 +940,10 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
+        dd($tipo);
         $view =  \View::make('Reportes/Reporte_consolidados_renta_docente_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->loadHTML($view)->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+       $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         if($tipo==1)
         {
@@ -1024,10 +967,12 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
+
+        dd($tipo);
         $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
         if($tipo==1)
         {
@@ -1053,10 +998,11 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         $data = $this->getData();
         $date = date('Y-m-d');
         $invoice = "2222";
+        dd($tipo);
         $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
         if($tipo==1)
         {
@@ -1084,7 +1030,7 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
         $view =  \View::make('Reportes/Reporte_Convocatorias_pdf', compact('data', 'date', 'invoice'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
         if($tipo==1)
         {
