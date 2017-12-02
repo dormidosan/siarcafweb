@@ -43,6 +43,7 @@ return array(
     'CreateModuloRolTable' => $baseDir . '/database/migrations/2017_10_08_130919_create_modulo_rol_table.php',
     'CreateModulosTable' => $baseDir . '/database/migrations/2017_10_08_130904_create_modulos_table.php',
     'CreateParametrosTable' => $baseDir . '/database/migrations/2017_10_08_130909_create_parametros_table.php',
+    'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePeriodosTable' => $baseDir . '/database/migrations/2017_10_08_130902_create_periodos_table.php',
     'CreatePermisosTable' => $baseDir . '/database/migrations/2017_10_08_130945_create_permisos_table.php',
     'CreatePersonasTable' => $baseDir . '/database/migrations/2017_10_08_130858_create_personas_table.php',

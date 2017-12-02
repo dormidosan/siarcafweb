@@ -365,6 +365,7 @@ class ComposerStaticInit924519e7d39384789a4737d2df0c5854
         'CreateModuloRolTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130919_create_modulo_rol_table.php',
         'CreateModulosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130904_create_modulos_table.php',
         'CreateParametrosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130909_create_parametros_table.php',
+        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePeriodosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130902_create_periodos_table.php',
         'CreatePermisosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130945_create_permisos_table.php',
         'CreatePersonasTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_08_130858_create_personas_table.php',
