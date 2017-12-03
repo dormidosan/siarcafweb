@@ -103,6 +103,7 @@
                             <td>
                                 <button type="submit" class="btn btn-primary btn-sm pull-right">
                                     <i class="fa fa-eye"></i> Ver
+                                </button>
                             </td>
                         </tr>
                         {!! Form::close() !!}

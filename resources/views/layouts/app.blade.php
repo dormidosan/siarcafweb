@@ -146,7 +146,7 @@
                             <li><a href="{{url("/CrearSesionPlenaria")}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion
                                     Plenaria</a>
                             </li>
-                            <li><a href="{{url("/home")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
+                            <li><a href="{{url("consultar_agendas_vigentes")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
                                     vigente</a>
                             </li>
                             <li><a href="{{url("/HistorialAgendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de

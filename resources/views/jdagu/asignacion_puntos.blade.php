@@ -89,7 +89,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>agendado</th>
+                                <th>Agendado</th>
                                 <th>Peticion</th>
                                 <th>Descripcion</th>
                                 <th>Fecha de creación</th>
