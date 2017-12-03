@@ -36,6 +36,30 @@
                         <div id="collapse{{$agenda_vigente->id}}" class="panel-collapse collapse " role="tabpanel"
                              aria-labelledby="agenda_vigente{{$agenda_vigente->id}}">
                             <div class="panel-body">
+
+                                <div class="box box-solid">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-info"></i>
+                                        <h3 class="box-title">Información sobre la Agenda</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <dl class="dl-horizontal">
+                                            <dt>Fecha y Hora de Inicio</dt>
+                                            <dd>{{ date("d/m/Y h:m A",strtotime($agenda_vigente->inicio)) }}</dd>
+                                            <dt>Lugar de Reunion</dt>
+                                            <dd>{{ $agenda_vigente->lugar    }}</dd>
+                                            <dt>Transcendental</dt>
+                                            <dd>{{ $agenda_vigente->trascendental? "Si":"No" }}</dd>
+                                        </dl>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+
+                                <div class="box-header with-border">
+                                    <i class="fa fa-list"></i>
+                                    <h3 class="box-title">Puntos de la Agenda</h3>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table text-center">
                                         <thead>
@@ -56,7 +80,7 @@
                                                     <td>{{ $j }}</td>
                                                     <td>{{ $punto->peticion->codigo }}</td>
                                                     <td>{{ $punto->peticion->descripcion }}</td>
-                                                    <td>{{ $punto->peticion->created_at }}</td>
+                                                    <td>{{ date("d/m/Y h:m A",strtotime($punto->peticion->created_at)) }}</td>
                                                     <td>{{ $punto->peticion->peticionario }}</td>
                                                     <td>
                                                         {!! Form::open(['route'=>['detalles_punto_agenda_vigente'],'method'=> 'POST']) !!}
