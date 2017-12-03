@@ -1,20 +1,28 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Agenda</a></li>
+            <li><a href="{{ route("consultar_agenda_vigentes") }}">Consultar Agendas Vigentes</a></li>
+            <li><a class="active">Detalles Punto de Agenda Vigente</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Seguimiento</h3>
+            <h3 class="box-title">Detalles Punto de Agenda Vigente</h3>
         </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
-                       href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
-                </div>
-
-
+        {{-- <div class="row">
+            <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
+                   href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
             </div>
         </div>
+        --}}
         <div class="box-body">
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-md-4">
@@ -123,4 +131,5 @@
         </div>
     </div>
 @endsection
+
 
