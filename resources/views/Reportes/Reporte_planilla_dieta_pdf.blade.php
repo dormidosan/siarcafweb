@@ -133,7 +133,7 @@
  </div>  
  
 <div id="cp" style="text-align: left;">
-El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): {{$horasreunion[0]->suma}}
+El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): 
  </div>  
 
 <div id="cp1" style="text-align: left;">
@@ -150,8 +150,8 @@ Por el pago de dietas de Junta Directiva de la AGU. del mes de {{$mes}} de {{$an
  </div> 
 
 <div id="cp4" style="text-align: left;">
-  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        $$.$$<pre/> <br/>
-  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido             $        $$.$$<pre/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        {{$monto_dieta}}<pre/> <br/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido          $        {{$renta}}<pre/>
  </div> 
 
 <div id="cp5" style="text-align: left;">

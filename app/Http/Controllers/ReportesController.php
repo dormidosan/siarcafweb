@@ -10,6 +10,7 @@ use App\Http\Requests\ReportesPermisosTemporalesRequest;
 use App\Http\Requests\ReportesPermisosPermanentesRequest;
 use App\Http\Requests\BuscarBitacoraCorrespRequest;
 use App\Http\Requests\ReportesAsistenciasRequest;
+use App\Http\Requests\ReportesConsolidadosRentaRequest;
 use Illuminate\Support\Facades\DB;
 use PHPJasperXML;
 use Response;
@@ -307,35 +308,73 @@ $resultados = DB::table('permisos')
 
     }
 
+public function buscar_consolidados_renta(ReportesConsolidadosRentaRequest $request){
+//dd($request->all());
+$tipo=$request->tipoDocumento;
+$sector=$request->tipoDocumento;
+$fechainicial=$request->fecha1;
+$fechafinal=$request->fecha2;
+
+
+
+
   
+
+
+        if($sector=='D'){
+
+        
+        $sector='DOCENTE';
+}
+
+
+        if($sector=='ND'){
+
+     
+        $sector='NO DOCENTE';
+}
+
+     
+
+
+
+        $resultados=DB::table('agendas')
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->where('asistencias.estado_asistencia_id','=',3)//3 por ser asistencias 
+        ->where
+([
+  ['agendas.fecha','>=',$this->convertirfecha($fechainicial)],
+  ['agendas.fecha','<=',$this->convertirfecha($fechafinal)]
+])
+->select('agendas.id','agendas.fecha','agendas.periodo_id')
+->distinct()
+->get();
+
+        
+        return view("Reportes.Reporte_consolidados_renta")
+         ->with('resultados',$resultados)
+         ->with('sector',$sector)
+         ->with('tipo',$tipo);
+
+
+
+}
+  
+
+
+
     public function buscar_planilla_dieta(ReportesRequest $request){
 
        //dd($request->all());
-      /*  $request->tipoDocumento
-        $request->nombre
-        $request->fecha1
-        */
-
-        //$users = DB::table('users')->get();
-        //$dieta = DB::table('dietas')->where('mes', $request->nombre)->first();   
-        
-        /*$dieta = DB::table('dietas')
-        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->where('users.name','like', $request->nombre)->select('users.name')->first();*/
-
-      // $mes1 = explode('/', $request->fecha1->format('d-m-y'));
-        
-
-      // echo('putas putas putas');
-      // $mesnum=explode('/', $request->fecha1)[1];
+   
         
         $mes=$this->numero_mes($request->fecha1);
 
-       /* $dieta = DB::table('dietas')
-        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->where('users.name','LIKE', $request->nombre)->select('users.name')->first();*/
+        $mesnum=$request->fecha1;
+
+
+
+       //dd($agenda);
 
        if($request->tipoDocumento=='A'){
 
@@ -350,10 +389,14 @@ $resultados = DB::table('permisos')
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->get();
 
+        //dd($resultados);
+
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
+         ->with('mesnum',$mesnum)
          ->with('tipo',$request->tipoDocumento);
 }
+
 
   if($request->tipoDocumento=='D'){
  
@@ -370,6 +413,7 @@ $resultados = DB::table('permisos')
 
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
+         ->with('mesnum',$mesnum)
          ->with('tipo',$request->tipoDocumento);
 }
 
@@ -388,6 +432,7 @@ $resultados = DB::table('permisos')
 
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
+         ->with('mesnum',$mesnum)
          ->with('tipo',$request->tipoDocumento);
 }
        /* $dieta = DB::table('dietas')
@@ -633,6 +678,28 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
 
  }
 
+public function porcAsistencia($idAsambleista,$idSesion,$tipoasistencia){
+
+    $horasreunion=DB::table('reuniones')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
+        ->where('reuniones.id','=',$idSesion) //por el momento solo filtro por el id 
+        ->where('reuniones.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
+        ->get();
+
+
+    $horasasistencia=DB::table('asistencias')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(entrada,salida)))/3600) as suma') 
+        ->where('asistencias.asambleista_id','=',$idAsambleista) 
+        ->where('asistencias.agenda_id','=',$idSesion)//por el momento solo filtro por el id
+        ->where('asistencias.estado_asistencia_id','=',$tipoasistencia) 
+        ->get();
+        
+$porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
+
+
+return $porcAsistencia; 
+
+}
 
 
       public function Reporte_planilla_dieta($tipo) 
@@ -643,6 +710,18 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
         $id=$parametros[1];
         $mes=$parametros[2];
         $anio=$parametros[3];
+        $mesnum=$parametros[4];
+
+
+
+       /* $agenda=DB::table('agendas')     //agendas del mes y año seleccionado
+        ->whereMonth('fecha','=',$mesnum)
+        ->whereYear('fecha','=',$anio)
+        ->get();
+
+        dd($agenda);*/
+
+
 
         $busqueda = DB::table('asambleistas')
         ->join('users','asambleistas.user_id','=','users.id')
@@ -671,66 +750,11 @@ $horasasistencia=DB::table('asistencias')
 
 $porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
 
+//$porcAsistencia=this->porcAsistencia($id,);
+
 //dd($porcAsistencia);
 
-        /*
 
-        $verificar=DB::table('asistencias')
-        ->where('asistencias.asambleista_id','=',1) 
-        ->where('asistencias.agenda_id','=',2)//por el momento solo filtro por el id 
-        ->get();
-
-        $acum1=0;
-        $acum2=0;
-        $acum3=0;
-        $acum4=0;
-
-foreach ($verificar as $var) {
-  //1 permiso temporal
-  //2 permiso permanente
-  //3 normal (sin permisos)
-  //4 cambio
-if($var->estado_asistencia_id==1){
-
-//dd($var);
-
-
-
-}
-
-if($var->estado_asistencia_id==2){
-
-// si es permamente no deberia tener derecho a dieta retornar mensaje que posee permiso permanente
-
-}
-
-if($var->estado_asistencia_id==3){
-
-
-$horasasistencia=DB::table('asistencias')
-        ->selectRaw('ABS(sum(time_to_sec(timediff(entrada,salida)))/3600) as suma') 
-        ->where('asistencias.asambleista_id','=',1) 
-        ->where('asistencias.agenda_id','=',1)//por el momento solo filtro por el id
-        ->where('asistencias.estado_asistencia_id','=',3) 
-        ->get();
-
-dd($horasasistencia[0]->suma);
-
-$acum3=$acum3+$horasasistencia[0]->suma;
-
-}
-
-
-if($var->estado_asistencia_id==4){
-
-
-
-}
-
-
-}
-
-*/
 
 
 
@@ -741,6 +765,47 @@ if($porcAsistencia<80){
 }
 
 
+
+$iva=0.0;
+$porcentaje_asistencia=0.0;
+$renta=0.0;
+$monto_dieta=0.0;
+
+$parametros=DB::table('parametros')->get();
+
+foreach ($parametros as $parametro) {
+
+if($parametro->nombre_parametro=='iva'){ 
+    $iva=$parametro->valor;
+}
+
+if($parametro->nombre_parametro=='porcentaje_asistencia'){ 
+    $porcentaje_asistencia=($parametro->valor)*100;
+}
+
+if($parametro->nombre_parametro=='renta'){ 
+    $renta=$parametro->valor;
+}
+
+if($parametro->nombre_parametro=='monto_dieta'){ 
+    $monto_dieta=$parametro->valor;
+}
+//echo($parametro->nombre_parametro);
+//$prueba=$parametro->nombre_parametro;
+}
+//dd($parametros);
+//dd($prueba);
+//dd($iva,$porcentaje_asistencia,$renta,$monto_dieta);
+if($porcAsistencia<=$porcentaje_asistencia){ // se generara planilla de dieta si alcanza el porcentage de asistencia
+
+//retorn
+
+}
+
+$renta=$monto_dieta-$monto_dieta/($renta+1);
+$renta=round($renta,2);
+
+//dd($renta);
     //dd($horasreunion);
     //dd($horasasistencia);
      
@@ -760,7 +825,7 @@ if($porcAsistencia<80){
 
         //dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
 
-        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio','horasreunion'))->render();
+        $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio','horasreunion','monto_dieta','renta'))->render();
         $pdf =\App::make('dompdf.wrapper');      
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
@@ -907,27 +972,88 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
  
 
 
-      public function Reporte_consolidados_renta($tipo) 
+      public function Reporte_consolidados_renta($tipo) //No docente
     {
       
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_consolidados_renta_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-       $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
+        
 
-        if($tipo==1)
+
+        //dd($tipo);
+
+
+        $parametros = explode('.', $tipo);
+        $tipodes=$parametros[0];
+        $sector=$parametros[1];
+        $idagenda=$parametros[2];
+        $fecheperiodo=$parametros[3];
+        $idperiodo=$parametros[4];
+
+        $nombreperiodo1=DB::table('periodos')
+        ->where('periodos.id','=',$idperiodo)
+        ->select('periodos.nombre_periodo')
+        ->get();
+
+        $nombreperiodo=$nombreperiodo1[0]->nombre_periodo;
+        //dd($nombreperiodo);
+
+       
+
+        if($sector=='D'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+        ->where('asistencias.estado_asistencia_id','=',3)//3 por ser asistencias normales 
+        ->where('asambleistas.sector_id','=',2)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietario','facultades.nombre','personas.nit')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='DOCENTE';
+}
+
+
+        if($sector=='ND'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+        ->where('asistencias.estado_asistencia_id','=',3)//3 por ser asistencias normales 
+        ->where('asambleistas.sector_id','=',3)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietario','facultades.nombre','personas.nit')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='NO DOCENTE';
+}
+
+
+
+
+
+
+
+        $view =  \View::make('Reportes/Reporte_consolidados_renta_pdf', compact('resultados','sector','nombreperiodo'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
+
+        if($tipodes==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($tipodes==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
 
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
     }
@@ -937,25 +1063,86 @@ if($verdescar==1)  //page output method I:standard output  D:Download file
       public function Reporte_consolidados_renta_docente($tipo) 
     {
       
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        dd($tipo);
-        $view =  \View::make('Reportes/Reporte_consolidados_renta_docente_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-       $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
+     
+  
 
-        if($tipo==1)
+
+        //dd($tipo);
+
+
+        $parametros = explode('.', $tipo);
+        $tipodes=$parametros[0];
+        $sector=$parametros[1];
+        $idagenda=$parametros[2];
+        $fecheperiodo=$parametros[3];
+        $idperiodo=$parametros[4];
+
+        $nombreperiodo1=DB::table('periodos')
+        ->where('periodos.id','=',$idperiodo)
+        ->select('periodos.nombre_periodo')
+        ->get();
+
+        $nombreperiodo=$nombreperiodo1[0]->nombre_periodo;
+        //dd($nombreperiodo);
+
+       
+
+        if($sector=='D'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+        ->where('asistencias.estado_asistencia_id','=',3)//3 por ser asistencias normales 
+        ->where('asambleistas.sector_id','=',2)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietario','facultades.nombre','personas.nit')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='DOCENTE';
+}
+
+
+        if($sector=='ND'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+        ->where('asistencias.estado_asistencia_id','=',3)//3 por ser asistencias normales 
+        ->where('asambleistas.sector_id','=',3)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietario','facultades.nombre','personas.nit')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='NO DOCENTE';
+}
+
+
+
+
+
+
+
+        $view =  \View::make('Reportes/Reporte_consolidados_renta_docente_pdf', compact('resultados','sector','nombreperiodo'))->render();
+        $pdf = \App::make('dompdf.wrapper');      
+         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
+
+        if($tipodes==1)
         {
             return $pdf->stream('reporte');
         }
-        if($tipo==2)
+        if($tipodes==2)
         {
             return $pdf->download('reporte.pdf'); 
         }
 
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
     }
