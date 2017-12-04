@@ -23,12 +23,6 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="comision{{$comision->id}}">
                             <h4 class="panel-title">
-                                <!-- used the next html line to display the element opened by default -->
-                            <!--
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$comision->id}}" aria-expanded="true" aria-controls="collapse{{$comision->id}}" class="text-capitalize">
-                                    {{ $comision->nombre }}
-                                    </a>
--->
                                 <a role="button" data-toggle="collapse" data-parent="#accordion"
                                    href="#collapse{{$comision->id}}" aria-expanded="false"
                                    aria-controls="collapse{{$comision->id}}" class="text-capitalize">
@@ -36,10 +30,9 @@
                                 </a>
                             </h4>
                         </div>
-                        <!-- used the next html line to display the element opened by default -->
-                    <!-- <div id="collapse{{$comision->id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$comision->id}}"> -->
+
                         <div id="collapse{{$comision->id}}" class="panel-collapse collapse " role="tabpanel"
-                             aria-labelledby="heading{{$comision->id}}">
+                             aria-labelledby="comision{{$comision->id}}">
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table text-center">
@@ -71,7 +64,7 @@
                                                         <td style="vertical-align: middle">{{ $cargo->asambleista->user->persona->primer_nombre . " " . $cargo->asambleista->user->persona->segundo_nombre . " " . $cargo->asambleista->user->persona->primer_apellido . " " . $cargo->asambleista->user->persona->segundo_apellido }}</td>
                                                         <td style="vertical-align: middle">{{ $cargo->asambleista->sector->nombre }}</td>
                                                         <td style="vertical-align: middle">{{ $cargo->cargo }}</td>
-                                                        <td style="vertical-align: middle">   
+                                                        <td style="vertical-align: middle">
                                          <a class="btn btn-info btn-xs"
                                             href="<?= $disco . $cargo->asambleista->ruta; ?>"
                                             role="button">Ver</a>

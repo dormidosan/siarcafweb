@@ -168,6 +168,8 @@ Route::get('/IniciarSesionPlenaria', function () {
 Route::get('/HistorialAgendas', function () {
     return view('Agenda.HistorialAgendas');
 });
+Route::get("consultar_agendas_vigentes","AgendaController@consultar_agendas_vigentes")->name("consultar_agenda_vigentes");
+Route::post('detalles_punto_agenda_vigente','AgendaController@detalles_punto_agenda_vigente')->name("detalles_punto_agenda_vigente");
 
 /* Routes Administracion */
 /*
