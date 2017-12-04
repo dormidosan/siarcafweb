@@ -16,6 +16,7 @@ class CreatePropuestasTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('punto_id');
+            $table->unsignedInteger('asambleista_id');
             $table->string('nombre_propuesta', 45)->nullable();
             $table->smallInteger('favor')->nullable();
             $table->smallInteger('contra')->nullable();
@@ -27,12 +28,19 @@ class CreatePropuestasTable extends Migration
             $table->smallInteger('pareja')->nullable();
 
             $table->index(["punto_id"], 'fk_propuestas_puntos1_idx');
+            $table->index(["asambleista_id"], 'fk_propuestas_asambleistas1_idx');
 
 
             $table->foreign('punto_id', 'fk_propuestas_puntos1_idx')
                 ->references('id')->on('puntos')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+
+            $table->foreign('asambleista_id', 'fk_propuestas_asambleistas1_idx')
+            ->references('id')->on('asambleistas')
+            ->onDelete('no action')
+            ->onUpdate('no action');
+
             $table->timestamps();
         });
     }

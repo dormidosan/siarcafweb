@@ -33,6 +33,16 @@ class Asambleista extends Model
     {
         return $this->hasMany('App\Asistencia');
     }
+
+    public function intervenciones()
+    {
+        return $this->hasMany('App\Intervencion');
+    }
+    
+    public function propuestas()
+    {
+        return $this->hasMany('App\Propuesta');
+    }
 	
     
     //LLAVES FORANEAS

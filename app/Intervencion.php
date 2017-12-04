@@ -15,5 +15,9 @@ class Intervencion extends Model
         return $this->belongsTo('App\Punto');
     }
 
-
+    public function asambleista()
+    {
+        return $this->belongsTo('App\Asambleista');
+    }
+    
 }

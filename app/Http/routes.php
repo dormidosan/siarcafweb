@@ -141,6 +141,15 @@ Route::post('discutir_punto_plenaria', array('as' => 'discutir_punto_plenaria', 
 Route::post('agregar_propuesta', array('as' => 'agregar_propuesta', 'uses' => 'AgendaController@agregar_propuesta'));
 Route::post('modificar_propuesta', array('as' => 'modificar_propuesta', 'uses' => 'AgendaController@modificar_propuesta'));
 Route::post('guardar_votacion', array('as' => 'guardar_votacion', 'uses' => 'AgendaController@guardar_votacion'));
+Route::post('agregar_intervencion', array('as' => 'agregar_intervencion', 'uses' => 'AgendaController@agregar_intervencion'));
+Route::post('seguimiento_peticion_plenaria', array('as' => 'seguimiento_peticion_plenaria', 'uses' => 'AgendaController@seguimiento_peticion_plenaria'));
+Route::post('retirar_punto_plenaria', array('as' => 'retirar_punto_plenaria', 'uses' => 'AgendaController@retirar_punto_plenaria'));
+Route::post('resolver_punto_plenaria', array('as' => 'resolver_punto_plenaria', 'uses' => 'AgendaController@resolver_punto_plenaria'));
+Route::post('fijar_puntos', array('as' => 'fijar_puntos', 'uses' => 'AgendaController@fijar_puntos'));
+Route::post('nuevo_orden_plenaria', array('as' => 'nuevo_orden_plenaria', 'uses' => 'AgendaController@nuevo_orden_plenaria'));
+
+
+
 
 });
 

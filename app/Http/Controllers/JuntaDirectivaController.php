@@ -73,7 +73,7 @@ class JuntaDirectivaController extends Controller
     $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
     if ($peticion->agendado == 1) {
         $peticion->agendado = 0;
-        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 're')->first()->id;    
+        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'jd')->first()->id;    
     }else{
         $peticion->agendado = 1;
         $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'aa')->first()->id;    
