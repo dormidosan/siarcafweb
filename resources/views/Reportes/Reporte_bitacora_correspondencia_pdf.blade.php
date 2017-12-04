@@ -112,10 +112,16 @@
 
 
 </style>
-                                         
+
+    <div style="position: absolute;"  align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
+</div>                                  
+ <div  align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+</div>                                     
                                                
- <div id="p" >
-    CORRESPONDENCIA RECIBIDA SESIÓN ORDINARIA DE JUNTA DIRECTIVA DE LA<br/>
+ <div id="p" style="text-align: center;position: absolute;right: 15%;top: 3%">
+    CORRESPONDENCIA RECIBIDA SESIÓN ORDINARIA<br/>DE JUNTA DIRECTIVA DE LA
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
     DEL {{$fechainicial}} AL {{$fechafinal}}   
   </div>   

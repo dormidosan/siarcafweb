@@ -113,13 +113,19 @@
 
 </style>
                                          
-                                               
- <div id="p" style="text-align: center;">
+     <div style="position: absolute;"  align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
+</div>                                  
+ <div  align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+</div>                                                                
+                                                          
+ <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    CUADRO DE RETENCION DE RENTA, POR EL PAGO DE DIETAS DEL SECTOR PROFESIONAL {{$sector}}<br/>
+    CUADRO DE RETENCION DE RENTA <br/>POR EL PAGO DE DIETAS DEL SECTOR PROFESIONAL {{$sector}}<br/>
     PERIODO CORRESPONDIENTE AL {{$nombreperiodo}}
 
-    <hr  />  
+     
   </div>   
                    
 </head>
