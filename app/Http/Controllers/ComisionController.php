@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComisionRequest;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Cache;
 
 
@@ -64,7 +65,7 @@ class ComisionController extends Controller
     {
         //obtener las comisiones, omitiendo la JD
         $comisiones = Comision::where("activa", 1)
-            ->where("id","!=",1)
+            ->where("id", "!=", 1)
             ->get();
         $cargos = Cargo::all();
         return view("Comisiones.AdministrarComision", ['comisiones' => $comisiones, 'cargos' => $cargos]);
@@ -180,31 +181,33 @@ class ComisionController extends Controller
 
     }
 
-    public function listado_reuniones_comision(Request $request){
-        $reuniones = Reunion::where('id','!=',0)->where('comision_id',$request->comision_id)->orderBy('created_at','DESC')->get();
+    public function listado_reuniones_comision(Request $request)
+    {
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', $request->comision_id)->orderBy('created_at', 'DESC')->get();
         $comision = Comision::find($request->get("comision_id"));
 
-        return view('Comisiones.listado_reuniones_comision',["reuniones"=>$reuniones, "comision"=>$comision]);
+        return view('Comisiones.listado_reuniones_comision', ["reuniones" => $reuniones, "comision" => $comision]);
     }
 
 
-    public function iniciar_reunion_comision(Request $request){
+    public function iniciar_reunion_comision(Request $request)
+    {
 
-        $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
 
-        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $reunion->activa = '1';
         $reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
         $reunion->save();
-        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
 
         $todos_puntos = 1;
 
         return view('Comisiones.reunion_comision')
-            ->with('todos_puntos',$todos_puntos)
-            ->with('reunion',$reunion)
-            ->with('comision',$comision)
-            ->with('peticiones',$peticiones);
+            ->with('todos_puntos', $todos_puntos)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('peticiones', $peticiones);
     }
 
     public function asistencia_comision(Request $request)
@@ -247,6 +250,38 @@ class ComisionController extends Controller
             ->with('reunion', $reunion)
             ->with('comision', $comision)
             ->with('asistencias', $asistencias);
+
+    }
+
+    public function seguimiento_peticion_comision(Request $request)
+    {
+        $disco = "../storage/documentos/";
+        $peticion = Peticion::find($request->get("id_peticion"));
+        $comision = Comision::find($request->get("id_comision"));
+
+        if ($request->get("id_reunion") == ""){
+            return view('Comisiones.seguimiento_peticion_comision',array("disco"=>$disco,"comision"=>$comision,"peticion"=>$peticion));
+        }else{
+            $reunion = Reunion::find($request->get("id_reunion"));
+            return view('Comisiones.seguimiento_peticion_comision',array("disco"=>$disco,"comision"=>$comision,"reunion"=>$reunion,"peticion"=>$peticion));
+        }
+
+
+
+    }
+
+    public function finalizar_reunion_comision(Request $request, Redirector $redirect)
+    {
+
+        //$cargos = Cargo::where('comision_id','=',$request->id_comision)->where('activo', '=', 1)->get();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        $reunion->activa = '0';
+        $reunion->vigente = '0';
+        $reunion->fin = Carbon::now()->format('Y-m-d H:i:s');
+        $reunion->save();
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
+        $comision = Comision::find($request->get("id_comision"));
+        return view('Comisiones.listado_reuniones_comision',array("reuniones"=>$reuniones,"comision"=>$comision));
 
     }
 }
