@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 
 use Storage;
 use App\Agenda;
@@ -54,6 +54,7 @@ class AgendaController extends Controller
 
     public function sesion_plenaria()
     {
+        dd();
     	$agendas = Agenda::where('vigente', '=', '1')->orderBy('created_at', 'ASC')->get();
 
         return view('Agenda.CrearSesionPlenaria')

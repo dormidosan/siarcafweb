@@ -162,9 +162,11 @@ Route::post('nuevo_orden_plenaria', array('as' => 'nuevo_orden_plenaria', 'uses'
 Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
+/*
 Route::get('/IniciarSesionPlenaria', function () {
     return view('Agenda.IniciarSesionPlenaria');
 });
+*/
 Route::get('/HistorialAgendas', function () {
     return view('Agenda.HistorialAgendas');
 });
