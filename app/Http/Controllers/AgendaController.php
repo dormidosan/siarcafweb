@@ -54,7 +54,7 @@ class AgendaController extends Controller
 
     public function sesion_plenaria()
     {
-        dd();
+        
     	$agendas = Agenda::where('vigente', '=', '1')->orderBy('created_at', 'ASC')->get();
 
         return view('Agenda.CrearSesionPlenaria')
@@ -428,9 +428,6 @@ class AgendaController extends Controller
         ->with('puntos',$puntos);
     }
     
-
-class AgendaController extends Controller
-{
     public function consultar_agendas_vigentes()
     {
         $agendas_vigentes = Agenda::where("vigente", 1)->orderBy("created_at", "ASC")->get();
@@ -448,4 +445,6 @@ class AgendaController extends Controller
             ->with('disco', $disco)
             ->with('peticion', $peticion);
     }
+
+
 }
