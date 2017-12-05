@@ -16,16 +16,23 @@ class CreateIntervencionesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('punto_id');
-            $table->string('asambleista', 45)->nullable();
+            $table->unsignedInteger('asambleista_id');
             $table->string('descripcion', 45)->nullable();
 
             $table->index(["punto_id"], 'fk_intervenciones_puntos1_idx');
+            $table->index(["asambleista_id"], 'fk_intervenciones_asambleistas1_idx');
 
 
             $table->foreign('punto_id', 'fk_intervenciones_puntos1_idx')
                 ->references('id')->on('puntos')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+
+            $table->foreign('asambleista_id', 'fk_intervenciones_asambleistas1_idx')
+            ->references('id')->on('asambleistas')
+            ->onDelete('no action')
+            ->onUpdate('no action');
+
             $table->timestamps();
         });
     }

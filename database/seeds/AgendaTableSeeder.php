@@ -27,6 +27,7 @@ class AgendaTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->subWeeks(2)->format('Y-m-d H:i:s'),
 		'fin'  	  => Carbon::create(2017, 11,10, 8, 0)->subWeeks(2)->addHours(5)->format('Y-m-d H:i:s'),
 		'activa'  => "0",
+		'fijada'  => "0",
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -42,6 +43,7 @@ class AgendaTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->subWeek()->format('Y-m-d H:i:s'),
 		'fin'  	  => Carbon::create(2017, 11,10, 8, 0)->subWeek()->addHours(6)->format('Y-m-d H:i:s'),
 		'activa'  => "0",
+		'fijada'  => "0",
 		'created_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s')
 		));
@@ -57,6 +59,7 @@ class AgendaTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2017, 11,10, 8, 0)->format('Y-m-d H:i:s'),
 		//'fin'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(8)->format('Y-m-d H:i:s'),
 		'activa'  => "0",
+		'fijada'  => "0",
 		'created_at' => Carbon::now()->addSeconds(4)->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->addSeconds(4)->format('Y-m-d H:i:s')
 		));

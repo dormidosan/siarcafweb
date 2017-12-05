@@ -66,7 +66,7 @@ class PeticionController extends Controller
 
 
 		// O USANDO LA MANERA TOSCA ANTIGUA
-        $peticion->estado_peticion_id = '1'; // NUEVAS PETICIONES EN ESTADO RECIBIDO
+        $peticion->estado_peticion_id = '2'; // NUEVAS PETICIONES EN ESTADO JD
 		$peticion->codigo = hash("crc32", microtime(), false); 
 		//$peticion->nombre = $request->nombre;
 		$peticion->descripcion = $request->descripcion;
