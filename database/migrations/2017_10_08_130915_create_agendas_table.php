@@ -24,6 +24,7 @@ class CreateAgendasTable extends Migration
             $table->dateTime('inicio')->nullable();
             $table->dateTime('fin')->nullable();
             $table->boolean('activa')->nullable();
+            $table->boolean('fijada')->nullable();
 
             $table->index(["periodo_id"], 'fk_agendas_periodos1_idx');
 

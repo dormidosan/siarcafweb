@@ -10,8 +10,7 @@
 
 @section("bodyModal")
 
-    <form id="sesion_activa" name="sesion_activa" method="" action="" enctype="multipart/form-data">
-
+  
         <div class="panel panel-success">
             <!-- Default panel contents -->
             <div class="panel-heading">Sesiones</div>
@@ -21,32 +20,39 @@
                     <thead class="text-bold">
                     <tr>
                         <th>No.</th>
-                        <th>Sesión Plenaria</th>
-                        <th>Descripción</th>
-                        <th>Fecha de inicio</th>
-                        <th>Fecha Ultimo Acceso</th>
+                        <th>Codigo Plenaria</th>
+                        <th>Fecha</th>
+                        <th>Lugar</th>
+                        <th>Trascendental</th>
+                        <th>Vigente</th>
+                        <th>Activa</th>
                         <th>Opción</th>
                     </tr>
                     </thead>
 
                     <!--Valores quemados para efectos de presentación -->
                     <tbody id="cuerpoTabla">
+                    @forelse($agendas as $agenda)
                     <tr>
-                        <td>1</td>
-                        <td> 06 AGU 2017-2019 </td>
-                        <td>Proceso de elección de autoridades</td>
-                        <td> 26/10/2017</td>
-                        <td> 26/10/2017</td>
-                        <td><button type="button" class="btn btn-success">Comenzar</button></td>
+                        <td>{!! $agenda->id !!}</td>
+                        <td>{!! $agenda->codigo !!}</td>
+                        <td>{!! $agenda->fecha !!}</td>
+                        <td>{!! $agenda->lugar !!}</td>
+                        <td>{!! $agenda->trascendental !!}</td>
+                        <td>{!! $agenda->vigente !!}</td>
+                        <td>{!! $agenda->activa !!}</td>
+                        <td>
+                        {!! Form::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
+                        <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
+                        <button type="submit" class="btn btn-success">Comenzar</button>
+                        {!! Form::close() !!}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td> 07 AGU 2017-2019 </td>
-                        <td>Agenda de recursos de nulidad</td>
-                        <td> 26/11/2017</td>
-                        <td> 26/10/2017</td>
-                        <td><button type="button" class="btn btn-success">Comenzar</button></td>
-                    </tr>
+                    @empty
+                        <p style="color: red ;">No hay criterios de busqueda</p>
+                    @endforelse
+
+            
                     </tbody>
                 </table>
 
@@ -56,7 +62,7 @@
         <div class="box-footer text-center">
             <h4>Período 2017-2017</h4>
         </div>
-    </form>
+
 @endsection
 
 @section("footerModal")

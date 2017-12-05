@@ -121,10 +121,36 @@ Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');
 });
 
-/* Routes para Agenda */
-Route::get('/CrearSesionPlenaria', function () {
-    return view('Agenda.CrearSesionPlenaria');
+/* Routes para Agenda 
+R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {
+    return view('Agenda.sesion_plenaria');
 });
+*/
+Route::group(['prefix' => 'plenarias'], function() {
+Route::get('sesion_plenaria', array('as' => 'sesion_plenaria', 'uses' => 'AgendaController@sesion_plenaria'));
+Route::post('iniciar_sesion_plenaria', array('as' => 'iniciar_sesion_plenaria', 'uses' => 'AgendaController@iniciar_sesion_plenaria'));
+Route::post('discutir_punto_plenaria', array('as' => 'discutir_punto_plenaria', 'uses' => 'AgendaController@discutir_punto_plenaria'));
+Route::post('agregar_propuesta', array('as' => 'agregar_propuesta', 'uses' => 'AgendaController@agregar_propuesta'));
+Route::post('modificar_propuesta', array('as' => 'modificar_propuesta', 'uses' => 'AgendaController@modificar_propuesta'));
+Route::post('guardar_votacion', array('as' => 'guardar_votacion', 'uses' => 'AgendaController@guardar_votacion'));
+Route::post('agregar_intervencion', array('as' => 'agregar_intervencion', 'uses' => 'AgendaController@agregar_intervencion'));
+Route::post('seguimiento_peticion_plenaria', array('as' => 'seguimiento_peticion_plenaria', 'uses' => 'AgendaController@seguimiento_peticion_plenaria'));
+Route::post('retirar_punto_plenaria', array('as' => 'retirar_punto_plenaria', 'uses' => 'AgendaController@retirar_punto_plenaria'));
+Route::post('resolver_punto_plenaria', array('as' => 'resolver_punto_plenaria', 'uses' => 'AgendaController@resolver_punto_plenaria'));
+Route::post('fijar_puntos', array('as' => 'fijar_puntos', 'uses' => 'AgendaController@fijar_puntos'));
+Route::post('nuevo_orden_plenaria', array('as' => 'nuevo_orden_plenaria', 'uses' => 'AgendaController@nuevo_orden_plenaria'));
+
+
+
+
+});
+
+
+
+
+
+
+
 Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
@@ -204,3 +230,5 @@ Route::post('registrar_asistencia', 'JuntaDirectivaController@registrar_asistenc
 Route::get('busqueda', 'DocumentoController@busqueda')->name('busqueda');
 Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name('buscar_documentos');
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
+
+Route::resource('photo','PhotoController');

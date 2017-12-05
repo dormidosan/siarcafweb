@@ -143,7 +143,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{url("/CrearSesionPlenaria")}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion
+                            <li><a href="{{url('plenarias/sesion_plenaria')}}"><i class="fa fa-dot-circle-o"></i>Crear Sesion
                                     Plenaria</a>
                             </li>
                             <li><a href="{{url("consultar_agendas_vigentes")}}"><i class="fa fa-dot-circle-o"></i>Consultar agenda
