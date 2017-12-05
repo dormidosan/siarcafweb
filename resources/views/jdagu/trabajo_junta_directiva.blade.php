@@ -17,7 +17,7 @@
         </div>
 
         <div class="box-body">
-            <h4 class="text-center text-bold">Administrar Trabajo de Junta Directiva</h4>
+            {{-- <h4 class="text-center text-bold">Administrar Trabajo de Junta Directiva</h4> --}}
 
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">

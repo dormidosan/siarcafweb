@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('') }}">
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
+            <li><a class="active">Listado de Peticiones</a></li>
+        </ol>
+    </section>
 @endsection
 
 @section("content")
@@ -10,6 +18,14 @@
             <h3 class="box-title">Listado de peticiones de {{ $comision->nombre }}</h3>
         </div>
         <div class="box-body">
+            <div class="hidden">
+                <form id="trabajo_comision" name="trabajo_comision" method="post"
+                      action="{{ url("trabajo_comision") }}">
+                    {{ csrf_field() }}
+                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                    <button class="btn btn-success btn-xs">Acceder</button>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table text-center table-bordered hover">
                     <thead>
@@ -18,7 +34,7 @@
                         <th>Codigo</th>
                         <th>Descripcion</th>
                         <th>Fecha de creación</th>
-                        <th>Fecha actual</th>
+                        {{-- <th>Fecha actual</th> --}}
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
@@ -32,8 +48,8 @@
                             <td>{!! $contador !!}</td>
                             <td>{{ $peticion->codigo }}</td>
                             <td>{{ $peticion->descripcion }}</td>
-                            <td>{{ $peticion->fecha }}</td>
-                            <td>{{ \Carbon\Carbon::now() }}</td>
+                            <td>{{ date("m/d/Y h:m A",strtotime($peticion->fecha)) }}</td>
+                            {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>{{ $peticion->peticionario }}</td>
                             <td>
                                 {{-- Ultima asignacion --}}
@@ -67,7 +83,7 @@
                                 <form id="ver_peticion_comision" action="{{ url("seguimiento_peticion_comision") }}" method="post" target="_blank">
                                     {{ csrf_field() }}
                                     <input type="text" id="id_peticion" name="id_peticion" class="hidden" value="{{ $peticion->id }}">
-                                    <button type="submit" class="btn btn-primary btn-sm pull-right">
+                                    <button type="submit" class="btn btn-primary btn-xs btn-block">
                                         <i class="fa fa-eye"></i> Ver
                                     </button>
                                 </form>
@@ -80,16 +96,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section("js")
-    <script src="{{ asset('') }}"></script>
-@endsection
-
-
-@section("scripts")
-    <script type="text/javascript">
-        $(function () {
-        });
-    </script>
 @endsection

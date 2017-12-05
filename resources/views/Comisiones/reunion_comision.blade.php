@@ -61,9 +61,9 @@
                 </div>
 
                 <div class="col-lg-4 col-lg-offset-2 col-sm-12">
-                    {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
-                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar
-                    </button>
+                    {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }}
+                    {{ Form::hidden('id_comision', $comision->id) }}
+                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar</button>
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -81,10 +81,10 @@
                                 <th>Peticion</th>
                                 <th>Descripcion</th>
                                 <th>Fecha de creación</th>
-                                <th>Fecha actual</th>
+                                {{--<th>Fecha actual</th>--}}
                                 <th>Peticionario</th>
                                 <th>Visto anteriormente por</th>
-                                <th colspan="3">Acción</th>
+                                <th colspan="2">Acción</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -104,9 +104,9 @@
                                     <td>
                                         {!! $peticion->fecha !!}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         {!! Carbon\Carbon::now() !!}
-                                    </td>
+                                    </td>--}}
                                     <td>
                                         {!! $peticion->peticionario !!}
                                     </td>
@@ -132,20 +132,13 @@
                                            -->
                                         {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
                                         {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <input type="submit" class="btn btn-info" name="Guardar" value="Ver">
+                                        <button type="submit" class="btn btn-primary btn-xs btn-block" id="ver" name="ver"><i class="fa fa-eye"></i> Ver</button>
                                         {!! Form::close() !!}
                                     </td>
                                     <td>
                                         {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST']) !!}
                                         {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <input type="submit" class="btn btn-success" name="Guardar" value="Asignar">
-                                        {!! Form::close() !!}
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST']) !!}
-                                        {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <input type="submit" class="btn btn-success" name="Guardar"
-                                               value="Subir atestado">
+                                        <button type="submit" class="btn btn-success btn-xs btn-block" id="subir" name="subir"><i class="fa fa-upload"></i> Subir Atestado</button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

@@ -105,8 +105,9 @@
                                         <td>{{ $seguimiento->documento->tipo_documento->tipo }}</td>
                                         <td>
                                             <a class="btn btn-info btn-xs"
-                                               href="<?= $disco . $seguimiento->documento->path; ?>"
+                                               href="{{ asset($disco.''.$seguimiento->documento->path) }}"
                                                role="button">Ver</a>
+
                                             <a class="btn btn-success btn-xs"
                                                href="descargar_documento/<?= $seguimiento->documento->id; ?>"
                                                role="button">Descargar</a>
