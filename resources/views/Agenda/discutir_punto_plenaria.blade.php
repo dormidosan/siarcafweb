@@ -18,18 +18,27 @@
                     <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Regresar a - Sesion plenaria</a>                  
                     {!! Form::close() !!}    
                 </div>
+                @if($punto->activo == 1)
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
                     {!! Form::open(['route'=>['retirar_punto_plenaria'],'method'=> 'POST']) !!} 
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">   
                     <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">                    
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Retirado</a>                  
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Retirar punto</a>                  
                     {!! Form::close() !!}    
-                </div>
+                </div>                
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
                     {!! Form::open(['route'=>['resolver_punto_plenaria'],'method'=> 'POST']) !!} 
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">     
                     <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">                  
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Resuelto</a>                  
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Resolver punto</a>                  
+                    {!! Form::close() !!}    
+                </div>     
+                @endif           
+                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                    {!! Form::open(['route'=>['comision_punto_plenaria'],'method'=> 'POST','target' => '_blank']) !!} 
+                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                    <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">           
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Enviar a comision</a>                  
                     {!! Form::close() !!}    
                 </div>
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
@@ -40,15 +49,6 @@
                     <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Historial seguimiento</a>                  
                     {!! Form::close() !!}    
                 </div>
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    {!! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!} 
-                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                    <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">     
-                    <input type="hidden" name="regresar" id="regresar" value="d">                   
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">No funciona***Enviar a comision</a>                  
-                    {!! Form::close() !!}    
-                </div>
-
              
             </div>
    </div>
@@ -86,10 +86,11 @@
             </div>
          </div>
       </div>
-        
+      @if($punto->activo == 1)
         @include('Agenda.propuestas')
         @include('Agenda.intervenciones')
-
+      @endif
+        
 
    </div>
 </div>

@@ -19,6 +19,10 @@ use App\Intervencion;
 use App\Asambleista;
 use App\Peticion;
 use App\EstadoPeticion;
+use App\Comision;
+use App\Seguimiento;
+use App\EstadoSeguimiento;
+use App\Asistencia;
 
 class AgendaController extends Controller
 {
@@ -52,13 +56,18 @@ class AgendaController extends Controller
              return $res;
     }
 
-    public function sesion_plenaria()
+    public function sala_sesion_plenaria(Request $request,Redirector $redirect)
     {
         
-    	$agendas = Agenda::where('vigente', '=', '1')->orderBy('created_at', 'ASC')->get();
+    	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $asambleistas = Asambleista::where('activo','=', 1)->get();
+        $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
 
-        return view('Agenda.CrearSesionPlenaria')
-        ->with('agendas', $agendas);
+        //return view('Agenda.CrearSesionPlenaria')
+        return view('Agenda.sala_sesion_plenaria')        
+        ->with('agenda', $agenda)
+        ->with('asambleistas', $asambleistas)
+        ->with('ultimos_ingresos', $ultimos_ingresos);
     }
 
     public function iniciar_sesion_plenaria(Request $request,Redirector $redirect)
@@ -66,7 +75,8 @@ class AgendaController extends Controller
     	
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
     	$puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
-    	$agenda->activa = '1';
+    	$agenda->vigente = '1'; // ya esta vigente asi que no es necesario realmente
+        $agenda->activa = '1';
     	$agenda->save();
     	
     	$actualizado = 0;
@@ -75,6 +85,155 @@ class AgendaController extends Controller
         ->with('agenda', $agenda)
         ->with('puntos', $puntos);
     }
+
+    public function finalizar_sesion_plenaria(Request $request,Redirector $redirect)
+    {
+        
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
+        $puntos_activos = Punto::where('agenda_id', '=', $agenda->id)->where('activo', '=', '1')->count();
+        
+        // si ya no hay puntos activos , regresar a pantalla de listado de sesiones plenarias
+        if ($puntos_activos == '0') {
+            //$agendas = Agenda::where('vigente','=', '1')->orderBy('created_at', 'ASC')->get();
+            $agenda->activa  = '0';
+            $agenda->vigente = '0';
+            $agenda->save();
+
+            $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
+            //$puntos = Punto::all();
+            return view('Agenda.consultar_agendas_vigentes')
+            ->with('agendas',$agendas);
+
+        } 
+        
+        
+        $actualizado = 0;
+        return view('Agenda.listado_puntos_plenaria')
+        ->with('actualizado',$actualizado)
+        ->with('agenda', $agenda)
+        ->with('puntos', $puntos);
+    }
+
+    public function pausar_sesion_plenaria(Request $request,Redirector $redirect)
+    {
+        
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $agenda->fin = Carbon::now()->format('Y-m-d H:i:s');
+        $agenda->save();
+        
+        $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
+        //$puntos = Punto::all();
+        return view('Agenda.consultar_agendas_vigentes')
+        ->with('agendas',$agendas);
+    }
+
+    public function comision_punto_plenaria(Request $request,Redirector $redirect)
+    {
+        
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $punto = Punto::where('id', '=', $request->id_punto)->first();
+        $peticion = Peticion::where('id', '=', $punto->peticion_id)->first();
+
+
+        //$id_peticion = $request->id_peticion;
+
+        //$peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
+        //$reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        //$comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
+        $comisiones = Comision::where('id', '!=', '1')->pluck('nombre', 'id');  // traer todas las comisiones menos la JD
+        $seguimientos = Seguimiento::where('peticion_id', '=', $peticion->id)->where('activo', '=', 1)->get();
+
+        return view('Agenda.lista_asignacion_plenaria')
+            ->with('agenda', $agenda)
+            ->with('punto', $punto)
+            ->with('peticion', $peticion)
+            ->with('comisiones', $comisiones)
+            ->with('seguimientos', $seguimientos);
+
+    }
+
+    public function asignar_comision_punto(Request $request,Redirector $redirect)
+    {
+        //dd($request->all());
+
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $punto = Punto::where('id', '=', $request->id_punto)->first();
+
+        $id_peticion = $request->id_peticion;
+        $id_comision = $request->comisiones;
+        $descripcion = $request->descripcion;
+
+        $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $comision = Comision::where('id', '=', $id_comision)->firstOrFail();
+
+
+        if (!$peticion->comisiones->contains($id_comision)) {
+
+            $seguimiento = new Seguimiento();
+            $seguimiento->peticion_id = $peticion->id;
+            $seguimiento->comision_id = $comision->id;
+            $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "se")->first()->id; // SE Seguimiento
+            $seguimiento->inicio = Carbon::now();
+            //$seguimiento->fin = Carbon::now();
+            $seguimiento->activo = '1';
+            $seguimiento->agendado = '0';
+            //$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+            $seguimiento->descripcion = "Inicio de control en: " . $comision->nombre . " - " . $descripcion;
+            $guardado = $seguimiento->save();
+            if ($guardado) {
+                $peticion->comisiones()->attach($id_comision);
+            }
+
+
+            $seguimiento = new Seguimiento();
+            $seguimiento->peticion_id = $peticion->id;
+            $seguimiento->comision_id = $comision->id;
+            $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "as")->first()->id; // AS Asignado
+            $seguimiento->inicio = Carbon::now();
+            $seguimiento->fin = Carbon::now();
+            $seguimiento->activo = '0';
+            $seguimiento->agendado = '0';
+            //$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+            $seguimiento->descripcion = "Asignado a: " . $comision->nombre . " - " . $descripcion;
+            $guardado = $seguimiento->save();
+
+            //if($guardado){
+            //$peticion->comisiones()->attach($id_comision);
+            //}
+            $peticion->comision = 1;  // quiere decir que este punto esta en una comision
+            $peticion->agendado = 0;
+            $peticion->asignado_agenda = 0;
+            $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', "co")->first()->id; // AS Asignado
+            $peticion->save();
+
+        }
+
+
+        //$peticion->comisiones()->sync([$id_comision], false);  //$model->sync(array $ids, $detaching = true)
+        //$peticion->comisiones()->attach($id_comision);
+
+        //
+        $punto->activo   = '0';
+        $punto->retirado = '0';
+        $punto->save();
+
+        //$peticion = Peticion::where('id','=',$id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
+        $comisiones = Comision::where('id', '!=', '1')->pluck('nombre', 'id');  // traer todas las comisiones menos la JD
+        $seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+
+        return view('Agenda.lista_asignacion_plenaria')
+            ->with('agenda', $agenda)
+            ->with('punto', $punto)
+            ->with('peticion', $peticion)          ////
+            ->with('comisiones', $comisiones)      ////
+            ->with('seguimientos', $seguimientos); ////
+      
+
+    }
+
+
+    
 
     public function discutir_punto_plenaria(Request $request,Redirector $redirect)
     {
@@ -430,21 +589,24 @@ class AgendaController extends Controller
     
     public function consultar_agendas_vigentes()
     {
-        $agendas_vigentes = Agenda::where("vigente", 1)->orderBy("created_at", "ASC")->get();
-        $puntos = Punto::all();
-        return view("Agenda.consultar_agendas_vigentes", ["agendas_vigentes" => $agendas_vigentes, "puntos" => $puntos]);
+        $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
+        //$puntos = Punto::all();
+        return view('Agenda.consultar_agendas_vigentes')
+        ->with('agendas',$agendas);
     }
 
-    public function detalles_punto_agenda_vigente(Request $request)
+    public function detalles_punto_agenda(Request $request)
     {
         $id_peticion = $request->id_peticion;
         $disco = "../storage/documentos/";
 
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
-        return view('Agenda.detalles_punto_agenda_vigente')
+        return view('Agenda.detalles_punto_agenda')
             ->with('disco', $disco)
             ->with('peticion', $peticion);
     }
+
+
 
 
 }

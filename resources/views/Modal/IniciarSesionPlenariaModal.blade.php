@@ -30,30 +30,31 @@
                     </tr>
                     </thead>
 
-                    <!--Valores quemados para efectos de presentación -->
+                    <!--Valores quemados para efectos de presentación 
                     <tbody id="cuerpoTabla">
-                    @forelse($agendas as $agenda)
+                    @-forelse(-$-agendas as $agenda)
                     <tr>
-                        <td>{!! $agenda->id !!}</td>
-                        <td>{!! $agenda->codigo !!}</td>
-                        <td>{!! $agenda->fecha !!}</td>
-                        <td>{!! $agenda->lugar !!}</td>
-                        <td>{!! $agenda->trascendental !!}</td>
-                        <td>{!! $agenda->vigente !!}</td>
-                        <td>{!! $agenda->activa !!}</td>
+                        <td>{-!-! $agenda->id !!}</td>
+                        <td>{-!-! $agenda->codigo !!}</td>
+                        <td>{-!-! $agenda->fecha !!}</td>
+                        <td>{-!-! $agenda->lugar !!}</td>
+                        <td>{-!-! $agenda->trascendental !!}</td>
+                        <td>{-!-! $agenda->vigente !!}</td>
+                        <td>{-!-! $agenda->activa !!}</td>
                         <td>
-                        {!! Form::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
+                        -{-!-! F-orm::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
                         <input type="hidden" name="id_agenda"   id="id_agenda"   value="{{$agenda->id}}">
                         <button type="submit" class="btn btn-success">Comenzar</button>
-                        {!! Form::close() !!}
+                        {-!-! Form::close() !!}
                         </td>
                     </tr>
-                    @empty
+                    @-empty
                         <p style="color: red ;">No hay criterios de busqueda</p>
-                    @endforelse
+                    @-endforelse
 
             
                     </tbody>
+                    -->
                 </table>
 
             </div>

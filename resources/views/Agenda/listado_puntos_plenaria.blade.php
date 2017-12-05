@@ -16,18 +16,19 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    {!! Form::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!} 
+                    {!! Form::open(['route'=>['sala_sesion_plenaria'],'method'=> 'POST']) !!} 
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">                   
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"> No funciona***Regresar a - Asistencia plenaria</a>                  
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"> Regresar a - Asistencia plenaria</a>                  
                     {!! Form::close() !!}    
                 </div>
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    {!! Form::open(['route'=>['retirar_punto_plenaria'],'method'=> 'POST']) !!} 
+                    {!! Form::open(['route'=>['finalizar_sesion_plenaria'],'method'=> 'POST']) !!} 
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">   
                               
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"> No funciona***Finalizar plenaria</a>                  
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block" disabled="disabled">Finalizar plenaria</a>                  
                     {!! Form::close() !!}    
                 </div>
+
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
                     {!! Form::open(['route'=>['fijar_puntos'],'method'=> 'POST']) !!} 
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">    
@@ -40,11 +41,15 @@
                     {!! Form::close() !!}    
                 </div>
                 <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    {!! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!} 
-                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                  
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block"> No funciona***Pausar plenaria </a>                  
-                    {!! Form::close() !!}    
+                    <!-- {-!-! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!} -->
+                    <!-- Al pausar sesion plenaria , regresara a la pantalla con el listado de todas las sesiones plenarias, 
+                    usar la pantalla de jonathan de consultar agenda vigente como ejemplo-->
+                    {!! Form::open(['route'=>['pausar_sesion_plenaria'],'method'=> 'POST']) !!} 
+                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">   
+                              
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-warning btn-block" >Pausar plenaria</a>                  
+                    {!! Form::close() !!}                  
+                    <!-- {-!-! Form::close() !!}    -->
                 </div>
 
              
@@ -149,3 +154,4 @@
         </div>
     </div>
 @endsection
+

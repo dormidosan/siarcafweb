@@ -59,7 +59,6 @@ Route::get('/discutir/{comision}/{id}', function () {
 });
 
 
-
 Route::post('buscar_planilla_dieta', 'ReportesController@buscar_planilla_dieta')->name("buscar_planilla_dieta");
 
 Route::post('buscar_permisos_temporales', 'ReportesController@buscar_permisos_temporales')->name("buscar_permisos_temporales");
@@ -71,34 +70,27 @@ Route::post('buscar_permisos_permanentes', 'ReportesController@buscar_permisos_p
 Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name("buscar_asistencias");
 
 /* Peticiones */
-/*
-Route::get('/RegistrarPeticion', function () {
-    return view('General.RegistroPeticion');
-});
-*/
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
-Route::get('/MonitorearPeticion', function () {
-    return view('General.MonitoreoPeticion');
-});
+Route::get('/MonitorearPeticion', function () {return view('General.MonitoreoPeticion');});
 
 
 /* Reportes */
 
 Route::get('/Reporte_permisos_permanentes', function () {
-    return view('Reportes.Reporte_permisos_permanentes',['resultados'=>NULL]);
+    return view('Reportes.Reporte_permisos_permanentes', ['resultados' => NULL]);
 });
 Route::get('/Reporte_permisos_permanentes/{tipo}', 'ReportesController@Reporte_permisos_permanentes');
 Route::get('/Reporte_asistencias_sesion_plenaria', function () {
-    return view('Reportes.Reporte_asistencias_sesion_plenaria',['resultados'=>NULL]);
+    return view('Reportes.Reporte_asistencias_sesion_plenaria', ['resultados' => NULL]);
 });
 Route::get('/Reporte_asistencias_sesion_plenaria/{tipo}', 'ReportesController@Reporte_asistencias_sesion_plenaria');
 Route::get('/Reporte_inasistencias_sesion_plenaria_pdf/{tipo}', 'ReportesController@Reporte_inasistencias_sesion_plenaria_pdf');
 Route::get('/Reporte_bitacora_correspondencia', function () {
-    return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
+    return view('Reportes.Reporte_bitacora_correspondencia', ['resultados' => NULL]);
 });
 Route::get('/Reporte_bitacora_correspondencia/{tipo}', 'ReportesController@Reporte_bitacora_correspondencia');
 Route::get('/Reporte_planilla_dieta', function () {
-    return view('Reportes.Reporte_planilla_dieta',['resultados'=>NULL]);
+    return view('Reportes.Reporte_planilla_dieta', ['resultados' => NULL]);
 });
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
@@ -122,7 +114,7 @@ Route::get('/Plantilla_Actas', function () {
 Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 Route::get('/Reporte_permisos_temporales', function () {
-    return view('Reportes.Reporte_permisos_temporales',['resultados'=>NULL]);
+    return view('Reportes.Reporte_permisos_temporales', ['resultados' => NULL]);
 });
 Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
 Route::get('/Reporte_Convocatorias', function () {
@@ -135,7 +127,7 @@ R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {
 });
 */
 Route::group(['prefix' => 'plenarias'], function() {
-Route::get('sesion_plenaria', array('as' => 'sesion_plenaria', 'uses' => 'AgendaController@sesion_plenaria'));
+Route::post('sala_sesion_plenaria', array('as' => 'sala_sesion_plenaria', 'uses' => 'AgendaController@sala_sesion_plenaria'));
 Route::post('iniciar_sesion_plenaria', array('as' => 'iniciar_sesion_plenaria', 'uses' => 'AgendaController@iniciar_sesion_plenaria'));
 Route::post('discutir_punto_plenaria', array('as' => 'discutir_punto_plenaria', 'uses' => 'AgendaController@discutir_punto_plenaria'));
 Route::post('agregar_propuesta', array('as' => 'agregar_propuesta', 'uses' => 'AgendaController@agregar_propuesta'));
@@ -147,6 +139,10 @@ Route::post('retirar_punto_plenaria', array('as' => 'retirar_punto_plenaria', 'u
 Route::post('resolver_punto_plenaria', array('as' => 'resolver_punto_plenaria', 'uses' => 'AgendaController@resolver_punto_plenaria'));
 Route::post('fijar_puntos', array('as' => 'fijar_puntos', 'uses' => 'AgendaController@fijar_puntos'));
 Route::post('nuevo_orden_plenaria', array('as' => 'nuevo_orden_plenaria', 'uses' => 'AgendaController@nuevo_orden_plenaria'));
+Route::post('finalizar_sesion_plenaria', array('as' => 'finalizar_sesion_plenaria', 'uses' => 'AgendaController@finalizar_sesion_plenaria'));
+Route::post('pausar_sesion_plenaria', array('as' => 'pausar_sesion_plenaria', 'uses' => 'AgendaController@pausar_sesion_plenaria'));
+Route::post('comision_punto_plenaria', array('as' => 'comision_punto_plenaria', 'uses' => 'AgendaController@comision_punto_plenaria'));
+Route::post('asignar_comision_punto', array('as' => 'asignar_comision_punto', 'uses' => 'AgendaController@asignar_comision_punto'));
 
 
 
@@ -170,15 +166,10 @@ Route::get('/IniciarSesionPlenaria', function () {
 Route::get('/HistorialAgendas', function () {
     return view('Agenda.HistorialAgendas');
 });
-Route::get("consultar_agendas_vigentes","AgendaController@consultar_agendas_vigentes")->name("consultar_agenda_vigentes");
-Route::post('detalles_punto_agenda_vigente','AgendaController@detalles_punto_agenda_vigente')->name("detalles_punto_agenda_vigente");
+Route::get("consultar_agendas_vigentes", "AgendaController@consultar_agendas_vigentes")->name("consultar_agenda_vigentes");
+Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->name("detalles_punto_agenda");
 
 /* Routes Administracion */
-/*
-Rou-t-e-::-g-et('/Parametros', function () {
-    return view('Administracion.Parametros');
-});
-*/
 
 Route::get('/ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');

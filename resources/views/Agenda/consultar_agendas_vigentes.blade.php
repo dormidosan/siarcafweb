@@ -20,37 +20,48 @@
 
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 @php $i = 1 @endphp
-                @forelse($agendas_vigentes as $agenda_vigente)
+                @forelse($agendas as $agenda)
 
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="agenda_vigente{{$agenda_vigente->id}}">
+                        <div class="panel-heading" role="tab" id="agenda{{$agenda->id}}">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapse{{$agenda_vigente->id}}" aria-expanded="false"
-                                   aria-controls="collapse{{$agenda_vigente->id}}" class="text-capitalize">
-                                    Agenda Vigente #{{$i}}
+                                   href="#collapse{{$agenda->id}}" aria-expanded="false"
+                                   aria-controls="collapse{{$agenda->id}}" class="text-capitalize">
+                                    Agenda Vigente #{{$i}}  
+                                    {{ $agenda->codigo}} 
+                                    @if ($agenda->activa == 1)
+                                        <span style="color: green ;">Sesion inconclusa</span>
+                                    @endif
+                                    @if ($agenda->trascendental == 1)
+                                        <span style="color: red ;">Sesion trascendental</span>
+                                    @endif
                                 </a>
                             </h4>
                         </div>
 
-                        <div id="collapse{{$agenda_vigente->id}}" class="panel-collapse collapse " role="tabpanel"
-                             aria-labelledby="agenda_vigente{{$agenda_vigente->id}}">
+                        <div id="collapse{{$agenda->id}}" class="panel-collapse collapse " role="tabpanel"
+                             aria-labelledby="agenda{{$agenda->id}}">
                             <div class="panel-body">
 
                                 <div class="box box-solid">
                                     <div class="box-header with-border">
                                         <i class="fa fa-info"></i>
                                         <h3 class="box-title">Información sobre la Agenda</h3>
+                                            {!! Form::open(['route'=>['sala_sesion_plenaria'],'method'=> 'POST']) !!} 
+                                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">                   
+                                            <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block"> Iniciar sesion plenaria</a>                  
+                                            {!! Form::close() !!}   
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
                                         <dl class="dl-horizontal">
                                             <dt>Fecha y Hora de Inicio</dt>
-                                            <dd>{{ date("d/m/Y h:m A",strtotime($agenda_vigente->inicio)) }}</dd>
+                                            <dd>{{ date("d/m/Y h:m A",strtotime($agenda->inicio)) }}</dd>
                                             <dt>Lugar de Reunion</dt>
-                                            <dd>{{ $agenda_vigente->lugar    }}</dd>
+                                            <dd>{{ $agenda->lugar    }}</dd>
                                             <dt>Transcendental</dt>
-                                            <dd>{{ $agenda_vigente->trascendental? "Si":"No" }}</dd>
+                                            <dd>{{ $agenda->trascendental? "Si":"No" }}</dd>
                                         </dl>
                                     </div>
                                     <!-- /.box-body -->
@@ -74,8 +85,7 @@
                                         </thead>
                                         <tbody class="text-center">
                                         @php $j = 1 @endphp
-                                        @foreach($puntos as $punto)
-                                            @if($agenda_vigente->id == $punto->agenda_id)
+                                        @forelse($agenda->puntos as $punto)
                                                 <tr>
                                                     <td>{{ $j }}</td>
                                                     <td>{{ $punto->peticion->codigo }}</td>
@@ -83,7 +93,7 @@
                                                     <td>{{ date("d/m/Y h:m A",strtotime($punto->peticion->created_at)) }}</td>
                                                     <td>{{ $punto->peticion->peticionario }}</td>
                                                     <td>
-                                                        {!! Form::open(['route'=>['detalles_punto_agenda_vigente'],'method'=> 'POST']) !!}
+                                                        {!! Form::open(['route'=>['detalles_punto_agenda'],'method'=> 'POST']) !!}
                                                         {{ Form::hidden('id_peticion', $punto->peticion->id) }}
                                                         <button type="submit" class="btn btn-primary btn-xs btn-block">
                                                             <i class="fa fa-eye"></i> Ver
@@ -91,9 +101,11 @@
                                                         {!! Form::close() !!}
                                                     </td>
                                                 </tr>
-                                            @endif
+                                            
                                             @php $j++ @endphp
-                                        @endforeach
+                                        @empty
+                                            <p style="color: red ;">No hay criterios de busqueda</p>
+                                        @endforelse
                                         </tbody>
                                     </table>
                                 </div>
