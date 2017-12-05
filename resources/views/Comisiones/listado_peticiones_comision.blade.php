@@ -80,9 +80,10 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <form id="ver_peticion_comision" action="{{ url("seguimiento_peticion_comision") }}" method="post" target="_blank">
+                                <form id="ver_peticion_comision" action="{{ url("seguimiento_peticion_comision") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="text" id="id_peticion" name="id_peticion" class="hidden" value="{{ $peticion->id }}">
+                                    <input type="text" id="id_comision" name="id_comision" class="hidden" value="{{ $comision->id }}">
                                     <button type="submit" class="btn btn-primary btn-xs btn-block">
                                         <i class="fa fa-eye"></i> Ver
                                     </button>

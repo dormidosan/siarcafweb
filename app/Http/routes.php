@@ -36,6 +36,7 @@ Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_
 Route::post('iniciar_reunion_comision', 'ComisionController@iniciar_reunion_comision')->name("iniciar_reunion_comision");
 Route::post('asistencia_comision', array('as' => 'asistencia_comision', 'uses' => 'ComisionController@asistencia_comision'));
 Route::post('registrar_asistencia_comision', 'ComisionController@registrar_asistencia_comision')->name('registrar_asistencia_comision');
+Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_comision')->name('finalizar_reunion_comision');
 
 
 //rutas q aun no uso

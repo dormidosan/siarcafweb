@@ -7,7 +7,8 @@
             <li><a>Comisiones</a></li>
             <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
             <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
-            <li><a href="javascript:document.getElementById('listado_reuniones_comision').submit();">Listado de Reuniones</a></li>
+            <li><a href="javascript:document.getElementById('listado_reuniones_comision').submit();">Listado de
+                    Reuniones</a></li>
             <li class="active">Reunion {{$reunion->codigo}}</li>
         </ol>
     </section>
@@ -61,9 +62,10 @@
                 </div>
 
                 <div class="col-lg-4 col-lg-offset-2 col-sm-12">
-                    {!! Form::open(['route'=>['finalizar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }}
+                    {!! Form::open(['route'=>['finalizar_reunion_comision'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }}
                     {{ Form::hidden('id_comision', $comision->id) }}
-                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar</button>
+                    <button type="submit" id="finalizar" name="finalizar" class="btn btn-danger btn-block">Finalizar
+                    </button>
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -130,15 +132,21 @@
                                         <!--
                                            <a class="btn btn-info" href="#" role="button">Ver</a>
                                            -->
-                                        {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
+                                        {!! Form::open(['route'=>['seguimiento_peticion_comision'],'method'=> 'POST']) !!}
                                         {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <button type="submit" class="btn btn-primary btn-xs btn-block" id="ver" name="ver"><i class="fa fa-eye"></i> Ver</button>
+                                        {{ Form::hidden('id_reunion', $reunion->id) }}
+                                        {{ Form::hidden('id_comision', $comision->id) }}
+                                        <button type="submit" class="btn btn-primary btn-xs btn-block" id="ver"
+                                                name="ver"><i class="fa fa-eye"></i> Ver
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                     <td>
                                         {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST']) !!}
                                         {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <button type="submit" class="btn btn-success btn-xs btn-block" id="subir" name="subir"><i class="fa fa-upload"></i> Subir Atestado</button>
+                                        <button type="submit" class="btn btn-success btn-xs btn-block" id="subir"
+                                                name="subir"><i class="fa fa-upload"></i> Subir Atestado
+                                        </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
