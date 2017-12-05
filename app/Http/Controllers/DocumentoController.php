@@ -57,6 +57,7 @@ class DocumentoController extends Controller
         return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
     }
 
+
     public function descargar_documento($id)
     {
         $documento = Documento::find($id);

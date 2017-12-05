@@ -30,7 +30,7 @@
                         <th>Codigo</th>
                         <th>Descripcion</th>
                         <th>Fecha de creación</th>
-                        <th>Fecha actual</th>
+                        {{-- <th>Fecha actual</th> --}}
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
@@ -38,14 +38,6 @@
                     </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
-                    <!--
-                       <tr>
-                           <td>Lo he dejado quemado para que</td>
-                           <td>no se vea solo :v</td>
-                           <td><a href="#" class="btn btn-block btn-success btn-xs">Descargar</a></td>
-                           <td>Opcion</td>
-                       </tr>
-                       -->
                     @php $contador =1 @endphp
                     @forelse($peticiones as $peticion)
                         {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
@@ -56,19 +48,13 @@
                                 @php $contador++ @endphp
                             </td>
                             <td>
-                                <center>
-                                    {!! $peticion->codigo !!}
-                                </center>
+                                {!! $peticion->codigo !!}
                             </td>
                             <td>
                                 {!! $peticion->descripcion !!}
                             </td>
-                            <td>
-                                {!! $peticion->fecha !!}
-                            </td>
-                            <td>
-                                {!! Carbon\Carbon::now() !!}
-                            </td>
+                            <td>{{ date("m/d/Y h:m A",strtotime($peticion->fecha)) }}</td>
+                            {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>
                                 {!! $peticion->peticionario !!}
                             </td>
@@ -101,7 +87,7 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary btn-sm pull-right">
+                                <button type="submit" class="btn btn-primary btn-xs btn-block">
                                     <i class="fa fa-eye"></i> Ver
                                 </button>
                             </td>

@@ -89,7 +89,7 @@
                     <th>Nombre Documento</th>
                     <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
-                    <th>Accion</th>
+                    <th colspan="2">Accion</th>
                 </tr>
                 </thead>
 
@@ -104,11 +104,13 @@
                             <td>{{ $documento->tipo_documento->tipo }}</td>
                             <td>{{ $documento->fecha_ingreso }}</td>
                             <td>
-                                <a class="btn btn-primary btn-sm" href="<?= $disco . $documento->path; ?>"
-                                   role="button"><i class="fa fa-eye"></i> Ver</a>
-                                <a class="btn btn-success btn-sm    "
-                                   href="descargar_documento/<?= $documento->id; ?>" role="button"><i
-                                            class="fa fa-download"></i> Descargar</a>
+                                <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$documento->path) }}"
+                                   role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success btn-xs btn-block"
+                                   href="descargar_documento/<?= $documento->id; ?>" role="button">
+                                    <i class="fa fa-download"></i> Descargar</a>
                             </td>
                         </tr>
                         @php $i++ @endphp
@@ -171,8 +173,8 @@
                     }
                 },
                 responsive: true,
-                columnDefs: [ { orderable: false, targets: [0,4] },  ],
-                order: [[ 1, 'asc' ]]
+                columnDefs: [{orderable: false, targets: [0, 5]}],
+                order: [[1, 'asc']]
 
             });
         });
