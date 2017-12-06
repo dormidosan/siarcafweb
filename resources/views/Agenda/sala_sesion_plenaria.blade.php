@@ -85,7 +85,9 @@
                             <!-- List group -->
                             <ul class="list-group">
                                 @foreach($ultimos_ingresos as $ultimos_ingreso)
-                                    <li class="list-group-item"><i class="fa fa-user"></i> {{ $ultimos_ingreso->asambleista->user->persona->primer_nombre  . " " . $ultimos_ingreso->asambleista->user->persona->segundo_nombre . " " . $ultimos_ingreso->asambleista->user->persona->primer_apellido . " " . $ultimos_ingreso->asambleista->user->persona->segundo_apellido }}</li>
+                                    <li class="list-group-item"><i
+                                                class="fa fa-user"></i> {{ $ultimos_ingreso->asambleista->user->persona->primer_nombre  . " " . $ultimos_ingreso->asambleista->user->persona->segundo_nombre . " " . $ultimos_ingreso->asambleista->user->persona->primer_apellido . " " . $ultimos_ingreso->asambleista->user->persona->segundo_apellido }}
+                                    </li>
                                 @endforeach
 
                             </ul>
@@ -104,8 +106,6 @@
                 </div>-->
                 <div class="box-body">
                     <div class="row">
-                        {!! Form::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
-                        {!! Form::close() !!}
                         <div class="col-lg-12 text-center text-success">
                             <h3>Código de Sesion Plenaria: <br>{{ $agenda->codigo}}</h3>
                         </div>
@@ -124,11 +124,13 @@
                         </div>
                         <div class="col-lg-6 text-center">
                             <div class="input-group-btn">
+                                {!! Form::open(['route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
                                 <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                 <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">
                                     Iniciar Sesión Plenaria
                                 </button>
-                                <!-- <but-ton type="button" class="btn btn-primary" onclick="mostrarModal()">Iniciar Sesión Plenaria</button> -->
+                            {!! Form::close() !!}
+                            <!-- <but-ton type="button" class="btn btn-primary" onclick="mostrarModal()">Iniciar Sesión Plenaria</button> -->
                             </div>
                         </div>
                     </div>
