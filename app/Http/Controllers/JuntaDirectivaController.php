@@ -438,7 +438,9 @@ class JuntaDirectivaController extends Controller
             //if($guardado){
             //$peticion->comisiones()->attach($id_comision);
             //}
-            $peticion->comision = 1;
+            $peticion->comision = 1;  // quiere decir que este punto esta en una comision
+            $peticion->agendado = 0;
+            $peticion->asignado_agenda = 0;
             $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', "co")->first()->id; // AS Asignado
             $peticion->save();
 
