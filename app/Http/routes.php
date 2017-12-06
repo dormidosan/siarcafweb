@@ -72,7 +72,8 @@ Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name
 
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
-Route::get('/MonitorearPeticion', function () {return view('General.MonitoreoPeticion');});
+Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
+Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 
 
 /* Reportes */
@@ -144,6 +145,7 @@ Route::post('finalizar_sesion_plenaria', array('as' => 'finalizar_sesion_plenari
 Route::post('pausar_sesion_plenaria', array('as' => 'pausar_sesion_plenaria', 'uses' => 'AgendaController@pausar_sesion_plenaria'));
 Route::post('comision_punto_plenaria', array('as' => 'comision_punto_plenaria', 'uses' => 'AgendaController@comision_punto_plenaria'));
 Route::post('asignar_comision_punto', array('as' => 'asignar_comision_punto', 'uses' => 'AgendaController@asignar_comision_punto'));
+Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleistas_sesion')->name('agregar_asambleistas_sesion');
 
 
 

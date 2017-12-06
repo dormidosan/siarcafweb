@@ -256,7 +256,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ url("/RegistrarPeticion") }}"><i class="fa fa-dot-circle-o"></i> Registrar
                                     Peticiones</a></li>
-                            <li><a href="{{ url("/MonitorearPeticion") }}"><i class="fa fa-dot-circle-o"></i>Monitorear
+                            <li><a href="{{ url("/monitoreo_peticion") }}"><i class="fa fa-dot-circle-o"></i>Monitorear
                                     Peticion</a>
                             </li>
                         </ul>

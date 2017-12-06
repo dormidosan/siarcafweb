@@ -28,8 +28,8 @@
                                 <a role="button" data-toggle="collapse" data-parent="#accordion"
                                    href="#collapse{{$agenda->id}}" aria-expanded="false"
                                    aria-controls="collapse{{$agenda->id}}" class="text-capitalize">
-                                    Agenda Vigente #{{$i}}  
-                                    {{ $agenda->codigo}} 
+                                    Agenda Vigente #{{$i}}
+                                    {{ $agenda->codigo}}
                                     @if ($agenda->activa == 1)
                                         <span style="color: green ;">Sesion inconclusa</span>
                                     @endif
@@ -48,21 +48,29 @@
                                     <div class="box-header with-border">
                                         <i class="fa fa-info"></i>
                                         <h3 class="box-title">Información sobre la Agenda</h3>
-                                            {!! Form::open(['route'=>['sala_sesion_plenaria'],'method'=> 'POST']) !!} 
-                                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">                   
-                                            <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block"> Iniciar sesion plenaria</a>                  
-                                            {!! Form::close() !!}   
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <dl class="dl-horizontal">
-                                            <dt>Fecha y Hora de Inicio</dt>
-                                            <dd>{{ date("d/m/Y h:m A",strtotime($agenda->inicio)) }}</dd>
-                                            <dt>Lugar de Reunion</dt>
-                                            <dd>{{ $agenda->lugar    }}</dd>
-                                            <dt>Transcendental</dt>
-                                            <dd>{{ $agenda->trascendental? "Si":"No" }}</dd>
-                                        </dl>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Fecha y Hora de Inicio</dt>
+                                                    <dd>{{ date("d/m/Y h:m A",strtotime($agenda->inicio)) }}</dd>
+                                                    <dt>Lugar de Reunion</dt>
+                                                    <dd>{{ $agenda->lugar    }}</dd>
+                                                    <dt>Transcendental</dt>
+                                                    <dd>{{ $agenda->trascendental? "Si":"No" }}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                {!! Form::open(['route'=>['sala_sesion_plenaria'],'method'=> 'POST']) !!}
+                                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                                                <button type="submit" id="iniciar" name="iniciar"
+                                                        class="btn btn-primary btn-block"> Iniciar sesion plenaria
+                                                </button>
+                                                {!! Form::close() !!}
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.box-body -->
                                 </div>
@@ -86,25 +94,27 @@
                                         <tbody class="text-center">
                                         @php $j = 1 @endphp
                                         @forelse($agenda->puntos as $punto)
-                                                <tr>
-                                                    <td>{{ $j }}</td>
-                                                    <td>{{ $punto->peticion->codigo }}</td>
-                                                    <td>{{ $punto->peticion->descripcion }}</td>
-                                                    <td>{{ date("d/m/Y h:m A",strtotime($punto->peticion->created_at)) }}</td>
-                                                    <td>{{ $punto->peticion->peticionario }}</td>
-                                                    <td>
-                                                        {!! Form::open(['route'=>['detalles_punto_agenda'],'method'=> 'POST']) !!}
-                                                        {{ Form::hidden('id_peticion', $punto->peticion->id) }}
-                                                        <button type="submit" class="btn btn-primary btn-xs btn-block">
-                                                            <i class="fa fa-eye"></i> Ver
-                                                        </button>
-                                                        {!! Form::close() !!}
-                                                    </td>
-                                                </tr>
-                                            
+                                            <tr>
+                                                <td>{{ $j }}</td>
+                                                <td>{{ $punto->peticion->codigo }}</td>
+                                                <td>{{ $punto->peticion->descripcion }}</td>
+                                                <td>{{ date("d/m/Y h:m A",strtotime($punto->peticion->created_at)) }}</td>
+                                                <td>{{ $punto->peticion->peticionario }}</td>
+                                                <td>
+                                                    {!! Form::open(['route'=>['detalles_punto_agenda'],'method'=> 'POST']) !!}
+                                                    {{ Form::hidden('id_peticion', $punto->peticion->id) }}
+                                                    <button type="submit" class="btn btn-primary btn-xs btn-block">
+                                                        <i class="fa fa-eye"></i> Ver
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            </tr>
+
                                             @php $j++ @endphp
                                         @empty
-                                            <p style="color: red ;">No hay criterios de busqueda</p>
+                                            <tr>
+                                                <td colspan="7" class="text-danger">No hay puntos asignados a esta agenda</td>
+                                            </tr>
                                         @endforelse
                                         </tbody>
                                     </table>
