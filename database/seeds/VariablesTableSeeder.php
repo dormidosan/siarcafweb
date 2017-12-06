@@ -35,13 +35,18 @@ class VariablesTableSeeder extends Seeder {
 			'tipo'  => 'acta jd'
 		));
 
+		\DB::table('tipo_documentos')->insert(array (
+			'tipo'  => 'bitacora'
+		));
+
 
 		\DB::table('periodos')->insert(array (
 		'nombre_periodo'  => '2013-2015',
 		'inicio'  => '2013-06-02',
 		'fin'  => '2015-06-02',
 		'activo'  => '0'
-
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 		
 		\DB::table('periodos')->insert(array (
@@ -49,7 +54,8 @@ class VariablesTableSeeder extends Seeder {
 		'inicio'  => '2015-06-02',
 		'fin'  => '2017-06-02',
 		'activo'  => '1'
-
+		'created_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s')
 		));
 
 		\DB::table('roles')->insert(array (

@@ -21,6 +21,7 @@ use App\EstadoPeticion;
 use App\Agenda;
 use App\Punto;
 use App\Presente;
+use App\Periodo;
 
 
 class JuntaDirectivaController extends Controller
@@ -462,6 +463,56 @@ class JuntaDirectivaController extends Controller
             ->with('seguimientos', $seguimientos)
             ->with('peticion', $peticion);
     }
+
+    public function historial_bitacoras_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id', '=', '1')->first();
+        $periodo = Periodo::latest()->first();
+        $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
+
+
+        return view('jdagu.historial_bitacoras_jd')
+            ->with('reuniones', $reuniones);
+    }
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function getRomanNumerals($decimalInteger) {

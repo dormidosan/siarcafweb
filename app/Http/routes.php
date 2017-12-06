@@ -225,6 +225,10 @@ Route::post('agendar_plenaria', array('as' => 'agendar_plenaria', 'uses' => 'Jun
 Route::get('lista_asignacion', array('as' => 'lista_asignacion', 'uses' => 'JuntaDirectivaController@lista_asignacion'));
 Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'JuntaDirectivaController@enlazar_comision'));
 
+Route::post('historial_bitacoras_jd', array('as' => 'historial_bitacoras_jd', 'uses' => 'JuntaDirectivaController@historial_bitacoras_jd'));
+
+
+
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
 Route::post('registrar_asistencia', 'JuntaDirectivaController@registrar_asistencia')->name('registrar_asistencia');
