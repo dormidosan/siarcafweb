@@ -38,6 +38,10 @@ Route::post('asistencia_comision', array('as' => 'asistencia_comision', 'uses' =
 Route::post('registrar_asistencia_comision', 'ComisionController@registrar_asistencia_comision')->name('registrar_asistencia_comision');
 Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_comision')->name('finalizar_reunion_comision');
 
+Route::post('historial_bitacoras', 'ComisionController@historial_bitacoras')->name('historial_bitacoras');
+Route::post('historial_dictamenes', 'ComisionController@historial_dictamenes')->name('historial_dictamenes');
+Route::post('convocatoria_comision', 'ComisionController@convocatoria_comision')->name('convocatoria_comision');
+
 
 //rutas q aun no uso
 Route::get('/HistorialBitacoras', function () {
@@ -50,7 +54,7 @@ Route::get('/TrabajoComision', function () {
     return view('Comisiones.TrabajoComision');
 });
 Route::get('/ConvocatoriaComision', function () {
-    return view('Comisiones.Convocatoria');
+    return view('Comisiones.convocatoria');
 });
 Route::get('/AsistenciaComision', function () {
     return view('Comisiones.AsistenciaComision');
@@ -224,6 +228,11 @@ Route::post('asignar_comision_jd', array('as' => 'asignar_comision_jd', 'uses' =
 Route::post('agendar_plenaria', array('as' => 'agendar_plenaria', 'uses' => 'JuntaDirectivaController@agendar_plenaria'));
 Route::get('lista_asignacion', array('as' => 'lista_asignacion', 'uses' => 'JuntaDirectivaController@lista_asignacion'));
 Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'JuntaDirectivaController@enlazar_comision'));
+
+Route::post('historial_bitacoras_jd', array('as' => 'historial_bitacoras_jd', 'uses' => 'JuntaDirectivaController@historial_bitacoras_jd'));
+Route::post('historial_dictamenes_jd', array('as' => 'historial_dictamenes_jd', 'uses' => 'JuntaDirectivaController@historial_dictamenes_jd'));
+
+
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Periodo;
 use App\Asambleista;
 use App\Cargo;
 use App\Clases\Mensaje;
@@ -284,4 +285,42 @@ class ComisionController extends Controller
         return view('Comisiones.listado_reuniones_comision',array("reuniones"=>$reuniones,"comision"=>$comision));
 
     }
+
+    public function historial_bitacoras(Request $request, Redirector $redirect)
+    {
+        $id_comision = $request->comision_id;
+        $comision = Comision::where('id', '=',$id_comision)->first();
+        $periodo = Periodo::latest()->first();
+        $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
+        $disco = "../storage/documentos/";
+
+        return view('Comisiones.historial_bitacoras')
+            ->with('disco', $disco)
+            ->with('comision', $comision)
+            ->with('reuniones', $reuniones);
+    }
+
+    public function historial_dictamenes(Request $request, Redirector $redirect)
+    {
+        $id_comision = $request->comision_id;
+        $comision = Comision::where('id', '=',$id_comision)->first();
+        $periodo = Periodo::latest()->first();
+        $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
+        $disco = "../storage/documentos/";
+
+        return view('Comisiones.historial_dictamenes')
+            ->with('disco', $disco)
+            ->with('comision', $comision)
+            ->with('reuniones', $reuniones);
+    }
+
+    public function convocatoria_comision(Request $request, Redirector $redirect)
+    {
+       
+        return view('Comisiones.convocatoria_comision');
+    }
+
+    
+
+
 }

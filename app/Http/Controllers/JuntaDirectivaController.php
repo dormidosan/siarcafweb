@@ -21,6 +21,7 @@ use App\EstadoPeticion;
 use App\Agenda;
 use App\Punto;
 use App\Presente;
+use App\Periodo;
 
 
 class JuntaDirectivaController extends Controller
@@ -195,9 +196,9 @@ class JuntaDirectivaController extends Controller
             $peticion->asignado_agenda = 1;
             $peticion->save();
         } else {
-            $punto_eliminado = Punto::where('peticion_id','=',$peticion->id)->where('agenda_id','=',$agenda->id)->firstOrFail();
+            $punto_eliminado = Punto::where('peticion_id','=',$peticion->id)->where('agenda_id','=',$agenda->id)->first();
             $punto_eliminado->delete();
-
+            
             $peticion->asignado_agenda = 0;
             $peticion->save();
 
@@ -462,6 +463,69 @@ class JuntaDirectivaController extends Controller
             ->with('seguimientos', $seguimientos)
             ->with('peticion', $peticion);
     }
+
+    public function historial_bitacoras_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id', '=', '1')->first();
+        $periodo = Periodo::latest()->first();
+        $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.historial_bitacoras_jd')
+            ->with('disco', $disco)
+            ->with('reuniones', $reuniones);
+    }
+
+    public function historial_dictamenes_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id', '=', '1')->first();
+        $periodo = Periodo::latest()->first();
+        $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.historial_dictamenes_jd')
+            ->with('disco', $disco)
+            ->with('reuniones', $reuniones);
+    }
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function getRomanNumerals($decimalInteger) {

@@ -5,14 +5,25 @@
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            
+        </ol>
+    </section>
+@endsection
+
 @section("content")
-    <div class="box box-danger">
+    <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Generar Convocatoria</h3>
+            <h3 class="box-title">Convocatoria de Comision</h3>
         </div>
+
         <div class="box-body">
-            <form id="convocatoria" method="post" action="{{ url('mailing') }}">
+            <form id="convocatoria" method="post" action="{{ url('mailing_jd') }}">
              {{ csrf_field() }}
+              {{ Form::hidden('id_comision', '1') }}
                 <div class="row">
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">

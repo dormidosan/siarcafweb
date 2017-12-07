@@ -65,10 +65,12 @@
                         <div class="box-body">
                             <div class="text-center">
                                 <i class="fa fa-folder-open-o fa-4x text-warning"></i>
-                            </div>
+                            </div>                            
                             <h3 class="profile-username text-center">Historial Bitacoras</h3>
-                            <a href="{{ url('HistorialBitacoras') }}" class="btn btn-warning btn-block
-                               btn-sm"><b>Acceder</b></a>
+                            {!! Form::open(['route'=>['historial_bitacoras_jd'],'method'=> 'POST']) !!}                            
+                            <button type="submit" id="finalizar" name="finalizar" class="btn btn-warning btn-block btn-sm"><b>Acceder</b>
+                            </button>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -95,7 +97,10 @@
                                 <i class="fa fa-clone fa-4x text-teal"></i>
                             </div>
                             <h3 class="profile-username text-center">Historial Dictamenes</h3>
-                            <a href="{{url('HistorialDictamenes')}}" class="btn bg-teal btn-block btn-sm"><b>Acceder</b></a>
+                            {!! Form::open(['route'=>['historial_dictamenes_jd'],'method'=> 'POST']) !!}                            
+                            <button type="submit" id="finalizar" name="finalizar" class="btn bg-teal btn-block btn-sm"><b>Acceder</b>
+                            </button>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
