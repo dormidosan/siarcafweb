@@ -97,7 +97,10 @@
                                 <i class="fa fa-clone fa-4x text-teal"></i>
                             </div>
                             <h3 class="profile-username text-center">Historial Dictamenes</h3>
-                            <a href="{{url('HistorialDictamenes')}}" class="btn bg-teal btn-block btn-sm"><b>Acceder</b></a>
+                            {!! Form::open(['route'=>['historial_dictamenes_jd'],'method'=> 'POST']) !!}                            
+                            <button type="submit" id="finalizar" name="finalizar" class="btn bg-teal btn-block btn-sm"><b>Acceder</b>
+                            </button>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,29 @@
     </section>
 @endsection
 
+@section('styles')
+    <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+<style type="text/css">
+        .fileUpload {
+            position: relative;
+            overflow: hidden;
+            margin: 0px;
+        }
+        .fileUpload input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+</style>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header with-border">
@@ -142,12 +165,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                     <td>
-                                        {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST']) !!}
-                                        {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        <button type="submit" class="btn btn-success btn-xs btn-block" id="subir"
-                                                name="subir"><i class="fa fa-upload"></i> Subir Atestado
-                                        </button>
-                                        {!! Form::close() !!}
+                                    <div class="fileUpload btn btn-primary btn-xs btn-block">
+                                        Subir atestado
+                                        <input type="file" class="upload" />
+                                    </div>
                                     </td>
                                 </tr>
                             @empty
