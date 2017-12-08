@@ -44,7 +44,7 @@ class VariablesTableSeeder extends Seeder {
 		'nombre_periodo'  => '2013-2015',
 		'inicio'  => '2013-06-02',
 		'fin'  => '2015-06-02',
-		'activo'  => '0'
+		'activo'  => '0',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -53,7 +53,7 @@ class VariablesTableSeeder extends Seeder {
 		'nombre_periodo'  => '2015-2017',
 		'inicio'  => '2015-06-02',
 		'fin'  => '2017-06-02',
-		'activo'  => '1'
+		'activo'  => '1',
 		'created_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->addSeconds(2)->format('Y-m-d H:i:s')
 		));
