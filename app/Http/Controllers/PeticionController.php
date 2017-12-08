@@ -17,6 +17,7 @@ use App\Peticion;
 use App\Periodo;
 use App\Seguimiento;
 use App\EstadoSeguimiento;
+use App\Http\Requests\PeticionRequest;
 
 class PeticionController extends Controller
 {
@@ -256,15 +257,13 @@ class PeticionController extends Controller
 
     public function monitoreo_peticion()
     {
-        $peticiones = Peticion::all();
-        return view("General.MonitoreoPeticion", array("peticiones" => $peticiones,"peticionBuscada"=>""));
+        return view("General.MonitoreoPeticion", array("peticionBuscada"=>""));
     }
 
     public function consultar_estado_peticion(Request $request){
 
-        $peticiones = Peticion::all();
         $peticionBuscada = Peticion::find($request->get("id_peticion")); //->paginate(10); para obtener todos los resultados  o null
-        return view("General.MonitoreoPeticion", array("peticiones" => $peticiones,"peticionBuscada"=>$peticionBuscada));
+        return view("General.MonitoreoPeticion", array("peticionBuscada"=>$peticionBuscada));
     }
 }
 
