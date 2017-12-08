@@ -80,15 +80,17 @@ class AgendaController extends Controller
 
     public function iniciar_sesion_plenaria(Request $request, Redirector $redirect)
     {
-
-    	
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
     	$puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
-    	$agenda->vigente = '1'; // ya esta vigente asi que no es necesario realmente
-        $agenda->activa = '1';
-    	$agenda->save();
-    	
-    	$actualizado = 0;
+
+    	if ($request->get("retornar") == "retornar"){
+            $agenda->vigente = '1'; // ya esta vigente asi que no es necesario realmente
+            $agenda->activa = '1';
+            $agenda->save();
+            //dd($request->get("retornar"));
+        }
+
+        $actualizado = 0;
 
         return view('Agenda.listado_puntos_plenaria')
             ->with('actualizado', $actualizado)

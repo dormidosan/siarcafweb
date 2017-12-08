@@ -144,7 +144,7 @@
                                                 <input type="hidden" name="id_agenda" id="id_agenda"
                                                        value="{{$agenda->id}}">
                                                 <button type="submit" class="btn btn-success btn-xs btn-block">
-                                                    <i class="fa fa-eye"></i>Discutir
+                                                    <i class="fa fa-eye"></i> Discutir
                                                 </button>
                                                 {!! Form::close() !!}
                                             </td>
