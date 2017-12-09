@@ -43,15 +43,7 @@
                     <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post"
                           action="{{ route("agregar_asambleistas_sesion") }}">
                         {{ csrf_field() }}
-                        <div class="row hidden">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="nombre">Agenda</label>
-                                    <input type="text" id="agenda_id" name="agenda_id" class="form-control"
-                                           value="{{ $agenda->id }}">
-                                </div>
-                            </div>
-                        </div>
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
 
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-md-12">
@@ -60,7 +52,7 @@
                                     <select id="asambleistas" name="asambleistas[]" class="form-control"
                                             multiple="multiple">
                                         @foreach($asambleistas as $asambleista)
-                                            <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
+                                            <option value="{{ $asambleista->id }}">{{ $asambleista->sector->nombre." - ".$asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -86,7 +78,7 @@
                             <ul class="list-group">
                                 @foreach($ultimos_ingresos as $ultimos_ingreso)
                                     <li class="list-group-item"><i
-                                                class="fa fa-user"></i> {{ $ultimos_ingreso->asambleista->user->persona->primer_nombre  . " " . $ultimos_ingreso->asambleista->user->persona->segundo_nombre . " " . $ultimos_ingreso->asambleista->user->persona->primer_apellido . " " . $ultimos_ingreso->asambleista->user->persona->segundo_apellido }}
+                                                class="fa fa-user"></i> {{ $ultimos_ingreso->asambleista->sector->nombre." - ".$ultimos_ingreso->asambleista->user->persona->primer_nombre  . " " . $ultimos_ingreso->asambleista->user->persona->segundo_nombre . " " . $ultimos_ingreso->asambleista->user->persona->primer_apellido . " " . $ultimos_ingreso->asambleista->user->persona->segundo_apellido }}
                                     </li>
                                 @endforeach
 

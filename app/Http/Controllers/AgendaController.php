@@ -62,19 +62,29 @@ class AgendaController extends Controller
     {
 
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
-    	$periodo_activo = Periodo::where("activo",1)->firstOrFail();
+    	$periodo_activo = Periodo::where('activo','=', 1)->first();
 
-        $asambleistas = Asambleista::where('activo','=', 1)
+        $array_asambleistas_sesion = Asistencia::where('agenda_id','=',$agenda->id)->pluck('asambleista_id')->toArray();
+
+        $asambleistas = Asambleista::where('activo','=', 1)            
             ->where("periodo_id",$periodo_activo->id)
+            ->where('facultad_id','=','5')
+            ->whereNotIn('id',$array_asambleistas_sesion)
             ->get();
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
 
         //return view('Agenda.CrearSesionPlenaria')
+
         return view('Agenda.sala_sesion_plenaria')        
         ->with('agenda', $agenda)
         ->with('asambleistas', $asambleistas)
         ->with('ultimos_ingresos', $ultimos_ingresos);
+
+
+
+
+
 
     }
 
@@ -611,39 +621,69 @@ class AgendaController extends Controller
 
 
     public function agregar_asambleistas_sesion(Request $request){
-        $asambleistas = $request->get("asambleistas");
-        $comision = Comision::find($request->get("comision_id"));
+        //dd($request->all());
+        $id_asambleistas = $request->get("asambleistas");
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        //$comision = Comision::find($request->get("comision_id"));
+        //dd($asambleistas);
 
-        foreach ($asambleistas as $asambleista) {
-            $asistencia = new Asistencia();
-            $asistencia->agenda_id = $request->get("agenda_id");
-            $asistencia->asambleista_id = $asambleista;
-            $asistencia->estado_asistencia_id = 3;
-            $asistencia->entrada = Carbon::now();
-            $asistencia->save();
-            Cache::flush();
+        foreach ($id_asambleistas as $id_asambleista) {
+            $ingresado  = Asistencia::where('agenda_id','=',$agenda->id)->where('asambleista_id','=',$id_asambleista)->count();
+                if ($ingresado == 0) {
+                    $asambleista_dato = Asambleista::where('id','=',$id_asambleista)->first();
+                    $asistencia = new Asistencia();
+                    $asistencia->agenda_id = $agenda->id; //************
+                    $asistencia->asambleista_id = $asambleista_dato->id; //************
+                    $asistencia->estado_asistencia_id = 3; // estado normal de asistencia es 3 
+                    $asistencia->entrada = Carbon::now();
+
+                    $propietarios = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asambleistas.facultad_id','=',$asambleista_dato->facultad_id)
+                                            ->where('asambleistas.sector_id','=',$asambleista_dato->sector_id)
+                                            ->count();
+                    //si hay dos personas , las siguientes 2 solo pueden ser suplentes los
+                    //cambios entre suplente y propietario se hacen en otra pantalla
+                    if ($propietarios <= 1) {   
+                        $asistencia->propietario = 1;
+                    } else {
+                        $asistencia->propietario = 0;
+                    }
+
+                    $asistencia->save();
+                    Cache::flush();
+                }
+                else{
+                        //dd("ya estaba");
+                }
         }
+
+        
+                                    //dd($propietarios);
 
         //$request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
         $request->session()->flash("success", "Asambleista(s) agregado(s) con exito ");
 
-        $agenda = Agenda::where('id', '=', $request->agenda_id)->first();
-        $periodo_activo = Periodo::where("activo",1)->firstOrFail();
+        //$agenda = Agenda::where('id', '=', $request->agenda_id)->first();
+        $periodo_activo = Periodo::where('activo','=','1')->first();
 
-        $asistencias = Asistencia::where("agenda_id",$request->get("agenda_id"))->get();
+        $array_asambleistas_sesion = Asistencia::where('agenda_id','=',$agenda->id)->pluck('asambleista_id')->toArray();
+        /*dd($asistencias);
         $array_asambleistas_sesion = array();
         foreach ($asistencias as $asistencia){
             array_push($array_asambleistas_sesion,$asistencia->asambleista_id);
         }
-
-
+        */
+        //dd($array_asambleistas_sesion);
         //remover del select los asambleistas ya ingresas
         $asambleistas = Asambleista::where('activo','=', 1)
-            ->where("periodo_id",$periodo_activo->id)
-            ->whereNotIn("id",$array_asambleistas_sesion)
+            ->where('periodo_id','=',$periodo_activo->id)
+            ->where('facultad_id','=','5')
+            ->whereNotIn('id',$array_asambleistas_sesion)
             ->get();
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
+        //dd($array_asambleistas_sesion);
         return view('Agenda.sala_sesion_plenaria')
             ->with('agenda', $agenda)
             ->with('asambleistas', $asambleistas)
@@ -653,5 +693,6 @@ class AgendaController extends Controller
 
 
 
+        
 
 }
