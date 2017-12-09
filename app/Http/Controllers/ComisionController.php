@@ -143,7 +143,6 @@ class ComisionController extends Controller
             $cargo->cargo = "Asambleista";
             $cargo->activo = 1;
             $cargo->save();
-            Cache::flush();
         }
 
         //$request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
@@ -167,7 +166,6 @@ class ComisionController extends Controller
         $asambleista_comision->activo = 0;
         $asambleista_comision->fin = Carbon::now();
         $asambleista_comision->save();
-        Cache::flush();
 
         $request->session()->flash("success", "Asambleista retirado de la comision con exito");
 

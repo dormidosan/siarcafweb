@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
-
 @endsection
 
 @section('breadcrumb')
@@ -104,7 +103,8 @@
                             <td>{{ $documento->tipo_documento->tipo }}</td>
                             <td>{{ $documento->fecha_ingreso }}</td>
                             <td>
-                                <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$documento->path) }}"
+                                <a class="btn btn-primary btn-xs btn-block"
+                                   href="{{ asset($disco.''.$documento->path) }}"
                                    role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
                             </td>
                             <td>
