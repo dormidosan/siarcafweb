@@ -28,7 +28,6 @@ use App\Asistencia;
 
 class AgendaController extends Controller
 {
-    //
     public function getRomanNumerals($decimalInteger)
     {
         $n = intval($decimalInteger);
@@ -651,7 +650,6 @@ class AgendaController extends Controller
                     }
 
                     $asistencia->save();
-                    Cache::flush();
                 }
                 else{
                         //dd("ya estaba");
