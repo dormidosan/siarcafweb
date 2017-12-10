@@ -9,8 +9,8 @@ class EstadoAsistencia extends Model
     //
     protected $table = 'estado_asistencias';
 
-	public function asistencias()
+	public function tiempos()
     {
-        return $this->hasMany('App\Asistencia');
+        return $this->hasMany('App\Tiempo');
     }
 }

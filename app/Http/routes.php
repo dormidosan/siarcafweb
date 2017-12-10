@@ -148,7 +148,11 @@ Route::post('finalizar_sesion_plenaria', array('as' => 'finalizar_sesion_plenari
 Route::post('pausar_sesion_plenaria', array('as' => 'pausar_sesion_plenaria', 'uses' => 'AgendaController@pausar_sesion_plenaria'));
 Route::post('comision_punto_plenaria', array('as' => 'comision_punto_plenaria', 'uses' => 'AgendaController@comision_punto_plenaria'));
 Route::post('asignar_comision_punto', array('as' => 'asignar_comision_punto', 'uses' => 'AgendaController@asignar_comision_punto'));
+
 Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleistas_sesion')->name('agregar_asambleistas_sesion');
+
+Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
+
 
 
 
@@ -160,10 +164,11 @@ Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleista
 
 
 
-
+/*
 Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
 });
+*/
 /*
 Route::get('/IniciarSesionPlenaria', function () {
     return view('Agenda.IniciarSesionPlenaria');
