@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index');
 /* Routes para Comisiones */
 
 Route::get('comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
-Route::get('/administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
+Route::get('administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
 Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
 Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
 Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
@@ -113,7 +113,7 @@ Route::get('/Reporte_constancias_renta_JD', function () {
     return view('Reportes.Reporte_constancias_renta_JD');
 });
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
-Route::get('/Plantilla_Actas', function () {
+Route::get('plantilla_actas', function () {
     return view('Plantillas.Plantilla_actas');
 });
 Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
@@ -169,7 +169,7 @@ Route::get('/IniciarSesionPlenaria', function () {
     return view('Agenda.IniciarSesionPlenaria');
 });
 */
-Route::get('/HistorialAgendas', function () {
+Route::get('historial_agendas', function () {
     return view('Agenda.HistorialAgendas');
 });
 Route::get("consultar_agendas_vigentes", "AgendaController@consultar_agendas_vigentes")->name("consultar_agenda_vigentes");
@@ -177,27 +177,27 @@ Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->
 
 /* Routes Administracion */
 
-Route::get('/ActualizarPlantilla', function () {
+Route::get('ActualizarPlantilla', function () {
     return view('Administracion.ActualizarPlantilla');
 });
-Route::get('/GestionarUsuarios', function () {
+Route::get('GestionarUsuarios', function () {
     return view('Administracion.GestionarUsuario');
 });
-Route::get('/GestionarPerfiles', function () {
+Route::get('GestionarPerfiles', function () {
     return view('Administracion.GestionarPerfiles');
 });
-Route::get('/registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
-Route::post('/guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
-Route::get('/periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
-Route::post('/guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
-Route::post('/finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
+Route::get('registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
+Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
+Route::get('periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
+Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
+Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
 Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
 Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 
 /* Asambleistas */
-Route::get('/listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
-Route::get('/listado_asambleistas_comision', "AsambleistaController@listado_asambleistas_comision");
-Route::get('/listado_asambleistas_junta', "AsambleistaController@listado_asambleistas_junta");
+Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
+Route::get('listado_asambleistas_comision', "AsambleistaController@listado_asambleistas_comision");
+Route::get('listado_asambleistas_junta', "AsambleistaController@listado_asambleistas_junta");
 
 /* Junta Directiva*/
 

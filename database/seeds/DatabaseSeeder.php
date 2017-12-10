@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosTableSeeder::class);
         $this->call(PeticionTableSeeder::class);
         $this->call(AgendaTableSeeder::class);
+        $this->call(ModulosTableSeeder::class);
+        $this->call(ModuloRolTableSeeder::class);
     }
 }
