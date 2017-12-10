@@ -15,14 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name("inicio");
 
-Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
 
 /* Routes para Comisiones */
 
-Route::get('/comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
+Route::get('comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 Route::get('/administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
 Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
 Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
@@ -250,3 +249,6 @@ Route::post('buscar_documentos', 'DocumentoController@buscar_documentos')->name(
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 Route::resource('photo','PhotoController');
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
