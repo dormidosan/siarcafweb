@@ -13,6 +13,11 @@ class Modulo extends Model
     {
         return $this->belongsToMany('App\Rol','modulo_rol')->withTimestamps();
     }
-	
+
+    public function padre()
+    {
+        return $this->belongsTo('App\Modulo','modulo_padre');
+    }
+
 
 }

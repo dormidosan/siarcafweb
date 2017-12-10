@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
-    @yield("styles")
-    <!-- CSRF Token -->
+@yield("styles")
+<!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SIARCA') }}</title>
 </head>
@@ -33,6 +33,21 @@
 {% endif %}
 {% endfor %}
 --}}
+
+@if(Auth::check())
+    @php($modulos = Auth::user()->rol->modulos)
+    @php($modulos_padre = [])
+    @foreach($modulos as $modulo)
+        @if(is_null($modulo->modulo_padre))
+            @if(in_array($modulo,$modulos_padre) == false)
+                @php(array_push($modulos_padre,$modulo))
+           @endif
+        @endif
+    @endforeach
+    {{-- dd($modulos_padre) --}}
+@endif
+
+
 <body class="fixed sidebar-mini skin-red-light">
 
 <div class="wrapper">
@@ -92,7 +107,8 @@
                             <li class="user-footer">
                                 @if(Auth::guest())
                                     <div class="text-center">
-                                        <a href="{{ url('login') }}" class="btn btn-danger btn-block"><i class="fa fa-sign-in"></i> Iniciar Sesion</a>
+                                        <a href="{{ url('login') }}" class="btn btn-danger btn-block"><i
+                                                    class="fa fa-sign-in"></i> Iniciar Sesion</a>
                                     </div>
                                 @else
                                     <div class="pull-left">
@@ -114,7 +130,7 @@
     <!--MENU-->
     @include("layouts.menu")
 
-    <!-- MAIN CONTENT-->
+<!-- MAIN CONTENT-->
     <div class="content-wrapper">
 
         <section class="content">
