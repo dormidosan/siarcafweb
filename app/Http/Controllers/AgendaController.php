@@ -25,6 +25,7 @@ use App\Comision;
 use App\Seguimiento;
 use App\EstadoSeguimiento;
 use App\Asistencia;
+use App\Facultad;
 
 class AgendaController extends Controller
 {
@@ -72,11 +73,13 @@ class AgendaController extends Controller
             ->get();
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
+        $facultades = Facultad::where('id','!=','0')->get();
 
         //return view('Agenda.CrearSesionPlenaria')
 
         return view('Agenda.sala_sesion_plenaria')        
         ->with('agenda', $agenda)
+        ->with('facultades', $facultades)
         ->with('asambleistas', $asambleistas)
         ->with('ultimos_ingresos', $ultimos_ingresos);
 
@@ -681,14 +684,53 @@ class AgendaController extends Controller
             ->get();
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
+        $facultades = Facultad::where('id','!=','0')->get();
         //dd($array_asambleistas_sesion);
         return view('Agenda.sala_sesion_plenaria')
             ->with('agenda', $agenda)
+            ->with('facultades', $facultades)
             ->with('asambleistas', $asambleistas)
             ->with('ultimos_ingresos', $ultimos_ingresos);
     }
 
+    
+    public function gestionar_asistencia(Request $request,Redirector $redirect)
+    {
+        $facultad = Facultad::where('id','=',$request->id_facultad)->first();
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $periodo = Periodo::where('activo','=','1')->first();
 
+        $asambleistas = Asambleista::where('activo','=', 1)
+            ->where('periodo_id','=',$periodo->id)
+            ->where('facultad_id','=',$facultad->id)
+            ->get();
+
+        $asistentes  =  Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asambleistas.facultad_id','=',$facultad->id)
+            ->select('asistencias.*')
+            ->get();
+
+        //$sector1 = 
+        $propietarios = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asambleistas.facultad_id','=',$asambleista_dato->facultad_id)
+                                            ->where('asambleistas.sector_id','=',$asambleista_dato->sector_id)
+                                            ->count();
+            //dd($asistentes);
+
+        return view('Agenda.gestionar_asistencia')
+            ->with('agenda', $agenda)
+            ->with('facultad', $facultad)
+            ->with('asistentes', $asistentes)
+            ->with('asambleistas', $asambleistas);
+
+
+
+
+
+
+    }
 
 
         

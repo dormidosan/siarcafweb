@@ -256,7 +256,7 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '3',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
+		'estado_asistencia_id'  => "4", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(3)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
 		'propietario'  => '1', 
@@ -267,7 +267,7 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '3',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
+		'estado_asistencia_id'  => "4", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
 		'propietario'  => '0', 
@@ -278,7 +278,7 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '3',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
+		'estado_asistencia_id'  => "3", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(8)->toTimeString(),
 		'propietario'  => '1', 

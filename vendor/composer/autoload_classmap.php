@@ -43,6 +43,7 @@ return array(
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_10_08_130854_create_roles_table.php',
     'CreateSectoresTable' => $baseDir . '/database/migrations/2017_10_08_130910_create_sectores_table.php',
     'CreateSeguimientosTable' => $baseDir . '/database/migrations/2017_10_08_130924_create_seguimientos_table.php',
+    'CreateTiemposTable' => $baseDir . '/database/migrations/2017_12_10_130330_create_tiempos_table.php',
     'CreateTipoDocumentosTable' => $baseDir . '/database/migrations/2017_10_08_130900_create_tipo_documentos_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2017_10_08_130916_create_users_table.php',
     'CreateVersionesTable' => $baseDir . '/database/migrations/2017_10_08_130924_create_versiones_table.php',
