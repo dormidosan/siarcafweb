@@ -98,10 +98,10 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '1',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "3", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'propietario'  => '1', 
+		'propietaria'  => '1', 
+		'dieta'  => '1', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -112,10 +112,10 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '1',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "3", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'propietario'  => '0', 
+		'propietaria'  => '0', 
+		'dieta'  => '0', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
@@ -126,165 +126,90 @@ class AgendaTableSeeder extends Seeder
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '2',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
-		'propietario'  => '1', 
+		'propietaria'  => '1', 
+		'dieta'  => '1', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 		}
 
-
-		for ($k=1; $k < 100; $k=$k+2) { 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '2',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "3", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(6)->toTimeString(),
-		'propietario'  => '0', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
-		}
-
-		for ($k=2; $k < 144; $k=$k+2) { 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '2',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "3", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
-		'propietario'  => '0', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
-		}
-
-
-		for ($k=101; $k < 144; $k=$k+2) { 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '2',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "2", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(3)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'propietario'  => '1', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
-		}
 
 
 //////////////////////////////
 
-		for ($k=1; $k < 144; $k=$k+2) { 
+		for ($k=1; $k < 140; $k=$k+2) { 
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '3',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(1)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(2)->toTimeString(),
-		'propietario'  => '1', 
+		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
+		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
+		'propietaria'  => '1', 
+		'dieta'  => '1', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
+		}
 
+
+		for ($k=2; $k < 140; $k=$k+2) { 
 		\DB::table('asistencias')->insert(array (
 		'agenda_id'  => '3',
 		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "1", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(3)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
-		'propietario'  => '1', 
+		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
+		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
+		'propietaria'  => '0', 
+		'dieta'  => '0', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
-
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "2", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(6)->toTimeString(),
-		'propietario'  => '1', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
-
-
 		}
 
 
 
-		for ($k=2; $k < 144; $k=$k+2) { 
+		for ($k=1; $k < 144; $k++) { 
 		
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "4", 
+		\DB::table('tiempos')->insert(array (
+		'asistencia_id'  =>  $k,
+		'estado_asistencia_id'  => "1", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(1)->toTimeString(),
-		'propietario'  => '0', 
+		'tiempo_propietario'  => '1', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "4", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(1)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(2)->toTimeString(),
-		'propietario'  => '1', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
-
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
+		\DB::table('tiempos')->insert(array (
+		'asistencia_id'  =>  $k,
 		'estado_asistencia_id'  => "4", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(2)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(3)->toTimeString(),
-		'propietario'  => '0', 
+		'tiempo_propietario'  => '0', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "4", 
+		\DB::table('tiempos')->insert(array (
+		'asistencia_id'  =>  $k,
+		'estado_asistencia_id'  => "3", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(3)->toTimeString(),
 		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
-		'propietario'  => '1', 
+		'tiempo_propietario'  => '1', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "4", 
+		\DB::table('tiempos')->insert(array (
+		'asistencia_id'  =>  $k,
+		'estado_asistencia_id'  => "2", 
 		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(4)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'propietario'  => '0', 
+		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(6)->toTimeString(),
+		'tiempo_propietario'  => '0', 
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
-		\DB::table('asistencias')->insert(array (
-		'agenda_id'  => '3',
-		'asambleista_id'  =>  $k,
-		'estado_asistencia_id'  => "3", 
-		'entrada'  => Carbon::create(2017, 11,10, 8, 0)->addHours(5)->toTimeString(),
-		'salida'  	  => Carbon::create(2017, 11,10, 8, 0)->addHours(8)->toTimeString(),
-		'propietario'  => '1', 
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
 
 	
 
