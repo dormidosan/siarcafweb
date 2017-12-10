@@ -17,6 +17,22 @@
     <title>{{ config('app.name', 'SIARCA') }}</title>
 </head>
 
+{{--{% set modulos = app.user.modulosActivos.toArray %}
+{% set modulos_padre = [] %}
+
+{# Se crea un array con todos los modulos que son padres #}
+{% for item in modulos %}
+{% if item.estado == 1 %}
+{% if item.moduloPadre is null %}
+{% if item not in modulos_padre %}
+{% set modulos_padre = modulos_padre|merge([item]) %}
+{% endif %}
+{% elseif item.getModuloPadreToArray not in modulos_padre %}
+{% set modulos_padre = modulos_padre|merge([item.getModuloPadreToArray]) %}
+{% endif %}
+{% endif %}
+{% endfor %}
+--}}
 <body class="fixed sidebar-mini skin-red-light">
 
 <div class="wrapper">
@@ -25,7 +41,7 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="{{ url("home") }}" class="logo">
+        <a href="{{ url("/") }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>AGU</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -57,29 +73,35 @@
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user2-160x160.jpg"
+                                <img src="{{ asset("images/default-user.png") }}"
                                      class="img-circle" alt="User Image">
                                 @if(Auth::guest())
                                     <p>
                                         Usuario Invitado
-                                        <small>ROL</small>
+                                        <!--<small>ROL</small>-->
                                     </p>
                                 @else
                                     <p>
                                         {{ Auth::user()->name }}
-                                        <small>ROL</small>
+                                        <small>{{ ucfirst(Auth::user()->rol->nombre_rol) }}</small>
                                     </p>
                                 @endif
 
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Datos de Usuario</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{{ url("logout") }}" class="btn btn-default btn-flat">Cerrar Sesion</a>
-                                </div>
+                                @if(Auth::guest())
+                                    <div class="text-center">
+                                        <a href="{{ url('login') }}" class="btn btn-danger btn-block"><i class="fa fa-sign-in"></i> Iniciar Sesion</a>
+                                    </div>
+                                @else
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Datos de Usuario</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="{{ url("logout") }}" class="btn btn-default btn-flat">Cerrar Sesion</a>
+                                    </div>
+                                @endif
                             </li>
                         </ul>
                     </li>

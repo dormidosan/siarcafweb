@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('persona_id');
             $table->unsignedInteger('rol_id');
             $table->string('name', 15)->nullable();
-            $table->string('password', 45)->nullable();
+            $table->string('password', 61)->nullable();
             $table->dateTime('fecha_registro')->nullable();
             $table->dateTime('ultimo_acceso')->nullable();
             $table->string('email', 45)->nullable();

@@ -40,6 +40,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Rol');
     }
+
+    public function getModulosActivos(){
+        //retorna todos los modulos que coincidan con la condicion
+        return $this->getModulo()->filter(function($entry){
+            return $entry->getEstado() != 0;
+        });
+    }
+
+    /**
+     * Get permisos
+     * Este metodo retorna las rutas a las que el rol tiene permiso
+     * @return array
+     */
+    public function getPermisos(){
+        $permisos = array();
+        $modulos = $this->getModulosActivos()->toArray();
+        foreach($modulos as $modulo){
+            $permisos[] = $modulo->getUrl();
+        }
+
+        return $permisos;
+    }
 	
 	
 	
