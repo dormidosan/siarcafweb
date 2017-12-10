@@ -25,51 +25,43 @@
                     <li data-target="#myCarousel" data-slide-to="1"></li>
                     <li data-target="#myCarousel" data-slide-to="2"></li>
                     <li data-target="#myCarousel" data-slide-to="3"></li>
-                    <li data-target="#myCarousel" data-slide-to="4"></li>
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
 
                     <div class="item active">
-                        <img src="{{asset("images/1.jpg")}}" alt="Chania">
+                        <img src="{{asset("images/E.jpg")}}" alt="Flower">
                         <div class="carousel-caption">
-                            <h3>Chania</h3>
-                            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+                            <h3>Asamblea General Universitaria</h3>
+                            <p>2017-2019</p>
                         </div>
                     </div>
 
                     <div class="item">
-                        <img src="{{asset("images/2.jpg")}}" alt="Chania">
+                        <img src="{{asset("images/A.jpg")}}" alt="Chania">
                         <div class="carousel-caption">
-                            <h3>Chania</h3>
-                            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+                            <h3>Comision de Cultura</h3>
+                            <p>AGU-UES 2017-2019</p>
                         </div>
                     </div>
 
                     <div class="item">
-                        <img src="{{asset("images/3.jpg")}}" alt="Flower">
+                        <img src="{{asset("images/B.jpg")}}" alt="Chania">
                         <div class="carousel-caption">
-                            <h3>Flowers</h3>
-                            <p>Beautiful flowers in Kolymbari, Crete.</p>
+                            <h3>Comision de Realidad Nacional y Comunicaciones</h3>
+                            <p>AGU-UES 2017-2019</p>
                         </div>
                     </div>
 
                     <div class="item">
-                        <img src="{{asset("images/4.jpeg")}}" alt="Flower">
+                        <img src="{{asset("images/C.jpg")}}" alt="Flower">
                         <div class="carousel-caption">
-                            <h3>Flowers</h3>
-                            <p>Beautiful flowers in Kolymbari, Crete.</p>
+                            <h3>Comision de Evaluacion y Desempeño de Autoridades Electas</h3>
+                            <p>AGU-UES 2017-2019</p>
                         </div>
                     </div>
 
-                    <div class="item">
-                        <img src="{{asset("images/5.jpg")}}" alt="Flower">
-                        <div class="carousel-caption">
-                            <h3>Flowers</h3>
-                            <p>Beautiful flowers in Kolymbari, Crete.</p>
-                        </div>
-                    </div>
 
                 </div>
 

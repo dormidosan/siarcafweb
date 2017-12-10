@@ -238,7 +238,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de permisos de <br/>sesion plenaria temporales',
+            'nombre_modulo'  => 'Listado de permisos de sesion plenaria temporales',
             'url' => 'Reporte_permisos_temporales',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
@@ -248,7 +248,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de permisos de <br/>sesión plenaria permanentes',
+            'nombre_modulo'  => 'Listado de permisos de sesión plenaria permanentes',
             'url' => 'Reporte_permisos_permanentes',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
@@ -258,7 +258,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de asistencia de <br/>asambleístas a sesión plenaria',
+            'nombre_modulo'  => 'Listado de asistencia de asambleístas a sesión plenaria',
             'url' => 'Reporte_asistencias_sesion_plenaria',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
