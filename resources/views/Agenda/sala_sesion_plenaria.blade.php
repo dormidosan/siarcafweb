@@ -160,10 +160,31 @@
                 <div class="panel-heading">Control de Asistencia</div>
                 <div class="panel-body">
                     <div class="row">
+                    <!--
                         <div class="col-lg-3 col-sm-3 col-md-3">
-                            <a class="btn btn-block btn-primary btn-xs" href="{{ url("GestionarAsistencia") }}">Ciencias
+                            <a class="btn btn-block btn-primary btn-xs" href="-{-{- url("GestionarAsistencia") }}">Ciencias
                                 Agónómicas</a>
                         </div>
+                    -->
+                    @php $contador=1 @endphp
+                    @forelse($facultades as $facultad)
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            {!! Form::open(['route'=>['gestionar_asistencia'],'method'=> 'POST','id'=>$facultad->id]) !!}    
+                                <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
+                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">                    
+                                <button type="submit" class="btn btn-primary" >{{$facultad->nombre}}</button>
+                            {!! Form::close() !!}
+                        </div>
+                        @if(($contador % 4) == 0)
+                        </div>
+                        <br>
+                        <div class="row">
+                        @endif 
+                    @php $contador++ @endphp
+                    @empty
+
+                    @endforelse
+                    <!--
                         <div class="col-lg-3 col-sm-3 col-md-3">
                             <button type="button" class="btn btn-primary">Facultad 1</button>
                         </div>
@@ -203,8 +224,8 @@
                         <div class="col-lg-3 col-sm-3 col-md-3">
                             <button type="button" class="btn btn-primary">Facultad 1</button>
                         </div>
+                        -->
                     </div>
-                    <br>
 
                 </div>
             </div>

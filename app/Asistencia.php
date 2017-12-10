@@ -9,6 +9,10 @@ class Asistencia extends Model
     //
 	protected $table = 'asistencias';
 
+    public function tiempos()
+    {
+        return $this->hasMany('App\Tiempo');
+    }
 
 	//LLAVES FORANEAS
 	public function agenda()
@@ -21,9 +25,6 @@ class Asistencia extends Model
         return $this->belongsTo('App\Asambleista');
     }
 
-    public function estado_asistencia()
-    {
-        return $this->belongsTo('App\EstadoAsistencia');
-    }
+    
 
 }
