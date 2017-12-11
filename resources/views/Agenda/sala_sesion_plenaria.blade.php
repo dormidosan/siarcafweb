@@ -298,5 +298,10 @@
             notificacion("Exito", "{{ Session::get('success') }}", "success");
         </script>
     @endif
+    @if(Session::has('warning'))
+        <script>
+            notificacion("Error", "{{ Session::get('warning') }}", "warning");
+        </script>
+    @endif
 
 @endsection
