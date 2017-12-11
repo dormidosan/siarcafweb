@@ -14,8 +14,8 @@ class CreateTiemposTable extends Migration
     {
         Schema::create('tiempos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('estado_asistencia_id');
             $table->unsignedInteger('asistencia_id');
+            $table->unsignedInteger('estado_asistencia_id');
             $table->Time('entrada')->nullable();
             $table->Time('salida')->nullable();
             $table->boolean('tiempo_propietario')->nullable();
