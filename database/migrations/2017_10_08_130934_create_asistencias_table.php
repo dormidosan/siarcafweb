@@ -17,12 +17,15 @@ class CreateAsistenciasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('agenda_id');
             $table->unsignedInteger('asambleista_id');
-            
-
             $table->Time('entrada')->nullable();
+
             $table->Time('salida')->nullable();
+
             $table->boolean('propietaria')->nullable();
+
             $table->boolean('dieta')->nullable();
+
+            
 
             $table->index(["asambleista_id"], 'fk_asistencias_asambleistas1_idx');
 

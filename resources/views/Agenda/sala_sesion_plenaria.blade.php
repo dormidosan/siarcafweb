@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label for="nombre">Asambleista</label>
                                     <select id="asambleistas" name="asambleistas[]" class="form-control"
-                                            multiple="multiple">
+                                            multiple="multiple" required="required">
                                         @foreach($asambleistas as $asambleista)
                                             <option value="{{ $asambleista->id }}">{{ $asambleista->sector->nombre." - ".$asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
                                         @endforeach
