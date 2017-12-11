@@ -771,6 +771,92 @@ class AgendaController extends Controller
 
     }
 
+    public function cambiar_propietaria(Request $request)
+    {
+        $asistencia = Asistencia::where('id','=',$request->id_asistente)->first();
+
+        if ($asistencia->propietaria == 1) {
+            $asistencia->propietaria = 0 ;            
+        } else {
+            $asistencia->propietaria = 1 ;
+        }
+        $asistencia->save();
+
+        //Cambiar el estado del ultimo registro de permanencia
+        $ultimo_tiempo = Tiempo::where('asistencia_id','=',$asistencia->id)->latest()->first();
+        if ($ultimo_tiempo) {
+            $ultimo_tiempo->salida = Carbon::now();
+            $ultimo_tiempo->estado_asistencia_id = '4';
+            $ultimo_tiempo->save();
+        }
+        
+
+
+
+        //crear uno nuevo por que cambia el estado para tomar en cuenta en dietas
+        $tiempo = new Tiempo();
+        $tiempo->asistencia_id = $asistencia->id;
+        $tiempo->estado_asistencia_id = '3';
+        $tiempo->entrada = Carbon::now();
+        //el estado actual del asambleista dentro de la sesion plenaria
+        $tiempo->tiempo_propietario = $asistencia->propietaria;
+        
+        $tiempo->save();
+        
+       //Pantalla antigua
+        $facultad = Facultad::where('id','=',$request->id_facultad)->first();
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        $periodo = Periodo::where('activo','=','1')->first();
+
+        $asambleistas = Asambleista::where('activo','=', 1)
+            ->where('periodo_id','=',$periodo->id)
+            ->where('facultad_id','=',$facultad->id)
+            ->get();
+
+        $asistentes  =  Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asambleistas.facultad_id','=',$facultad->id)
+            ->select('asistencias.*')
+            ->get();
+
+        //$sector1 = 
+            /* */
+        $sector1 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','1')
+                                            ->where('asambleistas.facultad_id','=',$facultad->id)
+                                            ->where('asambleistas.sector_id','=','1')
+                                            ->count();
+        $sector2 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','1')
+                                            ->where('asambleistas.facultad_id','=',$facultad->id)
+                                            ->where('asambleistas.sector_id','=','2')
+                                            ->count();
+        $sector3 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','1')
+                                            ->where('asambleistas.facultad_id','=',$facultad->id)
+                                            ->where('asambleistas.sector_id','=','3')
+                                            ->count();
+        
+                                            
+            
+
+        return view('Agenda.gestionar_asistencia')
+            ->with('sector1', $sector1)
+            ->with('sector2', $sector2)
+            ->with('sector3', $sector3)
+            ->with('agenda', $agenda)
+            ->with('facultad', $facultad)
+            ->with('asistentes', $asistentes)
+            ->with('asambleistas', $asambleistas);
+
+     
+    }
+
+    
+
 
         
 

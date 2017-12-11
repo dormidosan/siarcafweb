@@ -197,21 +197,24 @@ class VariablesTableSeeder extends Seeder {
 
 
 		\DB::table('facultades')->insert(array (
-		'nombre' => 'MULTIDISCIPLINARIA DE OCCIDENTE',
+		//'nombre' => 'MULTIDISCIPLINARIA DE OCCIDENTE',
+		'nombre' => 'FMOcc',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
 
 		\DB::table('facultades')->insert(array (
-		'nombre' => 'MULTIDISCIPLINARIA  PARACENTRAL',
+		//'nombre' => 'MULTIDISCIPLINARIA  PARACENTRAL',
+		'nombre' => 'FMP',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
 
 		\DB::table('facultades')->insert(array (
-		'nombre' => 'MULTIDISCIPLINARIA ORIENTAL',
+		//'nombre' => 'MULTIDISCIPLINARIA ORIENTAL',
+		'nombre' => 'FMO',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
