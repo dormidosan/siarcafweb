@@ -98,7 +98,14 @@ class AgendaController extends Controller
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
     	$puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
 
-        $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
+        // qmt es minimo trascendental , qmn es minimo para sesion normal 
+        if ($agenda->trascendental == 1) {
+            $quorum_minimo = Parametro::where('parametro','=','qmt')->first();
+        } else {
+            $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
+        }
+        
+
         $quorum_actual = Asistencia::where('agenda_id','=',$agenda->id)->where('propietaria','=','1')->count();
 
         //si el quorum actual es menor que el minimo requerido , regresa a la pantalla anterior
