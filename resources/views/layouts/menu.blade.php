@@ -1,3 +1,4 @@
+
 <aside class="main-sidebar">
     <div class="slimScrollDiv">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -47,19 +48,20 @@
                                     <span class="pull-right-container"><i
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
-                                    @foreach($modulos as $mh)
-                                        @if(is_null($mh->modulo_padre) != true)
-                                            @if($mp->id == $mh->padre->id)
-                                                @if($mh->tiene_hijos == false)
+                                @foreach($modulos as $mh)
+                                    @if(is_null($mh->modulo_padre) != true)
+                                        @if($mp->id == $mh->padre->id)
+                                            @if($mh->tiene_hijos == false)
                                                 <ul class="treeview-menu">
                                                     <li><a href="{{ url("$mh->url") }}"><i
                                                                     class="fa fa-dot-circle-o"></i>{{ $mh->nombre_modulo }}
                                                         </a></li>
                                                 </ul>
-                                                @else
+                                            @else
                                                 <ul class="treeview-menu">
                                                     <li class="treeview">
-                                                        <a href="#"><i class="fa fa-dot-circle-o"></i> {{ $mh->nombre_modulo }}
+                                                        <a href="#"><i
+                                                                    class="fa fa-dot-circle-o"></i> {{ $mh->nombre_modulo }}
                                                             <span class="pull-right-container"><i
                                                                         class="fa fa-angle-left pull-right"></i></span>
                                                         </a>
@@ -67,23 +69,23 @@
                                                             @if(is_null($mh2->modulo_padre) != true)
                                                                 @if($mh->id == $mh2->padre->id)
                                                                     <ul class="treeview-menu">
-                                                                        <li><a href="{{url("$mh2->url")}}"><i class="fa fa-dot-circle-o"></i>{{$mh2->nombre_modulo}}</a></li>
+                                                                        <li><a href="{{url("$mh2->url")}}"><i class="fa fa-dot-circle-o"></i>{{$mh2->nombre_modulo}}
+                                                                            </a></li>
                                                                     </ul>
                                                                 @endif
-                                                                @endif
+                                                            @endif
                                                         @endforeach
 
                                                     </li>
                                                 </ul>
-                                                @endif
-                                                {{-- @if($mh->tiene_jijos)--}}
                                             @endif
+                                            {{-- @if($mh->tiene_jijos)--}}
                                         @endif
-                                    @endforeach
+                                    @endif
+                                @endforeach
                             </li>
                         @else
-                            <li><a href="{{ url("$mp->url") }}"><i
-                                            class="{{ $mp->icono }}"></i><span>{{ $mp->nombre_modulo }}</span></a></li>
+                            <li><a href="{{ url("$mp->url") }}"><i class="{{ $mp->icono }}"></i><span>{{ $mp->nombre_modulo }}</span></a></li>
                         @endif
                     @endforeach
                 @endif

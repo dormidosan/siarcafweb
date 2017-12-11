@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        table.dataTable thead > tr > th {
+            padding-right: 0 !important;
+        }
+
+    </style>
 @endsection
 
 @section('breadcrumb')
@@ -88,7 +100,7 @@
                     <th>Nombre Documento</th>
                     <th>Tipo de Documento</th>
                     <th>Fecha Creacion</th>
-                    <th colspan="2">Accion</th>
+                    <th>Accion</th>
                 </tr>
                 </thead>
 
@@ -103,12 +115,10 @@
                             <td>{{ $documento->tipo_documento->tipo }}</td>
                             <td>{{ $documento->fecha_ingreso }}</td>
                             <td>
-                                <a class="btn btn-primary btn-xs btn-block"
+                                <a class="btn btn-primary btn-xs "
                                    href="{{ asset($disco.''.$documento->path) }}"
                                    role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-success btn-xs btn-block"
+                                <a class="btn btn-success btn-xs"
                                    href="descargar_documento/<?= $documento->id; ?>" role="button">
                                     <i class="fa fa-download"></i> Descargar</a>
                             </td>
@@ -132,17 +142,6 @@
 
 @endsection
 
-<style>
-    .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
-
-    table.dataTable thead > tr > th {
-        padding-right: 0 !important;
-    }
-
-</style>
 
 @section("scripts")
     <script type="text/javascript">
@@ -173,7 +172,7 @@
                     }
                 },
                 responsive: true,
-                columnDefs: [{orderable: false, targets: [0, 5]}],
+                columnDefs: [{orderable: false, targets: [0, 4]}],
                 order: [[1, 'asc']]
 
             });
