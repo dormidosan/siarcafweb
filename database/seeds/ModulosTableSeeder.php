@@ -238,7 +238,8 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de permisos de sesion plenaria temporales',
+            //'nombre_modulo'  => 'Listado de permisos de sesion plenaria temporales',
+            'nombre_modulo'  => 'Permisos Temporales',
             'url' => 'Reporte_permisos_temporales',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
@@ -248,7 +249,8 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de permisos de sesión plenaria permanentes',
+            //'nombre_modulo'  => 'Listado de permisos de sesión plenaria permanentes',
+            'nombre_modulo'  => 'Permisos Permanentes',
             'url' => 'Reporte_permisos_permanentes',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
@@ -258,7 +260,8 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Listado de asistencia de asambleístas a sesión plenaria',
+            //'nombre_modulo'  => 'Listado de asistencia de asambleístas a sesión plenaria',
+            'nombre_modulo'  => 'Asistencia a plenarias',
             'url' => 'Reporte_asistencias_sesion_plenaria',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
@@ -268,7 +271,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Bitacora de Correspondencia',
+            'nombre_modulo'  => 'Bitacora Correspondencia',
             'url' => 'Reporte_bitacora_correspondencia',
             'modulo_padre' => '7',
             'icono'  => 'fa fa-dot-circle-o',
