@@ -8,7 +8,7 @@
 @section('content')
     <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Facultad de Ciencias Agronómicas</h3>
+            <h3 class="box-title">{{$facultad->nombre}}</h3>
         </div>
 
         <div class="box-body">
@@ -25,6 +25,7 @@
                             <th>Sector</th>
 
                             <th>Hora de entrada</th>
+                            <th>Rol en plenaria</th>
                             <th>Cambiar a</th>
                             <!--
                             <th>Presente</th>
@@ -41,75 +42,55 @@
                             <td>{{$asambleista->user->persona->primer_nombre." ".$asambleista->user->persona->primer_apellido}}</td>
                             <td>{{$asambleista->propietario}}</td>
                             <td>{{$asambleista->sector->nombre}}</td>
-                            <td>
-                            @php $hora_entrada=0 @endphp
-                            @php $propietaria_plenaria=0 @endphp
-                            <!-- INCIAR - IMPRIMIR LA HORA DE ENTRADA Y SALIDA DE ESTE ASAMBLEISTA EN ESTA SESION -->
+                            @php $presente_plenaria = 0 @endphp
                             @forelse($asistentes as $asistente)
-                                @if($asambleista->id == $asistente->asambleista_id)
-                                    {{$asistente->entrada}} - 
-                                    {{$asistente->salida}} - 
-                                    @if($asistente->propietario == 1)
-                                    Propietario
-                                    @php $propietaria_plenaria=1 @endphp
+                                @if($asistente->asambleista_id == $asambleista->id)
+                                    @php $presente_plenaria = 1 @endphp
+                                    <td>{{$asistente->entrada}}</td>
+                                    @if($asistente->propietaria == 1)
+                                        <td class="success" >Propietario en plenaria</td>
+                                        <td><button type="submit" class="btn btn-primary" >Suplente</button></td>
                                     @else
-                                    Suplente
-                                    @php $propietaria_plenaria=2 @endphp
-                                    @endif
+                                        <td>Suplente en plenaria</td>
+                                        @if($asambleista->sector_id == 1) 
+                                            @if($sector1 < 2)
+                                                <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                            @else
+                                                <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
+                                            @endif
+                                        @endif
 
-                                    <br>
-                                    <!-- TIENE AL MENOS UN REGISTRO DE ASISTENCIA ASI QUE hora_entrada = 1 -->
-                                    @php $hora_entrada=1 @endphp
+                                        @if($asambleista->sector_id == 2) 
+                                            @if($sector2 < 2)
+                                                <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                            @else
+                                                <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
+                                            @endif
+                                        @endif
+
+                                        @if($asambleista->sector_id == 3) 
+                                            @if($sector3 < 2)
+                                                <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                            @else
+                                                <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
+                                            @endif
+                                        @endif
+
+                                    
+                                    @endif
+                                    
                                 @endif
+                                    
 
                             @empty
-                            
-                            <!--
-                            <td>1</td>
-                            <td>1</td>
-                            <td >
-                                <ul class="fa-ul" >
-                                    <li><i class="fa-li fa fa-check-square fa-lg s">-marcar</i></li>
-                                </ul>
-                            </td>
-                            <td>1-->
+
                             @endforelse
-                            <!-- TERMINA - LA HORA DE ENTRADA Y SALIDA DE ESTE ASAMBLEISTA EN ESTA SESION -->
+                        @if($presente_plenaria == 0)
+                            <td class="danger">No presente</td>
+                            <td class="danger">-</td>
+                            <td class="danger">-</td>
+                        @endif
 
-                            <!-- EVALUAR SI AL MENOS EXISTE UN REGISTRO DE ASISTENCIA PARA ESTE ASAMBLEISTA -->                            
-                            @if($hora_entrada == 0)
-                                No presente
-                            @endif
-                            </td>
-                            <!-- SI TIENE HORA DE ENTRADA , HACER ESTO -->   
-                            @if($hora_entrada == 0)
-                                <td></td>
-                            @else
-                                <td>
-                                
-
-
-                                    @if($propietaria_plenaria == 1)
-                                    <button type="submit" class="btn btn-primary" >Suplente</button>
-                                    @endif
-                                    @if($propietaria_plenaria == 2)
-                                        @if($asambleista->sector_id == 1)
-                                        <button type="submit" class="btn btn-primary" >Propietario</button>
-                                        @endif
-
-                                        @if($asambleista->sector_id == 2)
-                                        <button type="submit" class="btn btn-primary" >Propietario</button>
-                                        @endif
-
-                                        @if($asambleista->sector_id == 3)
-                                        <button type="submit" class="btn btn-primary" >Propietario</button>
-                                        @endif
-                                    
-                                    @endif
-                                    
-                                    
-                                </td>
-                            @endif
 
 
                         </tr>
