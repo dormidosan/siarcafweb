@@ -77,12 +77,14 @@ class AgendaController extends Controller
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $facultades = Facultad::where('id','!=','0')->get();
+        $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
         //return view('Agenda.CrearSesionPlenaria')
         //dd($asambleistas);
         return view('Agenda.sala_sesion_plenaria')        
         ->with('agenda', $agenda)
         ->with('facultades', $facultades)
+        ->with('asistentes', $asistentes)
         ->with('asambleistas', $asambleistas)
         ->with('ultimos_ingresos', $ultimos_ingresos);
 
@@ -123,10 +125,12 @@ class AgendaController extends Controller
 
                 $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
                 $facultades = Facultad::where('id','!=','0')->get();
+                $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
                 return view('Agenda.sala_sesion_plenaria')        
                 ->with('agenda', $agenda)
                 ->with('facultades', $facultades)
+                ->with('asistentes', $asistentes)
                 ->with('asambleistas', $asambleistas)
                 ->with('ultimos_ingresos', $ultimos_ingresos);
         }
@@ -739,10 +743,12 @@ class AgendaController extends Controller
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $facultades = Facultad::where('id','!=','0')->get();
+        $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
         //dd($array_asambleistas_sesion);
         return view('Agenda.sala_sesion_plenaria')
             ->with('agenda', $agenda)
             ->with('facultades', $facultades)
+            ->with('asistentes', $asistentes)
             ->with('asambleistas', $asambleistas)
             ->with('ultimos_ingresos', $ultimos_ingresos);
     }
