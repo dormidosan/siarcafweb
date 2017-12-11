@@ -47,39 +47,43 @@
                                     <span class="pull-right-container"><i
                                                 class="fa fa-angle-left pull-right"></i></span>
                                 </a>
+                                <ul class="treeview-menu">
                                     @foreach($modulos as $mh)
                                         @if(is_null($mh->modulo_padre) != true)
                                             @if($mp->id == $mh->padre->id)
                                                 @if($mh->tiene_hijos == false)
-                                                <ul class="treeview-menu">
                                                     <li><a href="{{ url("$mh->url") }}"><i
                                                                     class="fa fa-dot-circle-o"></i>{{ $mh->nombre_modulo }}
                                                         </a></li>
-                                                </ul>
                                                 @else
-                                                <ul class="treeview-menu">
                                                     <li class="treeview">
-                                                        <a href="#"><i class="fa fa-dot-circle-o"></i> {{ $mh->nombre_modulo }}
+                                                        <a href="#"><i
+                                                                    class="fa fa-dot-circle-o"></i> {{ $mh->nombre_modulo }}
                                                             <span class="pull-right-container"><i
                                                                         class="fa fa-angle-left pull-right"></i></span>
                                                         </a>
-                                                        @foreach($modulos as $mh2)
-                                                            @if(is_null($mh2->modulo_padre) != true)
-                                                                @if($mh->id == $mh2->padre->id)
-                                                                    <ul class="treeview-menu">
-                                                                        <li><a href="{{url("$mh2->url")}}"><i class="fa fa-dot-circle-o"></i>{{$mh2->nombre_modulo}}</a></li>
-                                                                    </ul>
+                                                        <ul class="treeview-menu">
+                                                            @foreach($modulos as $mh2)
+                                                                @if(is_null($mh2->modulo_padre) != true)
+                                                                    @if($mh->id == $mh2->padre->id)
+
+                                                                        <li><a href="{{url("$mh2->url")}}"><i
+                                                                                        class="fa fa-dot-circle-o"></i>{{$mh2->nombre_modulo}}
+                                                                            </a></li>
+
+                                                                    @endif
                                                                 @endif
-                                                                @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                        </ul>
 
                                                     </li>
-                                                </ul>
+
                                                 @endif
                                                 {{-- @if($mh->tiene_jijos)--}}
                                             @endif
                                         @endif
                                     @endforeach
+                                </ul>
                             </li>
                         @else
                             <li><a href="{{ url("$mp->url") }}"><i
