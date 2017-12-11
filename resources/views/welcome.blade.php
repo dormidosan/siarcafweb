@@ -4,13 +4,13 @@
     <style>
         #myCarousel.carousel.slide {
             width: 100%;
-            max-height: 415px; !important
+            max-height: 540px; !important
         }
 
         .carousel-inner > .item > img,
         .carousel-inner > .item > a > img {
             width: 100%;
-            max-height: 415px; !important
+            max-height: 540px; !important
         }
     </style>
 @endsection
