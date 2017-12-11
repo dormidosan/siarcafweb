@@ -17,23 +17,6 @@
     <title>{{ config('app.name', 'SIARCA') }}</title>
 </head>
 
-{{--{% set modulos = app.user.modulosActivos.toArray %}
-{% set modulos_padre = [] %}
-
-{# Se crea un array con todos los modulos que son padres #}
-{% for item in modulos %}
-{% if item.estado == 1 %}
-{% if item.moduloPadre is null %}
-{% if item not in modulos_padre %}
-{% set modulos_padre = modulos_padre|merge([item]) %}
-{% endif %}
-{% elseif item.getModuloPadreToArray not in modulos_padre %}
-{% set modulos_padre = modulos_padre|merge([item.getModuloPadreToArray]) %}
-{% endif %}
-{% endif %}
-{% endfor %}
---}}
-
 @if(Auth::check())
     @php($modulos = Auth::user()->rol->modulos)
     @php($modulos_padre = [])
