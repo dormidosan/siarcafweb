@@ -189,7 +189,7 @@ class ModulosTableSeeder extends Seeder
 
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Acuerdos',
-            'url' => 'plantillas_actas',
+            'url' => 'plantilla_actas',
             'modulo_padre' => '6',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,
