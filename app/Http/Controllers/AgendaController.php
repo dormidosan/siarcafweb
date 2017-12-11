@@ -27,6 +27,7 @@ use App\EstadoSeguimiento;
 use App\Asistencia;
 use App\Facultad;
 use App\Tiempo;
+use App\Parametro;
 
 class AgendaController extends Controller
 {
@@ -69,7 +70,7 @@ class AgendaController extends Controller
 
 
         $asambleistas = Asambleista::where('activo','=', 1)            
-            ->where("periodo_id",$periodo_activo->id)
+            ->where('periodo_id','=',$periodo_activo->id)
             //->where('facultad_id','=','5')
             ->whereNotIn('id',$array_asambleistas_sesion)
             ->get();
@@ -96,6 +97,32 @@ class AgendaController extends Controller
     {
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
     	$puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
+
+        $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
+        $quorum_actual = Asistencia::where('agenda_id','=',$agenda->id)->where('propietaria','=','1')->count();
+
+        //si el quorum actual es menor que el minimo requerido , regresa a la pantalla anterior
+        if($quorum_actual < $quorum_minimo->valor ){
+
+                $request->session()->flash("warning", 'No hay quorum minimo. Hay '. $quorum_actual.' propietarios presentes');
+                $periodo_activo = Periodo::where('activo','=', 1)->first();
+
+                $array_asambleistas_sesion = Asistencia::where('agenda_id','=',$agenda->id)->pluck('asambleista_id')->toArray();
+
+                $asambleistas = Asambleista::where('activo','=', 1)            
+                    ->where('periodo_id','=',$periodo_activo->id)
+                    ->whereNotIn('id',$array_asambleistas_sesion)
+                    ->get();
+
+                $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
+                $facultades = Facultad::where('id','!=','0')->get();
+
+                return view('Agenda.sala_sesion_plenaria')        
+                ->with('agenda', $agenda)
+                ->with('facultades', $facultades)
+                ->with('asambleistas', $asambleistas)
+                ->with('ultimos_ingresos', $ultimos_ingresos);
+        }
 
     	if ($request->get("retornar") == "retornar"){
             $agenda->vigente = '1'; // ya esta vigente asi que no es necesario realmente
