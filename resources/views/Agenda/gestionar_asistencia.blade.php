@@ -40,7 +40,13 @@
                         @forelse($asambleistas as $asambleista)
                         <tr>
                             <td>{{$asambleista->user->persona->primer_nombre." ".$asambleista->user->persona->primer_apellido}}</td>
-                            <td>{{$asambleista->propietario}}</td>
+                            <td>
+                                @if($asambleista->propietario == 1)
+                                    Propietario oficial
+                                @else
+                                    Suplente oficial
+                                @endif
+                            </td>
                             <td>{{$asambleista->sector->nombre}}</td>
                             @php $presente_plenaria = 0 @endphp
                             @forelse($asistentes as $asistente)
@@ -49,12 +55,22 @@
                                     <td>{{$asistente->entrada}}</td>
                                     @if($asistente->propietaria == 1)
                                         <td class="success" >Propietario en plenaria</td>
+                                        {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'1']) !!}    
+                                        <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
+                                        <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
+                                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                         <td><button type="submit" class="btn btn-primary" >Suplente</button></td>
+                                        {!! Form::close() !!}
                                     @else
                                         <td>Suplente en plenaria</td>
                                         @if($asambleista->sector_id == 1) 
                                             @if($sector1 < 2)
+                                                {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'2']) !!}    
+                                                <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
+                                                <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
+                                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                                 <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                                {!! Form::close() !!}
                                             @else
                                                 <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
                                             @endif
@@ -62,7 +78,12 @@
 
                                         @if($asambleista->sector_id == 2) 
                                             @if($sector2 < 2)
+                                                {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'3']) !!}    
+                                                <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
+                                                <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
+                                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                                 <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                                {!! Form::close() !!}
                                             @else
                                                 <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
                                             @endif
@@ -70,7 +91,12 @@
 
                                         @if($asambleista->sector_id == 3) 
                                             @if($sector3 < 2)
+                                                {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'4']) !!}    
+                                                <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
+                                                <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
+                                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                                 <td><button type="submit" class="btn btn-primary" >Propietario</button></td>
+                                                {!! Form::close() !!}
                                             @else
                                                 <td><button type="submit" class="btn btn-primary" disabled="disabled">Propietario</button></td>
                                             @endif
