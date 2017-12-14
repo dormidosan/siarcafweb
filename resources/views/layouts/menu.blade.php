@@ -26,6 +26,40 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>Asambleistas</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{url("/listado_asambleistas_facultad")}}"><i class="fa fa-dot-circle-o"></i>Listado
+                                    de
+                                    asambleistas</a>
+                            </li>
+                            <li><a href="{{url("/listado_asambleistas_comision")}}"><i class="fa fa-dot-circle-o"></i>Asambleistas
+                                    por
+                                    comision</a></li>
+                            <li><a href="{{url("/listado_asambleistas_junta")}}"><i class="fa fa-dot-circle-o"></i>
+                                    Asambleistas de JD</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i><span>Agenda</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{url("historial_agendas")}}"><i class="fa fa-dot-circle-o"></i>Historial de
+                                    agendas</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="treeview">
+                        <a href="#">
                             <i class="glyphicon glyphicon-envelope"></i> <span>Peticiones</span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
