@@ -124,10 +124,15 @@
                     <td>
                         {!! Form::select('asambleista_id',$asambleistas_plenaria,null,
                         ['id'=>'asambleista_id','class'=>'form-control','required'=>'required','placeholder' => 'Seleccione asambleista...']) !!}
-                        <input type="text" class="form-control" name="nueva_propuesta" id="nueva_propuesta"
-                               placeholder="Digite nueva propuesta">
+                        
                         <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                         <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+                    </td>
+                    <td>
+                        <textarea type="text" class="form-control" placeholder="Digite nueva propuesta"
+                                      id="nueva_propuesta" name="nueva_propuesta" required="required"></textarea>
+                        <!-- <input type="text" class="form-control" name="nueva_propuesta" id="nueva_propuesta"
+                               placeholder="Digite nueva propuesta"> -->
                     </td>
                     <td>
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Agregar

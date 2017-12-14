@@ -173,6 +173,8 @@ class AgendaController extends Controller
         
         
         $actualizado = 0;
+        $request->session()->flash("warning", 'Existen '.$puntos_activos.' punto(s) sin discutir');
+
         return view('Agenda.listado_puntos_plenaria')
         ->with('actualizado',$actualizado)
         ->with('agenda', $agenda)
@@ -493,7 +495,7 @@ class AgendaController extends Controller
         }
         unset($asambleistas_plenaria[0]);
         $disco = "../storage/documentos/";
-
+        //dd($punto->intervenciones);
         return view('Agenda.discutir_punto_plenaria')
             ->with('disco', $disco)
             ->with('agenda', $agenda)
