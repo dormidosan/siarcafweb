@@ -187,7 +187,7 @@
    <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
-        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+        $pdf->page_text(700,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
     }
 </script>
 </html>

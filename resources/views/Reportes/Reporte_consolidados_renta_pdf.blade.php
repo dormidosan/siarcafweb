@@ -149,7 +149,7 @@
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
 
-                    @php $i=1 @endphp
+                    @php $i=1;$total1=0;$total2=0;$total3=0 @endphp
                      @foreach($resultados as $result)
 
                     <tr>                                     
@@ -169,8 +169,15 @@
                       <td>$ {{$result->asistencia*$monto_dieta->valor-round(($result->asistencia*$monto_dieta->valor)-($result->asistencia*$monto_dieta->valor)/($renta->valor+1),2)}}</td>
                       
                     </tr> 
-                 @php $i=$i+1 @endphp
-                @endforeach   
+                 @php $i=$i+1;
+                      $total1=$total1+$result->asistencia*$monto_dieta->valor;
+                      $total2=$total2+round(($result->asistencia*$monto_dieta->valor)-($result->asistencia*$monto_dieta->valor)/($renta->valor+1),2);
+
+                  @endphp
+                @endforeach 
+                @php
+                $total3=$total1-$total2;
+                @endphp  
                     <tr>                                     
                       <td>
                         
@@ -179,13 +186,13 @@
                       <td>
                         
                       </td>
-                      <td>PASAN...</td>
+                      <td></td>
                     
                      
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
+                      <td>TOTAL </td>
+                      <td>$ {{$total1}} </td>
+                      <td>$ {{$total2}} </td>
+                      <td>$ {{$total3}} </td>
                       
                     </tr>
 
@@ -198,7 +205,7 @@
    <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
-        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+        $pdf->page_text(700,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
     }
 </script>
 </html>
