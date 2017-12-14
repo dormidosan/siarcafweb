@@ -27,6 +27,7 @@
                              <select required="true" class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value=""  >Seleccione una opcion</option>
                                 <option value="A" >Por Asambleista</option>
+                                <option value="E" >Consolidados Estudiantil</option>
                                 <option value="D" >Consolidados Profesional Docente</option>
                                 <option value="ND">Consolidados Profesional no Docente</option>
                             </select>
@@ -95,7 +96,7 @@
         </div        <div class="box-body">
 
 
-                  <table class="table table-hover">
+                  <table class="table table-hover" style="text-transform: uppercase;">
                    
                     <thead><tr>
                       
@@ -111,23 +112,30 @@
 
 @if(!($resultados==NULL))
 
-@php $i=0 @endphp
+
 
 
 @foreach($resultados as $result)
-@if($i==0)
+
                     <tr>                                     
                       <td>
                         @if($tipo=="A")
                         {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
                          @endif
+
+                         @if($tipo=="E")
+                         
+                        CONSOLIDADO DE DIETAS SECTOR ESTUDIANTIL
+                             @endif
+
+
                          @if($tipo=="D")
-                         {{$i=1}}
-                        Consolidado de dietas sectro docente
+                         
+                        CONSOLIDADO DE DIETAS SECTOR docente
                              @endif
                          @if($tipo=="ND")
-                         {{$i=1}}
-                         Consolidado de dietas sectro no docente
+                         
+                         CONSOLIDADO DE DIETAS SECTOR no docente
                            @endif
                       </td>
                       <td>{{$result->mes}} {{$result->anio}} </td>
@@ -138,6 +146,13 @@
 
                       
                         @endif
+                        
+
+                          @if($tipo=="E")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Est_pdf/1.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                     
+                        @endif
+
 
                         @if($tipo=="D")
                         <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >VER</a>
@@ -155,6 +170,11 @@
                         <a href="{{url("/Reporte_planilla_dieta/2.$result->asambleista_id.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                         @endif 
 
+                        @if($tipo=="E")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Est_pdf/2.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                    
+                        @endif
+
                         @if($tipo=="D")
                         <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                     
@@ -168,7 +188,7 @@
                       </td>
                     
                     </tr>
-@endif
+
 @endforeach
 @endif
                   </tbody>

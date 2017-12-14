@@ -20,32 +20,57 @@
             <form id="buscarDocs" method="post" action="{{ url("buscar_consolidados_renta") }}">
                {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
+                   <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label>Tipo</label>
+                            <label>Tipo </label>
                             
-                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                
-                                <option value="D">Sector Profesional Docente</option>
-                                <option value="ND">Sector Profesional No Docente</option>
+                             <select required="true" class="form-control" id="tipoDocumento" name="tipoDocumento">
+                                <option value="" >Seleccione una opcion</option>
+                                <option value="E">Estudiantil</option>
+                                <option value="D">Consolidados Profesional Docente</option>
+                                <option value="ND">Consolidados Profesional no Docente</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label for="fecha">Fecha inicial</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
+                            <label>Nombre</label>
+                            <input required="true" type="text" class="form-control" placeholder="Nombre" id="nombre"
+                                   name="nombre">                   
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
-                            <label for="fecha">Fecha final</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
+                            <label for="fecha1">Mes</label>
+
+                          <!-- <div class="input-group date fecha">
+                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>-->
+
+                            <select required="true" class="form-control" id="fecha1" name="fecha1">
+                                <option value="">Seleccione un mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label for="anio">Año</label>
+                            <input required="true" type="text" class="form-control" placeholder="Año" id="anio"
+                                   name="anio" onkeypress="return justNumbers(event);" maxlength="4" size="4">  
                         </div>
                     </div>
                    
@@ -83,15 +108,27 @@
                     <tbody>
                       @if(!($resultados==NULL))
                       @foreach($resultados as $result)
+                       @if($tipo=='E')
+                    <tr>                                     
+                      <td>
+                        SECTOR ESTUDIANTIL
+                      </td>
+                      <td>{{$mes}} {{$result->anio}}</td>
+                    
+                      <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                    
+                    </tr>
+                    @endif
                       @if($tipo=='ND')
                     <tr>                                     
                       <td>
                         SECTOR PROFESIONAL NO DOCENTE
                       </td>
-                      <td>{{$result->fecha}}</td>
+                      <td>{{$mes}} {{$result->anio}}</td>
                     
-                      <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                     @endif
@@ -100,10 +137,10 @@
                       <td>
                         SECTOR DOCENTE
                       </td>
-                      <td>{{$result->fecha}}</td>
+                      <td>{{$mes}} {{$result->anio}}</td>
                     
-                      <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->id.$result->fecha.$result->periodo_id")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
                     @endif
@@ -151,5 +188,13 @@ $('#fecha').datepicker({
                 format: 'LT',
             });
         });
+         function justNumbers(e)
+        {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if ((keynum == 8) || (keynum == 46))
+        return true;
+         
+        return /\d/.test(String.fromCharCode(keynum));
+        };
     </script>
 @endsection

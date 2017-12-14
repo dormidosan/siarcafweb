@@ -75,6 +75,9 @@ Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name
 
 Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados_renta')->name("buscar_consolidados_renta");
 
+Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_actas");
+
+Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
 
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
@@ -101,6 +104,7 @@ Route::get('/Reporte_planilla_dieta', function () {
     return view('Reportes.Reporte_planilla_dieta', ['resultados' => NULL]);
 });
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
+Route::get('/Reporte_planilla_dieta_prof_Est_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Est_pdf');
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
 Route::get('/Reporte_planilla_dieta_prof_Doc_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Doc_pdf');
 Route::get('/Reporte_consolidados_renta', function () {
@@ -116,10 +120,16 @@ Route::get('/Reporte_constancias_renta_JD', function () {
     return view('Reportes.Reporte_constancias_renta_JD');
 });
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
-Route::get('plantilla_actas', function () {
-    return view('Plantillas.Plantilla_actas');
+
+Route::get('/Plantilla_Actas', function () {
+    return view('Plantillas.Plantilla_actas', ['resultados' => NULL]);
 });
-Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
+
+Route::get('/Plantilla_Actas_JD', function () {
+    return view('Plantillas.Plantilla_actas_JD', ['resultados' => NULL]);
+});
+
+Route::get('/desc_Plantilla_actas/{tipo}', 'PlantillasController@desc_Plantilla_actas');
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales', ['resultados' => NULL]);

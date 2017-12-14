@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style;
 use Illuminate\Support\Facades\DB;
-
-
+use Carbon\Carbon;
+use App\Http\Requests\ActasRequest;
 class PlantillasController extends Controller
 {
     /**
@@ -19,11 +19,79 @@ class PlantillasController extends Controller
      */
 
 
+ public function buscar_actas(ActasRequest $request){
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;   
+        $resultados=DB::table('agendas')
+     
+        ->where('agendas.vigente','=',0)//0 por ser agenda vigente
+        ->where
+([
+  ['agendas.fecha','>=',$this->convertirfecha($fechainicial)],
+  ['agendas.fecha','<=',$this->convertirfecha($fechafinal)]
+])->get();
 
-    public function Plantilla_actas($tipo) 
+       // dd($resultados);
+        return view("Plantillas.Plantilla_actas")
+         ->with('resultados',$resultados);
+      return view("Plantillas.Plantilla_Actas",['resultados'=>NULL]);
+    }
+
+     public function buscar_actas_JD(ActasRequest $request){
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;   
+        $resultados=DB::table('reuniones')
+     
+        ->where('reuniones.vigente','=',0)//0 por ser agenda vigente
+        ->where
+([
+  ['reuniones.inicio','>=',$this->convertirfecha($fechainicial)],
+  ['reuniones.inicio','<=',$this->convertirfecha($fechafinal)]
+])->get();
+
+       // dd($resultados);
+        return view("Plantillas.Plantilla_actas_JD")
+         ->with('resultados',$resultados);
+      return view("Plantillas.Plantilla_Actas_JD",['resultados'=>NULL]);
+    }
+
+
+
+public function buscarFacultad($idFacultad){
+
+$nombrefacultad='NO ASIGNADO';
+$facultades=DB::table('facultades')        
+        ->get();
+
+foreach ($facultades as $facultad) {
+    if($facultad->id==$idFacultad){
+        $nombrefacultad=$facultad->nombre;
+    }
+}
+
+return $nombrefacultad;
+
+}
+
+
+    public function desc_Plantilla_actas($tipo) 
     {
-        $periodo='2015-2017'; //leido de la base
+        
+        $parametros = explode('.', $tipo);
+        $id_agenda=$parametros[0];
+        $id_periodo=$parametros[1];
+        $codigo_agenda=$parametros[2];
+        $fecha_agenda=$parametros[3];
+        $lugar_agenda=$parametros[4];
+        
+        $periodos=DB::table('periodos')
+        ->where('periodos.id','=', $id_periodo)
+        ->first();
+
+        $periodo_nombre=$periodos->nombre_periodo; //leido de la base
       
+
+       
 $PHPWord = new PHPWord();
 
 // Every element you want to append to the word document is placed in a section.
@@ -55,16 +123,17 @@ array('width'=>100, 'height'=>100, 'align'=>'Left','marginTop' => -1,
        'posHorizontalRel' => 'margin',
        'posVerticalRel' => 'line'));*///margen izquierdo
 
+
 $header->addImage('C:\xampp\htdocs\siarcaf\public\images\Logo_UES.jpg', 
-array('width'=>100, 'height'=>100, 'align'=>'Left','marginTop' => -1,
+array('width'=>75, 'height'=>75, 'align'=>'Left','marginTop' => -1,
 'wrappingStyle'=>'square',
        'positioning' => 'absolute',     
        'posVerticalRel' => 'line'));//margen izquierdo
 
 
 $header->addImage('C:\xampp\htdocs\siarcaf\public\images\agu_web.jpg', 
-array('width' => 150,
-'height' => 150,
+array('width' => 120,
+'height' => 120,
 'align'=>'right',
 'wrappingStyle' => 'square',
 'positioning' => 'relative',
@@ -92,21 +161,47 @@ $textrun->addImage('resources/_earth.jpg', $imageStyle);
 $wrappingStyles = array('inline', 'behind', 'infront', 'square', 'tight');
 
 $header->addText('UNIVERSIDAD DE EL SALVADOR','r2Style', 'p2Style');
+
 $header->addText('ASAMBLEA GENERAL UNIVERSITARIA','r2Style', 'p2Style');
 
+$header->addText('ACTA No.##/'.$periodo_nombre.' SESION PLENARIA ORDINARIA','r2Style', 'p2Style');
 
 
 
 
-
+         $Asambleistas=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->where('asistencias.agenda_id','=',$id_agenda)//por el momento solo filtro por el id
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietaria','asambleistas.facultad_id')
+        ->orderBy('asambleistas.facultad_id', 'asc')
+        ->get();
 
 $textrun = $section->addTextRun('arial12');
-$textrun->addText('El Infrascrito Secretario de la Junta Directiva de la Asamblea General 
-Universitaria, de la Universidad de El Salvador (2015-2017) ', //periodo tiene que ser leido de la base
-array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
-$textrun->addText('certifica:');
 
-$textrun1 = $section->addTextRun('arial12');
+$textrun->addText('Realizado en '.$lugar_agenda.' de la Universidad de El Salvador realizado el '.$fecha_agenda.
+    ' reunidos los siguientes Asambleistas:', 
+array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
+
+
+
+$textrun1 = $section->addTextRun('p2Style');
+
+$facultad='';
+
+foreach ($Asambleistas as $Asambleista) {
+     if(!($facultad==$this->buscarFacultad($Asambleista->facultad_id)))
+     {
+$textrun1->addText('<w:br/>'.$this->buscarFacultad($Asambleista->facultad_id).'<w:br/>'.'<w:br/>');
+$facultad=$this->buscarFacultad($Asambleista->facultad_id);
+     }
+$textrun1->addText($Asambleista->primer_nombre.' '.$Asambleista->segundo_nombre.' '.$Asambleista->primer_apellido.' '.$Asambleista->segundo_apellido.'<w:br/>');
+}
+
+
+/*
 $textrun1->addText('Que en Acta de Sesión Ordinaria de Junta Directiva de la Asamblea General Universitaria ');
 $textrun1->addText('NÚMERO 096/JD-AGU/2015-2017 (V.14), ', //leido de la base 
 array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
@@ -117,8 +212,13 @@ $textrun1->addText('en el que consta el ');
 $textrun1->addText('ACUERDO NUMERO CATORCE ', //leido de la base 
 array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
 $textrun1->addText('que literalmente dice: '); 
+*/
 
 $textrun2 = $section->addTextRun('arial12');
+$textrun2->addText('Para tratar la siguiente agenda propuesta por la junta directiva de este Organismo: <w:br/>');
+
+
+/*
 $textrun2->addText('"PUNTO V: ');
 $textrun2->addText('TOMA DE ACUERDOS: ACUERDO NÚMERO CATORCE: ', //leido de la base 
 array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
@@ -126,7 +226,7 @@ $textrun2->addText('La junta Directiva considerando el acuerdo No. 083/JD-AGU/20
 y con base en el Articulo 20 literales b) y k) del Reglamento Interno de Asamblea General Universitaria de la Universidad de el Salvador, 
 por tres votos a favor (unanimidad) ');
 $textrun2->addText('ACUERDA: ', //leido de la base 
-array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));
+array('name'=>'Arial', 'size'=>10, 'bold'=>true,'spaceBefore' => 0, 'spaceAfter' => 0, 'spacing' => 0));*/
 
 
 
@@ -145,27 +245,35 @@ $PHPWord->addNumberingStyle(
 $textrun3 = $section->addTextRun('arial12');
 
 
-$section->addListItem('Dar por recibida la nota presentada el seis de junio de dos mil diecisiete, por la Br. Wendy Carolina Criollo Hernández, 
+/*$section->addListItem('Dar por recibida la nota presentada el seis de junio de dos mil diecisiete, por la Br. Wendy Carolina Criollo Hernández, 
 en la que solicita copia simple de formatos utilizados en el desempeño de sus actividades diarias por el personal
 administrativo de la Asamblea General Universitaria (según lo detalla), lo cual será utilizado en el desarrollo del proyecto denominado:
 Sistema Informático para el Apoyo de Reuniones y Control de Acuerdos de la Asamblea General Universitaria de la Universidad de El Salvador,
 SIARCA_AGU_UES.', 0, null, 'multilevel',array('align'=>'both'));
 
-$section->addListItem('Remitir a la Br. Criollo Hernández, copias simples de los siguientes formatos solicitados.', 0, null, 'multilevel');
+$section->addListItem('Remitir a la Br. Criollo Hernández, copias simples de los siguientes formatos solicitados.', 0, null, 'multilevel');*/
+
+ $puntos=DB::table('puntos')
+        ->where('puntos.agenda_id','=',$id_agenda)
+        ->get();
 
 
+foreach ($puntos as $punto) {
+    $section->addListItem($punto->romano.' '.$punto->descripcion, 0, null, 'multilevel');
 
+    $propuestas=DB::table('propuestas')
+    ->where('propuestas.punto_id','=',$punto->id)
+    ->get();
+    foreach ($propuestas as $propuesta) {
+    $section->addListItem($propuesta->nombre_propuesta, 1, null, 'multilevel');
 
-
-for ($i = 1; $i <= 14; $i++) {
-
-    $section->addListItem('formato de ...', 1, null, 'multilevel');
+    }
     
 }
 
 
 $section->addText('Y para su conocimiento y efectos legales consiguientes, transcribo el presente Acuerdo en la 
-    Ciudad Universitaria, San Salvador, a los dieciséis dias del mes de junio de dos mil diecisiete.');
+    Ciudad Universitaria, San Salvador, '.$fecha_agenda);
 
 
 $section->addText('Lic. César Alfredo Arias Hernández');
@@ -202,9 +310,15 @@ $listItemRun->addText(' underlined', array('underline' => 'dash'));*/
 
 
 
+try {
+      $objWriter =  \PhpOffice\PhpWord\IOFactory::createWriter($PHPWord, 'Word2007'); 
+      $objWriter->save('Actas.docx'); // guarda los archivo en la carpeta public del proyecto
 
-$objWriter =  \PhpOffice\PhpWord\IOFactory::createWriter($PHPWord, 'Word2007'); 
-$objWriter->save('Actas.docx'); // guarda los archivo en la carpeta public del proyecto
+    } catch (Exception $e) {
+
+    }
+
+
 
 return response()->download('C:\xampp\htdocs\siarcaf\public\Actas.docx');
 
@@ -212,6 +326,14 @@ return response()->download('C:\xampp\htdocs\siarcaf\public\Actas.docx');
     }
 
  
+     public function convertirfecha($fecha){
+
+$fecha1conver= explode('/', $fecha);
+$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
+$fechainicial = date('Y-m-d', strtotime($fechatrans));
+
+        return $fechainicial;
+    }
 
     public function index()
     {

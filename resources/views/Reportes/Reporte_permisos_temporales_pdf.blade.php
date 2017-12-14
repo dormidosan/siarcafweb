@@ -42,7 +42,7 @@
 #nt {
   position: fixed;
   font-family: "ARIAL", serif;
-  font-size: 10pt;
+  font-size: 12pt;
   
   top: 30%;
 }
@@ -110,6 +110,9 @@
   top: 88%;
 }
 
+#html {
+  margin-top: 0;
+}
 
 </style>
             
@@ -137,7 +140,7 @@
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>Nombre del solicitante</th>                     
-                    <th>Firma</th>                     
+                                      
                
                     <th>Hora Salida</th>
                     <th>Firma del secretario de Junta Directiva en el que hace constar la hora en que regreso el/la Asambleista</th>
@@ -149,10 +152,10 @@
                       @foreach($resultados as $result)
                           <tr>                                     
                            <td>Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}}  <br/>Delego a: _____________</td>
-                           <td><pre>_________________</pre></td>
                           
-                           <td>{{$result->salida}}</td>
-                           <td>Hora a la que se reincorporo el/la Asambleista: {{$result->entrada}}</td>              
+                          
+                           <td>{{$result->entrada}} </td>
+                           <td>Hora a la que se reincorporo el/la Asambleista: {{$result->salida}}</td>              
                           </tr> 
                        @endforeach                        
                    </tbody>
@@ -161,4 +164,10 @@
  </div>
 
   </body>
+  <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("arial", "bold");
+        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+    }
+</script>
 </html>

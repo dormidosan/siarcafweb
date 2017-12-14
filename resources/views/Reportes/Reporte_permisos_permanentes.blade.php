@@ -73,9 +73,9 @@
                 @foreach($resultados as $result)
                     <tr>                                     
                       <td>
-                        Nombre permiso
+                        REPORTE PERMISOS PERMANENTES
                       </td>
-                      <td>fecha</td>
+                      <td>{{$fechainicial}} al {{$fechafinal}}</td>
                     
                       <td><a href="{{url("/Reporte_permisos_permanentes/1.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
                       <td><a href="{{url("/Reporte_permisos_permanentes/2.$fechainicial.$fechafinal")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
