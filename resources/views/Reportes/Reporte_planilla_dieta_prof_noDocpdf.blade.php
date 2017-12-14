@@ -116,13 +116,19 @@
 
 
 </style>
-                                         
+    <div style="position: absolute;"  align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
+</div>                                  
+ <div  align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+</div>                                                                
+                                                                
                                                
- <div id="p" >
+ <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
     DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}} <br/>
     SECTOR PROFESIONAL NO DOCENTE
-    <hr  /> 
+    
     PERIODO {{$anio}}
   </div>   
 
