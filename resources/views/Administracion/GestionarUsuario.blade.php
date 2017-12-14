@@ -28,32 +28,6 @@
             <h3 class="box-title">Administracion Usuarios</h3>
         </div>
         <div class="box-body">
-            <!--<div class="panel panel-info">
-                <div class="panel-heading">Agregar Usuario</div>
-                <div class="panel-body">
-                    <form class="row" id="agregar_usuario" name="agregar_usuario" method="post" action="">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Ingrese un nombre">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="excel">Subir Excel</label>
-                                <input type="file" class="form-control" id="excel" name="excel" placeholder="Subir archivo" accept=".xls,.xlsx">
-                            </div>
-                        </div>
-                        <div class="row text-center">
-                            <div>
-                                <button type="button" class="btn btn-info">Validar</button>
-                                <button type="button" class="btn btn-success">Guardar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
--->
             <table class="table text-center">
                 <thead>
                 <tr>

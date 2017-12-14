@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Asambleista;
 use App\Clases\Mensaje;
+use App\Comision;
 use App\Facultad;
 use App\Periodo;
 use App\Persona;
@@ -21,6 +22,7 @@ use App\Http\Requests\PeriodoRequest;
 class AdministracionController extends Controller
 {
     //
+
     public function registrar_usuario()
     {
         $facultades = Facultad::all();
@@ -130,27 +132,27 @@ class AdministracionController extends Controller
     public function parametros(Request $request)
     {
         $parametros = Parametro::all();
-        
         return view('Administracion.Parametros')
         ->with('parametros',$parametros);
-       
     }
 
     public function almacenar_parametro(Request $request)
     {
-
-
         //dd($request->all());
         $parametro = Parametro::where('id','=',$request->id_parametro)->firstOrFail();
         $parametro->valor = $request->nuevo_valor;
         $parametro->save();
 
-
         $parametros = Parametro::all();
-        
-        return view('Administracion.Parametros')
-        ->with('parametros',$parametros);
-       
+        $request->session()->flash("success", "Parametro actualizado con exito");
+
+        return redirect()->route("parametros");
+
+    }
+
+    public function administracion_usuarios(){
+        $comisiones = Comision::where("activa",1)->get();
+
     }
 
 
