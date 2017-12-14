@@ -262,7 +262,7 @@ class PeticionController extends Controller
 
     public function consultar_estado_peticion(Request $request){
 
-        $peticionBuscada = Peticion::find($request->get("id_peticion")); //->paginate(10); para obtener todos los resultados  o null
+        $peticionBuscada = Peticion::where("codigo",$request->get("codigo_peticion"))->first();
         return view("General.MonitoreoPeticion", array("peticionBuscada"=>$peticionBuscada));
     }
 }

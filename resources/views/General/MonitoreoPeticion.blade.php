@@ -38,16 +38,10 @@
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group {{ $errors->has('id_peticion') ? 'has-error' : '' }}">
-                            <label for="id_peticion">Codigo de Peticion</label>
-                            {{--<select id="id_peticion" name="id_peticion" class="form-control" required>
-                                <option value="">-- Ingrese el codigo de su Peticion --</option>
-                                @foreach($peticiones as $peticion)
-                                    <option value="{{ $peticion->id }}">{{ $peticion->codigo }}</option>
-                                @endforeach
-                            </select>--}}
-                            <input type="text" id="id_peticion" name="id_peticion" class="form-control" placeholder="Ingrese el codigo de su petición" required>
-                            <span class="text-danger">{{ $errors->first('id_peticion') }}</span>
+                        <div class="form-group {{ $errors->has('codigo_peticion') ? 'has-error' : '' }}">
+                            <label for="codigo_peticion">Codigo de Peticion</label>
+                            <input type="text" id="codigo_peticion" name="codigo_peticion" class="form-control" placeholder="Ingrese el codigo de su petición" required>
+                            <span class="text-danger">{{ $errors->first('codigo_peticion') }}</span>
                         </div>
                     </div>
                 </div>
@@ -116,7 +110,7 @@
                             @else
                                 <tbody>
                                 <tr>
-                                    <td colspan="7">Ingrese un codigo de peticion</td>
+                                    <td colspan="7">No se encuentra resultados</td>
                                 </tr>
                                 </tbody>
                             @endif
@@ -142,7 +136,7 @@
     <script type="text/javascript">
         $(function () {
 
-            $('#id_peticion').select2({
+            $('#codigo_peticion').select2({
                 placeholder: 'Ingrese su codigo de peticion',
                 language: "es",
                 width: '100%'
