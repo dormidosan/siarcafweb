@@ -11,7 +11,7 @@
        </div>
        <div class="box-body">
            <div class="table-responsive">
-                {!!Form::open(['route'=>'mailing','method'=>'POST'])!!}
+                {!!Form::open(['route'=>'mailing_jd','method'=>'POST'])!!}
 					 	<div class="col-md-6 contact-left">
 					 		{!!Form::text('name',null,['placeholder' => 'Nombre'])!!}
 					 		{!!Form::text('email',null,['placeholder' => 'Email'])!!}
