@@ -18,14 +18,28 @@ class DocumentoController extends Controller
 {
     public function busqueda()
     {
-        $tipo_documentos = TipoDocumento::all();
-        $periodos = Periodo::all();
-        return view('General.BusquedaDocumentos', ["tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
+        $nombre_documento = null ;
+        $tipo_documento = null ;
+        $periodo = null;
+        $descripcion = null;
+        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id'); 
+        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
+
+        return view('General.BusquedaDocumentos')        
+        ->with('periodo', $periodo)
+        ->with('periodos', $periodos)
+        ->with('descripcion', $descripcion)
+        ->with('tipo_documento', $tipo_documento)
+        ->with('tipo_documentos', $tipo_documentos)
+        ->with('nombre_documento', $nombre_documento);
+
+
     }
 
     public function buscar_documentos(Request $request)
     {
         //se obtienen los inputs
+        //dd($request->all());
         $nombre_documento = $request->get("nombre_documento");
         $tipo_documento = $request->get("tipo_documento");
         $periodo = $request->get("periodo");
@@ -33,8 +47,8 @@ class DocumentoController extends Controller
 
         //variables generales
         $disco = "../storage/documentos/";
-        $tipo_documentos = TipoDocumento::all();
-        $periodos = Periodo::all();
+        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id'); 
+        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
 
 
         if (empty($periodo)) {
@@ -54,7 +68,16 @@ class DocumentoController extends Controller
                 ->get();
         }
 
-        return view('General.BusquedaDocumentos', ['documentos' => $documentos, "disco" => $disco, "tipo_documentos" => $tipo_documentos, "periodos" => $periodos]);
+        return view('General.BusquedaDocumentos')   
+        ->with('disco', $disco)  
+        ->with('documentos', $documentos)   
+        ->with('periodo', $periodo)
+        ->with('periodos', $periodos)
+        ->with('descripcion', $descripcion)     
+        ->with('tipo_documento', $tipo_documento)
+        ->with('tipo_documentos', $tipo_documentos)
+        ->with('nombre_documento', $nombre_documento);
+
     }
 
 
