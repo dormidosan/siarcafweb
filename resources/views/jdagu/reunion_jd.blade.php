@@ -99,8 +99,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>agendado</th>
-                                <th>Peticion</th>
+                                <!--<th>agendado</th>
+                                <th>Peticion</th> -->
                                 <th>Descripcion</th>
                                 <th>Fecha de creación</th>
                                 <!--<th>Fecha actual</th>-->
@@ -117,8 +117,7 @@
                                     <tr>
                                         @endif
                                         <td>{!! $contador !!} @php $contador++ @endphp</td>
-                                        <td>{!! $peticion->agendado !!}</td>
-                                        <td>{!! $peticion->nombre !!}</td>
+                                        <!-- <td>-{-!-!- -$peticion->agendado -!-!-}-</td> -->
                                         <td>{!! $peticion->descripcion !!}</td>
                                         <td>{!! date("m/d/Y",strtotime($peticion->fecha)) !!}</td>
                                     <!--<td>{!! Carbon\Carbon::now() !!}</td>-->
