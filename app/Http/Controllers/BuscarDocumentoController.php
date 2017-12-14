@@ -42,7 +42,7 @@ class BuscarDocumentoController extends Controller
     public function descargar_documento($id)
     {
         $documento = Documento::find($id);
-        $ruta_documento = "../storage/documentos/" . $documento->path;
+        $ruta_documento = "../storage/documentos/".$documento->path;
         return response()->download($ruta_documento);
     }
 }

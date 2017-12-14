@@ -83,6 +83,7 @@ class DocumentoController extends Controller
 
     public function descargar_documento($id)
     {
+        //dd();
         $documento = Documento::find($id);
         $ruta_documento = "../storage/documentos/" . $documento->path;
         return response()->download($ruta_documento);
