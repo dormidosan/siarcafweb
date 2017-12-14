@@ -42,38 +42,24 @@
                         <div class="form-group ">
                             <label>Nombre Documento</label>
                             <input type="text" class="form-control" placeholder="Ingrese nombre" id="nombre_documento"
-                                   name="nombre_documento">
+                                   name="nombre_documento" value="{!! $nombre_documento !!}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-12 col-md-3">
-                        <div class="form-group {{ $errors->has('tipo_documento') ? 'has-error' : '' }}">
-                            <label>Tipo de Documento</label>
-                            <select id="tipo_documento" name="tipo_documento" class="form-control" required>
-                                <option value="">--Seleccione una opcion--</option>
-                                @foreach($tipo_documentos as $tipo_documento)
-                                    <option value="{{ $tipo_documento->id }}"
-                                            @if (old('tipo_documento') == $tipo_documento->id) selected="selected" @endif>{{ $tipo_documento->tipo}}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger">{{ $errors->first('tipo_documento') }}</span>
-                        </div>
+                        <label>Tipo de Documento</label>
+                            {!! Form::select('tipo_documento',$tipo_documentos,$tipo_documento,['id'=>'tipo_documento','class'=>'form-control','requiered'=>'requiered','placeholder'=>'seleccione tipo documento']) !!}
                     </div>
 
                     <div class="col-lg-3 col-sm-12 col-md-3">
                         <label>Periodo AGU</label>
-                        <select class="form-control" id="periodo" name="periodo">
-                            <option value="">--Seleccione una opcion --</option>
-                            @foreach($periodos as $periodo)
-                                <option value="{{ $periodo->id }}">{{ $periodo->nombre_periodo }}</option>
-                            @endforeach
-                        </select>
+                        {!! Form::select('periodo',$periodos,$periodo,['id'=>'periodo','class'=>'form-control','requiered'=>'requiered','placeholder'=>'seleccione periodo']) !!}
                     </div>
 
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label>Descripcion</label>
                             <textarea type="text" class="form-control" placeholder="Ingrese palabras clave"
-                                      id="descripcion" name="descripcion"></textarea>
+                                      id="descripcion" name="descripcion" >{!! $descripcion !!}</textarea>
                         </div>
                     </div>
                 </div>

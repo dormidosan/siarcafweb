@@ -97,7 +97,7 @@ class EstadosTableSeeder extends Seeder
 		));
 
 		\DB::table('estado_peticiones')->insert(array (
-		'estado'  => 're',
+		'estado'  => 'rs',
 		'nombre_estado'  => 'Resuelto',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')

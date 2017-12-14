@@ -154,7 +154,7 @@ Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleista
 Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
 Route::post('cambiar_propietaria', array('as' => 'cambiar_propietaria', 'uses' => 'AgendaController@cambiar_propietaria'));
 
-
+Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 
 

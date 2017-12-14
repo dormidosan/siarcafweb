@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Routing\Redirector;
 
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Cache;
+
 use Mail;
 use Session;
-use Illuminate\Routing\Redirector;
 use App\User;
 use App\Comision;
 use App\Reunion;
@@ -107,10 +109,11 @@ dd($destinos);
       }
       
     
+      $request->session()->flash("success", 'Correos electronicos enviados');
+      //Session::flash('success','Mensaje enviado correctamente');
+      //dd();
 
-      Session::flash('message','Mensaje enviado correctamente');
-
-        return view('correo.crear_convocatoria');
+        return view('jdagu.convocatoria_jd');
     }
 
 }
