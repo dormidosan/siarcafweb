@@ -34,6 +34,7 @@ class ComisionController extends Controller
         foreach ($resultados as $resultado)
             array_push($asambleistas_ids, $resultado->asambleista->id);
 
+        //se obtienen todos aquellos asambleistas que no esten en la comision actual
         $asambleistas = Asambleista::where("asambleistas.activo", "=", 1)
             ->whereNotIn("asambleistas.id", $asambleistas_ids)
             ->get();
