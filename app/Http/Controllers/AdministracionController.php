@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asambleista;
+use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Facultad;
@@ -133,13 +134,13 @@ class AdministracionController extends Controller
     {
         $parametros = Parametro::all();
         return view('Administracion.Parametros')
-        ->with('parametros',$parametros);
+            ->with('parametros', $parametros);
     }
 
     public function almacenar_parametro(Request $request)
     {
         //dd($request->all());
-        $parametro = Parametro::where('id','=',$request->id_parametro)->firstOrFail();
+        $parametro = Parametro::where('id', '=', $request->id_parametro)->firstOrFail();
         $parametro->valor = $request->nuevo_valor;
         $parametro->save();
 
@@ -150,11 +151,72 @@ class AdministracionController extends Controller
 
     }
 
-    public function administracion_usuarios(){
-        $comisiones = Comision::where("activa",1)->get();
-
+    public function administracion_usuarios()
+    {
+        $comisiones = Comision::where("activa", 1)->get();
     }
 
+    public function cambiar_perfiles()
+    {
+        $perfiles = Rol::all();
+        $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
+        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->get();
+        return view("Administracion.cambiar_perfiles", ["perfiles" => $perfiles, "asambleistas" => $asambleistas]);
+    }
+
+    public function cambiar_coordinador_comision()
+    {
+        $comisiones = Comision::where("activa", 1)->get();
+        return view("Administracion.cambiar_coordinador_comision", ["comisiones" => $comisiones]);
+    }
+
+    public function mostrar_asambleistas_comision_post(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $comision = Comision::find($request->get("idComision"));
+
+            //obtener los integrantes de la comision y que esten activos en el periodo activo
+            $integrantes = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+                ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
+                ->where("cargos.comision_id", $request->get("idComision"))
+                ->where("asambleistas.activo", 1)
+                ->where("periodos.activo", 1)
+                ->where("cargos.activo", 1)
+                ->get();
+
+            $tabla =
+                "<table class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
+                    <thead>
+                        <tr>
+                            <th>Asambleista</th>
+                            <th>Cargo</th>
+                            <th>Coordinador</th>
+                        </th>
+                    </thead>
+                    <tbody>";
+
+            foreach ($integrantes as $integrante){
+                $tabla .= "<tr>
+                                <td>".$integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido."</td>
+                                <td>".$integrante->cargo."</td>";
+                if ($integrante->cargo == "Coordinador"){
+                    $tabla .= "<td><div class='pretty p-icon p-curve'><input type='checkbox' checked disabled /><div class='state p-success'><i class='icon mdi mdi-check'></i><label>Coordinador de Comision</label></div></div></td>";
+                }
+                else{
+                    $tabla .= "<td><div class='pretty p-icon p-curve'><input type='checkbox'/><div class='state p-success'><i class='icon mdi mdi-check'></i><label></label></div></div></td>";
+                }
+
+            }
+
+            $tabla .= "</tbody></table>";
+            $respuesta = new \stdClass();
+            $respuesta->integrantes = $integrantes;
+            $respuesta->comision = $comision->id;
+            $respuesta->tabla = $tabla;
+            return new JsonResponse($respuesta);
+        }
+    }
 
 
 }
