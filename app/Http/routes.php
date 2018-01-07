@@ -79,6 +79,8 @@ Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_a
 
 Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
 
+Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");
+
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
@@ -134,6 +136,11 @@ Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_pe
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales', ['resultados' => NULL]);
 });
+
+Route::get('/Menu_reportes', function () {
+    return view('Reportes.MenuReportes');
+});
+
 Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
 Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');

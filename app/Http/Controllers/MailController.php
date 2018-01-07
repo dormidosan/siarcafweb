@@ -110,7 +110,7 @@ dd($destinos);
 
       Session::flash('message','Mensaje enviado correctamente');
 
-        return view('correo.crear_convocatoria');
+        return view('jdagu.convocatoria_jd');
     }
 
 }

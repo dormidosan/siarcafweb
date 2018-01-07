@@ -32,6 +32,16 @@ class PlantillasController extends Controller
 ])->get();
 
        // dd($resultados);
+
+if($resultados==NULL){
+
+ $request->session()->flash("warning", "No se encontraron registros");
+
+}
+else{
+ $request->session()->flash("success", "Busqueda terminada con exito");
+}
+
         return view("Plantillas.Plantilla_actas")
          ->with('resultados',$resultados);
       return view("Plantillas.Plantilla_Actas",['resultados'=>NULL]);
