@@ -203,6 +203,7 @@ Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
 Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 Route::post('mostrar_asambleistas_comision_post', "AdministracionController@mostrar_asambleistas_comision_post")->name("mostrar_asambleistas_comision_post");
+Route::post('actualizar_coordinador', "AdministracionController@actualizar_coordinador")->name("actualizar_coordinador");
 
 
 /* Asambleistas */

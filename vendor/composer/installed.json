@@ -20,7 +20,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8 || ^5.0"
         },
-        "time": "2016-09-01T10:05:43+00:00",
+        "time": "2016-09-01 10:05:43",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -72,7 +72,7 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2017-10-11T12:05:26+00:00",
+        "time": "2017-10-11 12:05:26",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -137,7 +137,7 @@
         "suggest": {
             "ext-symfony_debug": ""
         },
-        "time": "2016-07-26T08:03:56+00:00",
+        "time": "2016-07-26 08:03:56",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -210,7 +210,7 @@
             "symfony/config": "",
             "symfony/yaml": ""
         },
-        "time": "2016-07-30T07:22:48+00:00",
+        "time": "2016-07-30 07:22:48",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -281,7 +281,7 @@
             "symfony/http-foundation": "For using a Symfony Request object",
             "symfony/yaml": "For using the YAML loader"
         },
-        "time": "2016-06-29T05:40:00+00:00",
+        "time": "2016-06-29 05:40:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -338,7 +338,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2016-07-28T11:13:34+00:00",
+        "time": "2016-07-28 11:13:34",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -389,7 +389,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2017-10-11T12:05:26+00:00",
+        "time": "2017-10-11 12:05:26",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -444,7 +444,7 @@
             "php": ">=5.3.3",
             "symfony/polyfill-util": "~1.0"
         },
-        "time": "2017-10-11T12:05:26+00:00",
+        "time": "2017-10-11 12:05:26",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -505,7 +505,7 @@
         "require-dev": {
             "symfony/expression-language": "~2.8|~3.0"
         },
-        "time": "2016-07-17T13:54:30+00:00",
+        "time": "2016-07-17 13:54:30",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -539,71 +539,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "symfony/event-dispatcher",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/event-dispatcher.git",
-            "reference": "ca20b8f9ef149f40ff656d52965f240d85f7a8e4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/ca20b8f9ef149f40ff656d52965f240d85f7a8e4",
-            "reference": "ca20b8f9ef149f40ff656d52965f240d85f7a8e4",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8"
-        },
-        "conflict": {
-            "symfony/dependency-injection": "<3.3"
-        },
-        "require-dev": {
-            "psr/log": "~1.0",
-            "symfony/config": "~2.8|~3.0|~4.0",
-            "symfony/dependency-injection": "~3.3|~4.0",
-            "symfony/expression-language": "~2.8|~3.0|~4.0",
-            "symfony/stopwatch": "~2.8|~3.0|~4.0"
-        },
-        "suggest": {
-            "symfony/dependency-injection": "",
-            "symfony/http-kernel": ""
-        },
-        "time": "2017-11-09T14:14:31+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\EventDispatcher\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony EventDispatcher Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "psr/log",
         "version": "1.0.2",
         "version_normalized": "1.0.2.0",
@@ -621,7 +556,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-10-10T12:19:37+00:00",
+        "time": "2016-10-10 12:19:37",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -678,7 +613,7 @@
             "symfony/class-loader": "~2.8|~3.0",
             "symfony/http-kernel": "~2.8|~3.0"
         },
-        "time": "2016-07-30T07:22:48+00:00",
+        "time": "2016-07-30 07:22:48",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -762,7 +697,7 @@
             "symfony/finder": "",
             "symfony/var-dumper": ""
         },
-        "time": "2016-07-30T09:10:37+00:00",
+        "time": "2016-07-30 09:10:37",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -813,7 +748,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2016-06-29T05:40:00+00:00",
+        "time": "2016-06-29 05:40:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -875,7 +810,7 @@
             "symfony/event-dispatcher": "",
             "symfony/process": ""
         },
-        "time": "2016-07-30T07:22:48+00:00",
+        "time": "2016-07-30 07:22:48",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -930,7 +865,7 @@
             "mockery/mockery": "~0.9.1",
             "symfony/phpunit-bridge": "~3.2"
         },
-        "time": "2017-05-01T15:54:03+00:00",
+        "time": "2017-05-01 15:54:03",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -986,7 +921,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-09-16T12:04:44+00:00",
+        "time": "2016-09-16 12:04:44",
         "bin": [
             "bin/php-parse"
         ],
@@ -1042,7 +977,7 @@
             "phpunit/phpunit": "3.7.*",
             "squizlabs/php_codesniffer": "1.*"
         },
-        "time": "2014-04-08T15:00:19+00:00",
+        "time": "2014-04-08 15:00:19",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1088,7 +1023,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2015-04-20T18:58:01+00:00",
+        "time": "2015-04-20 18:58:01",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1129,7 +1064,7 @@
         "require-dev": {
             "phpunit/phpunit": "@stable"
         },
-        "time": "2014-10-24T07:27:01+00:00",
+        "time": "2014-10-24 07:27:01",
         "type": "project",
         "installation-source": "dist",
         "autoload": {
@@ -1178,7 +1113,7 @@
             "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
             "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
         },
-        "time": "2016-03-09T05:03:14+00:00",
+        "time": "2016-03-09 05:03:14",
         "bin": [
             "bin/psysh"
         ],
@@ -1241,7 +1176,7 @@
         "suggest": {
             "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
         },
-        "time": "2017-03-13T16:22:52+00:00",
+        "time": "2017-03-13 16:22:52",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1290,7 +1225,7 @@
             "friendsofphp/php-cs-fixer": "~2",
             "phpunit/phpunit": "~4.0 || ~5.0"
         },
-        "time": "2017-01-16T07:55:07+00:00",
+        "time": "2017-01-16 07:55:07",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1343,7 +1278,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0|~5.0"
         },
-        "time": "2017-01-23T04:29:33+00:00",
+        "time": "2017-01-23 04:29:33",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1416,7 +1351,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2017-06-19T01:22:40+00:00",
+        "time": "2017-06-19 01:22:40",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1489,7 +1424,7 @@
             "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
             "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
         },
-        "time": "2017-08-06T17:41:04+00:00",
+        "time": "2017-08-06 17:41:04",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1556,7 +1491,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.0|^5.0"
         },
-        "time": "2016-12-07T09:37:55+00:00",
+        "time": "2016-12-07 09:37:55",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1614,7 +1549,7 @@
         "require-dev": {
             "phpunit/phpunit": "^6.2"
         },
-        "time": "2017-07-22T12:18:28+00:00",
+        "time": "2017-07-22 12:18:28",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1757,7 +1692,7 @@
             "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (2.8.*|3.0.*).",
             "symfony/psr-http-message-bridge": "Required to use psr7 bridging features (0.2.*)."
         },
-        "time": "2016-08-26T11:44:52+00:00",
+        "time": "2016-08-26 11:44:52",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1815,7 +1750,7 @@
         "require-dev": {
             "phpunit/phpunit": "*"
         },
-        "time": "2016-07-19T19:14:21+00:00",
+        "time": "2016-07-19 19:14:21",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1861,7 +1796,7 @@
         "require-dev": {
             "phpunit/phpunit": "~5.0"
         },
-        "time": "2017-05-24T10:07:27+00:00",
+        "time": "2017-05-24 10:07:27",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1900,7 +1835,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8"
         },
-        "time": "2017-09-13T16:14:37+00:00",
+        "time": "2017-09-13 16:14:37",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1948,7 +1883,7 @@
             "phpunit/phpunit": "4.8.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2017-11-26T14:49:08+00:00",
+        "time": "2017-11-26 14:49:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2005,7 +1940,7 @@
             "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x|5.5.x",
             "php": ">=5.5.9"
         },
-        "time": "2017-07-29T19:01:17+00:00",
+        "time": "2017-07-29 19:01:17",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2066,7 +2001,7 @@
             "phpunit/phpunit": "^4.0 || ^5.0",
             "squizlabs/php_codesniffer": "^1.5"
         },
-        "time": "2017-08-15T16:48:10+00:00",
+        "time": "2017-08-15 16:48:10",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2118,7 +2053,7 @@
             "mockery/mockery": "dev-master",
             "phpunit/phpunit": "^6.1"
         },
-        "time": "2017-06-22T19:01:19+00:00",
+        "time": "2017-06-22 19:01:19",
         "type": "library",
         "extra": {
             "laravel": {
@@ -2179,7 +2114,7 @@
             "mockery/mockery": "~0.9",
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2017-05-21T18:02:21+00:00",
+        "time": "2017-05-21 18:02:21",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2226,7 +2161,7 @@
             "ext-curl": "*",
             "php": ">=5.3.0"
         },
-        "time": "2014-05-27T21:10:25+00:00",
+        "time": "2014-05-27 21:10:25",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2271,7 +2206,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2014-06-25T08:31:59+00:00",
+        "time": "2014-06-25 08:31:59",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2323,7 +2258,7 @@
             "phpunit/php-file-iterator": "1.3.3",
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2015-05-11T14:41:42+00:00",
+        "time": "2015-05-11 14:41:42",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2366,7 +2301,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2017-02-28T12:52:32+00:00",
+        "time": "2017-02-28 12:52:32",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2433,7 +2368,7 @@
             "mockery/mockery": "dev-master",
             "phpunit/phpunit": "^6.1"
         },
-        "time": "2017-06-22T19:01:19+00:00",
+        "time": "2017-06-22 19:01:19",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2479,7 +2414,7 @@
             "phpunit/phpunit": "^4.6",
             "sebastian/version": "^1.0.1"
         },
-        "time": "2016-11-23T20:04:58+00:00",
+        "time": "2016-11-23 20:04:58",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2530,7 +2465,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.6"
         },
-        "time": "2017-09-11T18:02:19+00:00",
+        "time": "2017-09-11 18:02:19",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2588,7 +2523,7 @@
             "mockery/mockery": "^0.9.4",
             "phpunit/phpunit": "^5.2||^4.8.24"
         },
-        "time": "2017-07-14T14:27:02+00:00",
+        "time": "2017-07-14 14:27:02",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2640,7 +2575,7 @@
             "mockery/mockery": "^1.0",
             "phpunit/phpunit": "^6.4"
         },
-        "time": "2017-11-27T17:38:31+00:00",
+        "time": "2017-11-27 17:38:31",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2666,177 +2601,6 @@
             }
         ],
         "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock."
-    },
-    {
-        "name": "zendframework/zend-stdlib",
-        "version": "2.4.13",
-        "version_normalized": "2.4.13.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/zend-stdlib.git",
-            "reference": "d8ecb629a72da9f91bd95c5af006384823560b42"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/d8ecb629a72da9f91bd95c5af006384823560b42",
-            "reference": "d8ecb629a72da9f91bd95c5af006384823560b42",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.23"
-        },
-        "require-dev": {
-            "fabpot/php-cs-fixer": "1.7.*",
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "dev-master",
-            "zendframework/zend-eventmanager": "self.version",
-            "zendframework/zend-filter": "self.version",
-            "zendframework/zend-serializer": "self.version",
-            "zendframework/zend-servicemanager": "self.version"
-        },
-        "suggest": {
-            "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
-            "zendframework/zend-filter": "To support naming strategy hydrator usage",
-            "zendframework/zend-serializer": "Zend\\Serializer component",
-            "zendframework/zend-servicemanager": "To support hydrator plugin manager usage"
-        },
-        "time": "2015-07-21T13:55:46+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.4-dev",
-                "dev-develop": "2.5-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Zend\\Stdlib\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "homepage": "https://github.com/zendframework/zend-stdlib",
-        "keywords": [
-            "stdlib",
-            "zf2"
-        ]
-    },
-    {
-        "name": "zendframework/zend-validator",
-        "version": "2.4.13",
-        "version_normalized": "2.4.13.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/zend-validator.git",
-            "reference": "81415511fe729e6de19a61936313cef43c80d337"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/81415511fe729e6de19a61936313cef43c80d337",
-            "reference": "81415511fe729e6de19a61936313cef43c80d337",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.23",
-            "zendframework/zend-stdlib": "~2.4.0"
-        },
-        "require-dev": {
-            "fabpot/php-cs-fixer": "1.7.*",
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "dev-master",
-            "zendframework/zend-config": "~2.4.0",
-            "zendframework/zend-db": "~2.4.0",
-            "zendframework/zend-filter": "~2.4.0",
-            "zendframework/zend-i18n": "~2.4.0",
-            "zendframework/zend-math": "~2.4.0",
-            "zendframework/zend-servicemanager": "~2.4.0",
-            "zendframework/zend-session": "~2.4.0",
-            "zendframework/zend-uri": "~2.4.0"
-        },
-        "suggest": {
-            "zendframework/zend-db": "Zend\\Db component",
-            "zendframework/zend-filter": "Zend\\Filter component, required by the Digits validator",
-            "zendframework/zend-i18n": "Zend\\I18n component to allow translation of validation error messages as well as to use the various Date validators",
-            "zendframework/zend-math": "Zend\\Math component",
-            "zendframework/zend-resources": "Translations of validator messages",
-            "zendframework/zend-servicemanager": "Zend\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
-            "zendframework/zend-session": "Zend\\Session component",
-            "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
-        },
-        "time": "2015-09-08T21:04:17+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.4-dev",
-                "dev-develop": "2.5-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Zend\\Validator\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": "provides a set of commonly needed validators",
-        "homepage": "https://github.com/zendframework/zend-validator",
-        "keywords": [
-            "validator",
-            "zf2"
-        ]
-    },
-    {
-        "name": "zendframework/zend-escaper",
-        "version": "2.4.13",
-        "version_normalized": "2.4.13.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zendframework/zend-escaper.git",
-            "reference": "13f468ff824f3c83018b90aff892a1b3201383a9"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-escaper/zipball/13f468ff824f3c83018b90aff892a1b3201383a9",
-            "reference": "13f468ff824f3c83018b90aff892a1b3201383a9",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.23"
-        },
-        "require-dev": {
-            "fabpot/php-cs-fixer": "1.7.*",
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "dev-master"
-        },
-        "time": "2015-05-07T14:55:31+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.4-dev",
-                "dev-develop": "2.5-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Zend\\Escaper\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "homepage": "https://github.com/zendframework/zend-escaper",
-        "keywords": [
-            "escaper",
-            "zf2"
-        ]
     },
     {
         "name": "phpoffice/common",
@@ -2865,7 +2629,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2017-11-23T14:13:25+00:00",
+        "time": "2017-11-23 14:13:25",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2896,108 +2660,6 @@
         ]
     },
     {
-        "name": "phpoffice/phpword",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/PHPOffice/PHPWord.git",
-            "reference": "7c256b53442ea0c229163216b27f362fa86199ba"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/7c256b53442ea0c229163216b27f362fa86199ba",
-            "reference": "7c256b53442ea0c229163216b27f362fa86199ba",
-            "shasum": ""
-        },
-        "require": {
-            "ext-xml": "*",
-            "php": ">=5.3.3",
-            "phpoffice/common": "0.2.*",
-            "zendframework/zend-escaper": "2.4.*",
-            "zendframework/zend-stdlib": "2.4.*",
-            "zendframework/zend-validator": "2.4.*"
-        },
-        "require-dev": {
-            "dompdf/dompdf": "0.6.*",
-            "mpdf/mpdf": "5.*",
-            "phpdocumentor/phpdocumentor": "2.*",
-            "phploc/phploc": "2.*",
-            "phpmd/phpmd": "2.*",
-            "phpunit/phpunit": "3.7.*",
-            "squizlabs/php_codesniffer": "1.*",
-            "tecnickcom/tcpdf": "6.*"
-        },
-        "suggest": {
-            "dompdf/dompdf": "Allows writing PDF",
-            "ext-gd2": "Allows adding images",
-            "ext-xmlwriter": "Allows writing OOXML and ODF",
-            "ext-xsl": "Allows applying XSL style sheet to headers, to main document part, and to footers of an OOXML template",
-            "ext-zip": "Allows writing OOXML and ODF"
-        },
-        "time": "2017-07-11T00:20:05+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "PhpOffice\\PhpWord\\": "src/PhpWord"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Mark Baker"
-            },
-            {
-                "name": "Franck Lefevre",
-                "homepage": "http://blog.rootslabs.net"
-            },
-            {
-                "name": "Gabriel Bull",
-                "email": "me@gabrielbull.com",
-                "homepage": "http://gabrielbull.com/"
-            },
-            {
-                "name": "Ivan Lanin",
-                "homepage": "http://ivan.lanin.org"
-            },
-            {
-                "name": "Roman Syroeshko",
-                "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
-            }
-        ],
-        "description": "PHPWord - A pure PHP library for reading and writing word processing documents (OOXML, ODF, RTF, HTML, PDF)",
-        "homepage": "http://phpoffice.github.io",
-        "keywords": [
-            "ISO IEC 29500",
-            "OOXML",
-            "Office Open XML",
-            "OpenDocument",
-            "OpenXML",
-            "PhpOffice",
-            "PhpWord",
-            "Rich Text Format",
-            "WordprocessingML",
-            "doc",
-            "docx",
-            "html",
-            "odf",
-            "odt",
-            "office",
-            "pdf",
-            "php",
-            "reader",
-            "rtf",
-            "template",
-            "template processor",
-            "word",
-            "writer"
-        ]
-    },
-    {
         "name": "phpunit/php-token-stream",
         "version": "1.4.12",
         "version_normalized": "1.4.12.0",
@@ -3019,7 +2681,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.2"
         },
-        "time": "2017-12-04T08:55:13+00:00",
+        "time": "2017-12-04 08:55:13",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3049,63 +2711,6 @@
         ]
     },
     {
-        "name": "symfony/yaml",
-        "version": "v3.3.14",
-        "version_normalized": "3.3.14.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "36353762fdca3a0ecdce4640764efc885df979f6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/36353762fdca3a0ecdce4640764efc885df979f6",
-            "reference": "36353762fdca3a0ecdce4640764efc885df979f6",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8"
-        },
-        "require-dev": {
-            "symfony/console": "~2.8|~3.0"
-        },
-        "suggest": {
-            "symfony/console": "For validating YAML files using the lint command"
-        },
-        "time": "2017-12-04T14:51:35+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.3-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "sebastian/version",
         "version": "1.0.6",
         "version_normalized": "1.0.6.0",
@@ -3120,7 +2725,7 @@
             "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
             "shasum": ""
         },
-        "time": "2015-06-21T13:59:46+00:00",
+        "time": "2015-06-21 13:59:46",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3166,7 +2771,7 @@
         "suggest": {
             "ext-uopz": "*"
         },
-        "time": "2015-10-12T03:26:01+00:00",
+        "time": "2015-10-12 03:26:01",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3216,7 +2821,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-10-03T07:41:43+00:00",
+        "time": "2016-10-03 07:41:43",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3273,7 +2878,7 @@
             "ext-mbstring": "*",
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-06-17T09:04:28+00:00",
+        "time": "2016-06-17 09:04:28",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3340,7 +2945,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8 || ^5.0"
         },
-        "time": "2016-08-18T05:49:44+00:00",
+        "time": "2016-08-18 05:49:44",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3392,7 +2997,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
         },
-        "time": "2017-05-22T07:24:03+00:00",
+        "time": "2017-05-22 07:24:03",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3448,7 +3053,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2017-01-29T09:50:25+00:00",
+        "time": "2017-01-29 09:50:25",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3509,7 +3114,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-06-21T13:50:34+00:00",
+        "time": "2015-06-21 13:50:34",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3559,7 +3164,7 @@
             "phpunit/phpunit": "^6.2.3",
             "squizlabs/php_codesniffer": "^3.0.2"
         },
-        "time": "2017-07-22T11:58:36+00:00",
+        "time": "2017-07-22 11:58:36",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3617,7 +3222,7 @@
         "suggest": {
             "ext-soap": "*"
         },
-        "time": "2015-10-02T06:51:40+00:00",
+        "time": "2015-10-02 06:51:40",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3669,7 +3274,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
         },
-        "time": "2017-02-26T11:10:40+00:00",
+        "time": "2017-02-26 11:10:40",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3717,7 +3322,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2017-11-27T13:52:08+00:00",
+        "time": "2017-11-27 13:52:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3780,7 +3385,7 @@
             "ext-xdebug": ">=2.2.1",
             "ext-xmlwriter": "*"
         },
-        "time": "2015-10-06T15:47:00+00:00",
+        "time": "2015-10-06 15:47:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3838,7 +3443,7 @@
             "phpspec/phpspec": "^2.5|^3.2",
             "phpunit/phpunit": "^4.8.35 || ^5.7"
         },
-        "time": "2017-11-24T13:59:53+00:00",
+        "time": "2017-11-24 13:59:53",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3916,7 +3521,7 @@
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2017-06-21T08:07:12+00:00",
+        "time": "2017-06-21 08:07:12",
         "bin": [
             "phpunit"
         ],
@@ -3966,7 +3571,7 @@
             "reference": "524f98f2b6906baf2556c89f5646773c1ab0e310",
             "shasum": ""
         },
-        "time": "2016-10-13T22:50:53+00:00",
+        "time": "2016-10-13 22:50:53",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -4001,7 +3606,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2016-06-29T05:40:00+00:00",
+        "time": "2016-06-29 05:40:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4063,7 +3668,7 @@
         "suggest": {
             "symfony/css-selector": ""
         },
-        "time": "2016-07-30T07:22:48+00:00",
+        "time": "2016-07-30 07:22:48",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4118,7 +3723,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8|^5.0"
         },
-        "time": "2017-12-10T11:40:39+00:00",
+        "time": "2017-12-10 11:40:39",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4150,6 +3755,331 @@
             "autoload",
             "class",
             "preload"
+        ]
+    },
+    {
+        "name": "symfony/event-dispatcher",
+        "version": "v3.4.3",
+        "version_normalized": "3.4.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/event-dispatcher.git",
+            "reference": "26b87b6bca8f8f797331a30b76fdae5342dc26ca"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/26b87b6bca8f8f797331a30b76fdae5342dc26ca",
+            "reference": "26b87b6bca8f8f797331a30b76fdae5342dc26ca",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "conflict": {
+            "symfony/dependency-injection": "<3.3"
+        },
+        "require-dev": {
+            "psr/log": "~1.0",
+            "symfony/config": "~2.8|~3.0|~4.0",
+            "symfony/dependency-injection": "~3.3|~4.0",
+            "symfony/expression-language": "~2.8|~3.0|~4.0",
+            "symfony/stopwatch": "~2.8|~3.0|~4.0"
+        },
+        "suggest": {
+            "symfony/dependency-injection": "",
+            "symfony/http-kernel": ""
+        },
+        "time": "2018-01-03 07:37:34",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\EventDispatcher\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony EventDispatcher Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "zendframework/zend-escaper",
+        "version": "2.5.2",
+        "version_normalized": "2.5.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/zend-escaper.git",
+            "reference": "2dcd14b61a72d8b8e27d579c6344e12c26141d4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/zend-escaper/zipball/2dcd14b61a72d8b8e27d579c6344e12c26141d4e",
+            "reference": "2dcd14b61a72d8b8e27d579c6344e12c26141d4e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "fabpot/php-cs-fixer": "1.7.*",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2016-06-30 19:48:38",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.5-dev",
+                "dev-develop": "2.6-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Zend\\Escaper\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "homepage": "https://github.com/zendframework/zend-escaper",
+        "keywords": [
+            "escaper",
+            "zf2"
+        ]
+    },
+    {
+        "name": "zendframework/zend-stdlib",
+        "version": "3.1.0",
+        "version_normalized": "3.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/zend-stdlib.git",
+            "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/debedcfc373a293f9250cc9aa03cf121428c8e78",
+            "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.6 || ^7.0"
+        },
+        "require-dev": {
+            "athletic/athletic": "~0.1",
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "^2.6.2"
+        },
+        "time": "2016-09-13 14:38:50",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1-dev",
+                "dev-develop": "3.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Zend\\Stdlib\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "homepage": "https://github.com/zendframework/zend-stdlib",
+        "keywords": [
+            "stdlib",
+            "zf2"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v3.3.15",
+        "version_normalized": "3.3.15.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/7c80d81b5805589be151b85b0df785f0dc3269cf",
+            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "require-dev": {
+            "symfony/console": "~2.8|~3.0"
+        },
+        "suggest": {
+            "symfony/console": "For validating YAML files using the lint command"
+        },
+        "time": "2018-01-03 07:37:11",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "phpoffice/phpword",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPOffice/PHPWord.git",
+            "reference": "bdca366d9109d91a8deeb46558b4ed0ef347bc04"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/bdca366d9109d91a8deeb46558b4ed0ef347bc04",
+            "reference": "bdca366d9109d91a8deeb46558b4ed0ef347bc04",
+            "shasum": ""
+        },
+        "require": {
+            "ext-xml": "*",
+            "php": "^5.3.3 || ^7.0",
+            "phpoffice/common": "^0.2",
+            "zendframework/zend-escaper": "^2.2",
+            "zendframework/zend-stdlib": "^2.2 || ^3.0"
+        },
+        "require-dev": {
+            "dompdf/dompdf": "0.8.*",
+            "friendsofphp/php-cs-fixer": "^2.0",
+            "mpdf/mpdf": "5.* || 6.* || 7.*",
+            "phpdocumentor/phpdocumentor": "2.*",
+            "phploc/phploc": "2.* || 3.* || 4.*",
+            "phpmd/phpmd": "2.*",
+            "phpunit/phpunit": "^4.8.36 || ^5.0",
+            "squizlabs/php_codesniffer": "^2.7",
+            "tecnickcom/tcpdf": "6.*"
+        },
+        "suggest": {
+            "dompdf/dompdf": "Allows writing PDF",
+            "ext-gd2": "Allows adding images",
+            "ext-xmlwriter": "Allows writing OOXML and ODF",
+            "ext-xsl": "Allows applying XSL style sheet to headers, to main document part, and to footers of an OOXML template",
+            "ext-zip": "Allows writing OOXML and ODF"
+        },
+        "time": "2018-01-03 13:15:59",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.15-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PhpOffice\\PhpWord\\": "src/PhpWord"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Mark Baker"
+            },
+            {
+                "name": "Gabriel Bull",
+                "email": "me@gabrielbull.com",
+                "homepage": "http://gabrielbull.com/"
+            },
+            {
+                "name": "Ivan Lanin",
+                "homepage": "http://ivan.lanin.org"
+            },
+            {
+                "name": "Roman Syroeshko",
+                "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
+            },
+            {
+                "name": "Franck Lefevre",
+                "homepage": "https://rootslabs.net/blog/"
+            },
+            {
+                "name": "Antoine de Troostembergh"
+            }
+        ],
+        "description": "PHPWord - A pure PHP library for reading and writing word processing documents (OOXML, ODF, RTF, HTML, PDF)",
+        "homepage": "http://phpoffice.github.io",
+        "keywords": [
+            "ISO IEC 29500",
+            "OOXML",
+            "Office Open XML",
+            "OpenDocument",
+            "OpenXML",
+            "PhpOffice",
+            "PhpWord",
+            "Rich Text Format",
+            "WordprocessingML",
+            "doc",
+            "docx",
+            "html",
+            "odf",
+            "odt",
+            "office",
+            "pdf",
+            "php",
+            "reader",
+            "rtf",
+            "template",
+            "template processor",
+            "word",
+            "writer"
         ]
     }
 ]
