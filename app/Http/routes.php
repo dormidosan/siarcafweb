@@ -196,7 +196,7 @@ Route::get('registrar_usuario', "AdministracionController@registrar_usuario")->n
 Route::get('periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
 Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
 Route::get('cambiar_perfiles', "AdministracionController@cambiar_perfiles")->name("cambiar_perfiles");
-Route::get('cambiar_coordinador_comision', "AdministracionController@cambiar_coordinador_comision")->name("cambiar_coordinador_comision");
+Route::get('cambiar_cargos_comision', "AdministracionController@cambiar_cargos_comision")->name("cambiar_cargos_comision");
 Route::get('cambiar_cargos_jd', "AdministracionController@cambiar_cargos_jd")->name("cambiar_cargos_jd");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
@@ -204,6 +204,7 @@ Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->
 Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
 Route::post('mostrar_asambleistas_comision_post', "AdministracionController@mostrar_asambleistas_comision_post")->name("mostrar_asambleistas_comision_post");
 Route::post('actualizar_coordinador', "AdministracionController@actualizar_coordinador")->name("actualizar_coordinador");
+Route::post('actualizar_secretario', "AdministracionController@actualizar_secretario")->name("actualizar_secretario");
 
 
 /* Asambleistas */

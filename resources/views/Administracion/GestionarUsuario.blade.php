@@ -119,8 +119,8 @@
                                 <div class="text-center">
                                     <i class="fa fa-user fa-4x text-success"></i>
                                 </div>
-                                <h3 class="profile-username text-center">Coordinador de Comision</h3>
-                                <a class="btn btn-success btn-block btn-sm" href="{{route("cambiar_coordinador_comision")}}"><b>Acceder</b></a>
+                                <h3 class="profile-username text-center">Cargos de Comision</h3>
+                                <a class="btn btn-success btn-block btn-sm" href="{{route("cambiar_cargos_comision")}}"><b>Acceder</b></a>
                             </div>
                         </div>
                     </div>
