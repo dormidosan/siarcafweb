@@ -109,5 +109,24 @@
             });
         }
 
+        function actualizar_secretario(idAsambleista) {
+            var idComision = $("#idComision").val();
+            $.ajax({
+                //se envia un token, como medida de seguridad ante posibles ataques
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route('actualizar_secretario') }}",
+                data: {
+                    "idComision": idComision,
+                    "idAsambleista":idAsambleista
+                }
+            }).done(function (response) {
+                notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                $("#tabla").html(response.tabla);
+            });
+        }
+
     </script>
 @endsection
