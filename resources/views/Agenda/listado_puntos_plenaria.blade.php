@@ -131,7 +131,8 @@
                                             <input type="hidden" name="restar" id="restar" value="1">
                                             <button type="submit" class="btn btn-success">Subir</button>
                                             {!! Form::close() !!}
-
+                                        </td>
+                                        <td>
                                             {!! Form::open(['route'=>['nuevo_orden_plenaria'],'method'=> 'POST','id'=>$punto->id.'1']) !!}
                                             <input type="hidden" name="id_agenda" id="id_agenda"
                                                    value="{{$agenda->id}}">

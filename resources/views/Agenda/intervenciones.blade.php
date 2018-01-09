@@ -30,6 +30,7 @@
                         </td>
                         <td>
                             {{ $intervencion->descripcion }}
+                            <button type="button" class="btn btn-primary" onclick="mostrarIntervencion()">Mostrar detalle</button>
                         </td>
 
                     </tr>

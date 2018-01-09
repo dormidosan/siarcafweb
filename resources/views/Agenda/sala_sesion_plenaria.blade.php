@@ -136,21 +136,30 @@
                 </div>
 
                 <div class="table-responsive">
+
+
                     <table class="table table-bordered text-center table-stripped">
                         <thead>
-                        <tr style="font-weight: bold">
-                            <th>Propietarios</th>
-                            <th>Calidad de Propietarios</th>
-                            <th>Suplente</th>
-                            <th>Total de Asistentes</th>
+                        <tr >
+                            <th  colspan="2">Propietarios electos</th>
+                            <th colspan="2">Suplentes electos</th>
+                            <th >Total</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>20</td>
-                            <td>5</td>
-                            <td>10</td>
-                            <td>36</td>
+                            <td>En calidad de propietario</td>
+                            <td>En calidad de suplente</td>
+                            <td>En calidad de propietario</td>
+                            <td>En calidad de suplente</td>
+                            <td>Total de Asistentes</td>
+                        </tr>
+                        <tr>
+                            <td >{{$conteo["pro"]}}</td>
+                            <td >{{$conteo["csup"]}}</td>
+                            <td >{{$conteo["cpro"]}}</td>
+                            <td >{{$conteo["sup"]}}</td>
+                            <td>{{$conteo["total"]}}</td>
                         </tr>
                         </tbody>
                     </table>

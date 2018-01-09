@@ -91,7 +91,7 @@ class PersonasTableSeeder extends Seeder
 
     	if ($j == 2) {
     	\DB::table('users')->insert(array (
-		'rol_id'  => '3 ',
+		'rol_id'  => '1 ',
 		'persona_id'  => $j,
 		'name'  => 'name_user'.$j,
 		'password'  => bcrypt('123456'),

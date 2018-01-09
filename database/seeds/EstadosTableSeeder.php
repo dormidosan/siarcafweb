@@ -162,6 +162,22 @@ class EstadosTableSeeder extends Seeder
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
 
+		\DB::table('parametros')->insert(array (
+		'parametro'  => 'vmn',
+		'nombre_parametro'  => 'votacion_minima_ordinaria',
+		'valor'  => '27',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
+		\DB::table('parametros')->insert(array (
+		'parametro'  => 'vmt',
+		'nombre_parametro'  => 'votacion_minima_trascendental',
+		'valor'  => '37',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
+
 
 
 
