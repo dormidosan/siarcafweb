@@ -82,7 +82,7 @@
                                        value="{{$parametro->valor}}">
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-pencil"></i> Actualizar</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-xs"><i class="fa fa-pencil"></i> Actualizar</button>
                             </td>
                         </tr>
                         {!! Form::close() !!}

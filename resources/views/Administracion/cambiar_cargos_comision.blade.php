@@ -4,6 +4,23 @@
     <link rel="stylesheet" href="{{ asset("libs/pretty-checkbox/pretty-checkbox.min.css") }}">
     <link href="{{ asset("libs/MaterialDesign/css/materialdesignicons.css") }}" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+
+    <!-- Datatables-->
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        table.dataTable thead > tr > th {
+            padding-right: 0 !important;
+        }
+
+    </style>
 @endsection
 
 
@@ -14,7 +31,7 @@
             <li><a>Administracion</a></li>
             <li><a>Gestionar Usuarios</a></li>
             <li><a href="{{ route("administracion_usuario") }}">Administracion Usuarios</a></li>
-            <li><a class="active">Coordinador Comision</a></li>
+            <li><a class="active">Cargos Comision</a></li>
         </ol>
     </section>
 @endsection
@@ -22,7 +39,7 @@
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Cambiar Coordinador Comision</h3>
+            <h3 class="box-title">Cambiar Cargos Comision</h3>
         </div>
         <div class="box-body">
             <!-- form que se mostrara oculto y es para almacenar el id de la comision-->
@@ -41,7 +58,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-3 col-sm-12 text-center">
-                        <label>Seleccione la comision a la que desea cambiar su coordinador</label><br>
+                        <label>Seleccione la comision a la que desea actualizar</label><br>
                     </div>
                 </div>
                 <div class="row">
@@ -68,10 +85,14 @@
 @section("js")
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <!-- Datatables -->
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
+
         function mostrar_asambleistas(idComision) {
             $.ajax({
                 //se envia un token, como medida de seguridad ante posibles ataques
@@ -86,6 +107,40 @@
             }).done(function (response) {
                 $("#idComision").val(response.comision);
                 $("#tabla").html(response.tabla);
+                inicializar_dataTable();
+            });
+        }
+
+        function inicializar_dataTable() {
+            var oTable = $('#tabla_miembros').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                columnDefs: [{orderable: false, targets: [2, 3]}],
+                order: [[0, 'asc']]
+
 
             });
         }
@@ -106,6 +161,7 @@
             }).done(function (response) {
                 notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
                 $("#tabla").html(response.tabla);
+                inicializar_dataTable();
             });
         }
 
@@ -125,6 +181,7 @@
             }).done(function (response) {
                 notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
                 $("#tabla").html(response.tabla);
+                inicializar_dataTable();
             });
         }
 
