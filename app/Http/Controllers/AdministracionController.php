@@ -165,17 +165,18 @@ class AdministracionController extends Controller
          * que el usuario logueado cambie su perfil
          *
          */
-        $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id",Auth::user()->id)->firstOrFail();
+        $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", Auth::user()->id)->firstOrFail();
 
         //se genera el listado de asambleistas, sin incluir el actual logueado en el sistema
-        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id","!=",$current_user->id)->get();
+        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", "!=", $current_user->id)->get();
 
         return view("Administracion.cambiar_perfiles", ["perfiles" => $perfiles, "asambleistas" => $asambleistas]);
 
     }
 
-    public function actualizar_perfil_usuario(Request $request){
-        if ($request->ajax()){
+    public function actualizar_perfil_usuario(Request $request)
+    {
+        if ($request->ajax()) {
 
             $asambleista = Asambleista::find($request->get("idAsambleista"));
 
@@ -186,25 +187,25 @@ class AdministracionController extends Controller
             //obtiendo la informacion necesaria para renderizarla y mostrarla al usuario
             $perfiles = Rol::all();
             $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
-            $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id",Auth::user()->id)->firstOrFail();
-            $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id","!=",$current_user->id)->get();
+            $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", Auth::user()->id)->firstOrFail();
+            $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", "!=", $current_user->id)->get();
 
             $respuesta = new \stdClass();
             $body_tabla = "";
-            foreach ($asambleistas as $asambleista){
+            foreach ($asambleistas as $asambleista) {
                 $body_tabla .= "<tr>
-                                    <td>". $asambleista->user->persona->primer_nombre . ' ' . $asambleista->user->persona->segundo_nombre . ' ' . $asambleista->user->persona->primer_apellido . ' ' . $asambleista->user->persona->segundo_apellido."</td>
-                                    <td>". ucfirst($asambleista->user->rol->nombre_rol) ."</td>
+                                    <td>" . $asambleista->user->persona->primer_nombre . ' ' . $asambleista->user->persona->segundo_nombre . ' ' . $asambleista->user->persona->primer_apellido . ' ' . $asambleista->user->persona->segundo_apellido . "</td>
+                                    <td>" . ucfirst($asambleista->user->rol->nombre_rol) . "</td>
                                     <td>
-                                        <select id='perfil' class='form-control' onchange='actualizar_perfil_usuario(".$asambleista->id.",this.value)'>
+                                        <select id='perfil' class='form-control' onchange='actualizar_perfil_usuario(" . $asambleista->id . ",this.value)'>
                                             <option> -- Seleccione una opcion --</option>";
 
-                                    foreach ($perfiles as $perfil){
-                                        $body_tabla .= "<option value='".$perfil->id."'>".ucfirst($perfil->nombre_rol)."</option>";
-                                    }//fin foreach perfiles
+                foreach ($perfiles as $perfil) {
+                    $body_tabla .= "<option value='" . $perfil->id . "'>" . ucfirst($perfil->nombre_rol) . "</option>";
+                }//fin foreach perfiles
 
-                                          
-                 $body_tabla .=         "</select>
+
+                $body_tabla .= "</select>
                                     </td>
                                </tr>";
             }//fin foreach asambleistas
@@ -214,6 +215,7 @@ class AdministracionController extends Controller
             return new JsonResponse($respuesta);
         }
     }
+
     public function cambiar_cargos_comision()
     {
         $comisiones = Comision::where("activa", 1)->where("nombre", "!=", "junta directiva")->get();
@@ -366,20 +368,21 @@ class AdministracionController extends Controller
             ->where("cargos.activo", 1)
             ->get();
 
-        return view("Administracion.cambiar_cargos_junta_directiva",["miembros_jd"=>$miembros_jd]);
+        return view("Administracion.cambiar_cargos_junta_directiva", ["miembros_jd" => $miembros_jd]);
     }
 
-    public function actualizar_cargo_miembro_jd(Request $request){
+    public function actualizar_cargo_miembro_jd(Request $request)
+    {
         $contador_vocales = 0;
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $miembros_jd = Cargo::where("comision_id", 1)->where("activo", 1)->get();
             foreach ($miembros_jd as $miembro) {
-                if ($miembro->cargo == $request->get("nuevo_cargo")){
+                if ($miembro->cargo == $request->get("nuevo_cargo")) {
                     $miembro->cargo = "Sin cargo";
                     $miembro->save();
                 }
 
-                if ($miembro->asambleista->id == $request->get("idMiembroJD")){
+                if ($miembro->asambleista->id == $request->get("idMiembroJD")) {
                     $miembro->cargo = $request->get("nuevo_cargo");
                     $miembro->save();
                 }
@@ -387,9 +390,31 @@ class AdministracionController extends Controller
 
             $respuesta = new \stdClass();
             $respuesta->tabla = $this->generarTabla(1);
-            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo cargo ". $request->get("nuevo_cargo")." realizada con exito", "success"))->toArray();
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo cargo " . $request->get("nuevo_cargo") . " realizada con exito", "success"))->toArray();
             return new JsonResponse($respuesta);
         }
+    }
+
+    public function gestionar_perfiles()
+    {
+        $perfiles = Rol::all();
+        return view("Administracion.gestionar_perfiles", ["perfiles" => $perfiles]);
+    }
+
+    public function agregar_perfiles(Request $request)
+    {
+        if ($request->ajax()){
+            $rol = new Rol();
+            $rol->nombre_rol = ucfirst($request->get("perfil"));
+            $rol->save();
+
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Perfil agregado con exito","success"))->toArray();
+            return new JsonResponse($respuesta);
+
+        }
+
+        //return redirect()->route("gestionar_perfiles");
     }
 
     private function generarTabla($idComision)
@@ -406,7 +431,7 @@ class AdministracionController extends Controller
             ->get();
 
         //si el id que se recibe no es el que pertenece a JD
-        if ($idComision != 1){
+        if ($idComision != 1) {
             $tabla =
                 "<table id='tabla_miembros' class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
                     <thead>
@@ -457,7 +482,7 @@ class AdministracionController extends Controller
             }
 
             $tabla .= "</tr></tbody></table>";
-        }else{ //si es JD
+        } else { //si es JD
             $tabla =
                 "<table id='tabla_miembros_jd' class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
                     <thead>
@@ -474,7 +499,7 @@ class AdministracionController extends Controller
                                 <td>" . $integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido . "</td>
                                 <td>" . $integrante->cargo . "</td>
                                 <td>
-                                    <select id='cargos_jd' name='cargos_jd' class='form-control' onchange='cambiar_cargo(". $integrante->asambleista->id.",this.value)'>
+                                    <select id='cargos_jd' name='cargos_jd' class='form-control' onchange='cambiar_cargo(" . $integrante->asambleista->id . ",this.value)'>
                                         <option>-- Seleccione un cargo --</option>
                                         <option value='Presidente'>Presidente</option>
                                         <option value='Vicepresidente'>Vicepresidente</option>

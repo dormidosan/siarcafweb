@@ -392,7 +392,7 @@ class ModulosTableSeeder extends Seeder
 
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Gestionar Perfiles',
-            'url' => 'GestionarPerfiles',
+            'url' => 'gestionar_perfiles',
             'modulo_padre' => '11',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,
