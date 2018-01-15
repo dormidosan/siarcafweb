@@ -188,10 +188,7 @@ Route::get('GestionarUsuarios', function () {
     return view('Administracion.GestionarUsuario');
 })->name("administracion_usuario");
 
-Route::get('GestionarPerfiles', function () {
-    return view('Administracion.GestionarPerfiles');
-});
-
+Route::get('gestionar_perfiles', "AdministracionController@gestionar_perfiles")->name("gestionar_perfiles");;
 Route::get('registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
 Route::get('periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
 Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionController@parametros'));
@@ -207,6 +204,7 @@ Route::post('actualizar_coordinador', "AdministracionController@actualizar_coord
 Route::post('actualizar_secretario', "AdministracionController@actualizar_secretario")->name("actualizar_secretario");
 Route::post('actualizar_cargo_miembro_jd', "AdministracionController@actualizar_cargo_miembro_jd")->name("actualizar_cargo_miembro_jd");
 Route::post('actualizar_perfil_usuario', "AdministracionController@actualizar_perfil_usuario")->name("actualizar_perfil_usuario");
+Route::post('agregar_perfiles', "AdministracionController@agregar_perfiles")->name("agregar_perfiles");
 
 
 /* Asambleistas */
