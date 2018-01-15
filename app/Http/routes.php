@@ -206,6 +206,7 @@ Route::post('mostrar_asambleistas_comision_post', "AdministracionController@most
 Route::post('actualizar_coordinador', "AdministracionController@actualizar_coordinador")->name("actualizar_coordinador");
 Route::post('actualizar_secretario', "AdministracionController@actualizar_secretario")->name("actualizar_secretario");
 Route::post('actualizar_cargo_miembro_jd', "AdministracionController@actualizar_cargo_miembro_jd")->name("actualizar_cargo_miembro_jd");
+Route::post('actualizar_perfil_usuario', "AdministracionController@actualizar_perfil_usuario")->name("actualizar_perfil_usuario");
 
 
 /* Asambleistas */

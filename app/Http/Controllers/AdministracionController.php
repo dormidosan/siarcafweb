@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdministracionController extends Controller
 {
@@ -157,10 +158,62 @@ class AdministracionController extends Controller
     {
         $perfiles = Rol::all();
         $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
-        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->get();
+
+        /*
+         * Obtener la entidad del actual usuario logueado
+         * con el fin de filtrar el listado de asambleistas y no mostrarlo en dicha lista, con el proposito de evitar
+         * que el usuario logueado cambie su perfil
+         *
+         */
+        $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id",Auth::user()->id)->firstOrFail();
+
+        //se genera el listado de asambleistas, sin incluir el actual logueado en el sistema
+        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id","!=",$current_user->id)->get();
+
         return view("Administracion.cambiar_perfiles", ["perfiles" => $perfiles, "asambleistas" => $asambleistas]);
+
     }
 
+    public function actualizar_perfil_usuario(Request $request){
+        if ($request->ajax()){
+
+            $asambleista = Asambleista::find($request->get("idAsambleista"));
+
+            $perfil = Rol::find($request->get("idPerfil"));
+            $asambleista->user->rol_id = $perfil->id;
+            $asambleista->user->save();
+
+            //obtiendo la informacion necesaria para renderizarla y mostrarla al usuario
+            $perfiles = Rol::all();
+            $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
+            $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id",Auth::user()->id)->firstOrFail();
+            $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id","!=",$current_user->id)->get();
+
+            $respuesta = new \stdClass();
+            $body_tabla = "";
+            foreach ($asambleistas as $asambleista){
+                $body_tabla .= "<tr>
+                                    <td>". $asambleista->user->persona->primer_nombre . ' ' . $asambleista->user->persona->segundo_nombre . ' ' . $asambleista->user->persona->primer_apellido . ' ' . $asambleista->user->persona->segundo_apellido."</td>
+                                    <td>". ucfirst($asambleista->user->rol->nombre_rol) ."</td>
+                                    <td>
+                                        <select id='perfil' class='form-control' onchange='actualizar_perfil_usuario(".$asambleista->id.",this.value)'>
+                                            <option> -- Seleccione una opcion --</option>";
+
+                                    foreach ($perfiles as $perfil){
+                                        $body_tabla .= "<option value='".$perfil->id."'>".ucfirst($perfil->nombre_rol)."</option>";
+                                    }//fin foreach perfiles
+
+                                          
+                 $body_tabla .=         "</select>
+                                    </td>
+                               </tr>";
+            }//fin foreach asambleistas
+
+            $respuesta->body_tabla = $body_tabla;
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo perfil realizada con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
     public function cambiar_cargos_comision()
     {
         $comisiones = Comision::where("activa", 1)->where("nombre", "!=", "junta directiva")->get();
