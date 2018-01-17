@@ -514,6 +514,7 @@ class AgendaController extends Controller
         $propuesta->activa = '1';
         if($request->favor >= $votacion_minima->valor){
             $propuesta->ganadora = '1';
+            // EN CASO QUE SE QUIERA TERMINAR EL PUNTO CUANDO SE ALCANZA LA VOTACION MINIMA
             //$propuesta->save();
             //return $this->resolverPunto($request->id_punto,$request->id_agenda);
         }else{

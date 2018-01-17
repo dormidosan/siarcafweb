@@ -17,6 +17,7 @@
 @section('styles')
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+
 <style type="text/css">
         .fileUpload {
             position: relative;

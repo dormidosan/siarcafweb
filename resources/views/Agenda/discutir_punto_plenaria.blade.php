@@ -123,6 +123,10 @@
                 @include('Agenda.propuestas')
                 @include('Agenda.intervenciones')
             @endif
+            @if($punto->activo == 0)
+                @include('Agenda.propuestas_inactivas')
+                @include('Agenda.intervenciones_inactivas')
+            @endif
 
 
         </div>

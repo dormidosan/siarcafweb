@@ -112,12 +112,16 @@
         </div>
     </div>
 
-@endsection @section("js")
+@endsection
+
+@section("js")
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
-@endsection @section("scripts")
+@endsection
+
+@section("scripts")
     <script type="text/javascript">
         $(function () {
             $('.toogle').bootstrapToggle({

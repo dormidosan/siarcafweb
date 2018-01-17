@@ -28,7 +28,7 @@
             <h3 class="box-title">Administracion Usuarios</h3>
         </div>
         <div class="box-body">
-            <table class="table text-center">
+            <!--<table class="table text-center">
                 <thead>
                 <tr>
                     <th>Foto</th>
@@ -97,7 +97,46 @@
 
                 </tbody>
 
-            </table>
+            </table>-->
+                <h4 class="text-center text-bold"><span><i class="fa fa-info-circle"></i></span> Seleccione una opcion para continuar</h4>
+                <br>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="box box-warning">
+                            <div class="box-body">
+                                    <div class="text-center">
+                                        <i class="fa fa-key fa-4x text-warning"></i>
+                                    </div>
+                                    <h3 class="profile-username text-center">Perfiles</h3>
+                                    <a class="btn btn-warning btn-block btn-sm" href="{{route("cambiar_perfiles")}}"><b>Acceder</b></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="text-center">
+                                    <i class="fa fa-user fa-4x text-success"></i>
+                                </div>
+                                <h3 class="profile-username text-center">Cargos de Comision</h3>
+                                <a class="btn btn-success btn-block btn-sm" href="{{route("cambiar_cargos_comision")}}"><b>Acceder</b></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <div class="text-center">
+                                    <i class="fa fa-users fa-4x text-info"></i>
+                                </div>
+                                <h3 class="profile-username text-center">Cargos de Junta Directiva</h3>
+                                <a class="btn btn-info btn-block btn-sm"><b>Acceder</b></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
 
     </div>

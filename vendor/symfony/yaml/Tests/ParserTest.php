@@ -1554,38 +1554,6 @@ YAML;
         $this->assertSame(array('foobar' => 'foobar'), $this->parser->parse($yaml));
     }
 
-    public function testCommentCharactersInMultiLineQuotedStrings()
-    {
-        $yaml = <<<YAML
-foo:
-    foobar: 'foo
-      #bar'
-    bar: baz
-YAML;
-        $expected = array(
-            'foo' => array(
-                'foobar' => 'foo #bar',
-                'bar' => 'baz',
-            ),
-        );
-
-        $this->assertSame($expected, $this->parser->parse($yaml));
-    }
-
-    public function testBlankLinesInQuotedMultiLineString()
-    {
-        $yaml = <<<YAML
-foobar: 'foo
-
-    bar'
-YAML;
-        $expected = array(
-            'foobar' => "foo\nbar",
-        );
-
-        $this->assertSame($expected, $this->parser->parse($yaml));
-    }
-
     public function testParseMultiLineUnquotedString()
     {
         $yaml = <<<EOT
@@ -2000,18 +1968,6 @@ YAML;
         );
 
         $this->assertEquals($expected, $this->parser->parse($yaml, Yaml::PARSE_OBJECT_FOR_MAP));
-    }
-
-    /**
-     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
-     * @expectedExceptionMessage Reference "foo" does not exist
-     */
-    public function testEvalRefException()
-    {
-        $yaml = <<<EOE
-foo: { &foo { a: Steve, <<: *foo} }
-EOE;
-        $this->parser->parse($yaml);
     }
 }
 
