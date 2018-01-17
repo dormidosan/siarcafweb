@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asambleista;
+use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Facultad;
@@ -18,11 +19,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdministracionController extends Controller
 {
-    //
-
     public function registrar_usuario()
     {
         $facultades = Facultad::all();
@@ -114,7 +114,6 @@ class AdministracionController extends Controller
         }
     }
 
-
     public function finalizar_periodo(Request $request)
     {
         if ($request->ajax()) {
@@ -133,13 +132,13 @@ class AdministracionController extends Controller
     {
         $parametros = Parametro::all();
         return view('Administracion.Parametros')
-        ->with('parametros',$parametros);
+            ->with('parametros', $parametros);
     }
 
     public function almacenar_parametro(Request $request)
     {
         //dd($request->all());
-        $parametro = Parametro::where('id','=',$request->id_parametro)->firstOrFail();
+        $parametro = Parametro::where('id', '=', $request->id_parametro)->firstOrFail();
         $parametro->valor = $request->nuevo_valor;
         $parametro->save();
 
@@ -150,11 +149,372 @@ class AdministracionController extends Controller
 
     }
 
-    public function administracion_usuarios(){
-        $comisiones = Comision::where("activa",1)->get();
+    public function administracion_usuarios()
+    {
+        $comisiones = Comision::where("activa", 1)->get();
+    }
+
+    public function cambiar_perfiles()
+    {
+        $perfiles = Rol::all();
+        $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
+
+        /*
+         * Obtener la entidad del actual usuario logueado
+         * con el fin de filtrar el listado de asambleistas y no mostrarlo en dicha lista, con el proposito de evitar
+         * que el usuario logueado cambie su perfil
+         *
+         */
+        $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", Auth::user()->id)->firstOrFail();
+
+        //se genera el listado de asambleistas, sin incluir el actual logueado en el sistema
+        $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", "!=", $current_user->id)->get();
+
+        return view("Administracion.cambiar_perfiles", ["perfiles" => $perfiles, "asambleistas" => $asambleistas]);
 
     }
 
+    public function actualizar_perfil_usuario(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $asambleista = Asambleista::find($request->get("idAsambleista"));
+
+            $perfil = Rol::find($request->get("idPerfil"));
+            $asambleista->user->rol_id = $perfil->id;
+            $asambleista->user->save();
+
+            //obtiendo la informacion necesaria para renderizarla y mostrarla al usuario
+            $perfiles = Rol::all();
+            $periodo_activo = Periodo::where("activo", 1)->firstOrFail();
+            $current_user = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", Auth::user()->id)->firstOrFail();
+            $asambleistas = Asambleista::where("periodo_id", $periodo_activo->id)->where("activo", 1)->where("id", "!=", $current_user->id)->get();
+
+            $respuesta = new \stdClass();
+            $body_tabla = "";
+            foreach ($asambleistas as $asambleista) {
+                $body_tabla .= "<tr>
+                                    <td>" . $asambleista->user->persona->primer_nombre . ' ' . $asambleista->user->persona->segundo_nombre . ' ' . $asambleista->user->persona->primer_apellido . ' ' . $asambleista->user->persona->segundo_apellido . "</td>
+                                    <td>" . ucfirst($asambleista->user->rol->nombre_rol) . "</td>
+                                    <td>
+                                        <select id='perfil' class='form-control' onchange='actualizar_perfil_usuario(" . $asambleista->id . ",this.value)'>
+                                            <option> -- Seleccione una opcion --</option>";
+
+                foreach ($perfiles as $perfil) {
+                    $body_tabla .= "<option value='" . $perfil->id . "'>" . ucfirst($perfil->nombre_rol) . "</option>";
+                }//fin foreach perfiles
+
+
+                $body_tabla .= "</select>
+                                    </td>
+                               </tr>";
+            }//fin foreach asambleistas
+
+            $respuesta->body_tabla = $body_tabla;
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo perfil realizada con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function cambiar_cargos_comision()
+    {
+        $comisiones = Comision::where("activa", 1)->where("nombre", "!=", "junta directiva")->get();
+        return view("Administracion.cambiar_cargos_comision", ["comisiones" => $comisiones]);
+    }
+
+    public function mostrar_asambleistas_comision_post(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $comision = Comision::find($request->get("idComision"));
+            $tabla = $this->generarTabla($comision->id);
+            /*
+            $comision = Comision::find($request->get("idComision"));
+
+            //obtener los integrantes de la comision y que esten activos en el periodo activo
+            $integrantes = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+                ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
+                ->where("cargos.comision_id", $request->get("idComision"))
+                ->where("asambleistas.activo", 1)
+                ->where("periodos.activo", 1)
+                ->where("cargos.activo", 1)
+                ->get();
+
+            $tabla =
+                "<table class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
+                    <thead>
+                        <tr>
+                            <th>Asambleista</th>
+                            <th>Cargo</th>
+                            <th>Coordinador</th>
+                        </th>
+                    </thead>
+                    <tbody>";
+
+            foreach ($integrantes as $integrante){
+                $tabla .= "<tr>
+                                <td>".$integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido."</td>
+                                <td>".$integrante->cargo."</td>";
+                if ($integrante->cargo == "Coordinador"){
+                    $tabla .= "<td><div class='pretty p-icon p-curve'><input type='checkbox' checked disabled /><div class='state p-success'><i class='icon mdi mdi-check'></i><label>Coordinador de Comision</label></div></div></td>";
+                }
+                else{
+                    $tabla .= "<td><div class='pretty p-icon p-curve'><input type='checkbox' onchange='actualizar_coordinador(".$integrante->asambleista->id.")'/><div class='state p-success'><i class='icon mdi mdi-check'></i><label></label></div></div></td>";
+                }
+
+            }
+
+            $tabla .= "</tbody></table>";
+
+            */
+            $respuesta = new \stdClass();
+            $respuesta->comision = $comision->id;
+            $respuesta->tabla = $tabla;
+
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function actualizar_coordinador(Request $request)
+    {
+        if ($request->ajax()) {
+            $comision = $comision = Comision::find($request->get("idComision"));
+            $asambleista = Asambleista::find($request->get("idAsambleista"));
+            //se obtienen todos los asambleistas de la comision, con el fin de identificar el anterior coordinador
+            $cargos_comision = Cargo::where("comision_id", $comision->id)->where("activo", 1)->get();
+
+            foreach ($cargos_comision as $cargo) {
+                //se verifca quien es el coordinador actual y se le quita ese cargo, para asignarselo al nuevo coordinador
+                //y que no sea el asambleista nuevo
+                $cargo_asambleista = $cargo->cargo;
+                switch ($cargo_asambleista) {
+                    case "Coordinador":
+                        if ($cargo->asambleista_id != $asambleista->id) {
+                            $cargo->cargo = "Asambleista";
+                            $cargo->save();
+                        }
+                        break;
+                    case "Asambleista":
+                        if ($cargo->asambleista_id == $asambleista->id) {
+                            $cargo->cargo = "Coordinador";
+                            $cargo->save();
+                        }
+                        break;
+                    case "Secretario":
+                        if ($cargo->asambleista_id == $asambleista->id) {
+                            $cargo->cargo = "Coordinador";
+                            $cargo->save();
+                        }
+                        break;
+                }
+            }
+
+            $respuesta = new \stdClass();
+            $respuesta->tabla = $this->generarTabla($comision->id);
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo coordinador realizada con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function actualizar_secretario(Request $request)
+    {
+        if ($request->ajax()) {
+            $comision = $comision = Comision::find($request->get("idComision"));
+            $asambleista = Asambleista::find($request->get("idAsambleista"));
+            //se obtienen todos los asambleistas de la comision, con el fin de identificar el anterior coordinador
+            $cargos_comision = Cargo::where("comision_id", $comision->id)->where("activo", 1)->get();
+
+            foreach ($cargos_comision as $cargo) {
+                //se verifca quien es el coordinador actual y se le quita ese cargo, para asignarselo al nuevo coordinador
+                //y que no sea el asambleista nuevo
+                $cargo_asambleista = $cargo->cargo;
+                switch ($cargo_asambleista) {
+                    //si hay un anterior secretario, se le quita ese cargo
+                    case "Secretario":
+                        if ($cargo->asambleista_id != $asambleista->id) {
+                            $cargo->cargo = "Asambleista";
+                            $cargo->save();
+                        }
+                        break;
+                    case "Asambleista":
+                        if ($cargo->asambleista_id == $asambleista->id) {
+                            $cargo->cargo = "Secretario";
+                            $cargo->save();
+                        }
+                        break;
+                    case "Coordinador":
+                        if ($cargo->asambleista_id == $asambleista->id) {
+                            $cargo->cargo = "Secretario";
+                            $cargo->save();
+                        }
+                        break;
+                }
+            }
+
+            $respuesta = new \stdClass();
+            $respuesta->tabla = $this->generarTabla($comision->id);
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo secretario realizada con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function cambiar_cargos_junta_directiva()
+    {
+        $miembros_jd = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+            ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
+            ->where("cargos.comision_id", 1)
+            ->where("asambleistas.activo", 1)
+            ->where("periodos.activo", 1)
+            ->where("cargos.activo", 1)
+            ->get();
+
+        return view("Administracion.cambiar_cargos_junta_directiva", ["miembros_jd" => $miembros_jd]);
+    }
+
+    public function actualizar_cargo_miembro_jd(Request $request)
+    {
+        $contador_vocales = 0;
+        if ($request->ajax()) {
+            $miembros_jd = Cargo::where("comision_id", 1)->where("activo", 1)->get();
+            foreach ($miembros_jd as $miembro) {
+                if ($miembro->cargo == $request->get("nuevo_cargo")) {
+                    $miembro->cargo = "Sin cargo";
+                    $miembro->save();
+                }
+
+                if ($miembro->asambleista->id == $request->get("idMiembroJD")) {
+                    $miembro->cargo = $request->get("nuevo_cargo");
+                    $miembro->save();
+                }
+            }
+
+            $respuesta = new \stdClass();
+            $respuesta->tabla = $this->generarTabla(1);
+            $respuesta->mensaje = (new Mensaje("Exito", "Asignación de nuevo cargo " . $request->get("nuevo_cargo") . " realizada con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function gestionar_perfiles()
+    {
+        $perfiles = Rol::all();
+        return view("Administracion.gestionar_perfiles", ["perfiles" => $perfiles]);
+    }
+
+    public function agregar_perfiles(Request $request)
+    {
+        if ($request->ajax()){
+            $rol = new Rol();
+            $rol->nombre_rol = ucfirst($request->get("perfil"));
+            $rol->save();
+
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Perfil agregado con exito","success"))->toArray();
+            return new JsonResponse($respuesta);
+
+        }
+
+        //return redirect()->route("gestionar_perfiles");
+    }
+
+    private function generarTabla($idComision)
+    {
+        $comision = Comision::find($idComision);
+
+        //obtener los integrantes de la comision y que esten activos en el periodo activo
+        $integrantes = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+            ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
+            ->where("cargos.comision_id", $idComision)
+            ->where("asambleistas.activo", 1)
+            ->where("periodos.activo", 1)
+            ->where("cargos.activo", 1)
+            ->get();
+
+        //si el id que se recibe no es el que pertenece a JD
+        if ($idComision != 1) {
+            $tabla =
+                "<table id='tabla_miembros' class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
+                    <thead>
+                        <tr>
+                            <th>Asambleista</th>
+                            <th>Cargo</th>
+                            <th>Coordinador</th>
+                            <th>Secretario</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+            foreach ($integrantes as $integrante) {
+                $tabla .= "<tr>
+                                <td>" . $integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido . "</td>
+                                <td>" . $integrante->cargo . "</td>";
+
+                if ($integrante->cargo == "Coordinador") {
+                    $tabla .= "<td>
+                                <div class='pretty p-icon p-curve'>
+                                    <input type='checkbox' checked disabled />
+                                    <div class='state p-success'><i class='icon mdi mdi-check'></i><label>Coordinador de Comision</label></div>
+                                </div>
+                          </td>";
+                } else {
+                    $tabla .= "<td>
+                                <div class='pretty p-icon p-curve'>
+                                    <input type='checkbox' onchange='actualizar_coordinador(" . $integrante->asambleista->id . ")'/>
+                                    <div class='state p-success'><i class='icon mdi mdi-check'></i><label></label></div></div>
+                           </td>";
+                }
+
+                if ($integrante->cargo == "Secretario") {
+                    $tabla .= "<td>
+                                <div class='pretty p-icon p-curve'>
+                                    <input type='checkbox' checked disabled />
+                                    <div class='state p-success'><i class='icon mdi mdi-check'></i><label>Secretario de Comision</label></div>
+                                </div>
+                          </td>";
+                } else {
+                    $tabla .= "<td>
+                                <div class='pretty p-icon p-curve'>
+                                    <input type='checkbox' onchange='actualizar_secretario(" . $integrante->asambleista->id . ")'/>
+                                    <div class='state p-success'><i class='icon mdi mdi-check'></i><label></label></div></div>
+                           </td>";
+                }
+
+            }
+
+            $tabla .= "</tr></tbody></table>";
+        } else { //si es JD
+            $tabla =
+                "<table id='tabla_miembros_jd' class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cargo Actual</th>
+                            <th>Nuevo Cargo</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+            foreach ($integrantes as $integrante) {
+                $tabla .= "<tr>
+                                <td>" . $integrante->asambleista->user->persona->primer_nombre . " " . $integrante->asambleista->user->persona->segundo_nombre . " " . $integrante->asambleista->user->persona->primer_apellido . " " . $integrante->asambleista->user->persona->segundo_apellido . "</td>
+                                <td>" . $integrante->cargo . "</td>
+                                <td>
+                                    <select id='cargos_jd' name='cargos_jd' class='form-control' onchange='cambiar_cargo(" . $integrante->asambleista->id . ",this.value)'>
+                                        <option>-- Seleccione un cargo --</option>
+                                        <option value='Presidente'>Presidente</option>
+                                        <option value='Vicepresidente'>Vicepresidente</option>
+                                        <option value='Secretario'>Secretario</option>
+                                        <option value='Vocal'>Vocal</option>
+                                    </select>
+                                </td>
+                            </tr>";
+            }
+
+            $tabla .= "</tbody></table>";
+        }
+
+        return $tabla;
+    }
 
 
 }

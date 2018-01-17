@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+@endsection
+
 @section('breadcrumb')
     <section>
         <ol class="breadcrumb">
@@ -33,8 +38,8 @@
                     {!! Form::open(['route'=>['finalizar_sesion_plenaria'],'method'=> 'POST']) !!}
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
 
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block"
-                            disabled="disabled">Finalizar plenaria
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block" >
+                    Finalizar plenaria
                     </button>
                     {!! Form::close() !!}
                 </div>
@@ -176,3 +181,21 @@
     </div>
 @endsection
 
+
+@section("js")
+    <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+@endsection
+
+
+@section("lobibox")
+
+    @if(Session::has('warning'))
+        <script>
+            notificacion("Error", "{{ Session::get('warning') }}", "warning");
+        </script>
+    @endif
+
+@endsection

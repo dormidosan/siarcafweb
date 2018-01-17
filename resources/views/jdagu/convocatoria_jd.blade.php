@@ -3,6 +3,9 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -75,7 +78,14 @@
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
+
 
 
 @section("scripts")
@@ -95,4 +105,13 @@
             });
         });
     </script>
+@endsection
+@section("lobibox")
+
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
+
 @endsection

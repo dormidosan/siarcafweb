@@ -106,7 +106,14 @@
                         <div class="col-lg-6">
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>25</h3>
+                                    @php $contador=0 @endphp 
+                                    @forelse($asistentes as $asistente)
+                                        @if($asistente->propietaria == 1)
+                                            @php $contador++ @endphp
+                                        @endif
+                                    @empty
+                                    @endforelse
+                                    <h3>{{$contador}}</h3>
                                     <p>Asambleistas Propetarios</p>
                                 </div>
                                 <div class="icon">

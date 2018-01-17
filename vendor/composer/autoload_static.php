@@ -27,7 +27,6 @@ class ComposerStaticInitc91e28fbeba4e0675ff81e31f5346584
         ),
         'Z' => 
         array (
-            'Zend\\Validator\\' => 15,
             'Zend\\Stdlib\\' => 12,
             'Zend\\Escaper\\' => 13,
         ),
@@ -115,10 +114,6 @@ class ComposerStaticInitc91e28fbeba4e0675ff81e31f5346584
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-        ),
-        'Zend\\Validator\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-validator/src',
         ),
         'Zend\\Stdlib\\' => 
         array (

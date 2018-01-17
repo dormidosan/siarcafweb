@@ -70,9 +70,9 @@
                                                     <a class="btn btn-info btn-xs"
                                                        href="<?= $disco . $asambleista->ruta; ?>"
                                                        role="button">Ver</a>
-                                                    <a class="btn btn-success btn-xs"
-                                                       href="descargar_documento/<?= $asambleista->ruta; ?>"
-                                                       role="button">Descargar</a>
+                                                    <!-- <a class="btn btn-success btn-xs"
+                                                       href="descargar_documento-/-<-?-= $asambleista->ruta; ?>"
+                                                       role="button">Descargar</a> -->
                                                 </td>
                                             </tr>
                                             @php $i++ @endphp @endif @endforeach @else

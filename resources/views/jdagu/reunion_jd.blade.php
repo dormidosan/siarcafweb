@@ -99,8 +99,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>agendado</th>
-                                <th>Peticion</th>
+                                <!--<th>agendado</th>
+                                <th>Peticion</th> -->
                                 <th>Descripcion</th>
                                 <th>Fecha de creación</th>
                                 <!--<th>Fecha actual</th>-->
@@ -117,8 +117,7 @@
                                     <tr>
                                         @endif
                                         <td>{!! $contador !!} @php $contador++ @endphp</td>
-                                        <td>{!! $peticion->agendado !!}</td>
-                                        <td>{!! $peticion->nombre !!}</td>
+                                        <!-- <td>-{-!-!- -$peticion->agendado -!-!-}-</td> -->
                                         <td>{!! $peticion->descripcion !!}</td>
                                         <td>{!! date("m/d/Y",strtotime($peticion->fecha)) !!}</td>
                                     <!--<td>{!! Carbon\Carbon::now() !!}</td>-->
@@ -137,7 +136,7 @@
                                             {{ Form::hidden('id_peticion', $peticion->id) }}
                                             {{ Form::hidden('id_reunion', $reunion->id) }}
                                             {{ Form::hidden('id_comision', $comision->id) }}
-                                            @if($peticion->agendado == 1)
+                                            @if($peticion->agendado == 1 OR $peticion->resuelto == 1)
                                                 <button type="submit" class="btn btn-default btn-xs"
                                                         disabled="disabled">Asignar comision
                                                 </button>
@@ -157,12 +156,12 @@
                                                    value="{{$comision->id}}">
                                             <input type="hidden" name="id_reunion" id="id_reunion"
                                                    value="{{$reunion->id}}">
-                                            @if($peticion->comision == 1)
+                                            @if($peticion->comision == 1 OR $peticion->resuelto == 1)
                                                 <button type="submit" class="btn btn-default btn-xs"
                                                         disabled="disabled">Agendar Plenaria
                                                 </button>
                                             @elseif($peticion->agendado == 1)
-                                                @if($peticion->asignado_agenda == 1)
+                                                @if($peticion->asignado_agenda == 1 OR $peticion->resuelto == 1)
                                                     <button type="submit" class="btn btn-danger btn-xs"
                                                             disabled="disabled">Retirar Plenaria
                                                     </button>

@@ -77,12 +77,14 @@ class AgendaController extends Controller
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $facultades = Facultad::where('id','!=','0')->get();
+        $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
         //return view('Agenda.CrearSesionPlenaria')
         //dd($asambleistas);
         return view('Agenda.sala_sesion_plenaria')        
         ->with('agenda', $agenda)
         ->with('facultades', $facultades)
+        ->with('asistentes', $asistentes)
         ->with('asambleistas', $asambleistas)
         ->with('ultimos_ingresos', $ultimos_ingresos);
 
@@ -98,7 +100,14 @@ class AgendaController extends Controller
     	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
     	$puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero','ASC')->get();
 
-        $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
+        // qmt es minimo trascendental , qmn es minimo para sesion normal 
+        if ($agenda->trascendental == 1) {
+            $quorum_minimo = Parametro::where('parametro','=','qmt')->first();
+        } else {
+            $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
+        }
+        
+
         $quorum_actual = Asistencia::where('agenda_id','=',$agenda->id)->where('propietaria','=','1')->count();
 
         //si el quorum actual es menor que el minimo requerido , regresa a la pantalla anterior
@@ -116,10 +125,12 @@ class AgendaController extends Controller
 
                 $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
                 $facultades = Facultad::where('id','!=','0')->get();
+                $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
                 return view('Agenda.sala_sesion_plenaria')        
                 ->with('agenda', $agenda)
                 ->with('facultades', $facultades)
+                ->with('asistentes', $asistentes)
                 ->with('asambleistas', $asambleistas)
                 ->with('ultimos_ingresos', $ultimos_ingresos);
         }
@@ -162,6 +173,8 @@ class AgendaController extends Controller
         
         
         $actualizado = 0;
+        $request->session()->flash("warning", 'Existen '.$puntos_activos.' punto(s) sin discutir');
+
         return view('Agenda.listado_puntos_plenaria')
         ->with('actualizado',$actualizado)
         ->with('agenda', $agenda)
@@ -482,7 +495,7 @@ class AgendaController extends Controller
         }
         unset($asambleistas_plenaria[0]);
         $disco = "../storage/documentos/";
-
+        //dd($punto->intervenciones);
         return view('Agenda.discutir_punto_plenaria')
             ->with('disco', $disco)
             ->with('agenda', $agenda)
@@ -732,10 +745,12 @@ class AgendaController extends Controller
 
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $facultades = Facultad::where('id','!=','0')->get();
+        $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
         //dd($array_asambleistas_sesion);
         return view('Agenda.sala_sesion_plenaria')
             ->with('agenda', $agenda)
             ->with('facultades', $facultades)
+            ->with('asistentes', $asistentes)
             ->with('asambleistas', $asambleistas)
             ->with('ultimos_ingresos', $ultimos_ingresos);
     }
