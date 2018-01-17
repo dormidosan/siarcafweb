@@ -36,13 +36,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input  type="text" class="form-control" placeholder="Nombre" id="nombre"
-                                   name="nombre">                   
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha1">Mes</label>

@@ -84,7 +84,7 @@ return $nombrefacultad;
 }
 
 
-    public function desc_Plantilla_actas($tipo) 
+    public function desc_Plantilla_actas($tipo) //https://stackoverflow.com/questions/46202824/how-to-fix-warning-illegal-string-offset-in-laravel-5-4
     {
         
         $parametros = explode('.', $tipo);
@@ -187,7 +187,9 @@ $header->addText('ACTA No.##/'.$periodo_nombre.' SESION PLENARIA ORDINARIA','r2S
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietaria','asambleistas.facultad_id')
         ->orderBy('asambleistas.facultad_id', 'asc')
+
         ->get();
+
 
 $textrun = $section->addTextRun('arial12');
 
@@ -263,10 +265,14 @@ SIARCA_AGU_UES.', 0, null, 'multilevel',array('align'=>'both'));
 
 $section->addListItem('Remitir a la Br. Criollo Hernández, copias simples de los siguientes formatos solicitados.', 0, null, 'multilevel');*/
 
+
+//dd($id_agenda);
  $puntos=DB::table('puntos')
         ->where('puntos.agenda_id','=',$id_agenda)
+        ->where('puntos.retirado','=',0)
+         ->orderBy('puntos.romano','asc')
         ->get();
-
+//dd($puntos);
 
 foreach ($puntos as $punto) {
     $section->addListItem($punto->romano.' '.$punto->descripcion, 0, null, 'multilevel');

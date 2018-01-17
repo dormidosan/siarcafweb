@@ -406,7 +406,6 @@ else{
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
         ->join('personas','users.persona_id','=','personas.id')
-        ->where('dietas.mes','=', $mes)
         ->where('dietas.anio','=', $request->anio)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->limit(1)->get();
@@ -905,7 +904,7 @@ $monto_dieta=$monto_dieta*$asistencianum;
 
 $busqueda[$cuenta]->dieta=$busqueda[$cuenta]->dieta+$monto_dieta;
 
-$renta=$monto_dieta-$monto_dieta/($renta+1);
+$renta=$monto_dieta*$renta;
 $renta=round($renta,2);
 $busqueda[$cuenta]->renta=$busqueda[$cuenta]->renta+$renta;
 }
