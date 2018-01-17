@@ -26,13 +26,15 @@
             <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
                                    name="nombre" value="{{old(" nombre ")}}">
                             <span class="text-danger">{{ $errors->first('nombre') }}</span>
                         </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-lg-6">
                         <div class="form-group ">
                             <label>codigo Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un codigo" id="codigo"

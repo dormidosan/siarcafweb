@@ -27,7 +27,7 @@
             <li><a>Administracion</a></li>
             <li><a>Gestionar Usuarios</a></li>
             <li><a href="{{ route("administracion_usuario") }}">Administracion Usuarios</a></li>
-            <li><a class="active">Perfiles</a></li>
+            <li><a class="active">Cargos Cargos Junta Directiva</a></li>
         </ol>
     </section>
 @endsection
@@ -35,29 +35,30 @@
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <div class="box-header">
-                <h3 class="box-title">Cambiar Perfiles</h3>
-            </div>
-            <div class="box-body">
-                <table class="table text-center" id="tabla_perfiles_usuarios">
+            <h3 class="box-title">Cambiar Cargos de Junta Directiva</h3>
+        </div>
+        <div class="box-body">
+            <div class="table-responsive">
+                <table id='tabla_miembros_jd' class='table table-striped table-bordered table-condensed table-hover dataTable text-center'>
                     <thead>
                     <tr>
-                        <th>Asambleista</th>
-                        <th>Perfil Actual</th>
-                        <th>Nuevo Perfil</th>
+                        <th>Nombre</th>
+                        <th>Cargo Actual</th>
+                        <th>Nuevo Cargo</th>
                     </tr>
                     </thead>
-                    <tbody id="body_tabla_perfiles_usuarios">
-                    @foreach($asambleistas as $asambleista)
+                    <tbody>
+                    @foreach($miembros_jd as $miembro)
                         <tr>
-                            <td>{{ $asambleista->user->persona->primer_nombre . ' ' . $asambleista->user->persona->segundo_nombre . ' ' . $asambleista->user->persona->primer_apellido . ' ' . $asambleista->user->persona->segundo_apellido }}</td>
-                            <td>{{ ucfirst($asambleista->user->rol->nombre_rol) }}</td>
+                            <td>{{ $miembro->asambleista->user->persona->primer_nombre . ' ' . $miembro->asambleista->user->persona->segundo_nombre . ' ' . $miembro->asambleista->user->persona->primer_apellido . ' ' . $miembro->asambleista->user->persona->segundo_apellido }}</td>
+                            <td>{{ $miembro->cargo }}</td>
                             <td>
-                                <select id="perfil" class="form-control" onchange="actualizar_perfil_usuario({{$asambleista->id}},this.value)">
-                                    <option> -- Seleccione una opcion --</option>
-                                    @foreach($perfiles as $perfil)
-                                        <option value="{{ $perfil->id }}">{{ ucfirst($perfil->nombre_rol)}}</option>
-                                    @endforeach
+                                <select id="cargos_jd" name="cargos_jd" class="form-control" onchange="cambiar_cargo({{$miembro->asambleista->id}},this.value)">
+                                    <option>-- Seleccione un cargo --</option>
+                                    <option value="Presidente">Presidente</option>
+                                    <option value="Vicepresidente">Vicepresidente</option>
+                                    <option value="Secretario JD">Secretario</option>
+                                    <option value="Vocal">Vocal</option>
                                 </select>
                             </td>
                         </tr>
@@ -77,14 +78,35 @@
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 @endsection
 
+
 @section("scripts")
     <script type="text/javascript">
         $(function () {
             inicializar_dataTable();
         });
 
+        function cambiar_cargo(idMiembroJD,nuevo_cargo) {
+            $.ajax({
+                //se envia un token, como medida de seguridad ante posibles ataques
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route('actualizar_cargo_miembro_jd') }}",
+                data: {
+                    "idMiembroJD": idMiembroJD,
+                    "nuevo_cargo": nuevo_cargo
+                }
+            }).done(function (response) {
+                notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
+                $('#tabla_miembros_jd').DataTable().destroy();
+                $("#tabla_miembros_jd").html(response.tabla);
+                inicializar_dataTable();
+            });
+        }
+
         function inicializar_dataTable() {
-            var tabla = $('#tabla_perfiles_usuarios').DataTable({
+            var tabla_miembros_jd = $('#tabla_miembros_jd').DataTable({
                 language: {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -112,28 +134,6 @@
                 responsive: true,
                 columnDefs: [{orderable: false, targets: [0,1,2]}],
                 //order: [[1, 'asc']]
-            });
-        }
-
-        function actualizar_perfil_usuario(idAsambleista,idPerfil) {
-            $.ajax({
-                //se envia un token, como medida de seguridad ante posibles ataques
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
-                type: 'POST',
-                url: "{{ route('actualizar_perfil_usuario') }}",
-                data: {
-                    "idAsambleista": idAsambleista,
-                    "idPerfil": idPerfil
-                }
-            }).done(function (response) {
-                notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
-                //$('#tabla_perfiles_usuarios').DataTable().destroy();
-                //$("#tabla_perfiles_usuarios").html(response.tabla);
-                $('#tabla_perfiles_usuarios').DataTable().destroy();
-                $("#body_tabla_perfiles_usuarios").html(response.body_tabla);
-               inicializar_dataTable();
             });
         }
     </script>

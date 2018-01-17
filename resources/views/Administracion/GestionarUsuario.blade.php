@@ -132,7 +132,7 @@
                                     <i class="fa fa-users fa-4x text-info"></i>
                                 </div>
                                 <h3 class="profile-username text-center">Cargos de Junta Directiva</h3>
-                                <a class="btn btn-info btn-block btn-sm"><b>Acceder</b></a>
+                                <a class="btn btn-info btn-block btn-sm" href="{{route("cambiar_cargos_junta_directiva")}}"><b>Acceder</b></a>
                             </div>
                         </div>
                     </div>
