@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdministracionController extends Controller
 {
@@ -433,15 +434,14 @@ class AdministracionController extends Controller
 
         //obtener los modulos que se encuentran en la tabla modulo_rol
         $modulos_actuales = (Rol::find($id_rol))->modulos()->get();
-        foreach ($modulos_actuales as $modulo){
-            $modulo->roles()->detach($rol->id);
-        }
-
-        foreach ($modulos as $modulo){
-            $modulo = Modulo::find($modulo);
-        }
+        //se remueven todos los modulos que tiene asociado el rol
+        DB::table('modulo_rol')->where('id', $id_rol->id)->delete();
 
 
+        //para salvar en la relacion ManyToMany de rol y modulo
+        $rol->modulos()->sync($modulos);
+
+        return redirect()->route("gestionar_perfiles");
 
 
     }
