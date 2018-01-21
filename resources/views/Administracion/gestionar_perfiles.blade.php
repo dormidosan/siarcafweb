@@ -61,9 +61,20 @@
                         @foreach($perfiles as $perfil)
                             <tr>
                                 <td>{{ucfirst($perfil->nombre_rol)}}</td>
-                                <td><a href="#" class="btn btn-primary btn-xs"><i class="fa fa-external-link-square"
-                                                                                  aria-hidden="true"></i> Acceder</a>
+                                <td>
+                                    <form id="acceder" name="acceder" class="form" action="{{ route("administrar_acceso_modulos") }}" method="post">
+                                        {{ csrf_field() }}
+                                        <div class="form-control hidden">
+                                            <label>ID</label>
+                                            <input type="text" id="id_rol" name="id_rol" value="{{$perfil->id}}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-xs"><i class="fa fa-external-link-square"
+                                                                                                aria-hidden="true"></i> Acceder</button>
+                                    </form>
                                 </td>
+                                {{-- <td><a href="#" class="btn btn-primary btn-xs"><i class="fa fa-external-link-square"
+                                                                                  aria-hidden="true"></i> Acceder</a>
+                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

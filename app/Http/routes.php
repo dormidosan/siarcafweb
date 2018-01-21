@@ -179,15 +179,8 @@ Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->
 
 /* Routes Administracion */
 
-Route::get('ActualizarPlantilla', function () {
-    return view('Administracion.ActualizarPlantilla');
-});
-
-//Ruta de la opcion Administracion Usuarios
-Route::get('GestionarUsuarios', function () {
-    return view('Administracion.GestionarUsuario');
-})->name("administracion_usuario");
-
+Route::get('ActualizarPlantilla', function () {return view('Administracion.ActualizarPlantilla');});
+Route::get('GestionarUsuarios', function () {return view('Administracion.GestionarUsuario');})->name("administracion_usuario");
 Route::get('gestionar_perfiles', "AdministracionController@gestionar_perfiles")->name("gestionar_perfiles");;
 Route::get('registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
 Route::get('periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
@@ -205,7 +198,8 @@ Route::post('actualizar_secretario', "AdministracionController@actualizar_secret
 Route::post('actualizar_cargo_miembro_jd', "AdministracionController@actualizar_cargo_miembro_jd")->name("actualizar_cargo_miembro_jd");
 Route::post('actualizar_perfil_usuario', "AdministracionController@actualizar_perfil_usuario")->name("actualizar_perfil_usuario");
 Route::post('agregar_perfiles', "AdministracionController@agregar_perfiles")->name("agregar_perfiles");
-
+Route::post('administrar_acceso_modulos', "AdministracionController@administrar_acceso_modulos")->name("administrar_acceso_modulos");
+Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_modulos")->name("asignar_acceso_modulos");
 
 /* Asambleistas */
 Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");

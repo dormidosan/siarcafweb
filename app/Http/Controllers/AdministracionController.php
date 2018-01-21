@@ -7,6 +7,7 @@ use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
 use App\Facultad;
+use App\Modulo;
 use App\Periodo;
 use App\Persona;
 use App\Rol;
@@ -415,6 +416,17 @@ class AdministracionController extends Controller
         }
 
         //return redirect()->route("gestionar_perfiles");
+    }
+
+    public function administrar_acceso_modulos(Request $request){
+        $modulos_padres = Modulo::where("tiene_hijos",1)->get();
+        $modulos_hijos = Modulo::all();
+        $id_rol = $request->get("id_rol");
+        return view("Administracion.administrar_acceso_modulos",["modulos_padres"=>$modulos_padres,"modulos_hijos"=>$modulos_hijos,"id_rol"=>$id_rol]);
+    }
+
+    public function asignar_acceso_modulos(Request $request){
+
     }
 
     private function generarTabla($idComision)
