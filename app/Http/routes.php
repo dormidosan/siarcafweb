@@ -73,6 +73,9 @@ Route::post('buscar_permisos_permanentes', 'ReportesController@buscar_permisos_p
 
 Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name("buscar_asistencias");
 
+Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados_renta')->name("buscar_consolidados_renta");
+
+
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
@@ -101,7 +104,7 @@ Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planill
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
 Route::get('/Reporte_planilla_dieta_prof_Doc_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Doc_pdf');
 Route::get('/Reporte_consolidados_renta', function () {
-    return view('Reportes.Reporte_consolidados_renta');
+    return view('Reportes.Reporte_consolidados_renta',['resultados'=>NULL]);
 });
 Route::get('/Reporte_consolidados_renta/{tipo}', 'ReportesController@Reporte_consolidados_renta');
 Route::get('/Reporte_consolidados_renta_docente/{tipo}', 'ReportesController@Reporte_consolidados_renta_docente');
