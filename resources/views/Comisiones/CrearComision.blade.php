@@ -84,7 +84,13 @@
                                 <i class="fa fa-check text-success text-bold" aria-hidden="true"></i> @endif
                         </td>
 
-                        @php $contador = 0 @endphp @foreach($cargos as $cargo) @if($cargo->comision_id == $comision->id && $cargo->activo == 1) @php $contador++ @endphp @endif @endforeach
+                        @php $contador = 0 @endphp
+                        @foreach($cargos as $cargo)
+                            {{-- obtener total de asambleistas en el periodo activo--}}
+                            @if($cargo->comision_id == $comision->id && $cargo->activo == 1 && $cargo->asambleista->periodo->activo == 1)
+                                @php $contador++ @endphp
+                            @endif
+                        @endforeach
                         <td>
                             {{ $contador }}
                         </td>

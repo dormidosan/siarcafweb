@@ -51,7 +51,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <form class="row" action="{{ route("") }}">
+                        @php $searchedRole @endphp
+                        <form class="row" method="post" action="{{ route("asignar_acceso_modulos") }}">
+                            {{ csrf_field() }}
+                            <input type="text" id="id_rol" name="id_rol" hidden value="{{ $id_rol }}">
                             @foreach($modulos_padres as $modulos_padre)
                                 <tr>
                                     <td class="text-center text-bold">{{$modulos_padre->nombre_modulo}}</td>
@@ -59,9 +62,12 @@
                                         @foreach($modulos_hijos as $modulos_hijo)
                                             @if($modulos_hijo->modulo_padre == $modulos_padre->id)
                                                 <div>
-                                                    @if($modulos_hijo->roles[0]->id == $id_rol)
+                                                    @php $searchedRole = array_search($id_rol->nombre_rol,$modulos_hijo->roles->pluck('nombre_rol')->toArray()); @endphp
+
+                                                    @if($modulos_hijo->roles[$searchedRole]->id == $id_rol->id)
                                                         <div class="pretty p-icon p-smooth">
-                                                            <input type="checkbox" name="modulo_rol[]" value="{{ $modulos_hijo->id }}" checked/>
+                                                            <input type="checkbox" name="modulos[]"
+                                                                   value="{{ $modulos_hijo->id }}" checked/>
                                                             <div class="state p-success">
                                                                 <i class="icon mdi mdi-check"></i>
                                                                 <label>{{$modulos_hijo->nombre_modulo}}</label>
@@ -69,7 +75,8 @@
                                                         </div>
                                                     @else
                                                         <div class="pretty p-icon p-smooth">
-                                                            <input type="checkbox" name="modulo_rol[]" value="{{ $modulos_hijo->id }}"/>
+                                                            <input type="checkbox" name="modulos[]"
+                                                                   value="{{ $modulos_hijo->id }}"/>
                                                             <div class="state p-success">
                                                                 <i class="icon mdi mdi-check"></i>
                                                                 <label>{{$modulos_hijo->nombre_modulo}}</label>

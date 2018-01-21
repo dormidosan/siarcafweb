@@ -421,11 +421,28 @@ class AdministracionController extends Controller
     public function administrar_acceso_modulos(Request $request){
         $modulos_padres = Modulo::where("tiene_hijos",1)->get();
         $modulos_hijos = Modulo::all();
-        $id_rol = $request->get("id_rol");
+        //$id_rol = $request->get("id_rol");
+        $id_rol = Rol::find($request->get("id_rol"));
         return view("Administracion.administrar_acceso_modulos",["modulos_padres"=>$modulos_padres,"modulos_hijos"=>$modulos_hijos,"id_rol"=>$id_rol]);
     }
 
     public function asignar_acceso_modulos(Request $request){
+        $id_rol = $request->get("id_rol");
+        $modulos = $request->get("modulos");
+        $rol = Rol::find($id_rol);
+
+        //obtener los modulos que se encuentran en la tabla modulo_rol
+        $modulos_actuales = (Rol::find($id_rol))->modulos()->get();
+        foreach ($modulos_actuales as $modulo){
+            $modulo->roles()->detach($rol->id);
+        }
+
+        foreach ($modulos as $modulo){
+            $modulo = Modulo::find($modulo);
+        }
+
+
+
 
     }
 
