@@ -150,8 +150,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        Sergio\PhpJasperXML\JasperReportsServiceProvider::class,
-
+      
 
         /*
          * Application Service Providers...
@@ -175,7 +174,7 @@ return [
     */
 
     'aliases' => [
-        'PHPJasperXML'  => Sergio\PhpJasperXML\PHPJasperXML::class,
+        
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

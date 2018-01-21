@@ -77,6 +77,11 @@ Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados
 
 Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_actas");
 
+Route::post('buscar_acuerdos', 'PlantillasController@buscar_acuerdos')->name("buscar_acuerdos");
+
+Route::post('buscar_dictamenes', 'PlantillasController@buscar_dictamenes')->name("buscar_dictamenes");
+
+
 Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
 
 Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");
@@ -127,11 +132,23 @@ Route::get('/Plantilla_Actas', function () {
     return view('Plantillas.Plantilla_actas', ['resultados' => NULL]);
 });
 
+Route::get('/Plantilla_Acuerdos', function () {
+    return view('Plantillas.Plantilla_acuerdos', ['resultados' => NULL]);
+});
+
+Route::get('/Plantilla_dictamenes', function () {
+    return view('Plantillas.Plantilla_dictamenes', ['resultados' => NULL]);
+});
+
+
 Route::get('/Plantilla_Actas_JD', function () {
     return view('Plantillas.Plantilla_actas_JD', ['resultados' => NULL]);
 });
 
 Route::get('/desc_Plantilla_actas/{tipo}', 'PlantillasController@desc_Plantilla_actas');
+Route::get('/desc_Plantilla_acuerdos/{tipo}', 'PlantillasController@desc_Plantilla_acuerdos');
+Route::get('/desc_Plantilla_dictamenes/{tipo}', 'PlantillasController@desc_Plantilla_dictamenes');
+
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales', ['resultados' => NULL]);
@@ -139,6 +156,10 @@ Route::get('/Reporte_permisos_temporales', function () {
 
 Route::get('/Menu_reportes', function () {
     return view('Reportes.MenuReportes');
+});
+
+Route::get('/Menu_plantillas', function () {
+    return view('Plantillas.MenuPlantilla');
 });
 
 Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
