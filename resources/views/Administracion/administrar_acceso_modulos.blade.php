@@ -54,7 +54,7 @@
                         @php $searchedRole @endphp
                         <form class="row" method="post" action="{{ route("asignar_acceso_modulos") }}">
                             {{ csrf_field() }}
-                            <input type="text" id="id_rol" name="id_rol" hidden value="{{ $id_rol }}">
+                            <input type="text" id="id_rol" name="id_rol" hidden value="{{ $id_rol->id }}">
                             @foreach($modulos_padres as $modulos_padre)
                                 <tr>
                                     <td class="text-center text-bold">{{$modulos_padre->nombre_modulo}}</td>
