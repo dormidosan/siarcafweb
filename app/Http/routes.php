@@ -73,6 +73,9 @@ Route::post('buscar_permisos_permanentes', 'ReportesController@buscar_permisos_p
 
 Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name("buscar_asistencias");
 
+Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados_renta')->name("buscar_consolidados_renta");
+
+
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
@@ -101,7 +104,7 @@ Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planill
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
 Route::get('/Reporte_planilla_dieta_prof_Doc_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Doc_pdf');
 Route::get('/Reporte_consolidados_renta', function () {
-    return view('Reportes.Reporte_consolidados_renta');
+    return view('Reportes.Reporte_consolidados_renta',['resultados'=>NULL]);
 });
 Route::get('/Reporte_consolidados_renta/{tipo}', 'ReportesController@Reporte_consolidados_renta');
 Route::get('/Reporte_consolidados_renta_docente/{tipo}', 'ReportesController@Reporte_consolidados_renta_docente');
@@ -179,15 +182,8 @@ Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->
 
 /* Routes Administracion */
 
-Route::get('ActualizarPlantilla', function () {
-    return view('Administracion.ActualizarPlantilla');
-});
-
-//Ruta de la opcion Administracion Usuarios
-Route::get('GestionarUsuarios', function () {
-    return view('Administracion.GestionarUsuario');
-})->name("administracion_usuario");
-
+Route::get('ActualizarPlantilla', function () {return view('Administracion.ActualizarPlantilla');});
+Route::get('GestionarUsuarios', function () {return view('Administracion.GestionarUsuario');})->name("administracion_usuario");
 Route::get('gestionar_perfiles', "AdministracionController@gestionar_perfiles")->name("gestionar_perfiles");;
 Route::get('registrar_usuario', "AdministracionController@registrar_usuario")->name("mostrar_formulario_registrar_usuario");;
 Route::get('periodos_agu', "AdministracionController@mostrar_periodos_agu")->name("periodos_agu");
@@ -195,6 +191,7 @@ Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionCo
 Route::get('cambiar_perfiles', "AdministracionController@cambiar_perfiles")->name("cambiar_perfiles");
 Route::get('cambiar_cargos_comision', "AdministracionController@cambiar_cargos_comision")->name("cambiar_cargos_comision");
 Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_cargos_junta_directiva")->name("cambiar_cargos_junta_directiva");
+
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
@@ -205,7 +202,8 @@ Route::post('actualizar_secretario', "AdministracionController@actualizar_secret
 Route::post('actualizar_cargo_miembro_jd', "AdministracionController@actualizar_cargo_miembro_jd")->name("actualizar_cargo_miembro_jd");
 Route::post('actualizar_perfil_usuario', "AdministracionController@actualizar_perfil_usuario")->name("actualizar_perfil_usuario");
 Route::post('agregar_perfiles', "AdministracionController@agregar_perfiles")->name("agregar_perfiles");
-
+Route::post('administrar_acceso_modulos', "AdministracionController@administrar_acceso_modulos")->name("administrar_acceso_modulos");
+Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_modulos")->name("asignar_acceso_modulos");
 
 /* Asambleistas */
 Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
