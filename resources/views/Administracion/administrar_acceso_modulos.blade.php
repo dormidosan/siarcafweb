@@ -52,6 +52,10 @@
                         </thead>
                         <tbody>
                         @php $searchedRole @endphp
+                        {{--@php $modulosArray = Auth::user()->rol->modulos->toArray() @endphp--}}
+
+                        {{-- dd($modulosArray) --}}
+
                         <form class="row" method="post" action="{{ route("asignar_acceso_modulos") }}">
                             {{ csrf_field() }}
                             <input type="text" id="id_rol" name="id_rol" hidden value="{{ $id_rol->id }}">
@@ -64,7 +68,8 @@
                                                 <div>
                                                     @php $searchedRole = array_search($id_rol->nombre_rol,$modulos_hijo->roles->pluck('nombre_rol')->toArray()); @endphp
 
-                                                    @if($modulos_hijo->roles[$searchedRole]->id == $id_rol->id)
+                                                    {{-- @if($modulos_hijo->roles[$searchedRole]->id == $id_rol->id) --}}
+                                                    @if(in_array($modulos_hijo->id,$modulosArray))
                                                         <div class="pretty p-icon p-smooth">
                                                             <input type="checkbox" name="modulos[]"
                                                                    value="{{ $modulos_hijo->id }}" checked/>
