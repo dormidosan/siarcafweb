@@ -95,7 +95,7 @@
                             @endforeach
                             <tr class="text-center">
                                 <td colspan="2">
-                                    <button type="submit" id="aceptar" class="btn btn-primary disabled">Aceptar</button>
+                                    <button type="submit" id="aceptar" class="btn btn-primary disabled" disabled>Aceptar</button>
                                 </td>
                             </tr>
                         </form>
