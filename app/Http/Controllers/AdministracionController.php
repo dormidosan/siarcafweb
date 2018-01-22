@@ -449,14 +449,7 @@ class AdministracionController extends Controller
         $ModuloPadreTienePadre = false;
         foreach ($modulos as $modulo) {
             $mod = Modulo::find($modulo);
-            /*if ($mod->modulo_padre != ""){
-                $mp = Modulo::find($mod->modulo_padre);
-                if ($mp->modulo_padre != ""){
-                    $mp2 = Modulo::find($mp->modulo_padre);
-                    //$rol->modulos()->attach([$mp2->id,$mp->id,$mod->id]);
-                }
-                //$rol->modulos()->attach([$mp->id,$mod->id]);
-            }*/
+
             $mp = Modulo::find($mod->modulo_padre);
             if ($mp->modulo_padre != ""){
                 $mp2 = Modulo::find($mp->modulo_padre);
