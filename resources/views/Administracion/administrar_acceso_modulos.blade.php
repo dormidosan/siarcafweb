@@ -117,6 +117,9 @@
 
 @section("scripts")
     <script type="text/javascript">
+        $(function () {
+            habilitar_button();
+        });
 
         function habilitar_button() {
             var chk_arr = $('input[name="modulos[]"]:checked').length;
