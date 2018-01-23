@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
 use Illuminate\Support\Facades\Auth;
+use Excel;
 
 class AdministracionController extends Controller
 {
@@ -99,7 +100,6 @@ class AdministracionController extends Controller
     {
         $periodo_activo = Periodo::where("activo", 1)->first();
 
-
         if (!empty($periodo_activo)) {
             $request->session()->flash("error", "Ya existe un periodo activo");
             return redirect()->back();
@@ -110,6 +110,82 @@ class AdministracionController extends Controller
             $periodo->fin = Carbon::createFromFormat('d-m-Y', $request->get("inicio"))->addYear(2);
             $periodo->activo = 1;
             $periodo->save();
+
+            if ($request->hasFile("excel") && $request->file('excel')->isValid()) {
+                $extension = $request->excel->extension();
+                if ($extension == "xlsx" || $extension == "csv") {
+                    $path = $request->excel->path();
+                    $data = Excel::load($path, function ($reader) {
+                    })->get();
+                    if (!empty($data) && $data->count()) {
+                        foreach ($data as $key => $value) {
+                            //$asambleistas[] = ['name' => $value->name, 'phone' => $value->phone, 'email' => $value->email];
+                            $persona = new Persona();
+                            $persona->primer_nombre = $value->primer_nombre;
+                            $persona->segundo_nombre = $value->segundo_nombre;
+                            $persona->primer_apellido = $value->primer_apellido;
+                            $persona->segundo_apellido = $value->segundo_nombre;
+                            $persona->dui = $value->dui;
+                            $persona->nit = $value->nit;
+
+                            //sentencia para agregar la foto
+                            //$persona->foto = $request->get("foto");
+
+                            $persona->afp = $value->afp;
+                            $persona->cuenta = $value->cuenta;
+                            $persona->save();
+
+                            $usuario = new User();
+                            switch ($value->tipo_usuario){
+                                case "Administrador":
+                                    $usuario->rol_id = 1;
+                                    break;
+                                case "Secretario":
+                                    $usuario->rol_id = 2;
+                                    break;
+                                case "Asambleista":
+                                    $usuario->rol_id = 3;
+                                    break;
+                            }
+
+                            $usuario->persona_id = $persona->id;
+                            $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
+                            $usuario->password = bcrypt("ATB");
+                            $usuario->email = $value->correo;
+                            $usuario->activo = 1;
+                            $usuario->save();
+
+                            $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                            //dd($periodo_activo);
+                            $asambleista = new Asambleista();
+                            $asambleista->user_id = $usuario->id;
+                            $asambleista->periodo_id = $periodo_activo->id;
+                            $asambleista->facultad_id = (Facultad::where("nombre",strtoupper($value->facultad))->first())->id;
+                            $asambleista->sector_id = (Sector::where("nombre",$value->sector)->first())->id;
+                            switch ($value->propetario){
+                                case "Si":
+                                    $asambleista->propietario = 1;
+                                    break;
+                                case "No":
+                                    $asambleista->propietario= 0;
+                                    break;
+                            }
+                            //setea al user como un asambleista activo
+                            $asambleista->activo = 1;
+
+                            $hoy = Carbon::now();
+                            $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
+
+                            if ($hoy > $inicio_periodo) {
+                                $asambleista->inicio = $hoy;
+                            } else {
+                                $asambleista->inicio = $inicio_periodo;
+                            }
+                            $asambleista->save();
+                        }
+                    }
+                }
+            }
             $request->session()->flash("success", "Periodo creado con exito");
             return redirect()->route("periodos_agu");
         }
@@ -425,10 +501,10 @@ class AdministracionController extends Controller
         $id_rol = Rol::find($request->get("id_rol"));
         $modulosArrayTemporal = $id_rol->modulos->toArray();
         $modulosArray = array();
-        foreach ($modulosArrayTemporal as $mat){
-            array_push($modulosArray,$mat["pivot"]["modulo_id"]);
+        foreach ($modulosArrayTemporal as $mat) {
+            array_push($modulosArray, $mat["pivot"]["modulo_id"]);
         }
-        return view("Administracion.administrar_acceso_modulos", ["modulos_padres" => $modulos_padres, "modulos_hijos" => $modulos_hijos, "id_rol" => $id_rol,"modulosArray"=>$modulosArray]);
+        return view("Administracion.administrar_acceso_modulos", ["modulos_padres" => $modulos_padres, "modulos_hijos" => $modulos_hijos, "id_rol" => $id_rol, "modulosArray" => $modulosArray]);
     }
 
     public function asignar_acceso_modulos(Request $request)
@@ -447,30 +523,31 @@ class AdministracionController extends Controller
         //para salvar en la relacion ManyToMany de rol y modulo
         $arrayTemporal = array();
         $ModuloPadreTienePadre = false;
+        array_push($arrayTemporal, 1);
         foreach ($modulos as $modulo) {
             $mod = Modulo::find($modulo);
 
             $mp = Modulo::find($mod->modulo_padre);
-            if ($mp->modulo_padre != ""){
+            if ($mp->modulo_padre != "") {
                 $mp2 = Modulo::find($mp->modulo_padre);
                 $ModuloPadreTienePadre = true;
             }
 
-            switch ($ModuloPadreTienePadre){
+            switch ($ModuloPadreTienePadre) {
                 case false:
-                    if (!in_array($mp->id,$arrayTemporal)) {
-                        array_push($arrayTemporal,$mp->id);
+                    if (!in_array($mp->id, $arrayTemporal)) {
+                        array_push($arrayTemporal, $mp->id);
                     }
                     break;
                 case true:
-                    if (!in_array($mp->id,$arrayTemporal) && !in_array($mp2->id,$arrayTemporal)) {
-                        array_push($arrayTemporal,$mp->id);
-                        array_push($arrayTemporal,$mp2->id);
+                    if (!in_array($mp->id, $arrayTemporal) && !in_array($mp2->id, $arrayTemporal)) {
+                        array_push($arrayTemporal, $mp->id);
+                        array_push($arrayTemporal, $mp2->id);
                     }
                     break;
             }
             $ModuloPadreTienePadre = false;
-            array_push($arrayTemporal,$mod->id);
+            array_push($arrayTemporal, $mod->id);
         }
 
         $rol->modulos()->attach($arrayTemporal);
