@@ -85,7 +85,8 @@
                                         @if(is_null($mh->modulo_padre) != true)
                                             @if($mp->id == $mh->padre->id)
                                                 @if($mh->tiene_hijos == false)
-                                                    <li><a href="{{ url("$mh->url") }}"><i
+                                                    <li id="{{ str_replace(' ','',$mh->nombre_modulo) }}"><a
+                                                                href="{{ url("$mh->url") }}"><i
                                                                     class="fa fa-dot-circle-o"></i>{{ $mh->nombre_modulo }}
                                                         </a></li>
                                                 @else
@@ -100,7 +101,8 @@
                                                                 @if(is_null($mh2->modulo_padre) != true)
                                                                     @if($mh->id == $mh2->padre->id)
 
-                                                                        <li><a href="{{url("$mh2->url")}}"><i
+                                                                        <li id="{{ str_replace(' ','',$mh2->nombre_modulo) }}">
+                                                                            <a href="{{url("$mh2->url")}}"><i
                                                                                         class="fa fa-dot-circle-o"></i>{{$mh2->nombre_modulo}}
                                                                             </a></li>
 
@@ -119,10 +121,13 @@
                                 </ul>
                             </li>
                         @else
-                            <li><a href="{{ url("$mp->url") }}"><i
+                            <li id="{{ str_replace(' ','',$mp->nombre_modulo) }}"><a href="{{ url("$mp->url") }}"><i
                                             class="{{ $mp->icono }}"></i><span>{{ $mp->nombre_modulo }}</span></a></li>
                         @endif
                     @endforeach
+                    <li><a href="{{url('logout')}}"><i class="fa fa-sign-out"></i>
+                            <span>Cerrar Sesion</span></a>
+                    </li>
                 @endif
 
 

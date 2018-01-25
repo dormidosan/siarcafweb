@@ -123,6 +123,7 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+
             $('.input-group.date.fecha').datepicker({
                 format: "d-m-yyyy",
                 clearBtn: true,
@@ -152,6 +153,7 @@
                 },
                 hideThumbnailContent: true
             });
+
 
         });
 
