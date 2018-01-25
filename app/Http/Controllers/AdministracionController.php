@@ -10,6 +10,7 @@ use App\Facultad;
 use App\Modulo;
 use App\Periodo;
 use App\Persona;
+use App\Plantilla;
 use App\Rol;
 use App\Sector;
 use App\User;
@@ -90,6 +91,12 @@ class AdministracionController extends Controller
      * Funcion que esta asociada a un metodo GET, que muestra todos los periodos AGU
      * hasta la fecha
      */
+    public function gestionar_plantillas()
+    {
+        $plantillas = Plantilla::all();
+        return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
+    }
+
     public function mostrar_periodos_agu()
     {
         $periodos = Periodo::orderBy("id", "desc")->get();
@@ -136,7 +143,7 @@ class AdministracionController extends Controller
                             $persona->save();
 
                             $usuario = new User();
-                            switch ($value->tipo_usuario){
+                            switch ($value->tipo_usuario) {
                                 case "Administrador":
                                     $usuario->rol_id = 1;
                                     break;
@@ -160,14 +167,14 @@ class AdministracionController extends Controller
                             $asambleista = new Asambleista();
                             $asambleista->user_id = $usuario->id;
                             $asambleista->periodo_id = $periodo_activo->id;
-                            $asambleista->facultad_id = (Facultad::where("nombre",strtoupper($value->facultad))->first())->id;
-                            $asambleista->sector_id = (Sector::where("nombre",$value->sector)->first())->id;
-                            switch ($value->propetario){
+                            $asambleista->facultad_id = (Facultad::where("nombre", strtoupper($value->facultad))->first())->id;
+                            $asambleista->sector_id = (Sector::where("nombre", $value->sector)->first())->id;
+                            switch ($value->propetario) {
                                 case "Si":
                                     $asambleista->propietario = 1;
                                     break;
                                 case "No":
-                                    $asambleista->propietario= 0;
+                                    $asambleista->propietario = 0;
                                     break;
                             }
                             //setea al user como un asambleista activo
@@ -553,6 +560,21 @@ class AdministracionController extends Controller
         $rol->modulos()->attach($arrayTemporal);
         return redirect()->route("gestionar_perfiles");
 
+    }
+
+    public function agregar_plantillas(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->hasFile("plantillas")) {
+                foreach ($request->plantillas as $plantilla) {
+                    $documento = new Plantilla();
+                    $documento->nombre = $plantilla->getClientOriginalName();
+                }
+                $respuesta = new \stdClass();
+                $respuesta->mensaje = (new Mensaje("Exito", "Plantillas agregadas con exito", "success"))->toArray();
+                return new JsonResponse($respuesta);
+            }
+        }
     }
 
     private function generarTabla($idComision)

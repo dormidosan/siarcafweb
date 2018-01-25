@@ -361,8 +361,8 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Actualizar Plantillas',
-            'url' => 'ActualizarPlantilla',
+            'nombre_modulo'  => 'Plantillas',
+            'url' => 'gestionar_plantillas',
             'modulo_padre' => '10',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,
