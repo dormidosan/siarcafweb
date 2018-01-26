@@ -234,8 +234,17 @@ class JuntaDirectivaController extends Controller
         $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
 
         $peticiones = Peticion::join("puntos", "peticiones.id", "=", "puntos.peticion_id")
-                            ->where('peticiones.agendado','=',1)
-                            ->where('puntos.agenda_id','=',$agenda->id)
+                            //->where('peticiones.agendado','=',1)
+                            //->where('puntos.agenda_id','=',$agenda->id)
+                            ->Where(function ($query) {
+                              $query->where('peticiones.agendado','=',1)
+                                    ->where('peticiones.asignado_agenda','=',0);
+                            })
+                            ->orWhere(function ($query) {
+                              $query->where('peticiones.agendado','=',1)
+                                    ->where('peticiones.asignado_agenda','=',1)
+                                    ->where('puntos.agenda_id','=',$agenda->id);
+                            })
                             ->orderBy('peticiones.created_at','ASC')
                             ->get();
 

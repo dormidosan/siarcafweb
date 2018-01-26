@@ -52,6 +52,8 @@
                         </thead>
                         <tbody>
                         @php $searchedRole @endphp
+                        {{--@php $modulosArray = Auth::user()->rol->modulos->toArray() @endphp--}}
+
                         <form class="row" method="post" action="{{ route("asignar_acceso_modulos") }}">
                             {{ csrf_field() }}
                             <input type="text" id="id_rol" name="id_rol" hidden value="{{ $id_rol->id }}">
@@ -64,10 +66,12 @@
                                                 <div>
                                                     @php $searchedRole = array_search($id_rol->nombre_rol,$modulos_hijo->roles->pluck('nombre_rol')->toArray()); @endphp
 
-                                                    @if($modulos_hijo->roles[$searchedRole]->id == $id_rol->id)
+                                                    {{-- @if($modulos_hijo->roles[$searchedRole]->id == $id_rol->id) --}}
+                                                    @if(in_array($modulos_hijo->id,$modulosArray))
                                                         <div class="pretty p-icon p-smooth">
                                                             <input type="checkbox" name="modulos[]"
-                                                                   value="{{ $modulos_hijo->id }}" checked/>
+                                                                   value="{{ $modulos_hijo->id }}" checked
+                                                                   onchange="habilitar_button()"/>
                                                             <div class="state p-success">
                                                                 <i class="icon mdi mdi-check"></i>
                                                                 <label>{{$modulos_hijo->nombre_modulo}}</label>
@@ -76,7 +80,7 @@
                                                     @else
                                                         <div class="pretty p-icon p-smooth">
                                                             <input type="checkbox" name="modulos[]"
-                                                                   value="{{ $modulos_hijo->id }}"/>
+                                                                   value="{{ $modulos_hijo->id }}" onchange="habilitar_button()"/>
                                                             <div class="state p-success">
                                                                 <i class="icon mdi mdi-check"></i>
                                                                 <label>{{$modulos_hijo->nombre_modulo}}</label>
@@ -91,7 +95,7 @@
                             @endforeach
                             <tr class="text-center">
                                 <td colspan="2">
-                                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                                    <button type="submit" id="aceptar" class="btn btn-primary disabled" disabled>Aceptar</button>
                                 </td>
                             </tr>
                         </form>
@@ -114,6 +118,20 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+            habilitar_button();
         });
+
+        function habilitar_button() {
+            var chk_arr = $('input[name="modulos[]"]:checked').length;
+            if(chk_arr == 0) {
+                $("#aceptar").addClass("disabled");
+                $("#aceptar").attr("disabled","disabled");
+
+            } else{
+                $("#aceptar").removeClass("disabled");
+                $("#aceptar").removeAttr("disabled");
+
+            }
+        }
     </script>
 @endsection

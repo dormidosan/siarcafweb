@@ -10,6 +10,7 @@ use App\Facultad;
 use App\Modulo;
 use App\Periodo;
 use App\Persona;
+use App\Plantilla;
 use App\Rol;
 use App\Sector;
 use App\User;
@@ -21,7 +22,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Excel;
 
 class AdministracionController extends Controller
 {
@@ -90,6 +91,12 @@ class AdministracionController extends Controller
      * Funcion que esta asociada a un metodo GET, que muestra todos los periodos AGU
      * hasta la fecha
      */
+    public function gestionar_plantillas()
+    {
+        $plantillas = Plantilla::all();
+        return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
+    }
+
     public function mostrar_periodos_agu()
     {
         $periodos = Periodo::orderBy("id", "desc")->get();
@@ -99,7 +106,6 @@ class AdministracionController extends Controller
     public function guardar_periodo(PeriodoRequest $request)
     {
         $periodo_activo = Periodo::where("activo", 1)->first();
-
 
         if (!empty($periodo_activo)) {
             $request->session()->flash("error", "Ya existe un periodo activo");
@@ -111,6 +117,82 @@ class AdministracionController extends Controller
             $periodo->fin = Carbon::createFromFormat('d-m-Y', $request->get("inicio"))->addYear(2);
             $periodo->activo = 1;
             $periodo->save();
+
+            if ($request->hasFile("excel") && $request->file('excel')->isValid()) {
+                $extension = $request->excel->extension();
+                if ($extension == "xlsx" || $extension == "csv") {
+                    $path = $request->excel->path();
+                    $data = Excel::load($path, function ($reader) {
+                    })->get();
+                    if (!empty($data) && $data->count()) {
+                        foreach ($data as $key => $value) {
+                            //$asambleistas[] = ['name' => $value->name, 'phone' => $value->phone, 'email' => $value->email];
+                            $persona = new Persona();
+                            $persona->primer_nombre = $value->primer_nombre;
+                            $persona->segundo_nombre = $value->segundo_nombre;
+                            $persona->primer_apellido = $value->primer_apellido;
+                            $persona->segundo_apellido = $value->segundo_nombre;
+                            $persona->dui = $value->dui;
+                            $persona->nit = $value->nit;
+
+                            //sentencia para agregar la foto
+                            //$persona->foto = $request->get("foto");
+
+                            $persona->afp = $value->afp;
+                            $persona->cuenta = $value->cuenta;
+                            $persona->save();
+
+                            $usuario = new User();
+                            switch ($value->tipo_usuario) {
+                                case "Administrador":
+                                    $usuario->rol_id = 1;
+                                    break;
+                                case "Secretario":
+                                    $usuario->rol_id = 2;
+                                    break;
+                                case "Asambleista":
+                                    $usuario->rol_id = 3;
+                                    break;
+                            }
+
+                            $usuario->persona_id = $persona->id;
+                            $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
+                            $usuario->password = bcrypt("ATB");
+                            $usuario->email = $value->correo;
+                            $usuario->activo = 1;
+                            $usuario->save();
+
+                            $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                            //dd($periodo_activo);
+                            $asambleista = new Asambleista();
+                            $asambleista->user_id = $usuario->id;
+                            $asambleista->periodo_id = $periodo_activo->id;
+                            $asambleista->facultad_id = (Facultad::where("nombre", strtoupper($value->facultad))->first())->id;
+                            $asambleista->sector_id = (Sector::where("nombre", $value->sector)->first())->id;
+                            switch ($value->propetario) {
+                                case "Si":
+                                    $asambleista->propietario = 1;
+                                    break;
+                                case "No":
+                                    $asambleista->propietario = 0;
+                                    break;
+                            }
+                            //setea al user como un asambleista activo
+                            $asambleista->activo = 1;
+
+                            $hoy = Carbon::now();
+                            $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
+
+                            if ($hoy > $inicio_periodo) {
+                                $asambleista->inicio = $hoy;
+                            } else {
+                                $asambleista->inicio = $inicio_periodo;
+                            }
+                            $asambleista->save();
+                        }
+                    }
+                }
+            }
             $request->session()->flash("success", "Periodo creado con exito");
             return redirect()->route("periodos_agu");
         }
@@ -405,13 +487,13 @@ class AdministracionController extends Controller
 
     public function agregar_perfiles(Request $request)
     {
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $rol = new Rol();
             $rol->nombre_rol = ucfirst($request->get("perfil"));
             $rol->save();
 
             $respuesta = new \stdClass();
-            $respuesta->mensaje = (new Mensaje("Exito","Perfil agregado con exito","success"))->toArray();
+            $respuesta->mensaje = (new Mensaje("Exito", "Perfil agregado con exito", "success"))->toArray();
             return new JsonResponse($respuesta);
 
         }
@@ -419,15 +501,21 @@ class AdministracionController extends Controller
         //return redirect()->route("gestionar_perfiles");
     }
 
-    public function administrar_acceso_modulos(Request $request){
-        $modulos_padres = Modulo::where("tiene_hijos",1)->get();
+    public function administrar_acceso_modulos(Request $request)
+    {
+        $modulos_padres = Modulo::where("tiene_hijos", 1)->get();
         $modulos_hijos = Modulo::all();
-        //$id_rol = $request->get("id_rol");
         $id_rol = Rol::find($request->get("id_rol"));
-        return view("Administracion.administrar_acceso_modulos",["modulos_padres"=>$modulos_padres,"modulos_hijos"=>$modulos_hijos,"id_rol"=>$id_rol]);
+        $modulosArrayTemporal = $id_rol->modulos->toArray();
+        $modulosArray = array();
+        foreach ($modulosArrayTemporal as $mat) {
+            array_push($modulosArray, $mat["pivot"]["modulo_id"]);
+        }
+        return view("Administracion.administrar_acceso_modulos", ["modulos_padres" => $modulos_padres, "modulos_hijos" => $modulos_hijos, "id_rol" => $id_rol, "modulosArray" => $modulosArray]);
     }
 
-    public function asignar_acceso_modulos(Request $request){
+    public function asignar_acceso_modulos(Request $request)
+    {
         $id_rol = $request->get("id_rol");
         $modulos = $request->get("modulos");
         $rol = Rol::find($id_rol);
@@ -435,15 +523,58 @@ class AdministracionController extends Controller
         //obtener los modulos que se encuentran en la tabla modulo_rol
         $modulos_actuales = (Rol::find($id_rol))->modulos()->get();
         //se remueven todos los modulos que tiene asociado el rol
-        DB::table('modulo_rol')->where('id', $id_rol->id)->delete();
-
+        foreach ($modulos_actuales as $modulo) {
+            $modulo->roles()->detach($rol->id);
+        }
 
         //para salvar en la relacion ManyToMany de rol y modulo
-        $rol->modulos()->sync($modulos);
+        $arrayTemporal = array();
+        $ModuloPadreTienePadre = false;
+        array_push($arrayTemporal, 1);
+        foreach ($modulos as $modulo) {
+            $mod = Modulo::find($modulo);
 
+            $mp = Modulo::find($mod->modulo_padre);
+            if ($mp->modulo_padre != "") {
+                $mp2 = Modulo::find($mp->modulo_padre);
+                $ModuloPadreTienePadre = true;
+            }
+
+            switch ($ModuloPadreTienePadre) {
+                case false:
+                    if (!in_array($mp->id, $arrayTemporal)) {
+                        array_push($arrayTemporal, $mp->id);
+                    }
+                    break;
+                case true:
+                    if (!in_array($mp->id, $arrayTemporal) && !in_array($mp2->id, $arrayTemporal)) {
+                        array_push($arrayTemporal, $mp->id);
+                        array_push($arrayTemporal, $mp2->id);
+                    }
+                    break;
+            }
+            $ModuloPadreTienePadre = false;
+            array_push($arrayTemporal, $mod->id);
+        }
+
+        $rol->modulos()->attach($arrayTemporal);
         return redirect()->route("gestionar_perfiles");
 
+    }
 
+    public function agregar_plantillas(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->hasFile("plantillas")) {
+                foreach ($request->plantillas as $plantilla) {
+                    $documento = new Plantilla();
+                    $documento->nombre = $plantilla->getClientOriginalName();
+                }
+                $respuesta = new \stdClass();
+                $respuesta->mensaje = (new Mensaje("Exito", "Plantillas agregadas con exito", "success"))->toArray();
+                return new JsonResponse($respuesta);
+            }
+        }
     }
 
     private function generarTabla($idComision)
