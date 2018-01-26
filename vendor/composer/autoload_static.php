@@ -364,6 +364,7 @@ class ComposerStaticInit41038c1030ffc73b8f1713a2809aeb69
         'App\\Intervencion' => __DIR__ . '/../..' . '/app/Intervencion.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Modulo' => __DIR__ . '/../..' . '/app/Modulo.php',
+        'App\\ModuloRol' => __DIR__ . '/../..' . '/app/ModuloRol.php',
         'App\\Parametro' => __DIR__ . '/../..' . '/app/Parametro.php',
         'App\\Periodo' => __DIR__ . '/../..' . '/app/Periodo.php',
         'App\\Permiso' => __DIR__ . '/../..' . '/app/Permiso.php',

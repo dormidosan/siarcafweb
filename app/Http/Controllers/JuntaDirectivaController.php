@@ -22,6 +22,7 @@ use App\Agenda;
 use App\Punto;
 use App\Presente;
 use App\Periodo;
+use DateTime;
 
 
 class JuntaDirectivaController extends Controller
@@ -57,15 +58,82 @@ class JuntaDirectivaController extends Controller
     {
 
         $id_peticion = $request->id_peticion;
+        $es_reunion = $request->es_reunion;
         $disco = "../storage/documentos/";
 
+        if ($es_reunion == 1) {
+            $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+            $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+        } else {
+            $reunion = null;
+            $comision = null;
+        }
+        
+
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail(); //->paginate(10); para obtener todos los resultados  o null
+        
         //dd($peticion);
         return view('jdagu.seguimiento_peticion_individual_jd')
             ->with('disco', $disco)
-            ->with('peticion', $peticion);
+            ->with('reunion',$reunion)
+            ->with('comision',$comision)
+            ->with('peticion', $peticion)
+            ->with('es_reunion',$es_reunion);
 
     }
+
+    
+
+    public function listado_agenda_plenaria_jd(Request $request, Redirector $redirect)
+    {
+
+        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+
+        
+        return view('jdagu.listado_agenda_plenaria_jd')
+        ->with('agendas', $agendas);
+
+    }
+
+    public function generar_agenda_plenaria_jd(Request $request, Redirector $redirect)
+    {   //dd($request->all());
+        $agenda =  new Agenda();
+        $agenda->codigo = $request->codigo;
+        $agenda->periodo_id = Periodo::latest()->first()->id;
+        $agenda->lugar = $request->lugar;
+        $agenda->fecha = DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y'); 
+        $agenda->inicio = DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+        $agenda->trascendental = 0;
+        if($request->trascendental == 'on')
+            $agenda->trascendental = 1;
+
+        $agenda->vigente = 1;
+        $agenda->activa = 0;
+        $agenda->fijada = 0;
+        $agenda->save();
+
+
+        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+
+        return view('jdagu.listado_agenda_plenaria_jd')
+        ->with('agendas', $agendas);
+
+    }
+
+    
+    public function eliminar_agenda_creada_jd(Request $request, Redirector $redirect)
+    {   //dd($request->all());
+
+        $agenda = Agenda::where('id','=',$request->id_agenda)->first(); 
+        $agenda->delete();
+        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+
+        return view('jdagu.listado_agenda_plenaria_jd')
+        ->with('agendas', $agendas);
+
+    }
+
+    
 
 
     public function agendar_plenaria(Request $request,Redirector $redirect){
@@ -156,12 +224,20 @@ class JuntaDirectivaController extends Controller
     
     public function agregar_puntos_jd(Request $request,Redirector $redirect){
         //dd();
+        
 
-        $peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
+
+        //$peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
 
         $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
         $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
         $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+        $peticiones = Peticion::join("puntos", "peticiones.id", "=", "puntos.peticion_id")
+                            ->where('peticiones.agendado','=',1)
+                            ->where('puntos.agenda_id','=',$agenda->id)
+                            ->orderBy('peticiones.created_at','ASC')
+                            ->get();
 
 
         $todos_puntos = 3;

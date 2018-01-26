@@ -63,6 +63,7 @@ return array(
     'App\\Intervencion' => $baseDir . '/app/Intervencion.php',
     'App\\Jobs\\Job' => $baseDir . '/app/Jobs/Job.php',
     'App\\Modulo' => $baseDir . '/app/Modulo.php',
+    'App\\ModuloRol' => $baseDir . '/app/ModuloRol.php',
     'App\\Parametro' => $baseDir . '/app/Parametro.php',
     'App\\Periodo' => $baseDir . '/app/Periodo.php',
     'App\\Permiso' => $baseDir . '/app/Permiso.php',
