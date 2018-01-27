@@ -88,7 +88,7 @@
                         <th>Peticionario</th>
                         <th>Fecha peticion</th>
                         <th>Retirado</th>
-                        <th colspan="2">Accion</th>
+                        <th colspan="3">Accion</th>
                     </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
@@ -131,7 +131,8 @@
                                             <input type="hidden" name="restar" id="restar" value="1">
                                             <button type="submit" class="btn btn-success">Subir</button>
                                             {!! Form::close() !!}
-
+                                        </td>
+                                        <td>
                                             {!! Form::open(['route'=>['nuevo_orden_plenaria'],'method'=> 'POST','id'=>$punto->id.'1']) !!}
                                             <input type="hidden" name="id_agenda" id="id_agenda"
                                                    value="{{$agenda->id}}">
@@ -153,6 +154,9 @@
                                                 </button>
                                                 {!! Form::close() !!}
                                             </td>
+                                            <td>
+                                                
+                                            </td>
                                         @else
                                             <td>
                                                 <button type="submit" class="btn btn-success btn-xs btn-block"
@@ -160,6 +164,18 @@
                                                     <i class="fa fa-eye"></i> Discutir
                                                 </button>
                                             </td>
+                                            <td>
+                                                {!! Form::open(['route'=>['discutir_punto_plenaria'],'method'=> 'POST']) !!}
+                                                <input type="hidden" name="id_punto" id="id_punto"
+                                                       value="{{$punto->id}}">
+                                                <input type="hidden" name="id_agenda" id="id_agenda"
+                                                       value="{{$agenda->id}}">
+                                                <button type="submit" class="btn btn-success btn-xs btn-block">
+                                                    <i class="fa fa-eye"></i> Revisar
+                                                </button>
+                                                {!! Form::close() !!}
+                                            </td>
+
                                         @endif
                                     @endif
                                 @else

@@ -34,7 +34,8 @@
                     @php $contador =1 @endphp @forelse($reuniones as $reunion)
                         {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!}
                         <tr>
-                            {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', '1') }}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                             <td>
                                 {!! $contador !!} @php $contador++ @endphp
                             </td>
@@ -44,35 +45,44 @@
                             <td>{!! $reunion->inicio !!}</td>
                             <td>{!! $reunion->fin !!}</td>
                             @if($reunion->vigente == 1)
+                            <!--
                                 <td>
                                     <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
                                                 class="fa fa-eye"></i> Ver
                                     </button>
                                 </td>
+                            -->
+                                @if($reunion->activa == 0)
                                 <td>
                                     <button type="submit" class="btn btn-success btn-xs btn-block"><i
-                                                class="fa fa-eye"></i>
-                                        Iniciar
+                                                class="fa fa-eye"></i>Iniciar
                                     </button>
                                 </td>
+                                @else
                                 <td>
-                                    <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                    <button type="submit" class="btn btn-success btn-xs btn-block" ><i
                                                 class="fa fa-eye"></i> Continuar
                                     </button>
                                 </td>
+                                @endif
+                                
+                                
                             @else
+                            <!--
                                 <td>
                                     <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
                                                 class="fa fa-eye"></i> Ver
                                     </button>
                                 </td>
+                            
                                 <td>
                                     <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
                                                 class="fa fa-eye"></i> Iniciar
                                     </button>
                                 </td>
+                                -->
                                 <td>
-                                    <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
+                                    <button type="submit" class="btn btn-warning btn-xs btn-block" disabled><i
                                                 class="fa fa-eye"></i> Continuar
                                     </button>
                                 </td>

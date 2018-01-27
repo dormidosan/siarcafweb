@@ -17,7 +17,7 @@ class CreateIntervencionesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('punto_id');
             $table->unsignedInteger('asambleista_id');
-            $table->string('descripcion', 45)->nullable();
+            $table->text('descripcion')->nullable();
 
             $table->index(["punto_id"], 'fk_intervenciones_puntos1_idx');
             $table->index(["asambleista_id"], 'fk_intervenciones_asambleistas1_idx');

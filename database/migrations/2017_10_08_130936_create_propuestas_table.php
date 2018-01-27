@@ -17,7 +17,7 @@ class CreatePropuestasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('punto_id');
             $table->unsignedInteger('asambleista_id');
-            $table->string('nombre_propuesta', 45)->nullable();
+            $table->string('nombre_propuesta', 254)->nullable();
             $table->smallInteger('favor')->nullable();
             $table->smallInteger('contra')->nullable();
             $table->smallInteger('abstencion')->nullable();
@@ -26,6 +26,7 @@ class CreatePropuestasTable extends Migration
             $table->boolean('activa')->nullable();
             $table->boolean('votado')->nullable();
             $table->smallInteger('pareja')->nullable();
+            $table->smallInteger('ganadora')->nullable();
 
             $table->index(["punto_id"], 'fk_propuestas_puntos1_idx');
             $table->index(["asambleista_id"], 'fk_propuestas_asambleistas1_idx');

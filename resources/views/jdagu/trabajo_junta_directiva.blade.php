@@ -39,8 +39,8 @@
                             <div class="text-center">
                                 <i class="fa fa-book fa-4x text-red"></i>
                             </div>
-                            <h3 class="profile-username text-center">Generar Bitacora</h3>
-                            <a href="#" class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
+                            <h3 class="profile-username text-center">Generar Agenda Plenaria</h3>
+                            <a href="{{url('listado_agenda_plenaria_jd')}}" class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
                         </div>
                     </div>
                 </div>

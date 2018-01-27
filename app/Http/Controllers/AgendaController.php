@@ -60,6 +60,34 @@ class AgendaController extends Controller
         return $res;
     }
 
+    public function resolverPunto($id_punto,$id_agenda) //$this->resolverPunto($request->id_punto,$request->id_agenda);
+    {
+        // ******* CUERPO DEL METODO
+        $punto = Punto::where('id', '=', $id_punto)->first();
+        $punto->activo = '0';
+        $punto->save();
+        $peticion = Peticion::where('id', '=', $punto->peticion_id)->first();
+        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'rs')->first()->id;
+        $peticion->resuelto = '1';
+        $peticion->agendado = '0';
+        $peticion->asignado_agenda = '0';
+        $peticion->comision = '0';
+        $peticion->save();
+
+
+        // ******* CUERPO DEL METODO
+
+
+        $agenda = Agenda::where('id', '=', $id_agenda)->first();
+        $puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero', 'ASC')->get();
+        $actualizado = 0;
+        return view('Agenda.listado_puntos_plenaria')
+            ->with('actualizado', $actualizado)
+            ->with('agenda', $agenda)
+            ->with('puntos', $puntos);
+    }
+
+
     public function sala_sesion_plenaria(Request $request,Redirector $redirect)
     {
 
@@ -79,10 +107,46 @@ class AgendaController extends Controller
         $facultades = Facultad::where('id','!=','0')->get();
         $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
+        $conteo = array(
+                        "pro" => "0",
+                        "csup" => "0",
+                        "cpro" => "0",
+                        "sup" => "0",
+                        "total" => "0",
+                    );
+        $conteo["pro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','1')
+                                            ->where('asambleistas.propietario','=','1')
+                                            ->count();
+
+        $conteo["csup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','0')
+                                            ->where('asambleistas.propietario','=','1')
+                                            ->count();
+
+        $conteo["cpro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','1')
+                                            ->where('asambleistas.propietario','=','0')
+                                            ->count();
+
+        $conteo["sup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                                            ->where('asistencias.agenda_id','=',$agenda->id)
+                                            ->where('asistencias.propietaria','=','0')
+                                            ->where('asambleistas.propietario','=','0')
+                                            ->count();
+
+        $conteo["total"] = Asistencia::where('agenda_id','=',$agenda->id)->count();
+
+
+
         //return view('Agenda.CrearSesionPlenaria')
         //dd($asambleistas);
         return view('Agenda.sala_sesion_plenaria')        
         ->with('agenda', $agenda)
+        ->with('conteo', $conteo)
         ->with('facultades', $facultades)
         ->with('asistentes', $asistentes)
         ->with('asambleistas', $asambleistas)
@@ -434,6 +498,13 @@ class AgendaController extends Controller
 
 
         // ******* CUERPO DEL METODO
+        if ($agenda->trascendental == 1) {
+            $votacion_minima = Parametro::where('parametro','=','vmt')->first();// votacion minima trascendental
+        } else {
+            $votacion_minima = Parametro::where('parametro','=','vmn')->first();// votacion minima normal 
+        }
+         
+
         $propuesta = Propuesta::where('id', '=', $request->id_propuesta)->first();
         $propuesta->favor = $request->favor;
         $propuesta->contra = $request->contra;
@@ -441,6 +512,15 @@ class AgendaController extends Controller
         $propuesta->nulo = $request->nulo;
         $propuesta->votado = '1';
         $propuesta->activa = '1';
+        if($request->favor >= $votacion_minima->valor){
+            $propuesta->ganadora = '1';
+            // EN CASO QUE SE QUIERA TERMINAR EL PUNTO CUANDO SE ALCANZA LA VOTACION MINIMA
+            //$propuesta->save();
+            //return $this->resolverPunto($request->id_punto,$request->id_agenda);
+        }else{
+            $propuesta->ganadora = '0';
+        }
+
         $propuesta->save();
         // ******* CUERPO DEL METODO
 
@@ -556,30 +636,8 @@ class AgendaController extends Controller
     public function resolver_punto_plenaria(Request $request, Redirector $redirect)
     {
 
-
-        // ******* CUERPO DEL METODO
-        $punto = Punto::where('id', '=', $request->id_punto)->first();
-        $punto->activo = '0';
-        $punto->save();
-        $peticion = Peticion::where('id', '=', $punto->peticion_id)->first();
-        $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'rs')->first()->id;
-        $peticion->resuelto = '1';
-        $peticion->agendado = '0';
-        $peticion->asignado_agenda = '0';
-        $peticion->comision = '0';
-        $peticion->save();
-
-
-        // ******* CUERPO DEL METODO
-
-
-        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
-        $puntos = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero', 'ASC')->get();
-        $actualizado = 0;
-        return view('Agenda.listado_puntos_plenaria')
-            ->with('actualizado', $actualizado)
-            ->with('agenda', $agenda)
-            ->with('puntos', $puntos);
+        return $this->resolverPunto($request->id_punto,$request->id_agenda);
+        
     }
 
 

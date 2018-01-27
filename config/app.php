@@ -150,8 +150,10 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+
         Sergio\PhpJasperXML\JasperReportsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
 
         /*

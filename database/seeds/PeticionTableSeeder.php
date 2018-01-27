@@ -61,8 +61,8 @@ class PeticionTableSeeder extends Seeder
 		'agendado'  => '0',
 		'asignado_agenda'  => '0',
 		'comision'  => $c,
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		'created_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s')
 		));
 
 
@@ -108,8 +108,8 @@ class PeticionTableSeeder extends Seeder
 		'activo'  => '0',
 		'agendado'  => '0',
 		'descripcion'  => 'Creacion prueba por seed',
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		'created_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s')
 		));
 
 		for ($k=1; $k < 3; $k++) { 
@@ -124,8 +124,8 @@ class PeticionTableSeeder extends Seeder
 		'activo'  => '0',
 		'agendado'  => '0',
 		'descripcion'  => 'documento prueba por seed',
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		'created_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s')
 		));
 		}
 
@@ -140,8 +140,8 @@ class PeticionTableSeeder extends Seeder
 		'activo'  => '1',
 		'agendado'  => '0',
 		'descripcion'  => 'Inicio control de JD prueba por seed',
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		'created_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s')
 		));
 
 		\DB::table('seguimientos')->insert(array (
@@ -155,8 +155,8 @@ class PeticionTableSeeder extends Seeder
 		'activo'  => '0',
 		'agendado'  => '0',
 		'descripcion'  => 'Asignado a JD prueba por seed',
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		'created_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->addSeconds($i)->format('Y-m-d H:i:s')
 		));	
 
 		// --------------------------------

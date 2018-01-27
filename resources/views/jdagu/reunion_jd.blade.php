@@ -28,14 +28,16 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-12">
                     {!! Form::open(['route'=>['asistencia_jd'],'method'=> 'POST']) !!}
-                    {{ Form::hidden('id_reunion', $reunion->id) }}
-                    {{ Form::hidden('id_comision', $comision->id) }}
+                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block ">Asistencia</button>
                     {!! Form::close() !!}
                 </div>
 
                 <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                    {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
+                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     @if($todos_puntos == 1)
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block"
                                 disabled="disabled">Reunion JD***
@@ -48,7 +50,9 @@
                 </div>
 
                 <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['puntos_agendados'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                    {!! Form::open(['route'=>['puntos_agendados'],'method'=> 'POST']) !!} 
+                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     @if($todos_puntos == 2)
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block"
                                 disabled="disabled">Puntos Plenaria***
@@ -62,7 +66,9 @@
                 </div>
 
                 <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['listado_sesion_plenaria'],'method'=> 'POST']) !!} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                    {!! Form::open(['route'=>['listado_sesion_plenaria'],'method'=> 'POST']) !!} 
+                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     @if($todos_puntos == 3)
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block">Listado
                             Sesion Plenaria
@@ -127,15 +133,24 @@
                                         </td>
                                         <td>
                                             {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST','id'=>$peticion->id.'1']) !!}
-                                            {{ Form::hidden('id_peticion', $peticion->id) }} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                                            <input type="hidden" name="id_peticion" id="id_peticion"
+                                                   value="{{$peticion->id}}">
+                                            <input type="hidden" name="id_comision" id="id_comision"
+                                                   value="{{$comision->id}}">
+                                            <input type="hidden" name="id_reunion" id="id_reunion"
+                                                   value="{{$reunion->id}}">
+                                            <input type="hidden" name="es_reunion"  id="es_reunion"  value="1">
                                             <button type="submit" class="btn btn-info btn-xs">Ver</button>
                                             {!! Form::close() !!}
                                         </td>
                                         <td>
                                             {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
-                                            {{ Form::hidden('id_peticion', $peticion->id) }}
-                                            {{ Form::hidden('id_reunion', $reunion->id) }}
-                                            {{ Form::hidden('id_comision', $comision->id) }}
+                                            <input type="hidden" name="id_peticion" id="id_peticion"
+                                                   value="{{$peticion->id}}">
+                                            <input type="hidden" name="id_comision" id="id_comision"
+                                                   value="{{$comision->id}}">
+                                            <input type="hidden" name="id_reunion" id="id_reunion"
+                                                   value="{{$reunion->id}}">
                                             @if($peticion->agendado == 1 OR $peticion->resuelto == 1)
                                                 <button type="submit" class="btn btn-default btn-xs"
                                                         disabled="disabled">Asignar comision
@@ -179,7 +194,12 @@
 
                                         <td>
                                             {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST','id'=>$peticion->id.'4']) !!}
-                                            {{ Form::hidden('id_peticion', $peticion->id) }} {{ Form::hidden('id_reunion', $reunion->id) }} {{ Form::hidden('id_comision', $comision->id) }}
+                                            <input type="hidden" name="id_peticion" id="id_peticion"
+                                                   value="{{$peticion->id}}">
+                                            <input type="hidden" name="id_comision" id="id_comision"
+                                                   value="{{$comision->id}}">
+                                            <input type="hidden" name="id_reunion" id="id_reunion"
+                                                   value="{{$reunion->id}}">
                                             <button type="submit" class="btn btn-success btn-xs">Subir Atestado</button>
                                             {!! Form::close() !!}
                                         </td>

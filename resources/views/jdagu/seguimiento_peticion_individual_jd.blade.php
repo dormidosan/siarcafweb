@@ -7,10 +7,24 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                    <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
-                       href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
-                </div>
+            @if($es_reunion == 1)
+            <div class="col-lg-3 col-sm-12">
+                    {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
+                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Reunion JD</button>
+                   
+                    {!! Form::close() !!}
+            </div>
+            @else
+            <div class="col-lg-4 col-lg-offset-1 col-sm-12">
+                <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
+                   href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
+            </div>
+            @endif
+                
+
+                
 
 
             </div>

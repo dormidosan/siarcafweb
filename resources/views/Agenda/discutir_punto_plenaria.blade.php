@@ -8,9 +8,9 @@
 @section('breadcrumb')
     <section>
         <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{ route('inicio') }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Agenda</a></li>
-            <li><a href="{{ route("consultar_agenda_vigentes") }}">Consultar Agendas Vigentes</a></li>
+            <li><a href="{{ route('consultar_agenda_vigentes') }}">Consultar Agendas Vigentes</a></li>
             <li><a href="javascript:document.getElementById('sala_sesion_plenaria').submit();">Sesion Plenaria de Agenda {{ $agenda->codigo }}</a></li>
             <li><a href="javascript:document.getElementById('iniciar_sesion_plenaria').submit();">Listado de Puntos</a></li>
             <li class="active">Informacion de Punto de Plenaria</li>
@@ -123,15 +123,26 @@
                 @include('Agenda.propuestas')
                 @include('Agenda.intervenciones')
             @endif
+            @if($punto->activo == 0)
+                @include('Agenda.propuestas_inactivas')
+                @include('Agenda.intervenciones_inactivas')
+            @endif
 
 
         </div>
     </div>
+@include("Modal.MostrarIntervencionModal")
 @endsection
 @section("js")
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+
+
+    <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 @section("scripts")
     <script type="text/javascript">
@@ -155,6 +166,18 @@
 
             });
         });
+
+        /* 
+        -/-*Esta función permite mostrar el modal-*-/
+        function mostrarModal() {
+            $("#iniciarSesionPlenaria").modal('show')
+        }
+        */
+        function mostrarIntervencion() {
+            $("#mostrarIntervencion").modal('show')
+        }
     </script>
 @endsection
+
+
 

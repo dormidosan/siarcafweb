@@ -87,6 +87,7 @@
                                 {!! $i !!}
                             </td>
                             <td>
+                            <input type="hidden" name="es_reunion"  id="es_reunion"  value="0">
                                 <button type="submit" class="btn btn-primary btn-xs btn-block">
                                     <i class="fa fa-eye"></i> Ver
                                 </button>

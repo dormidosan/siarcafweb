@@ -30,6 +30,7 @@ class PersonasTableSeeder extends Seeder
 		'segundo_nombre'  => $faker->firstName,
 		'primer_apellido'  => $faker->lastname,
 		'segundo_apellido'  => $faker->lastname,
+		'nacimiento'  => $faker->date($format = 'Y-m-d', $min = '-48 years', $max = '-20 years'),
 		'dui'  => $faker->unique()->ean8,
 		'nit'  => $faker->unique()->isbn13,
 		'foto' => 'foto_agu3.jpg',
@@ -44,6 +45,7 @@ class PersonasTableSeeder extends Seeder
 		'segundo_nombre'  => $faker->firstName,
 		'primer_apellido'  => $faker->lastname,
 		'segundo_apellido'  => $faker->lastname,
+		'nacimiento'  => $faker->date($format = 'Y-m-d', $min = '-48 years', $max = '-20 years'),
 		'dui'  => $faker->unique()->ean8,
 		'nit'  => $faker->unique()->isbn13,
 		'foto' => 'foto_agu.jpg',
@@ -57,6 +59,7 @@ class PersonasTableSeeder extends Seeder
 		'segundo_nombre'  => $faker->firstName,
 		'primer_apellido'  => $faker->lastname,
 		'segundo_apellido'  => $faker->lastname,
+		'nacimiento'  => $faker->date($format = 'Y-m-d', $min = '-48 years', $max = '-20 years'),
 		'dui'  => $faker->unique()->ean8,
 		'nit'  => $faker->unique()->isbn13,
 		'foto' => 'foto_agu2.jpg',
@@ -91,7 +94,7 @@ class PersonasTableSeeder extends Seeder
 
     	if ($j == 2) {
     	\DB::table('users')->insert(array (
-		'rol_id'  => '3 ',
+		'rol_id'  => '1 ',
 		'persona_id'  => $j,
 		'name'  => 'name_user'.$j,
 		'password'  => bcrypt('123456'),
@@ -290,6 +293,7 @@ class PersonasTableSeeder extends Seeder
 		'segundo_nombre'  => 'nombre1',
 		'primer_apellido'  => 'apellido1',
 		'segundo_apellido'  => 'apellido1',
+		'nacimiento'  => $faker->date($format = 'Y-m-d', $min = '-48 years', $max = '-20 years'),
 		'dui'  => '01610325-1',
 		'nit'  => '0404-110993-101-1',
 		'foto' => 'foto_agu2.jpg',
