@@ -58,8 +58,7 @@
                     @if($propuesta->votado == 1)
                         <tr class="text-center">
                             <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
+                                {{ $contador++ }}
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
@@ -104,7 +103,6 @@
                             {!! Form::open(['route'=>['guardar_votacion'],'method'=> 'POST']) !!}
                             <td>
                                 {{ $contador++ }}
-                                @php $contador++ @endphp
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
