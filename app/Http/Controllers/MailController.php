@@ -113,6 +113,11 @@ dd($destinos);
       //Session::flash('success','Mensaje enviado correctamente');
       //dd();
 
+<<<<<<< HEAD
+      Session::flash('message','Mensaje enviado correctamente');
+
+=======
+>>>>>>> origin
         return view('jdagu.convocatoria_jd');
     }
 

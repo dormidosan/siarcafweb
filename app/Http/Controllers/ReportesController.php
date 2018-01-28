@@ -21,7 +21,10 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\JsonResponse;
 use App\Clases\Mensaje;
+<<<<<<< HEAD
 use App\Periodo;
+=======
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 class ReportesController extends Controller
 {
@@ -31,6 +34,7 @@ class ReportesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+<<<<<<< HEAD
  public function buscar_periodo()
     {
       
@@ -223,6 +227,10 @@ $resultados =DB::table('asambleistas')
 
     public function Reporte_permisos_temporales($tipo) 
     {
+=======
+    public function Reporte_permisos_temporales($tipo) 
+    {
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 
         $parametros = explode('.', $tipo);
@@ -257,6 +265,7 @@ $resultados =DB::table('asambleistas')
 
        
         $view =  \View::make('Reportes/Reporte_permisos_temporales_pdf', compact('resultados','fecha'))->render();
+<<<<<<< HEAD
 
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true); //estas ondas no furulan :v
@@ -266,6 +275,17 @@ $resultados =DB::table('asambleistas')
         $pdf->getDomPDF()->set_option('margin-right',0);
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+=======
+
+        $pdf = \App::make('dompdf.wrapper');      
+        $pdf->getDomPDF()->set_option("enable_php", true); //estas ondas no furulan :v
+        $pdf->getDomPDF()->set_option('margin-top',0);
+        $pdf->getDomPDF()->set_option('margin-bottom',0);
+        $pdf->getDomPDF()->set_option('margin-left',0);
+        $pdf->getDomPDF()->set_option('margin-right',0);
+        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
+
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
         if($tipodes==1)
         {
             return $pdf->stream('reporte');
@@ -368,6 +388,8 @@ $resultados = DB::table('permisos')
         $sector='ESTUDIANTIL';
 }
 
+<<<<<<< HEAD
+=======
 
         if($sector=='D'){
 
@@ -413,9 +435,58 @@ $resultados = DB::table('permisos')
         ->get();
         $sector='NO DOCENTE';
 }
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
+
+        if($sector=='D'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
+        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
+        ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
+
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+      
+        ->where('asambleistas.sector_id','=',2)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='DOCENTE';
+}
+
+
+<<<<<<< HEAD
+        if($sector=='ND'){
+
+         $resultados=DB::table('asistencias')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
+         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
+        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
+        ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
+
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
+      
+        ->where('asambleistas.sector_id','=',3)//sector estudiantil
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
+        ->orderBy('facultades.nombre', 'desc')
+
+        ->get();
+        $sector='NO DOCENTE';
+}
 
 
 
+=======
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 
 
@@ -516,6 +587,7 @@ public function buscar_consolidados_renta(ReportesConsolidadosRentaRequest $requ
 //dd($request->all());
   
         $mes=$this->numero_mes($request->fecha1);
+<<<<<<< HEAD
 
         $mesnum=$request->fecha1;
 
@@ -558,9 +630,57 @@ if($resultados==NULL){
 else{
  $request->session()->flash("success", "Busqueda terminada con exito");
 }
+=======
+
+        $mesnum=$request->fecha1;
+
+        $tipodoc=0;
+
+       //dd($agenda);
+
+
+if($request->tipoDocumento=='E'){
+ $tipodoc=1;   
+}
+  if($request->tipoDocumento=='D'){
+ $tipodoc=2;
+     
+}
+  if($request->tipoDocumento=='ND'){
+$tipodoc=3;
+   
+}
+     
+
+$resultados = DB::table('dietas')
+        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')
+        ->join('sectores','asambleistas.sector_id','=','sectores.id')
+        ->join('personas','users.persona_id','=','personas.id')
+        ->where('dietas.mes','=', $mes)
+        ->where('dietas.anio','=', $request->anio)
+        ->where('sectores.id','=', $tipodoc)
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre')
+        ->limit(1)
+        ->get();
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
+
+if($resultados==NULL){
+
+<<<<<<< HEAD
+
+=======
+ $request->session()->flash("warning", "No se encontraron registros");
+
+}
+else{
+ $request->session()->flash("success", "Busqueda terminada con exito");
+}
 
 
 
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
          return view("Reportes.Reporte_consolidados_renta")
          ->with('resultados',$resultados)
          ->with('mes',$mes)
@@ -660,6 +780,13 @@ if($request->tipoDocumento=='E'){
         ->join('users','asambleistas.user_id','=','users.id')
         ->whereColumn(['users.name','like', $request->nombre],
                       ['dietas.mes','=',$mes])->select('users.name')->first();*/
+<<<<<<< HEAD
+
+        
+        if($resultados==NULL){
+
+ $request->session()->flash("warning", "No se encontraron registros");
+=======
 
         
         if($resultados==NULL){
@@ -670,11 +797,21 @@ if($request->tipoDocumento=='E'){
 else{
  $request->session()->flash("success", "Busqueda terminada con exito");
 }
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
+}
+else{
+ $request->session()->flash("success", "Busqueda terminada con exito");
+}
 
 
             //echo($dieta->name);
 
+<<<<<<< HEAD
+            //echo($dieta->name);
+
+=======
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
          
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
@@ -826,8 +963,13 @@ else{
 
     
 
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
  public function buscar_bitacora_correspondencia(BuscarBitacoraCorrespRequest $request){
 
 $fechainicial=$request->fecha1;
@@ -849,6 +991,18 @@ $fechafinal=$request->fecha2;
 //$fechafinal = date('Y-m-d', strtotime($fechafinal));
 
 
+<<<<<<< HEAD
+=======
+
+$resultados = DB::table('peticiones')
+->where
+([
+  ['peticiones.fecha','>=',$this->convertirfecha($fechainicial)],
+  ['peticiones.fecha','<=',$this->convertirfecha($fechafinal)]
+])
+->limit(1)
+->get();
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 $resultados = DB::table('peticiones')
 ->where
@@ -861,7 +1015,10 @@ $resultados = DB::table('peticiones')
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 /*$resultados = DB::table('peticiones')
 ->where('peticiones.id','=',1)
 ->get();*/
@@ -871,6 +1028,19 @@ $resultados = DB::table('peticiones')
 //dd($resultados);
 
 
+<<<<<<< HEAD
+=======
+
+if($resultados==NULL){
+
+ $request->session()->flash("warning", "No se encontraron registros");
+
+}
+else{
+ $request->session()->flash("success", "Busqueda terminada con exito");
+}
+
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 if($resultados==NULL){
 
@@ -900,6 +1070,26 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
 
  }
 
+<<<<<<< HEAD
+=======
+
+    $uno=$this->convertirfecha($fechainicial);
+    $dos=$this->convertirfecha($fechafinal);
+         return view("Reportes.Reporte_bitacora_correspondencia")
+         ->with('fechainicial',$uno)
+         ->with('fechafinal',$dos)
+         ->with('resultados',$resultados);
+
+
+
+
+return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
+
+
+
+ }
+
+>>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 public function porcAsistencia($idAsambleista,$idSesion,$tipoasistencia){
 
     $horasreunion=DB::table('reuniones')

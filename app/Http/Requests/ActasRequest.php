@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ReportesRequest extends Request
+class ActasRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class ReportesRequest extends Request
     public function rules()
     {
         return [
-            'tipoDocumento' => 'required|max:50'
+            'fecha1' => 'required|max:50'
         ];
     }
 
@@ -36,7 +36,7 @@ class ReportesRequest extends Request
     public function messages()
     {
         return [
-            'tipoDocumento.required' => 'El nombre es requerido'
+            'fecha1.required' => 'La fecha inicial es requerida'
         ];
     }
 }

@@ -1,177 +1,5 @@
 [
     {
-        "name": "symfony/yaml",
-        "version": "v3.3.15",
-        "version_normalized": "3.3.15.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/7c80d81b5805589be151b85b0df785f0dc3269cf",
-            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8"
-        },
-        "require-dev": {
-            "symfony/console": "~2.8|~3.0"
-        },
-        "suggest": {
-            "symfony/console": "For validating YAML files using the lint command"
-        },
-        "time": "2018-01-03T07:37:11+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.3-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
-        "name": "phpunit/php-token-stream",
-        "version": "1.4.12",
-        "version_normalized": "1.4.12.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-            "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/1ce90ba27c42e4e44e6d8458241466380b51fa16",
-            "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16",
-            "shasum": ""
-        },
-        "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.2"
-        },
-        "time": "2017-12-04T08:55:13+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            }
-        ],
-        "description": "Wrapper around PHP's tokenizer extension.",
-        "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
-        "keywords": [
-            "tokenizer"
-        ]
-    },
-    {
-        "name": "phpunit/php-code-coverage",
-        "version": "2.2.4",
-        "version_normalized": "2.2.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-            "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/eabf68b476ac7d0f73793aada060f1c1a9bf8979",
-            "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "phpunit/php-file-iterator": "~1.3",
-            "phpunit/php-text-template": "~1.2",
-            "phpunit/php-token-stream": "~1.3",
-            "sebastian/environment": "^1.3.2",
-            "sebastian/version": "~1.0"
-        },
-        "require-dev": {
-            "ext-xdebug": ">=2.1.4",
-            "phpunit/phpunit": "~4"
-        },
-        "suggest": {
-            "ext-dom": "*",
-            "ext-xdebug": ">=2.2.1",
-            "ext-xmlwriter": "*"
-        },
-        "time": "2015-10-06T15:47:00+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.2.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
-        "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
-        "keywords": [
-            "coverage",
-            "testing",
-            "xunit"
-        ]
-    },
-    {
         "name": "sabberworm/php-css-parser",
         "version": "8.1.0",
         "version_normalized": "8.1.0.0",
@@ -2615,84 +2443,6 @@
         ]
     },
     {
-        "name": "sergio-vilchis/laravel-phpjasperxml",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sergio-vilchis/laravel-phpjasperxml.git",
-            "reference": "524f98f2b6906baf2556c89f5646773c1ab0e310"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sergio-vilchis/laravel-phpjasperxml/zipball/524f98f2b6906baf2556c89f5646773c1ab0e310",
-            "reference": "524f98f2b6906baf2556c89f5646773c1ab0e310",
-            "shasum": ""
-        },
-        "time": "2016-10-13T22:50:53+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Sergio\\PhpJasperXML\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "authors": [
-            {
-                "name": "Sergio Vilchis",
-                "email": "s.vilchisq@gmail.com"
-            }
-        ],
-        "description": "Laravel package to render JasperReports"
-    },
-    {
-        "name": "jaspersoft/rest-client",
-        "version": "v2.0.0",
-        "version_normalized": "2.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Jaspersoft/jrs-rest-php-client.git",
-            "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Jaspersoft/jrs-rest-php-client/zipball/017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
-            "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "php": ">=5.3.0"
-        },
-        "time": "2014-05-27T21:10:25+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Jaspersoft": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Jaspersoft",
-                "email": "code@jaspersoft.com"
-            }
-        ],
-        "description": "A client for the JasperReports Server REST API",
-        "homepage": "http://github.com/Jaspersoft/jrs-rest-php-client",
-        "keywords": [
-            "jasper-reports",
-            "jasperreports",
-            "jaspersoft",
-            "reporting"
-        ]
-    },
-    {
         "name": "laravelcollective/html",
         "version": "v5.2.6",
         "version_normalized": "5.2.6.0",
@@ -3212,6 +2962,63 @@
             "test double",
             "testing"
         ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v3.3.15",
+        "version_normalized": "3.3.15.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/7c80d81b5805589be151b85b0df785f0dc3269cf",
+            "reference": "7c80d81b5805589be151b85b0df785f0dc3269cf",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "require-dev": {
+            "symfony/console": "~2.8|~3.0"
+        },
+        "suggest": {
+            "symfony/console": "For validating YAML files using the lint command"
+        },
+        "time": "2018-01-03T07:37:11+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
     },
     {
         "name": "sebastian/version",
@@ -3854,6 +3661,121 @@
         "keywords": [
             "filesystem",
             "iterator"
+        ]
+    },
+    {
+        "name": "phpunit/php-token-stream",
+        "version": "1.4.12",
+        "version_normalized": "1.4.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-token-stream.git",
+            "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/1ce90ba27c42e4e44e6d8458241466380b51fa16",
+            "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16",
+            "shasum": ""
+        },
+        "require": {
+            "ext-tokenizer": "*",
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.2"
+        },
+        "time": "2017-12-04T08:55:13+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            }
+        ],
+        "description": "Wrapper around PHP's tokenizer extension.",
+        "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
+        "keywords": [
+            "tokenizer"
+        ]
+    },
+    {
+        "name": "phpunit/php-code-coverage",
+        "version": "2.2.4",
+        "version_normalized": "2.2.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+            "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/eabf68b476ac7d0f73793aada060f1c1a9bf8979",
+            "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "phpunit/php-file-iterator": "~1.3",
+            "phpunit/php-text-template": "~1.2",
+            "phpunit/php-token-stream": "~1.3",
+            "sebastian/environment": "^1.3.2",
+            "sebastian/version": "~1.0"
+        },
+        "require-dev": {
+            "ext-xdebug": ">=2.1.4",
+            "phpunit/phpunit": "~4"
+        },
+        "suggest": {
+            "ext-dom": "*",
+            "ext-xdebug": ">=2.2.1",
+            "ext-xmlwriter": "*"
+        },
+        "time": "2015-10-06T15:47:00+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
+        "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
+        "keywords": [
+            "coverage",
+            "testing",
+            "xunit"
         ]
     },
     {
