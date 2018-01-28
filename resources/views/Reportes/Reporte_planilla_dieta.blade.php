@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
+     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('content')
@@ -27,18 +30,13 @@
                              <select required="true" class="form-control" id="tipoDocumento" name="tipoDocumento">
                                 <option value=""  >Seleccione una opcion</option>
                                 <option value="A" >Por Asambleista</option>
+                                <option value="E" >Consolidados Estudiantil</option>
                                 <option value="D" >Consolidados Profesional Docente</option>
                                 <option value="ND">Consolidados Profesional no Docente</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input required="true" type="text" class="form-control" placeholder="Nombre" id="nombre"
-                                   name="nombre">                   
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="form-group">
                             <label for="fecha1">Mes</label>
@@ -95,7 +93,7 @@
         </div        <div class="box-body">
 
 
-                  <table class="table table-hover">
+                  <table class="table table-hover" style="text-transform: uppercase;">
                    
                     <thead><tr>
                       
@@ -111,23 +109,30 @@
 
 @if(!($resultados==NULL))
 
-@php $i=0 @endphp
+
 
 
 @foreach($resultados as $result)
-@if($i==0)
+
                     <tr>                                     
                       <td>
                         @if($tipo=="A")
-                        {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
+                        REPORTE ANUAL DE DIETAS POR ASAMBLEISTA
                          @endif
+
+                         @if($tipo=="E")
+                         
+                        CONSOLIDADO DE DIETAS SECTOR ESTUDIANTIL
+                             @endif
+
+
                          @if($tipo=="D")
-                         {{$i=1}}
-                        Consolidado de dietas sectro docente
+                         
+                        CONSOLIDADO DE DIETAS SECTOR docente
                              @endif
                          @if($tipo=="ND")
-                         {{$i=1}}
-                         Consolidado de dietas sectro no docente
+                         
+                         CONSOLIDADO DE DIETAS SECTOR no docente
                            @endif
                       </td>
                       <td>{{$result->mes}} {{$result->anio}} </td>
@@ -138,6 +143,13 @@
 
                       
                         @endif
+                        
+
+                          @if($tipo=="E")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Est_pdf/1.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >VER</a>
+                     
+                        @endif
+
 
                         @if($tipo=="D")
                         <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/1.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >VER</a>
@@ -155,6 +167,11 @@
                         <a href="{{url("/Reporte_planilla_dieta/2.$result->asambleista_id.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                         @endif 
 
+                        @if($tipo=="E")
+                        <a href="{{url("/Reporte_planilla_dieta_prof_Est_pdf/2.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
+                    
+                        @endif
+
                         @if($tipo=="D")
                         <a href="{{url("/Reporte_planilla_dieta_prof_Doc_pdf/2.$result->mes.$result->anio.$mesnum")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a>
                     
@@ -168,7 +185,7 @@
                       </td>
                     
                     </tr>
-@endif
+
 @endforeach
 @endif
                   </tbody>
@@ -192,10 +209,14 @@ $('#fecha').datepicker({
 
  
  @section("js")
-    <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+      <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 @section("scripts")
@@ -240,4 +261,16 @@ $('#fecha').datepicker({
         });
     }
     </script>
+@endsection
+@section("lobibox")
+ @if(Session::has('success'))
+    <script>
+        notificacion("Exito", "{{ Session::get('success') }}", "success");
+    </script>
+@endif 
+@if(Session::has('warning'))
+    <script>
+        notificacion("Exito", "{{ Session::get('warning') }}", "warning");
+    </script>
+@endif 
 @endsection

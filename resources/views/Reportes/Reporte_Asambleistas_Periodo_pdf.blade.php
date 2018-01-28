@@ -53,6 +53,7 @@
   font-size: 10pt;
   top: 20%;
 }
+
 #cp1 {
   position: fixed;
   font-family: "ARIAL", serif;
@@ -111,80 +112,90 @@
 
 
 </style>
-
-    <div style="position: absolute;"  align="left">
+                                         
+     <div style="position: absolute;"  align="left">
   <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
 </div>                                  
  <div  align="right">
   <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
 </div>                                                                
-                                               
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
+                                                          
+ <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%; text-transform: uppercase;">
+    UNIVERSIDAD DE EL SALVADOR<br/>
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    MANDAMIENTO DE PAGOS DE DIETAS SECTOR DOCENTE<br/>
-    CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}
+    ASAMBLEISTAS  QUE PARTICIPARON EN EL PERIODO {{$nombre_periodos->nombre_periodo}}<br/>
+    
+
      
   </div>   
-    
                    
 </head>
   <body>
-              
-               
- <div  style="text-align: center;">
-   <table id="cp"  border="1" cellpadding="0" cellspacing="0" ;>                 
+ 
+
+                <table style="text-align: center; position: center;" align="center"  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
+                   
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>No. </th>                     
-                    <th>SECTOR</th>                     
+                                 
                     <th>NOMBRES</th>
                     <th>FACULTAD</th>
-                    
-                    <th>TOTAL</th>
+                    <th>NIT</th>
+                    <th>DUI</th>
+                    <th>PROPIETARIO</th>
+                    <th>CORREO</th>
                     </tr>
                   </thead>
+
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                    @php $i=1;$total=0 @endphp
-                    
+
+                    @php $i=1;$total1=0;$total2=0;$total3=0 @endphp
                      @foreach($resultados as $result)
-                       
-                       <tr>                                     
+
+                    <tr>                                     
                       <td>
-                       {{$i}}
+                        {{$i}}
                       </td>
-                      <td>
-                         PROF. DOCENTE
-                      </td>
-                      <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>                   
-                      <td>{{$result->nom_fact}} </td>
                       
-                      <td>$ {{$result->asistencia*$monto_dieta->valor}}</td>                      
-                    </tr>                 
-                       @php $i=$i+1;
-                       $total=$total+$result->asistencia*$monto_dieta->valor
-                       @endphp
-   @endforeach          
-    <tr>                                     
-                      <td>                       
+                      <td>
+                        {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
                       </td>
-                      <td>                      
+                      <td>{{$result->NomFac}}</td>
+                    
+                      <td>{{$result->nit}}</td>
+                    
+                      <td>{{$result->dui}}</td>
+
+                       @if($result->propietario==1)
+                      <td>
+                         PROPIETARIO
                       </td>
-                      <td></td>                  
-                      <td>TOTAL:</td>
-                         
-                      <td>$ {{$total}} </td>                
-                    </tr>
+                      @else
+                      <td>
+                         SUPLENTE
+                      </td>                      
+                      @endif
+
+                      <td>{{$result->email}}</td>
+                      
+                    </tr> 
+                 @php $i=$i+1;
+                  @endphp
+                @endforeach 
+                
+                    
 
                    </tbody>
 
-                 </table>
-</div>       
+                </table>
+
 
   </body>
    <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
-        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+        $pdf->page_text(250,250, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
     }
 </script>
 </html>
