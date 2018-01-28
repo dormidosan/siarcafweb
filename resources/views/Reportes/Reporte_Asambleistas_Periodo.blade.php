@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-       <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
@@ -17,44 +17,23 @@
 
 <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Reporte constancias de renta</h3>
+            <h3 class="box-title">Reporte Asambleistas por periodo</h3>
         </div>
         <div class="box-body">
-            <form id="buscarDocs" method="post" action="#">
+            <form id="buscarDocs" method="post" action="{{ url("buscar_asambleistas_periodo") }}">
+              {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label>Filtro</label>
-                            
-                             <select class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value="">--Seleccione una opcion --</option>
-                                <option value="User">Asambleista</option>
-                                <option value="Sesion">Sesion plenaria</option>
-                            </select>
-                        </div>
+                       <div class="col-lg-3 col-sm-12 col-md-3">
+                        <label>Periodo AGU</label>
+                        {!! Form::select('periodo',$periodos,$periodo,['id'=>'periodo','class'=>'form-control','requiered'=>'required','placeholder'=>'seleccione periodo']) !!}
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label for="fecha">Fecha inicial</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label for="fecha">Fecha final</label>
-                            <div class="input-group date fecha">
-                                <input id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                            </div>
-                        </div>
-                    </div>
+                   
                    
                 </div>
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button disabled="true" type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+                        <button type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
                     </div>
                 </div>
             </form>
@@ -74,25 +53,42 @@
                    
                     <thead><tr>
                       
-                      <th>Nombre </th>
+                      <th>Nombre</th>
                       
-                      <th>Fecha</th>
+                      <th>Nombre Periodo</th>
                       
                       <th>Ver</th>
                       <th>Descargar</th>
                     </tr></thead>
                     <tbody>
+@if(!($resultados==NULL))
+@foreach($resultados as $result)
                     <tr>                                     
                       <td>
-                        Nombre permiso
+                        ASAMBLEISTAS DEL PERIO {{$result->nombre_periodo}}
+                      </td>
+                      <td>{{$result->nombre_periodo}}</td>
+                    
+                      <td><a href="{{url("/Reporte_Asambleista_Periodo/1.$periodo")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_Asambleista_Periodo/2.$periodo")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                    
+                    </tr>
+                    
+                 <!--    <tr>                                     
+                      <td>
+                        Inasistencias a Sesiones plenarias
                       </td>
                       <td>fecha</td>
                     
-                      <td><a href="{{url("/Reporte_constancias_renta/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
-                      <td><a href="{{url("/Reporte_constancias_renta/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
+                      <td><a href="{{url("/Reporte_inasistencias_sesion_plenaria_pdf/1")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
+                      <td><a href="{{url("/Reporte_inasistencias_sesion_plenaria_pdf/2")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
                     
                     </tr>
-                   
+
+                    -->
+                 
+@endforeach 
+@endif
                   </tbody></table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -113,7 +109,7 @@ $('#fecha').datepicker({
 
  
  @section("js")
-      <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>

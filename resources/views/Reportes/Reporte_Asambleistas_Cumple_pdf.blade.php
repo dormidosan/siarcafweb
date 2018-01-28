@@ -5,12 +5,10 @@
     <title>Reporte Dieta</title>
   <style type="text/css" media="print">  
   #watermark {
-    position: fixed;
+ position: fixed;
     top: 45%;
     width: 100%;
-    text-align: center;
-    opacity: .4;
-    transform: rotate(270deg);
+    opacity: .5;
     transform-origin: 50% 50%;
     z-index: -1000;
     
@@ -29,7 +27,7 @@
   font: bold;
   top: 5%;
   text-align: center;
-  aling-items: center;
+  
 }
 
 #mp {
@@ -48,11 +46,13 @@
 }
 
 #cp {
-  position: fixed;
+  
   font-family: "ARIAL", serif;
   font-size: 10pt;
   top: 20%;
+  right: 50%;
 }
+
 #cp1 {
   position: fixed;
   font-family: "ARIAL", serif;
@@ -109,82 +109,85 @@
   top: 88%;
 }
 
+#fondo {
+    background-repeat:no-repeat;
+                 background-size:100%;
+                background-image: url('../images/Logo_UES.jpg'); 
+}
 
 </style>
 
-    <div style="position: absolute;"  align="left">
-  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
-</div>                                  
- <div  align="right">
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
-</div>                                                                
-                                               
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
+  <div style="position: fixed;top: 15%; width: 100%; opacity: .5;transform-origin: 50% 50%; z-index: -1000; left: 20%;">
+     <IMG SRC="{{ asset('images/cumple.jpg') }}" width="80%" height="55%">
+  </div>
+  
+  <IMG align="left" SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%">
+                         
+
+  <IMG align="right" SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+                                                           
+                                                          
+ <div id="p" style=" text-align: center;right: 25%;text-transform: uppercase;">
+    UNIVERSIDAD DE EL SALVADOR<br/>
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    MANDAMIENTO DE PAGOS DE DIETAS SECTOR DOCENTE<br/>
-    CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}
+    CUMPLEAÑEROS DEL MES DE {{$mesnom}}<br/>
+    PERIODO {{$nombre_periodos->nombre_periodo}}<br/>
+    <br/>
+    <br/>
+
      
   </div>   
-    
                    
 </head>
   <body>
-              
-               
- <div  style="text-align: center;">
-   <table id="cp"  border="1" cellpadding="0" cellspacing="0" ;>                 
+ 
+
+                <table style="text-align: center; position: center;" align="center" border="1" cellpadding="0" cellspacing="0" >
+                   
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>No. </th>                     
-                    <th>SECTOR</th>                     
+                                 
                     <th>NOMBRES</th>
                     <th>FACULTAD</th>
-                    
-                    <th>TOTAL</th>
+                  
                     </tr>
                   </thead>
+
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                    @php $i=1;$total=0 @endphp
-                    
+
+                    @php $i=1;$total1=0;$total2=0;$total3=0 @endphp
                      @foreach($resultados as $result)
-                       
-                       <tr>                                     
+
+                    <tr>                                     
                       <td>
-                       {{$i}}
+                        {{$i}}
                       </td>
-                      <td>
-                         PROF. DOCENTE
-                      </td>
-                      <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>                   
-                      <td>{{$result->nom_fact}} </td>
                       
-                      <td>$ {{$result->asistencia*$monto_dieta->valor}}</td>                      
-                    </tr>                 
-                       @php $i=$i+1;
-                       $total=$total+$result->asistencia*$monto_dieta->valor
-                       @endphp
-   @endforeach          
-    <tr>                                     
-                      <td>                       
+                      <td>
+                        {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
                       </td>
-                      <td>                      
-                      </td>
-                      <td></td>                  
-                      <td>TOTAL:</td>
-                         
-                      <td>$ {{$total}} </td>                
-                    </tr>
+                      <td>{{$result->NomFac}}</td>
+                    
+                    
+                      
+                    </tr> 
+                 @php $i=$i+1;
+                  @endphp
+                @endforeach 
+                
+                    
 
                    </tbody>
 
-                 </table>
-</div>       
+                </table>
+
 
   </body>
    <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
-        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+        $pdf->page_text(50,50, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
     }
 </script>
 </html>

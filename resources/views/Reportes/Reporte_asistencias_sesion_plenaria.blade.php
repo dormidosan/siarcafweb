@@ -3,6 +3,9 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('content')
@@ -133,6 +136,10 @@ $('#fecha').datepicker({
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 @section("scripts")
@@ -152,4 +159,16 @@ $('#fecha').datepicker({
             });
         });
     </script>
+@endsection
+@section("lobibox")
+ @if(Session::has('success'))
+    <script>
+        notificacion("Exito", "{{ Session::get('success') }}", "success");
+    </script>
+@endif 
+@if(Session::has('warning'))
+    <script>
+        notificacion("Exito", "{{ Session::get('warning') }}", "warning");
+    </script>
+@endif 
 @endsection

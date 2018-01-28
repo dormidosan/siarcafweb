@@ -75,6 +75,22 @@ Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name
 
 Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados_renta')->name("buscar_consolidados_renta");
 
+Route::post('buscar_asambleistas_periodo', 'ReportesController@buscar_asambleistas_periodo')->name("buscar_asambleistas_periodo");
+
+Route::post('buscar_asambleistas_cumple', 'ReportesController@buscar_asambleistas_cumple')->name("buscar_asambleistas_cumple");
+
+
+Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_actas");
+
+Route::post('buscar_acuerdos', 'PlantillasController@buscar_acuerdos')->name("buscar_acuerdos");
+
+Route::post('buscar_dictamenes', 'PlantillasController@buscar_dictamenes')->name("buscar_dictamenes");
+
+
+
+Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
+
+Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");
 
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
@@ -100,7 +116,22 @@ Route::get('/Reporte_bitacora_correspondencia/{tipo}', 'ReportesController@Repor
 Route::get('/Reporte_planilla_dieta', function () {
     return view('Reportes.Reporte_planilla_dieta', ['resultados' => NULL]);
 });
+
+
+Route::get('buscar_periodo', 'ReportesController@buscar_periodo')->name('buscar_periodo');
+
+Route::get('buscar_cumple', 'ReportesController@buscar_cumple')->name('buscar_cumple');
+
+
+
+
+
+Route::get('/Reporte_Asambleista_Periodo/{tipo}', 'ReportesController@Reporte_Asambleista_Periodo');
+
+Route::get('/Reporte_Asambleistas_Cumple/{tipo}', 'ReportesController@Reporte_Asambleistas_Cumple');
+
 Route::get('/Reporte_planilla_dieta/{tipo}', 'ReportesController@Reporte_planilla_dieta');
+Route::get('/Reporte_planilla_dieta_prof_Est_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Est_pdf');
 Route::get('/Reporte_planilla_dieta_prof_noDocpdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_noDocpdf');
 Route::get('/Reporte_planilla_dieta_prof_Doc_pdf/{tipo}', 'ReportesController@Reporte_planilla_dieta_prof_Doc_pdf');
 Route::get('/Reporte_consolidados_renta', function () {
@@ -116,18 +147,46 @@ Route::get('/Reporte_constancias_renta_JD', function () {
     return view('Reportes.Reporte_constancias_renta_JD');
 });
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
-Route::get('plantilla_actas', function () {
-    return view('Plantillas.Plantilla_actas');
+
+Route::get('/Plantilla_Actas', function () {
+    return view('Plantillas.Plantilla_actas', ['resultados' => NULL]);
 });
-Route::get('/Plantilla_actas/{tipo}', 'PlantillasController@Plantilla_actas');
+
+Route::get('/Plantilla_Acuerdos', function () {
+    return view('Plantillas.Plantilla_acuerdos', ['resultados' => NULL]);
+});
+
+Route::get('/Plantilla_dictamenes', function () {
+    return view('Plantillas.Plantilla_dictamenes', ['resultados' => NULL]);
+});
+
+
+Route::get('/Plantilla_Actas_JD', function () {
+    return view('Plantillas.Plantilla_actas_JD', ['resultados' => NULL]);
+});
+
+Route::get('/desc_Plantilla_actas/{tipo}', 'PlantillasController@desc_Plantilla_actas');
+Route::get('/desc_Plantilla_acuerdos/{tipo}', 'PlantillasController@desc_Plantilla_acuerdos');
+Route::get('/desc_Plantilla_dictamenes/{tipo}', 'PlantillasController@desc_Plantilla_dictamenes');
+
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
 Route::get('/Reporte_permisos_temporales', function () {
     return view('Reportes.Reporte_permisos_temporales', ['resultados' => NULL]);
 });
+
+Route::get('/Menu_reportes', function () {
+    return view('Reportes.MenuReportes');
+});
+
+Route::get('/Menu_plantillas', function () {
+    return view('Plantillas.MenuPlantilla');
+});
+
 Route::get('/Reporte_Convocatorias_pdf/{tipo}', 'ReportesController@Reporte_Convocatorias');
 Route::get('/Reporte_Convocatorias', function () {
     return view('Reportes.Reporte_Convocatorias');
 });
+
 
 /* Routes para Agenda 
 R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {

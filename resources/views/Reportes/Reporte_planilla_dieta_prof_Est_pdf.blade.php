@@ -121,11 +121,12 @@
                                                
  <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    MANDAMIENTO DE PAGOS DE DIETAS SECTOR DOCENTE<br/>
+    MANDAMIENTO DE PAGOS DE DIETAS SECTOR ESTUDIANTIL<br/>
     CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}
      
   </div>   
     
+  
                    
 </head>
   <body>
@@ -145,15 +146,13 @@
                   </thead>
                     <tbody>  <!-- CUERPO DE LA TABLA-->
                     @php $i=1;$total=0 @endphp
-                    
                      @foreach($resultados as $result)
-                       
                        <tr>                                     
                       <td>
                        {{$i}}
                       </td>
                       <td>
-                         PROF. DOCENTE
+                         SECTOR ESTUDIANTIL
                       </td>
                       <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>                   
                       <td>{{$result->nom_fact}} </td>
@@ -181,7 +180,7 @@
 </div>       
 
   </body>
-   <script type="text/php">
+  <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
         $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
