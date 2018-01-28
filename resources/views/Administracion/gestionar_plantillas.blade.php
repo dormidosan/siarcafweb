@@ -33,23 +33,28 @@
 
                     <tbody id="cuerpoTabla">
                     @forelse($plantillas as $plantilla)
-                        {!! Form::open(['route'=>['almacenar_plantilla'],'method'=> 'POST','id'=>$plantilla->id]) !!}
                         <tr>
+                        <form id="{{$plantilla->id}}" name="almacenar_plantilla" method="post" action="{{ url('almacenar_plantilla') }}" enctype="multipart/form-data" >
+                        {{ csrf_field() }}
                             <input type="hidden" name="id_plantilla" id="id_plantilla" value="{{$plantilla->id}}">
                             <td>{!! $plantilla->codigo !!}</td>
                             <td>{!! $plantilla->nombre !!}</td>
                             <td>
-                                <button type="submit" class="btn btn-primary btn-block btn-xs"><i class="fa fa-pencil"></i> Descargar</button>
+                                <a class="btn btn-success btn-xs"
+                                   href="descargar_plantilla/<?= $plantilla->id; ?>" role="button">
+                                    <i class="fa fa-download"></i> Descargar</a>
                             </td>
                             <td>
-                                <input id="documento_plantilla<?=$plantilla->id?>"  name="documento_plantilla" type="file" data-show-preview="false"  required > 
-
+                                <!-- 
+                    USANDO CLASE<input id="documento_plantilla<?=$plantilla->id?>" class="pla" name="documento_plantilla" type="file" data-show-preview="false" required >  
+     USANDO JQUERY QUE ENCONTRE <input id="documento_plantilla<?=$plantilla->id?>" name="documento_plantilla" type="file" class="file" data-show-preview="false" required="required"> -->
+                                <input id="documento_plantilla<?=$plantilla->id?>" name="documento_plantilla" type="file"   data-show-preview="false" required="required">
                             </td>
                             <td width="10%">
                                 <button type="submit" class="btn btn-primary btn-block btn-xs"><i class="fa fa-pencil"></i> Actualizar</button>
                             </td>
+                        </form>
                         </tr>
-                        {!! Form::close() !!}
                     @empty
 
                     @endforelse
@@ -100,7 +105,7 @@
 
 
             $(function () {
-            $("[name='documento_plantilla']").fileinput({
+            $(".pla").fileinput({
                 theme: "explorer",
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
@@ -109,9 +114,9 @@
                 allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
                 showUpload: false,
                 fileActionSettings: {
-                    showRemove: false,
+                    showRemove: true,
                     showUpload: false,
-                    showZoom: false,
+                    showZoom: true,
                     showDrag: false
                 },
                 hideThumbnailContent: true

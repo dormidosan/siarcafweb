@@ -207,6 +207,8 @@ Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_m
 Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")->name("agregar_plantillas");
 Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
 
+Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
+
 
 
 /* Asambleistas */

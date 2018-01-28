@@ -58,6 +58,11 @@ return [
             'driver' => 'local',
             'root' => storage_path('documentos'),
         ],
+
+        'plantillas' => [
+            'driver' => 'local',
+            'root' => storage_path('plantillas'),
+        ],
 		
 		'fotos' => [
             'driver' => 'local',
