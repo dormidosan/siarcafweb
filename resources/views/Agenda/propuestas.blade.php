@@ -1,8 +1,9 @@
 <div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Propuestas</div>
+    <div class="panel-heading" role="tab" id="panel_propuestas">
+        <h4 class="panel-title">Propuestas</h4>
+    </div>
     <div class="panel-body">
-        {!! Form::open(['route'=>['agregar_propuesta'],'method'=> 'POST']) !!}
+        {!! Form::open(['route'=>['agregar_propuesta'],'method'=> 'POST','id'=>'agregarPropuesta','class'=>'agregarPropuesta']) !!}
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
@@ -23,13 +24,12 @@
         </div>
         <div class="row text-center">
             <div class="col-lg-12">
-                <button type="submit" id="iniciar" name="iniciar" class="btn btn-success">Agregar Propuesta
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-primary btn-sm">Agregar Propuesta
                 </button>
             </div>
         </div>
         {!! Form::close() !!}
     </div>
-
     <!-- Table -->
     <div class="table-responsive">
         <table id="propuestas_tabla" class="table table-hover text-center">
@@ -50,7 +50,9 @@
             <tbody id="cuerpoTabla" class="text-center">
             @php $contador = 1 @endphp
             @if($propuestas->isEmpty())
-                <td colspan="10">No existen propuestas actualmente registradas</td>
+                <tr>
+                    <td colspan="10">No existen propuestas actualmente registradas</td>
+                </tr>
             @else
                 @foreach($propuestas as $propuesta)
                     @if($propuesta->votado == 1)
@@ -78,7 +80,6 @@
                                 {{ $propuesta->nulo }}
                             </td>
                             <td>{{ $propuesta->ronda }}</td>
-                            <td>{{ $propuesta->activa }}</td>
                             <td>
                                 @if($propuesta->ronda == 1 and $propuesta->activa == 1)
                                     {!! Form::open(['route'=>['modificar_propuesta'],'method'=> 'POST']) !!}
@@ -87,7 +88,8 @@
                                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                     <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                     <input type="hidden" name="opcion" id="opcion" value="1">
-                                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-warning btn-block">
+                                    <button type="submit" id="iniciar" name="iniciar"
+                                            class="btn btn-warning btn-xs text-center btn-block">
                                         Ronda 2
                                     </button>
                                     {!! Form::close() !!}
@@ -114,20 +116,22 @@
                                 <input type="number" class="form-control input-sm" id="favor" name="favor" value="0">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm"  id="contra" name="contra" value="0">
+                                <input type="number" class="form-control input-sm" id="contra" name="contra" value="0">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm"  id="abstencion" name="abstencion" value="0">
+                                <input type="number" class="form-control input-sm" id="abstencion" name="abstencion"
+                                       value="0">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm"  id="nulo" name="nulo" value="0">
+                                <input type="number" class="form-control input-sm" id="nulo" name="nulo" value="0">
                             </td>
                             <td>{{ $propuesta->ronda }}</td>
                             <td>
                                 <input type="hidden" name="id_propuesta" id="id_propuesta" value="{{$propuesta->id}}">
                                 <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                 <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                                <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block btn-xs">
+                                <button type="submit" id="iniciar" name="iniciar"
+                                        class="btn btn-success btn-block btn-xs">
                                     Guardar
                                 </button>
                             </td>
@@ -138,7 +142,8 @@
                                 <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                 <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                 <input type="hidden" name="opcion" id="opcion" value="2">
-                                <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block btn-xs">
+                                <button type="submit" id="iniciar" name="iniciar"
+                                        class="btn btn-danger btn-block btn-xs">
                                     Retirar
                                 </button>
                                 {!! Form::close() !!}
