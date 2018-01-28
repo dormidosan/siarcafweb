@@ -88,7 +88,7 @@
                         @forelse($asistentes as $asistente)
                             @if($asistente->asambleista_id == $asambleista->id)
                                 @php $presente_plenaria = 1 @endphp
-                                <td>{{$asistente->entrada}}</td>
+                                <td>{{\Carbon\Carbon::parse($asistente->entrada)->format('h:m A')}}</td>
                                 @if($asistente->propietaria == 1)
                                     <td class="success" >Propietario en plenaria</td>
                                     {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'1']) !!}
@@ -180,11 +180,38 @@
     <script type="text/javascript">
         $(function () {
             var table = $('#asistencia').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
                 "columnDefs": [
-                    { "visible": false, "targets": 2 }
+                    { "visible": false, "targets": 2 },
+                    { "orderable": false, "targets": [0,1,2,3,4,5]}
                 ],
+                "searching": false,
                 "order": [[ 2, 'asc' ]],
-                "displayLength": 25,
+                //"displayLength": 25,
+                "paging": false,
                 "drawCallback": function ( settings ) {
                     var api = this.api();
                     var rows = api.rows( {page:'current'} ).nodes();
@@ -199,7 +226,7 @@
                             last = group;
                         }
                     } );
-                },
+                }
             } );
 
             // Order by the grouping

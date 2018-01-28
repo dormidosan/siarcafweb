@@ -7,6 +7,8 @@
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
+
 @endsection
 
 @section('breadcrumb')
@@ -189,12 +191,98 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+            var maxChar = 15;
+            var maxCharIntevencion = 250;
+            $("#caja").removeClass("text-danger");
+            $("#caja").addClass("text-green");
+            $("#caja2").removeClass("text-danger");
+            $("#caja2").addClass("text-green");
+
+            $("#nueva_propuesta").keyup(function () {
+               var length = $(this).val().length;
+               total = maxChar - length;
+               $("#chars").text(total);
+               if(total == 0){
+                   $("#caja").removeClass("text-green");
+                   $("#caja").addClass("text-danger");
+               }
+            });
+
+            $("#nueva_intervencion").keyup(function () {
+               var length = $(this).val().length;
+               total = maxCharIntevencion - length;
+               $("#chars2").text(total);
+               if(total == 0){
+                   $("#caja2").removeClass("text-green");
+                   $("#caja2").addClass("text-danger");
+               }
+            });
+
+            $('#agregarPropuesta').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    nueva_propuesta: {
+                        validators: {
+                            stringLength: {
+                                max: 15,
+                                message: 'La propuesta no debe de exceder los 15 caracteres'
+                            },
+                            notEmpty: {
+                                message: 'La propuesta es requerida'
+                            }
+                        }
+                    },
+                    asambleista_id: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El asambleista es requerido'
+                            }
+                        }
+                    }
+                }
+            });
+
+            $('#agregarIntervenciones').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    nueva_intervencion: {
+                        validators: {
+                            stringLength: {
+                                max: 250,
+                                message: 'La intervencion no debe de exceder los 250 caracteres'
+                            },
+                            notEmpty: {
+                                message: 'La intervencion es requerida'
+                            }
+                        }
+                    },
+                    asambleista_id_intervencion: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El asambleista es requerido'
+                            }
+                        }
+                    }
+                }
+            });
 
             $("#documento").fileinput({
                 theme: "explorer",
