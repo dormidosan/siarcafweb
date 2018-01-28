@@ -17,89 +17,56 @@
 @endsection
 
 @section("content")
-    {{-- <div class="panel panel-success">
+    <div class="panel panel-success">
                 <div class="panel-heading">Plantillas del Sistema</div>
                 <div class="panel-body">
-                    <table class="table table-bordered text-center">
-                        <thead>
+                    <table id="parametros"
+                       class="table table-striped table-bordered table-condensed table-hover text-center">
+                    <thead>
+                    <tr>
+                        <th width="10%">Codigo plantilla</th>
+                        <th width="25%">Nombre plantilla</th>
+                        <th width="10%">Descargar</th>
+                        <th colspan="2">Actualizar</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="cuerpoTabla">
+                    @forelse($plantillas as $plantilla)
                         <tr>
-                            <th>Plantilla</th>
-                            <th>Descargar</th>
-                            <th>Actualizar</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <!-- OJO HAY Q CAMBIAR EL ID POR EL DEL DOC EN LA BD -->
-                            <td id="plantilla1" name="plantilla1">Plantilla</td>
-                            <td id="descargarPlantilla1" name="descargarPlantilla1">
-                                <button class="btn btn-primary btn-xs">Descargar</button>
+                        <form id="{{$plantilla->id}}" name="almacenar_plantilla" method="post" action="{{ url('almacenar_plantilla') }}" enctype="multipart/form-data" >
+                        {{ csrf_field() }}
+                            <input type="hidden" name="id_plantilla" id="id_plantilla" value="{{$plantilla->id}}">
+                            <td>{!! $plantilla->codigo !!}</td>
+                            <td>{!! $plantilla->nombre !!}</td>
+                            <td>
+                                <a class="btn btn-success btn-xs"
+                                   href="descargar_plantilla/<?= $plantilla->id; ?>" role="button">
+                                    <i class="fa fa-download"></i> Descargar</a>
                             </td>
                             <td>
-                                <!-- aqui se le pasa el id de la plantilla en la funcion mostrarModal(id)-->
-                                <button class="btn btn-primary btn-xs" onclick="mostrarModal(1)">Actualizar</button>
+                                <!-- 
+                    USANDO CLASE<input id="documento_plantilla<?=$plantilla->id?>" class="pla" name="documento_plantilla" type="file" data-show-preview="false" required >  
+     USANDO JQUERY QUE ENCONTRE <input id="documento_plantilla<?=$plantilla->id?>" name="documento_plantilla" type="file" class="file" data-show-preview="false" required="required"> -->
+                                <input id="documento_plantilla<?=$plantilla->id?>" name="documento_plantilla" type="file"   data-show-preview="false" required="required">
                             </td>
+                            <td width="10%">
+                                <button type="submit" class="btn btn-primary btn-block btn-xs"><i class="fa fa-pencil"></i> Actualizar</button>
+                            </td>
+                        </form>
                         </tr>
-                        <tr>
-                            <!-- OJO HAY Q CAMBIAR EL ID POR EL DEL DOC EN LA BD -->
-                            <td id="plantilla2" name="plantilla2">Plantilla</td>
-                            <td id="descargarPlantilla2" name="descargarPlantilla2">
-                                <button class="btn btn-primary btn-xs">Descargar</button>
-                            </td>
-                            <td>
-                                <!-- aqui se le pasa el id de la plantilla en la funcion mostrarModal(id)-->
-                                <button class="btn btn-primary btn-xs" onclick="mostrarModal(2)">Actualizar</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>--}}
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
-            <li class=""><a href="#tab_administrar" data-toggle="tab" aria-expanded="false">Administar</a></li>
-            <li class="active"><a href="#tab_agregar" data-toggle="tab" aria-expanded="true">Agregar</a></li>
-            <li class="pull-left header"><i class="fa fa-files-o"></i>Plantillas</li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab_agregar">
-                <div class="file-loading">
-                    <input id="plantillas" name="plantillas[]" type="file" accept=".xlsx, .xls, .doc, .docx" multiple>
+                    @empty
+
+                    @endforelse
+
+                    </tbody>
+
+                </table>
+
+                 
                 </div>
             </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="tab_administrar">
-                <div class="table-responsive">
-                    <table class="table text-center">
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descargar</th>
-                            <th>Actualizar</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if($plantillas->isEmpty())
-                            <tr>
-                                <td colspan="3">No existen plantillas en el sistema</td>
-                            </tr>
-                        @else
-                            @foreach($plantillas as $plantilla)
-                                <tr>
-                                    <td>{{$plantilla->nombre}}</td>
-                                    <td><a href="" class="btn btn-primary btn-xs">Descargar</a></td>
-                                    <td><a href="" class="btn btn-primary btn-xs">Actualizar</a></td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-        <!-- /.tab-content -->
-    </div>
+    
     @include("Modal.ActualizarPlantillaModal")
 @endsection
 
@@ -134,6 +101,27 @@
                 //showPreview: false,
                 //hideThumbnailContent: true
             });
+
+
+
+            $(function () {
+            $(".pla").fileinput({
+                theme: "explorer",
+                previewFileType: "pdf, xls, xlsx, doc, docx",
+                language: "es",
+                //minFileCount: 1,
+                maxFileCount: 3,
+                allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
+                showUpload: false,
+                fileActionSettings: {
+                    showRemove: true,
+                    showUpload: false,
+                    showZoom: true,
+                    showDrag: false
+                },
+                hideThumbnailContent: true
+            });
+        });
 
             // CATCH RESPONSE, usa si se envia por ajax con el boton q este js trae
             $('#plantillas').on('filebatchuploaderror', function (event, data, previewId, index) {

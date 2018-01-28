@@ -268,6 +268,11 @@ Route::post('agregar_perfiles', "AdministracionController@agregar_perfiles")->na
 Route::post('administrar_acceso_modulos', "AdministracionController@administrar_acceso_modulos")->name("administrar_acceso_modulos");
 Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_modulos")->name("asignar_acceso_modulos");
 Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")->name("agregar_plantillas");
+Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
+
+Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
+
+
 
 /* Asambleistas */
 Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
