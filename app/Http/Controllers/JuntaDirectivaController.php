@@ -223,19 +223,12 @@ class JuntaDirectivaController extends Controller
     
     
     public function agregar_puntos_jd(Request $request,Redirector $redirect){
-        //dd();
-        
-
-
-        //$peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get(); // Primero ordenar por el estado, despues los estados 
 
         $agenda = Agenda::where('id','=',$request->id_agenda)->firstOrFail();
         $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
         $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
 
         $peticiones = Peticion::leftJoin("puntos", "puntos.peticion_id", "=", "peticiones.id")
-                            //->where('peticiones.agendado','=',1)
-                            //->where('puntos.agenda_id','=',$agenda->id)
                             ->Where(function ($query) {
                               $query->where('peticiones.agendado','=',1)
                                     ->where('peticiones.asignado_agenda','=',0);
@@ -248,8 +241,7 @@ class JuntaDirectivaController extends Controller
                             ->select('peticiones.*')
                             ->orderBy('peticiones.created_at','ASC')
                             ->get();
-                            //$peticiones = Peticion::where('agendado','=',1)->orderBy('created_at','ASC')->get();
-        //dd($peticiones);
+
         $todos_puntos = 3;
         return view('jdagu.asignacion_puntos')
         ->with('todos_puntos',$todos_puntos)
