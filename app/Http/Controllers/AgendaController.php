@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Periodo;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
@@ -953,6 +954,16 @@ class AgendaController extends Controller
             ->with('asambleistas', $asambleistas);
 
      
+    }
+
+    public function obtener_datos_intervencion(Request $request){
+        if ($request->ajax()){
+            $intervencion = Intervencion::find($request->get("idIntervencion"));
+            $respuesta = new \stdClass();
+            $respuesta->asambleista = $intervencion->asambleista->user->persona->primer_nombre . ' ' . $intervencion->asambleista->user->persona->segundo_nombre . ' ' . $intervencion->asambleista->user->persona->primer_apellido . ' ' . $intervencion->asambleista->user->persona->segundo_apellido;
+            $respuesta->contenido = $intervencion->descripcion;
+            return new JsonResponse($respuesta);
+        }
     }
 
     
