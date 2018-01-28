@@ -61,7 +61,6 @@ class ComposerStaticInit92bffd607de22de7e5621bb50f6999b5
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'SuperClosure\\' => 13,
-            'Sergio\\PhpJasperXML\\' => 20,
         ),
         'P' => 
         array (
@@ -206,10 +205,6 @@ class ComposerStaticInit92bffd607de22de7e5621bb50f6999b5
         'SuperClosure\\' => 
         array (
             0 => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src',
-        ),
-        'Sergio\\PhpJasperXML\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/sergio-vilchis/laravel-phpjasperxml/src',
         ),
         'Psy\\' => 
         array (

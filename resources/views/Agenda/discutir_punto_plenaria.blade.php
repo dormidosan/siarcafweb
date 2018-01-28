@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -27,7 +30,6 @@
         <div class="box-body">
             <div class="row">
                 <div class=" hidden">
-
                     {!! Form::open(['id'=>'iniciar_sesion_plenaria','route'=>['iniciar_sesion_plenaria'],'method'=> 'POST']) !!}
                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                     <input type="hidden" name="retornar" id="retornar" value="retornar">
@@ -85,39 +87,45 @@
 
             </div>
             <br>
-            <div class="row">
-                <div class="col-lg-4 col-sm-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fecha inicio</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre"
-                               value="{{ $punto->peticion->fecha }}"
-                               readonly>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Informacion de Peticion</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label>Peticionario</label>
+                                <input name="nombre" type="text" class="form-control" id="nombre"
+                                       value="{{ $punto->peticion->peticionario }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label>Fecha inicio</label>
+                                <input name="nombre" type="text" class="form-control" id="nombre"
+                                       value="{{ Carbon\Carbon::parse($punto->peticion->fecha)->format('d-m-Y h:m:i a') }}"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label>Fecha Actual</label>
+                                <input name="nombre" type="text" class="form-control" id="nombre"
+                                       value="{{ date_format(Carbon\Carbon::now(),"d-m-Y h:m:i a") }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label>Descripcion</label>
+                                <textarea class="form-control" readonly>{{ $punto->peticion->descripcion }}</textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fecha Actual</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre"
-                               value="{{ Carbon\Carbon::now() }}" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-12 col-md-4">
-                    <div class="form-group">
-                        <label>Peticionario</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre"
-                               value="{{ $punto->peticion->peticionario }}" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-sm-12 col-md-4">
-                    <div class="form-group">
-                        <label>Descripcion</label>
-                        <textarea class="form-control" readonly>{{ $punto->peticion->descripcion }}</textarea>
-                    </div>
-                </div>
+
             </div>
             @if($punto->activo == 1)
                 @include('Agenda.propuestas')
@@ -132,18 +140,22 @@
         </div>
     </div>
 @include("Modal.MostrarIntervencionModal")
+
 @endsection
+
 @section("js")
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
-
-
     <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+
 @endsection
+
 @section("scripts")
     <script type="text/javascript">
         $(function () {
@@ -165,8 +177,14 @@
                 showPreview: false
 
             });
+
         });
 
+        $('#asambleista_id').select2({
+            placeholder: 'Seleccione un asambleista',
+            language: "es",
+            width: '100%'
+        });
         /* 
         -/-*Esta función permite mostrar el modal-*-/
         function mostrarModal() {
