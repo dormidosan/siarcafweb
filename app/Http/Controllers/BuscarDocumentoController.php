@@ -45,6 +45,7 @@ class BuscarDocumentoController extends Controller
         $ruta_documento = "../storage/documentos/".$documento->path;
         return response()->download($ruta_documento);
     }
+    
 }
 
 

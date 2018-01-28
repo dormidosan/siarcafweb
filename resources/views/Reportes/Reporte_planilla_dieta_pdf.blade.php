@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Reporte Dieta</title>
-  <style type="text/css">  
+  <style type="text/css" media="print">  
   #watermark {
     position: fixed;
     top: 45%;
@@ -42,7 +42,7 @@
   font-family: "ARIAL", serif;
   font-size: 10pt;
   font: bold;
-  top: 15%;
+  top: 40%;
 }
 
 #cp {
@@ -108,26 +108,39 @@
   top: 88%;
 }
 
+.page-break {
+  page-break-before: always;
+
+}
 
 </style>
                                          
-<div style="position:fixed;" align="right">
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="25%" height="25%" >
-</div>
 
-<div style="position:fixed;" align="left">
-  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="130" height="130" >
-</div>                                                   
- <div id="p" style="position:fixed;text-align: center;">
-    UNIVERSIDAD DE EL SALVADOR<br/>
-    ASAMBLEA GENERAL UNIVERSITARIA<br/>
-  </div>   
-  <div id="mp" style="text-align: center;">
-    CIUDAD UNIVERSITARIA, SAN SALVADOR, EL SALVADOR, C.A.  
-  </div>                    
+
+ 
+
+
+
+                    
 </head>
   <body>
- 
+           
+
+@foreach($busqueda as $busque)
+
+   <div style="position: absolute;"  align="left">
+  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
+</div>                                  
+ <div  align="right">
+  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+</div>                                                                
+                                               
+ <div id="p" style="text-align: center;position: absolute;right: 15%;top: 3%;text-transform: uppercase;">
+    UNIVERSIDAD DE EL SALVADOR<br/>
+    ASAMBLEA GENERAL UNIVERSITARIA<br/>
+    CIUDAD UNIVERSITARIA, SAN SALVADOR, EL SALVADOR, C.A.<br/>
+  </div>   
+
  <div id="nt" style="text-align: left;">
  NIT INSTITUCIONAL: 0614-110121-001-3
  </div>  
@@ -137,12 +150,15 @@ El infrascrito agente de retención, hace constar  que los  ingresos devengados 
  </div>  
 
 <div id="cp1" style="text-align: left;">
-NIT No. {{$nit}}<br/>
-NOMBRE: {{$nombrecompleto}}
+NIT No. {{$busque->nit}}<br/>
+NOMBRE: {{$busque->primer_nombre}}
+        {{$busque->segundo_nombre}}
+        {{$busque->primer_apellido}}
+        {{$busque->segundo_apellido}}
  </div>  
 
  <div id="cp2" style="text-align: left;">
-Por el pago de dietas de Junta Directiva de la AGU. del mes de {{$mes}} de {{$anio}}. son los que se desglosan de la siguiente manera.
+Por el pago de dietas de Junta Directiva de la AGU. del año {{$anio}}. son los que se desglosan de la siguiente manera.
  </div>  
 
 <div id="cp3" style="text-align: left;">
@@ -150,8 +166,8 @@ Por el pago de dietas de Junta Directiva de la AGU. del mes de {{$mes}} de {{$an
  </div> 
 
 <div id="cp4" style="text-align: left;">
-  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        {{$monto_dieta}}<pre/> <br/>
-  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido          $        {{$renta}}<pre/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        {{$busque->dieta}}<pre/> <br/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido          $        {{$busque->renta}}<pre/>
  </div> 
 
 <div id="cp5" style="text-align: left;">
@@ -166,5 +182,20 @@ Licda. Josefina Sibrián de Rodríguez
 Presidenta Asamblea General Universitaria
  </div> 
 
+
+
+
+<div style="page-break-before: always;"></div>
+@endforeach   
+  
+
   </body>
+
+
+
 </html>
+
+
+
+
+

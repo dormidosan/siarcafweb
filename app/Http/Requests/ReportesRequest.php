@@ -24,7 +24,7 @@ class ReportesRequest extends Request
     public function rules()
     {
         return [
-            'nombre' => 'required|max:50'
+            'tipoDocumento' => 'required|max:50'
         ];
     }
 
@@ -36,7 +36,7 @@ class ReportesRequest extends Request
     public function messages()
     {
         return [
-            'nombre.required' => 'El nombre es requerido'
+            'tipoDocumento.required' => 'El nombre es requerido'
         ];
     }
 }

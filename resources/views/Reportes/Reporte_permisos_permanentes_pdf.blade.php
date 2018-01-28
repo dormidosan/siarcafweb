@@ -122,7 +122,7 @@
 
                                          
                                                
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 5%" >
+ <div id="p" style="text-align: center;position: absolute;right: 15%;top: 5%" >
     Sesión Plenaria de Asamblea General Universitaria {{$fechainicial}} AL {{$fechafinal}}<br/>
     Solicitudes de PERMISOS DEFINITIVOS<br/>
      
@@ -137,7 +137,7 @@
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>Nombre del solicitante</th>                     
-                    <th>Firma</th>                     
+                                       
                     <th>Motivo del permiso</th>
                     <th>Fecha de permiso</th>
                     <th>Inicio</th>
@@ -152,7 +152,7 @@
                            <td><pre>
 Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}} <br/>
 Delego a: _____________</pre></td>
-                           <td>_______________</td>
+                          
                            <td><pre>{{$result->motivo}}</pre></td>
                            <td><pre>{{substr($result->fecha_permiso, 0, 10)}}</pre></td>
                            <td><pre>{{$result->inicio}}</pre></td>
@@ -170,4 +170,10 @@ Delego a: _____________</pre></td>
 
 
   </body>
+   <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("arial", "bold");
+        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+    }
+</script>
 </html>

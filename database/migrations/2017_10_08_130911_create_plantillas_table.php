@@ -15,6 +15,7 @@ class CreatePlantillasTable extends Migration
         Schema::create('plantillas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('codigo', 5)->nullable();
             $table->string('nombre', 45)->nullable();
             $table->string('path', 45)->nullable();
             $table->timestamps();
