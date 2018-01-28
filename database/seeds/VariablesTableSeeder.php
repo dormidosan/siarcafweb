@@ -700,8 +700,16 @@ class VariablesTableSeeder extends Seeder {
 
 */
 
+		for ($i=0; $i < 5; $i++) { 
+		\DB::table('plantillas')->insert(array (
+		'codigo'  => 'pla'.$i,
+		'nombre'  => 'documento'.$i,
+		'path'  => '0b17d8a78c9516c900892e6a0ad52809.pdf',
+		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+		));
 
-		
+		}		
 	}
 	
 }

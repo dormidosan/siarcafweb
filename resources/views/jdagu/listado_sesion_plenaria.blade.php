@@ -73,7 +73,7 @@
                                 <input type="hidden" name="id_comision" id="id_comision"
                                        value="{{$comision->id}}">
                                 <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                                @if($agenda->vigente == 1)
+                                @if($agenda->vigente == 1 and $agenda->fijada == 0)
                                     <button type="submit" class="btn btn-success">Agregar puntos</button>
                                 @else
                                     <button type="submit" class="btn btn-success" disabled="disabled">Agregar
