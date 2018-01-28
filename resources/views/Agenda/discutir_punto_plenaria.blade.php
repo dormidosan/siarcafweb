@@ -87,45 +87,56 @@
 
             </div>
             <br>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Informacion de Peticion</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label>Peticionario</label>
-                                <input name="nombre" type="text" class="form-control" id="nombre"
-                                       value="{{ $punto->peticion->peticionario }}" readonly>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="info_peticion">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion"
+                               href="#info_peticion_contenido" aria-expanded="true"
+                               aria-controls="info_peticion_contenido" class="text-capitalize">
+                                Informacion de Peticion
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="info_peticion_contenido" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="info_peticion_contenido">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>Peticionario</label>
+                                        <input name="nombre" type="text" class="form-control" id="nombre"
+                                               value="{{ $punto->peticion->peticionario }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha inicio</label>
+                                        <input name="nombre" type="text" class="form-control" id="nombre"
+                                               value="{{ Carbon\Carbon::parse($punto->peticion->fecha)->format('d-m-Y h:m:i a') }}"
+                                               readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>Fecha Actual</label>
+                                        <input name="nombre" type="text" class="form-control" id="nombre"
+                                               value="{{ date_format(Carbon\Carbon::now(),"d-m-Y h:m:i a") }}" readonly>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label>Fecha inicio</label>
-                                <input name="nombre" type="text" class="form-control" id="nombre"
-                                       value="{{ Carbon\Carbon::parse($punto->peticion->fecha)->format('d-m-Y h:m:i a') }}"
-                                       readonly>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label>Fecha Actual</label>
-                                <input name="nombre" type="text" class="form-control" id="nombre"
-                                       value="{{ date_format(Carbon\Carbon::now(),"d-m-Y h:m:i a") }}" readonly>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                        <textarea class="form-control" readonly>{{ $punto->peticion->descripcion }}</textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label>Descripcion</label>
-                                <textarea class="form-control" readonly>{{ $punto->peticion->descripcion }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
+                </div>
             </div>
             @if($punto->activo == 1)
                 @include('Agenda.propuestas')
@@ -159,6 +170,7 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+
             $("#documento").fileinput({
                 theme: "explorer",
                 uploadUrl: "/file-upload-batch/2",
@@ -177,7 +189,7 @@
                 showPreview: false
 
             });
-
+            clearForms();
         });
 
         $('#asambleista_id').select2({
@@ -185,14 +197,32 @@
             language: "es",
             width: '100%'
         });
-        /* 
-        -/-*Esta función permite mostrar el modal-*-/
-        function mostrarModal() {
-            $("#iniciarSesionPlenaria").modal('show')
+
+        function mostrarIntervencion(idIntervencion) {
+            event.preventDefault();
+            console.log(idIntervencion);
+            $("#asambleista_nombre").val("");
+            $("#contenido").val("");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route('obtener_datos_intervencion') }}",
+                data: {
+                    "idIntervencion": idIntervencion,
+                }
+            }).done(function (response) {
+                $("#asambleista_nombre").val(response.asambleista);
+                $("#contenido").val(response.contenido);
+                $("#mostrarIntervencion").modal('show')
+            });
         }
-        */
-        function mostrarIntervencion() {
-            $("#mostrarIntervencion").modal('show')
+
+        function clearForms()
+        {
+            document.getElementById("nueva_propuesta").value=""; //don't forget to set the textbox ID
+            document.getElementById("nueva_intervencion").value=""; //don't forget to set the textbox ID
         }
     </script>
 @endsection
