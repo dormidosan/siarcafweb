@@ -49,14 +49,13 @@
                 @foreach($punto->intervenciones as $intervencion)
                     <tr class="text-center">
                         <td>
-                            {!! $contador !!}
-                            @php $contador++ @endphp
+                            {{ $contador++ }}
                         </td>
                         <td>
                             {{ $intervencion->asambleista->user->persona->primer_nombre }} {{ $intervencion->asambleista->user->persona->primer_apellido }}
                         </td>
                         <td>
-                            <a onclick="mostrarIntervencion({{$intervencion->id}})">Mostrar Detalles</a>
+                            <a onclick="mostrarIntervencion({{$intervencion->id}},event)" class="btn btn-primary"><i class="fa fa-external-link-square"></i> Mostrar Detalles</a>
                         </td>
 
                     </tr>

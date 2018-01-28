@@ -2,7 +2,8 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
@@ -14,9 +15,11 @@
             <li><a href="{{ route('inicio') }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Agenda</a></li>
             <li><a href="{{ route('consultar_agenda_vigentes') }}">Consultar Agendas Vigentes</a></li>
-            <li><a href="javascript:document.getElementById('sala_sesion_plenaria').submit();">Sesion Plenaria de Agenda {{ $agenda->codigo }}</a></li>
-            <li><a href="javascript:document.getElementById('iniciar_sesion_plenaria').submit();">Listado de Puntos</a></li>
-            <li class="active">Informacion de Punto de Plenaria</li>
+            <li><a href="javascript:document.getElementById('sala_sesion_plenaria').submit();">Sesion Plenaria de
+                    Agenda {{ $agenda->codigo }}</a></li>
+            <li><a href="javascript:document.getElementById('iniciar_sesion_plenaria').submit();">Listado de Puntos</a>
+            </li>
+            <li class="active">Discusion de Punto de Plenaria</li>
         </ol>
     </section>
 @endsection
@@ -51,7 +54,7 @@
                         {!! Form::open(['route'=>['retirar_punto_plenaria'],'method'=> 'POST']) !!}
                         <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                         <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                        <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Retirar
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-red-gradient btn-block">Retirar
                             punto
                         </button>
                         {!! Form::close() !!}
@@ -60,30 +63,51 @@
                         {!! Form::open(['route'=>['resolver_punto_plenaria'],'method'=> 'POST']) !!}
                         <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                         <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                        <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Resolver
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-green-gradient btn-block">Resolver
                             punto
                         </button>
                         {!! Form::close() !!}
                     </div>
+                    <div class="col-lg-3 col-sm-12">
+                        {!! Form::open(['route'=>['comision_punto_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                        <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-teal-gradient btn-block">Enviar a
+                            comision
+                        </button>
+                        {!! Form::close() !!}
+                    </div>
+                    <div class="col-lg-3 col-sm-12">
+                        {!! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                        <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+                        <input type="hidden" name="regresar" id="regresar" value="d">
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-yellow-gradient btn-block">Historial
+                            seguimiento
+                        </button>
+                        {!! Form::close() !!}
+                    </div>
+                @else
+                    <div class="col-lg-6 col-sm-12">
+                        {!! Form::open(['route'=>['comision_punto_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                        <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-teal-gradient btn-block">Enviar a comision
+                        </button>
+                        {!! Form::close() !!}
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        {!! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                        <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+                        <input type="hidden" name="regresar" id="regresar" value="d">
+                        <button type="submit" id="iniciar" name="iniciar" class="btn bg-yellow-gradient btn-block">Historial
+                            seguimiento
+                        </button>
+                        {!! Form::close() !!}
+                    </div>
                 @endif
-                <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['comision_punto_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
-                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                    <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Enviar a comision
-                    </button>
-                    {!! Form::close() !!}
-                </div>
-                <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['seguimiento_peticion_plenaria'],'method'=> 'POST','target' => '_blank']) !!}
-                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                    <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                    <input type="hidden" name="regresar" id="regresar" value="d">
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-info btn-block">Historial
-                        seguimiento
-                    </button>
-                    {!! Form::close() !!}
-                </div>
+
 
             </div>
             <br>
@@ -129,7 +153,8 @@
                                 <div class="col-lg-12 col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <label>Descripcion</label>
-                                        <textarea class="form-control" readonly>{{ $punto->peticion->descripcion }}</textarea>
+                                        <textarea class="form-control"
+                                                  readonly>{{ $punto->peticion->descripcion }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +175,7 @@
 
         </div>
     </div>
-@include("Modal.MostrarIntervencionModal")
+    @include("Modal.MostrarIntervencionModal")
 
 @endsection
 
@@ -198,9 +223,14 @@
             width: '100%'
         });
 
-        function mostrarIntervencion(idIntervencion) {
+        $('#asambleista_id_intervencion').select2({
+            placeholder: 'Seleccione un asambleista',
+            language: "es",
+            width: '100%'
+        });
+
+        function mostrarIntervencion(idIntervencion, event) {
             event.preventDefault();
-            console.log(idIntervencion);
             $("#asambleista_nombre").val("");
             $("#contenido").val("");
             $.ajax({
@@ -213,16 +243,15 @@
                     "idIntervencion": idIntervencion,
                 }
             }).done(function (response) {
-                $("#asambleista_nombre").val(response.asambleista);
+                $("#myModalLabel").text("Intervencion de " + response.asambleista); //remplazar el contenido del header
                 $("#contenido").val(response.contenido);
                 $("#mostrarIntervencion").modal('show')
             });
         }
 
-        function clearForms()
-        {
-            document.getElementById("nueva_propuesta").value=""; //don't forget to set the textbox ID
-            document.getElementById("nueva_intervencion").value=""; //don't forget to set the textbox ID
+        function clearForms() {
+            document.getElementById("nueva_propuesta").value = ""; //don't forget to set the textbox ID
+            document.getElementById("nueva_intervencion").value = ""; //don't forget to set the textbox ID
         }
     </script>
 @endsection
