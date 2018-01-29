@@ -53,9 +53,12 @@
                             <div class="text-center">
                                 <i class="fa fa-envelope fa-4x text-green"></i>
                             </div>
-                            <h3 class="profile-username text-center">Convocatorias</h3>
-                            <a href="{{ url('convocatoria_jd') }}"
+                            <h3 class="profile-username text-center">Generar Reuniones JD</h3>
+                            <!--<a href="{{ url('convocatoria_jd') }}"
+                               class="btn btn-success btn-block btn-sm"><b>Acceder</b></a> -->
+                            <a href="{{ url('generar_reuniones_jd') }}"
                                class="btn btn-success btn-block btn-sm"><b>Acceder</b></a>
+
                         </div>
                     </div>
                 </div>

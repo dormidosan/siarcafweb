@@ -5,6 +5,18 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+
+          <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        table.dataTable thead > tr > th {
+            padding-right: 0 !important;
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -12,6 +24,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Historial de  Bitacoras</h3>
         </div>
+        <!--
         <div class="box-body">
             <form id="crearbuscar" name="buscar" method="post" action="#">
                 <div class="row">
@@ -32,6 +45,7 @@
                 </div>
             </form>
         </div>
+        -->
     </div>
 
     <?php $i = 1; ?>
@@ -39,12 +53,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">Listado de Bitacoras</h3>
         </div>
-        <div class="box-body">
+        <div class="box-body table-responsive">
             <table id="resultadoDocs"
-                   class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
+                   class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
-                    <th>Nombre Bitacora</th>
+                    <th colspan="2">Nombre Bitacora</th>
                     <th>Fecha Creacion</th>
                     <th>Lugar</th>
                     <th>Accion</th>
@@ -56,7 +70,8 @@
                     @forelse($reunion->documentos as $documento)
                             @if($documento->tipo_documento_id == 7)
                             <tr>
-                                <td>{!! $documento->nombre_documento !!}</td>                                
+                                <td>{!! $documento->nombre_documento !!}</td>
+                                <td>{!! $documento->tipo_documento->tipo !!}</td>                                  
                                 <td>{!! $reunion->codigo !!}</td>
                                 <td>{!! $reunion->lugar !!}</td>
                                 <td>
@@ -71,12 +86,15 @@
                             </tr>
                             @endif
                         @empty
-                        <p style="color: red ;">No hay criterios de busqueda</p>
+                        <!-- <p style="color: red ;">No hay criterios de busqueda</p> -->
+                        <?php $text1 = 1; ?>
                         @endforelse
                 @empty
-                <p style="color: red ;">No hay criterios de busqueda</p>
+                    @if($text1 == 1)
+                        <p style="color: red ;">No hay criterios de busqueda</p>
+                    @endif
                 @endforelse
-
+                
                 </tbody>
 
             </table>
@@ -92,7 +110,7 @@
 
 @endsection
 
-@section('scripts')
+@section("scripts")
     <script type="text/javascript">
         $(function () {
             var oTable = $('#resultadoDocs').DataTable({
@@ -120,8 +138,12 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                responsive: true,
+                columnDefs: [{orderable: false, targets: [0, 4]}],
+                order: [[1, 'asc']]
 
             });
         });
     </script>
+
 @endsection

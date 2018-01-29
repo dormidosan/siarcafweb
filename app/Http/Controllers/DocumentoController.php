@@ -52,14 +52,14 @@ class DocumentoController extends Controller
 
 
         if (empty($periodo)) {
-            $documentos = Documento::join("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
+            $documentos = Documento::leftJoin("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
                 ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
                 ->where("documentos.tipo_documento_id", $tipo_documento)
                 ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
                 ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
                 ->get();
         } else {
-            $documentos = Documento::join("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
+            $documentos = Documento::leftJoin("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
                 ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
                 ->where("documentos.tipo_documento_id", $tipo_documento)
                 ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
