@@ -46,22 +46,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <div class="text-center">
-                                <i class="fa fa-envelope fa-4x text-green"></i>
-                            </div>
-                            <h3 class="profile-username text-center">DICTAMENES</h3>
-                            <a href="{{ url('Plantilla_dictamenes') }}"
-                               class="btn btn-success btn-block btn-sm"><b>Acceder</b></a>
-                        </div>
-                    </div>
-                </div>
-
-             
-            </div>
+         
 
            
 

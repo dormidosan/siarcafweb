@@ -150,15 +150,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-<<<<<<< HEAD
 
-        Sergio\PhpJasperXML\JasperReportsServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-
-
-=======
-      
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
         /*
          * Application Service Providers...

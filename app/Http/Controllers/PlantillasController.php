@@ -530,11 +530,7 @@ $textrun3 = $section->addTextRun('arial12');
  $puntos=DB::table('puntos')
         ->where('puntos.agenda_id','=',$id_agenda)
         ->where('puntos.retirado','=',0)
-<<<<<<< HEAD
         ->orderBy('puntos.romano','asc')
-=======
-         ->orderBy('puntos.romano','asc')
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
         ->get();
 //dd($puntos);
 
@@ -543,16 +539,10 @@ foreach ($puntos as $punto) {
 
     $propuestas=DB::table('propuestas')
     ->where('propuestas.punto_id','=',$punto->id)
-<<<<<<< HEAD
     ->where('propuestas.nulo','=',0)
     ->get();
     foreach ($propuestas as $propuesta) {
     $section->addListItem($propuesta->nombre_propuesta.' FAVOR: '.$propuesta->favor.' CONTRA: '.$propuesta->contra, 1, null, 'multilevel');
-=======
-    ->get();
-    foreach ($propuestas as $propuesta) {
-    $section->addListItem($propuesta->nombre_propuesta, 1, null, 'multilevel');
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
     }
     

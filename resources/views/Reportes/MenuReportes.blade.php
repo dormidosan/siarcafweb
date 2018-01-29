@@ -106,7 +106,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
              <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
                     <div class="box" style="border-top-color: #D81B60">
@@ -136,8 +135,6 @@
                     </div>
                 </div>
                 
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
         </div>
 
         

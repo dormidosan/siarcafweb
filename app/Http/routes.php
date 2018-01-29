@@ -75,25 +75,16 @@ Route::post('buscar_asistencias', 'ReportesController@buscar_asistencias')->name
 
 Route::post('buscar_consolidados_renta', 'ReportesController@buscar_consolidados_renta')->name("buscar_consolidados_renta");
 
-<<<<<<< HEAD
 Route::post('buscar_asambleistas_periodo', 'ReportesController@buscar_asambleistas_periodo')->name("buscar_asambleistas_periodo");
 
 Route::post('buscar_asambleistas_cumple', 'ReportesController@buscar_asambleistas_cumple')->name("buscar_asambleistas_cumple");
 
-
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_actas");
 
 Route::post('buscar_acuerdos', 'PlantillasController@buscar_acuerdos')->name("buscar_acuerdos");
 
 Route::post('buscar_dictamenes', 'PlantillasController@buscar_dictamenes')->name("buscar_dictamenes");
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
 
 Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");

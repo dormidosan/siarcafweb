@@ -165,22 +165,13 @@
                       <td>{{$result->nit}}</td>
                     
                       <td>$ {{$result->asistencia*$monto_dieta->valor}} </td>
-<<<<<<< HEAD
                       <td>$ {{round($result->asistencia*$monto_dieta->valor*$renta->valor,2)}} </td>
                       <td>$ {{round($result->asistencia*$monto_dieta->valor-$result->asistencia*$monto_dieta->valor*$renta->valor,2)}}</td>
-=======
-                      <td>$ {{round(($result->asistencia*$monto_dieta->valor)-($result->asistencia*$monto_dieta->valor)/($renta->valor+1),2)}} </td>
-                      <td>$ {{$result->asistencia*$monto_dieta->valor-round(($result->asistencia*$monto_dieta->valor)-($result->asistencia*$monto_dieta->valor)/($renta->valor+1),2)}}</td>
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
                       
                     </tr> 
                  @php $i=$i+1;
                       $total1=$total1+$result->asistencia*$monto_dieta->valor;
-<<<<<<< HEAD
                       $total2=$total2+round($result->asistencia*$monto_dieta->valor*$renta->valor,2);
-=======
-                      $total2=$total2+round(($result->asistencia*$monto_dieta->valor)-($result->asistencia*$monto_dieta->valor)/($renta->valor+1),2);
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
                   @endphp
                 @endforeach 

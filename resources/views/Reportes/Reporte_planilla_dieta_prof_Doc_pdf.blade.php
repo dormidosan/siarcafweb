@@ -112,17 +112,16 @@
 
 </style>
 
-    <div style="position: absolute;"  align="left">
-  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
-</div>                                  
- <div  align="right">
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
-</div>                                                                
+     <IMG align="left" SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%">
+                         
+
+  <IMG align="right" SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+                                                                        
                                                
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
+  <div id="p" style=" text-align: center;right: 25%;text-transform: uppercase;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
     MANDAMIENTO DE PAGOS DE DIETAS SECTOR DOCENTE<br/>
-    CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}
+    CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}<br/><br/><br/><br/>
      
   </div>   
     
@@ -131,8 +130,8 @@
   <body>
               
                
- <div  style="text-align: center;">
-   <table id="cp"  border="1" cellpadding="0" cellspacing="0" ;>                 
+               
+ <table style="text-align: center; position: center;" align="center" border="1" cellpadding="0" cellspacing="0" >              
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>No. </th>                     
@@ -178,7 +177,7 @@
                    </tbody>
 
                  </table>
-</div>       
+   
 
   </body>
    <script type="text/php">
