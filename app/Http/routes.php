@@ -245,7 +245,8 @@ Route::get('parametros', array('as' => 'parametros', 'uses' => 'AdministracionCo
 Route::get('cambiar_perfiles', "AdministracionController@cambiar_perfiles")->name("cambiar_perfiles");
 Route::get('cambiar_cargos_comision', "AdministracionController@cambiar_cargos_comision")->name("cambiar_cargos_comision");
 Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_cargos_junta_directiva")->name("cambiar_cargos_junta_directiva");
-
+Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
+Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
@@ -260,8 +261,8 @@ Route::post('administrar_acceso_modulos', "AdministracionController@administrar_
 Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_modulos")->name("asignar_acceso_modulos");
 Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")->name("agregar_plantillas");
 Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
+Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 
-Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 
 
 

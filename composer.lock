@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3c84c57ef00b8f206440819a50315f70",
-    "content-hash": "0c1bc1d5990b33b8c697d8e8fd7e1ddf",
+    "hash": "151b9efffb785f4f3b033aac6c33c74f",
+    "content-hash": "15b6d5da296e3006acb465b4da56e386",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -714,16 +714,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.41",
+            "version": "1.0.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f400aa98912c561ba625ea4065031b7a41e5a155"
+                "reference": "09eabc54e199950041aef258a85847676496fe8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f400aa98912c561ba625ea4065031b7a41e5a155",
-                "reference": "f400aa98912c561ba625ea4065031b7a41e5a155",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/09eabc54e199950041aef258a85847676496fe8e",
+                "reference": "09eabc54e199950041aef258a85847676496fe8e",
                 "shasum": ""
             },
             "require": {
@@ -734,12 +734,13 @@
             },
             "require-dev": {
                 "ext-fileinfo": "*",
-                "mockery/mockery": "~0.9",
-                "phpspec/phpspec": "^2.2",
-                "phpunit/phpunit": "~4.8"
+                "phpspec/phpspec": "^3.4",
+                "phpunit/phpunit": "^5.7"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
+                "ext-ftp": "Allows you to use FTP server storage",
+                "ext-openssl": "Allows you to use FTPS server storage",
                 "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
                 "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
                 "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
@@ -793,7 +794,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-08-06 17:41:04"
+            "time": "2018-01-27 16:03:56"
         },
         {
             "name": "maatwebsite/excel",
@@ -2530,50 +2531,6 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
-        },
-        {
-            "name": "jaspersoft/rest-client",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Jaspersoft/jrs-rest-php-client.git",
-                "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Jaspersoft/jrs-rest-php-client/zipball/017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
-                "reference": "017f081101b8f8c1a7ba15b65a89694d8c53bd2c",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Jaspersoft": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jaspersoft",
-                    "email": "code@jaspersoft.com"
-                }
-            ],
-            "description": "A client for the JasperReports Server REST API",
-            "homepage": "http://github.com/Jaspersoft/jrs-rest-php-client",
-            "keywords": [
-                "jasper-reports",
-                "jasperreports",
-                "jaspersoft",
-                "reporting"
-            ],
-            "time": "2014-05-27 21:10:25"
         },
         {
             "name": "laurentbrieu/tcpdf",

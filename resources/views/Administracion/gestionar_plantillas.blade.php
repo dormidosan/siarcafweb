@@ -73,7 +73,6 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-
             $('#actualizar_plantilla').formValidation({
                 framework: 'bootstrap',
                 icon: {
