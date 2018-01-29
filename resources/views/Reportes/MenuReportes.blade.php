@@ -40,7 +40,8 @@
                                 <i class="fa fa-book fa-4x text-red"></i>
                             </div>
                             <h3 class="profile-username text-center">PERMISOS TEMPORALES</h3>
-                            <a href="{{ url('Reporte_permisos_temporales') }}" class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
+                            <a href="{{ url('Reporte_permisos_temporales') }}"
+                               class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
                         </div>
                     </div>
                 </div>
@@ -65,12 +66,12 @@
                         <div class="box-body">
                             <div class="text-center">
                                 <i class="fa fa-folder-open-o fa-4x text-warning"></i>
-                            </div>                            
+                            </div>
                             <h3 class="profile-username text-center">BITACORA CORRESPONDENCIA</h3>
-                                                  
+
                             <a href="{{ url('Reporte_bitacora_correspondencia') }}"
                                class="btn btn-success btn-block btn-sm"><b>Acceder</b></a>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -97,17 +98,15 @@
                                 <i class="fa fa-clone fa-4x text-teal"></i>
                             </div>
                             <h3 class="profile-username text-center">CONSOLIDADOS DE RENTA</h3>
-                                                      
+
                             <a href="{{url('Reporte_consolidados_renta')}}"
                                class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></a>
-                           
+
                         </div>
                     </div>
                 </div>
             </div>
-
-<<<<<<< HEAD
-             <div class="row">
+            <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
@@ -121,25 +120,23 @@
                     </div>
                 </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-2">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-2">
                     <div class="box" style="border-top-color: #39CCCC">
                         <div class="box-body">
                             <div class="text-center">
                                 <i class="fa fa-clone fa-4x text-teal"></i>
                             </div>
                             <h3 class="profile-username text-center">CUMPLEAÑEROS DEL MES</h3>
-                                                      
+
                             <a href="{{url('buscar_cumple')}}"
                                class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></a>
-                           
+
                         </div>
                     </div>
                 </div>
-                
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-        </div>
 
-        
-    </div>
+            </div>
+
+
+        </div>
 @endsection

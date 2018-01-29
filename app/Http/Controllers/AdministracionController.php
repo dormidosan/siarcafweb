@@ -107,7 +107,7 @@ class AdministracionController extends Controller
     public function descargar_plantilla($id)
     {
         $plantilla = Plantilla::find($id);
-        $ruta_plantilla = "../storage/plantillas/".$plantilla->path;
+        $ruta_plantilla = "../storage/plantillas/" . $plantilla->path;
         return response()->download($ruta_plantilla);
     }
 
@@ -249,10 +249,8 @@ class AdministracionController extends Controller
 
     public function almacenar_plantilla(Request $request)
     {
-       //dd($request->all());
-        $vieja_plantilla_id = $request->id_plantilla;
-        $nueva_plantilla = $this->guardarPlantilla($request->documento_plantilla,$vieja_plantilla_id,'plantillas');
-
+        $vieja_plantilla_id = $request->plantilla_id;
+        $nueva_plantilla = $this->guardarPlantilla($request->plantilla, $vieja_plantilla_id, 'plantillas');
         $plantillas = Plantilla::all();
         return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
 
@@ -602,6 +600,20 @@ class AdministracionController extends Controller
         }
     }
 
+    public function actualizar_plantilla(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->hasFile("plantilla")) {
+                $vieja_plantilla_id = $request->id_plantilla;
+                $nueva_plantilla = $this->guardarPlantilla($request->plantilla, $vieja_plantilla_id, 'plantillas');
+                $respuesta = new \stdClass();
+                $respuesta->mensaje = (new Mensaje("Exito", "Plantillas agregadas con exito", "success"))->toArray();
+                return new JsonResponse($respuesta);
+            }
+        }
+    }
+
+
     private function generarTabla($idComision)
     {
         $comision = Comision::find($idComision);
@@ -701,24 +713,24 @@ class AdministracionController extends Controller
         return $tabla;
     }
 
-public function guardarPlantilla($doc,$plantilla_id,$destino){
-            $archivo = $doc;
-            $vieja_plantilla = Plantilla::where('id', '=', $plantilla_id)->first();
-            $vieja_plantilla->nombre = $archivo->getClientOriginalName();
+    public function guardarPlantilla($doc, $plantilla_id, $destino)
+    {
+        $archivo = $doc;
+        $vieja_plantilla = Plantilla::where('id', '=', $plantilla_id)->first();
+        $vieja_plantilla->nombre = $archivo->getClientOriginalName();
 
-
-            //$plantilla = new Plantilla();
-            //$plantilla->nombre = $archivo->getClientOriginalName();
+        //$plantilla = new Plantilla();
+        //$plantilla->nombre = $archivo->getClientOriginalName();
+        $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+        while (Plantilla::where('path', '=', $ruta)->first()) {
             $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
-            while (Plantilla::where('path', '=', $ruta)->first()) {
-                $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
-            }
-            //dd($ruta);
-            $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
-            $vieja_plantilla->path = $ruta;
-            $vieja_plantilla->save();
-
-            return $vieja_plantilla;
         }
+        //dd($ruta);
+        $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
+        $vieja_plantilla->path = $ruta;
+        $vieja_plantilla->save();
+
+        return $vieja_plantilla;
+    }
 
 }
