@@ -18,7 +18,10 @@
             <div class="col-lg-8">
                 <div class="form-group">
                     {!! Form::label('nueva_propuesta','Propuesta') !!}
-                    {!! Form::textarea('nueva_propuesta', null, ['id'=>'nueva_propuesta','class' => 'form-control','size' => '30x4','required'=>'required','placeholder'=>'Ingrese la nueva propuesta']) !!}
+                    {!! Form::textarea('nueva_propuesta', null, ['id'=>'nueva_propuesta','class' => 'form-control','size' => '30x4','maxlength'=>'254','required'=>'required','placeholder'=>'Ingrese la nueva propuesta']) !!}
+                    <div class="pull-right text-green" id="caja">
+                        <span id="chars">254</span> caracteres restantes
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,8 +61,7 @@
                     @if($propuesta->votado == 1)
                         <tr class="text-center">
                             <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
+                                {{ $contador++ }}
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
@@ -79,7 +81,11 @@
                             <td>
                                 {{ $propuesta->nulo }}
                             </td>
-                            <td>{{ $propuesta->ronda }}</td>
+                            @if($propuesta->ronda == 1)
+                                <td class="success text-bold">{{ $propuesta->ronda }}</td>
+                            @else
+                                <td class="info text-bold">{{ $propuesta->ronda }}</td>
+                            @endif
                             <td>
                                 @if($propuesta->ronda == 1 and $propuesta->activa == 1)
                                     {!! Form::open(['route'=>['modificar_propuesta'],'method'=> 'POST']) !!}
@@ -104,7 +110,6 @@
                             {!! Form::open(['route'=>['guardar_votacion'],'method'=> 'POST']) !!}
                             <td>
                                 {{ $contador++ }}
-                                @php $contador++ @endphp
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
@@ -112,17 +117,17 @@
                             <td>
                                 {{ $propuesta->asambleista->user->persona->primer_nombre }} {{ $propuesta->asambleista->user->persona->primer_apellido }}
                             </td>
-                            <td>
+                            <td width="7%">
                                 <input type="number" class="form-control input-sm" id="favor" name="favor" value="0">
                             </td>
-                            <td>
+                            <td width="7%">
                                 <input type="number" class="form-control input-sm" id="contra" name="contra" value="0">
                             </td>
-                            <td>
+                            <td width="7%">
                                 <input type="number" class="form-control input-sm" id="abstencion" name="abstencion"
                                        value="0">
                             </td>
-                            <td>
+                            <td width="7%">
                                 <input type="number" class="form-control input-sm" id="nulo" name="nulo" value="0">
                             </td>
                             <td>{{ $propuesta->ronda }}</td>

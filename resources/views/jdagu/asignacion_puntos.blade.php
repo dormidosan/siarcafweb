@@ -16,7 +16,7 @@
             <li><a href="{{ route("listado_reuniones_jd") }}">Listado de Reuniones</a></li>
             <li><a href="javascript:document.getElementById('iniciar_reunion_jd').submit();">Reunion {{ $reunion->codigo }}</a></li>
             <li><a href="javascript:document.getElementById('listado_sesion_plenaria').submit();">Listado de Sesiones Plenarias</a></li>
-            <li class="active">Asignacion de Puntos</li>
+            <li class="active">Asignacion Puntos</li>
         </ol>
     </section>
 @endsection

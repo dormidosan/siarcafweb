@@ -18,7 +18,10 @@
             <div class="col-lg-8">
                 <div class="form-group">
                     {!! Form::label('nueva_intervencion','Intervencion') !!}
-                    {!! Form::textarea('nueva_intervencion', null, ['id'=>'nueva_intervencion','class' => 'form-control','size' => '30x4','required'=>'required','placeholder'=>'Digite nueva intervencion']) !!}
+                    {!! Form::textarea('nueva_intervencion', null, ['id'=>'nueva_intervencion','class' => 'form-control','size' => '30x4','maxlength'=>'250','required'=>'required','placeholder'=>'Digite nueva intervencion']) !!}
+                    <div class="pull-right text-green" id="caja2">
+                        <span id="chars2">250</span> caracteres restantes
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,14 +52,13 @@
                 @foreach($punto->intervenciones as $intervencion)
                     <tr class="text-center">
                         <td>
-                            {!! $contador !!}
-                            @php $contador++ @endphp
+                            {{ $contador++ }}
                         </td>
                         <td>
                             {{ $intervencion->asambleista->user->persona->primer_nombre }} {{ $intervencion->asambleista->user->persona->primer_apellido }}
                         </td>
                         <td>
-                            <a onclick="mostrarIntervencion({{$intervencion->id}})">Mostrar Detalles</a>
+                            <a onclick="mostrarIntervencion({{$intervencion->id}},event)" class="btn btn-primary"><i class="fa fa-external-link-square"></i> Mostrar Detalles</a>
                         </td>
 
                     </tr>

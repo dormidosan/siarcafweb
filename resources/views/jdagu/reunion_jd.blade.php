@@ -40,7 +40,7 @@
                     <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     @if($todos_puntos == 1)
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block"
-                                disabled="disabled">Reunion JD***
+                                disabled="disabled">Reunion JD
                         </button>
                     @else
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block">Reunion JD
@@ -55,7 +55,7 @@
                     <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                     @if($todos_puntos == 2)
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block"
-                                disabled="disabled">Puntos Plenaria***
+                                disabled="disabled">Puntos Plenaria
                         </button>
                     @else
                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-default btn-block">Puntos

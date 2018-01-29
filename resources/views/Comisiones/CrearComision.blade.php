@@ -106,9 +106,9 @@
                             @endif @endif
                         </td>
                         @if($comision->created_at)
-                            <td>{{ date_format($comision->created_at,"d/m/Y h:i:s") }}</td>
+                            <td>{{ date_format($comision->created_at,"d/m/Y h:m A") }}</td>
                         @endif @if($comision->updated_at)
-                            <td>{{ date_format($comision->updated_at,"d/m/Y h:i:s") }}</td>
+                            <td>{{ date_format($comision->updated_at,"d/m/Y h:m A") }}</td>
                         @endif
 
                     </tr>

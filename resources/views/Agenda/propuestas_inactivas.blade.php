@@ -9,61 +9,64 @@
                 <tr>
                     <th>#</th>
                     <th>Nombre propuesta</th>
-                    <th>Nombre asambleista</th>
-                    <th>favor</th>
-                    <th>contra</th>
-                    <th>abstencion</th>
-                    <th>nulos</th>
-                    <th>ronda</th>
-                    <th>activa</th>
+                    <th>Asambleista</th>
+                    <th>Favor</th>
+                    <th>Contra</th>
+                    <th>Abstencion</th>
+                    <th>Nulos</th>
+                    <th>Ronda</th>
+                    <th colspan="2">Accion</th>
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla" class="text-center">
                 @php $contador = 1 @endphp
-                @foreach($propuestas as $propuesta)
-                    @if($propuesta->votado == 1)
-                        <tr>
-                            <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
-                            </td>
-                            <td>
-                                {{ $propuesta->nombre_propuesta }}
-                            </td>
-                            <td>
-                                {{ $propuesta->asambleista->user->persona->primer_nombre }} {{ $propuesta->asambleista->user->persona->primer_apellido }}
-                            </td>
-                            <td>
-                                {{ $propuesta->favor }}
-                            </td>
-                            <td>
-                                {{ $propuesta->contra }}
-                            </td>
-                            <td>
-                                {{ $propuesta->abstencion }}
-                            </td>
-                            <td>
-                                {{ $propuesta->nulo }}
-                            </td>
-                            <td>{{ $propuesta->ronda }}</td>
-                            <td>{{ $propuesta->activa }}</td>
-                            <td>
-                                @if($propuesta->ronda == 1 and $propuesta->activa == 1)
-                                    {!! Form::open(['route'=>['modificar_propuesta'],'method'=> 'POST']) !!}
-                                  
-                                    {!! Form::close() !!}
-                                @endif
-                            </td>
-                            <td>
+                @if($propuestas->isEmpty())
+                    <tr>
+                        <td colspan="10">No existen propuestas actualmente registradas</td>
+                    </tr>
+                @else
+                    @foreach($propuestas as $propuesta)
+                        @if($propuesta->votado == 1)
+                            <tr>
+                                <td>
+                                    {{ $contador++ }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->nombre_propuesta }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->asambleista->user->persona->primer_nombre }} {{ $propuesta->asambleista->user->persona->primer_apellido }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->favor }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->contra }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->abstencion }}
+                                </td>
+                                <td>
+                                    {{ $propuesta->nulo }}
+                                </td>
+                                <td>{{ $propuesta->ronda }}</td>
+                                <td>{{ $propuesta->activa }}</td>
+                                <td>
+                                    @if($propuesta->ronda == 1 and $propuesta->activa == 1)
+                                        {!! Form::open(['route'=>['modificar_propuesta'],'method'=> 'POST']) !!}
 
-                            </td>
-                        </tr>
-                    @else
+                                        {!! Form::close() !!}
+                                    @endif
+                                </td>
+                                <td>
 
-                    @endif
-                    {{--@empty
-                    <p style="color: red ;">No hay criterios de busqueda</p>--}}
-                @endforeach
+                                </td>
+                            </tr>
+                        @else
+
+                        @endif
+                    @endforeach
+                @endif
                 </tbody>
             </table>
         </div>

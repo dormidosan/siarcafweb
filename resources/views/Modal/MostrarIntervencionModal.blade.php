@@ -5,7 +5,7 @@
 @endsection
 
 @section("idModal","mostrarIntervencion")
-@section("EncabezadoModal","Encabezado intervencion")
+@section("EncabezadoModal","Detalles Intervencion")
 @section("size","modal-lg")
 
 @section("bodyModal")
@@ -13,16 +13,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label>Nombre de Asambleista</label>
-                    <input type="text" id="asambleista_nombre" class="form-control" value="" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
                     <label>Contenido de la Intervencion</label>
-                    <textarea id="contenido" class="form-control" readonly></textarea>
+                    <textarea id="contenido" class="form-control" rows="15" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -33,7 +25,7 @@
     <div class="modal-footer text-center">
         <div class="row">
             <div class="col-lg-12">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

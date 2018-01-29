@@ -141,9 +141,7 @@
                     <th>PROPIETARIO Ó <br/>SUPLENTE</th>                     
                     <th>NOMBRES</th>
                     <th>FACULTAD</th>
-                    <th>1a</th>
-                    <th>2a</th>
-                    <th>FIRMA ASAMBLEISTA</th>
+                   
                   
                     <th>Hora entrada</th>
                     <th>ESPACIO RESERVADO PARA SECRETARIO AGU</th>
@@ -156,7 +154,7 @@
                       <td>
                        {{$i}}
                       </td>
-                      @if($result->propietario==1)
+                      @if($result->propietaria==1)
                       <td>
                          PROPIETARIO
                       </td>
@@ -167,9 +165,7 @@
                       @endif
                       <td>{{$result->primer_nombre}} {{$result->primer_apellido}}</td>                   
                       <td>{{$result->nombre}}</td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
+                     
                            
                       <td> {{$result->entrada}} </td>
                       <td>  </td>                 
@@ -188,4 +184,10 @@
 
   
   </body>
+   <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("arial", "bold");
+        $pdf->page_text(700,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+    }
+</script>
 </html>

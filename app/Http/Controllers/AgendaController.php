@@ -9,10 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-
 use App\Http\Requests;
+use App\Http\Requests\PropuestaRequest;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Cache;
 use Storage;
 use App\Agenda;
@@ -87,7 +86,6 @@ class AgendaController extends Controller
             ->with('agenda', $agenda)
             ->with('puntos', $puntos);
     }
-
 
     public function sala_sesion_plenaria(Request $request,Redirector $redirect)
     {
@@ -192,8 +190,42 @@ class AgendaController extends Controller
                 $facultades = Facultad::where('id','!=','0')->get();
                 $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
+                $conteo = array(
+                    "pro" => "0",
+                    "csup" => "0",
+                    "cpro" => "0",
+                    "sup" => "0",
+                    "total" => "0",
+                );
+                $conteo["pro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','1')
+                    ->where('asambleistas.propietario','=','1')
+                    ->count();
+
+                $conteo["csup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','0')
+                    ->where('asambleistas.propietario','=','1')
+                    ->count();
+
+                $conteo["cpro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','1')
+                    ->where('asambleistas.propietario','=','0')
+                    ->count();
+
+                $conteo["sup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','0')
+                    ->where('asambleistas.propietario','=','0')
+                    ->count();
+
+                $conteo["total"] = Asistencia::where('agenda_id','=',$agenda->id)->count();
+
                 return view('Agenda.sala_sesion_plenaria')        
                 ->with('agenda', $agenda)
+                ->with('conteo', $conteo)
                 ->with('facultades', $facultades)
                 ->with('asistentes', $asistentes)
                 ->with('asambleistas', $asambleistas)
@@ -362,9 +394,6 @@ class AgendaController extends Controller
       
 
     }
-
-
-    
 
     public function discutir_punto_plenaria(Request $request,Redirector $redirect)
 
@@ -547,7 +576,6 @@ class AgendaController extends Controller
             ->with('propuestas', $propuestas);
     }
 
-
     public function agregar_intervencion(Request $request, Redirector $redirect)
     {
 
@@ -585,7 +613,6 @@ class AgendaController extends Controller
             ->with('propuestas', $propuestas);
     }
 
-
     public function seguimiento_peticion_plenaria(Request $request, Redirector $redirect)
     {
         $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
@@ -608,7 +635,6 @@ class AgendaController extends Controller
             ->with('peticion', $peticion);
 
     }
-
 
     public function retirar_punto_plenaria(Request $request, Redirector $redirect)
     {
@@ -641,7 +667,6 @@ class AgendaController extends Controller
         
     }
 
-
     public function fijar_puntos(Request $request, Redirector $redirect)
     {
 
@@ -659,7 +684,6 @@ class AgendaController extends Controller
             ->with('agenda', $agenda)
             ->with('puntos', $puntos);
     }
-
 
     public function nuevo_orden_plenaria(Request $request, Redirector $redirect)
     {
@@ -722,13 +746,10 @@ class AgendaController extends Controller
             ->with('peticion', $peticion);
     }
 
-
     public function agregar_asambleistas_sesion(Request $request){
-        //dd($request->all());
+
         $id_asambleistas = $request->get("asambleistas");
         $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
-        //$comision = Comision::find($request->get("comision_id"));
-        //dd($asambleistas);
 
         foreach ($id_asambleistas as $id_asambleista) {
             $ingresado  = Asistencia::where('agenda_id','=',$agenda->id)->where('asambleista_id','=',$id_asambleista)->count();
@@ -767,18 +788,11 @@ class AgendaController extends Controller
                         $tiempo->tiempo_propietario = 0;
                     }
                     $tiempo->save();
-
-
-
-
-
                 }
                 else{
                         //dd("ya estaba");
                 }
         }
-
-        
                                     //dd($propietarios);
 
         //$request->session()->flash("success", "Asambleista(s) agregado(s) con exito " .$cargo->id);
@@ -805,12 +819,47 @@ class AgendaController extends Controller
         $ultimos_ingresos  = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->take(5)->get();
         $facultades = Facultad::where('id','!=','0')->get();
         $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
-        //dd($array_asambleistas_sesion);
+
+        $conteo = array(
+            "pro" => "0",
+            "csup" => "0",
+            "cpro" => "0",
+            "sup" => "0",
+            "total" => "0",
+        );
+        $conteo["pro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asistencias.propietaria','=','1')
+            ->where('asambleistas.propietario','=','1')
+            ->count();
+
+        $conteo["csup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asistencias.propietaria','=','0')
+            ->where('asambleistas.propietario','=','1')
+            ->count();
+
+        $conteo["cpro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asistencias.propietaria','=','1')
+            ->where('asambleistas.propietario','=','0')
+            ->count();
+
+        $conteo["sup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id','=',$agenda->id)
+            ->where('asistencias.propietaria','=','0')
+            ->where('asambleistas.propietario','=','0')
+            ->count();
+
+        $conteo["total"] = Asistencia::where('agenda_id','=',$agenda->id)->count();
+
+
         return view('Agenda.sala_sesion_plenaria')
             ->with('agenda', $agenda)
             ->with('facultades', $facultades)
             ->with('asistentes', $asistentes)
             ->with('asambleistas', $asambleistas)
+            ->with('conteo', $conteo)
             ->with('ultimos_ingresos', $ultimos_ingresos);
     }
 
@@ -965,10 +1014,4 @@ class AgendaController extends Controller
             return new JsonResponse($respuesta);
         }
     }
-
-    
-
-
-        
-
 }

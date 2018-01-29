@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit92bffd607de22de7e5621bb50f6999b5
+class ComposerStaticInit889f62302c17823e54ea0934e503b5f9
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -339,10 +339,6 @@ class ComposerStaticInit92bffd607de22de7e5621bb50f6999b5
         ),
         'J' => 
         array (
-            'Jaspersoft' => 
-            array (
-                0 => __DIR__ . '/..' . '/jaspersoft/rest-client/src',
-            ),
             'JakubOnderka\\PhpConsoleHighlighter' => 
             array (
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -958,10 +954,10 @@ class ComposerStaticInit92bffd607de22de7e5621bb50f6999b5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit92bffd607de22de7e5621bb50f6999b5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit92bffd607de22de7e5621bb50f6999b5::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit92bffd607de22de7e5621bb50f6999b5::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit92bffd607de22de7e5621bb50f6999b5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$classMap;
 
         }, null, ClassLoader::class);
     }

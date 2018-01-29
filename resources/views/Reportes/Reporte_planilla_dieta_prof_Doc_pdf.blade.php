@@ -119,35 +119,35 @@
   <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
 </div>                                                                
                                                
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%">
+ <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
     MANDAMIENTO DE PAGOS DE DIETAS SECTOR DOCENTE<br/>
-    CORRESPONDIENTE AL MES DE {{$mes}}
+    CORRESPONDIENTE AL MES DE {{$mes}} {{$anio}}
      
   </div>   
+    
                    
 </head>
   <body>
               
                
- 
-   <table id="cp"  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">                 
+ <div  style="text-align: center;">
+   <table id="cp"  border="1" cellpadding="0" cellspacing="0" ;>                 
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
                     <th>No. </th>                     
                     <th>SECTOR</th>                     
                     <th>NOMBRES</th>
                     <th>FACULTAD</th>
-                    <th>1a. SESION</th>
-                    <th>2a. SESION</th>
-                    <th>3a. SESION</th>
-                    <th>4a. SESION</th>
+                    
                     <th>TOTAL</th>
                     </tr>
                   </thead>
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                    @php $i=1 @endphp
+                    @php $i=1;$total=0 @endphp
+                    
                      @foreach($resultados as $result)
+                       
                        <tr>                                     
                       <td>
                        {{$i}}
@@ -157,31 +157,34 @@
                       </td>
                       <td>{{$result->primer_nombre}} {{$result->segundo_apellido}}</td>                   
                       <td>{{$result->nom_fact}} </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td> - </td>
-                      <td>$ -  </td>                      
+                      
+                      <td>$ {{$result->asistencia*$monto_dieta->valor}}</td>                      
                     </tr>                 
-                       @php $i=$i+1 @endphp
+                       @php $i=$i+1;
+                       $total=$total+$result->asistencia*$monto_dieta->valor
+                       @endphp
    @endforeach          
     <tr>                                     
                       <td>                       
                       </td>
                       <td>                      
                       </td>
-                      <td>PASAN...</td>                  
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>      
-                      <td>$ - </td>                
+                      <td></td>                  
+                      <td>TOTAL:</td>
+                         
+                      <td>$ {{$total}} </td>                
                     </tr>
 
                    </tbody>
 
-                </table>       
+                 </table>
+</div>       
 
   </body>
+   <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("arial", "bold");
+        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+    }
+</script>
 </html>

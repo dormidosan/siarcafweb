@@ -124,9 +124,9 @@
 </div>                                                                
                                                                 
                                                
- <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%">
+ <div id="p" style="text-align: center;position: absolute;right: 25%;top: 3%;text-transform: uppercase;">
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}} <br/>
+    DETALLE DE DIETA  DE ASAMBLEISTAS DEL MES {{$mes}} {{$anio}}<br/>
     SECTOR PROFESIONAL NO DOCENTE
     
     PERIODO {{$anio}}
@@ -138,7 +138,7 @@
 
  
  <!--style="page-break-before: always;"-->
-
+<div  style="text-align: center;">
                 <table id="cp"  border="1" cellpadding="0" cellspacing="0" >
                    
                   <thead>  <!-- ENCABEZADO TABLA-->
@@ -146,35 +146,31 @@
                     <th>No. </th>                     
                     <th>SECTOR</th>                     
                     <th>NOMBRES</th>
-                    <th>1a. SESION</th>
-                    <th>2a. SESION</th>
-                    <th>3a. SESION</th>
-                    <th>4a. SESION</th>
+                    <th>FACULTAD</th>
                     <th>TOTAL</th>
                     </tr>
                   </thead>
 
                     <tbody>  <!-- CUERPO DE LA TABLA-->
-                      @php $i=1 @endphp
+                      @php $i=1;$total=0 @endphp
                      @foreach($resultados as $result)
                     <tr>                                     
                       <td>
                          {{$i}}
                       </td>
                       <td>
-                        PROF. NO DOCENTE
+                       NO DOCENTE
                       </td>
                       <td>{{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}}{{$result->segundo_apellido}}</td>
+                    <td>{{$result->nom_fact}} </td>
                     
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
+                      <td>$ {{$result->asistencia*$monto_dieta->valor}} </td>
                       
                     </tr> 
                       
-  @php $i=$i+1 @endphp
+  @php $i=$i+1;
+                       $total=$total+$result->asistencia*$monto_dieta->valor
+                       @endphp
    @endforeach   
                     <tr>                                     
                       <td>
@@ -183,34 +179,24 @@
                       <td>
                         
                       </td>
-                      <td>PASAN...</td>
+                      <td>
+                        
+                      </td>
+                      <td>TOTAL:</td>
                     
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
-                      <td>$ - </td>
+                      
+                      <td>$ {{$total}} </td>
                       
                     </tr>
 
                    </tbody>
-
-                
-
-<!--<div class="page">
-    First page
-</div>
-<div class="page">
-    Second page
-</div>-->
-              
- 
-  <!--  <div style="page-break-before: always;">
-    </div>   -->
+                 </table>
+</div>  
   </body>
-  <script type="text/php">
- $text = 'pagina: {PAGE_NUM} / {PAGE_COUNT}';
- $font = Font_Metrics::get_font("helvetica", "bold");
- $pdf->page_text(36, 18, $text, $font, 9);
+ <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("arial", "bold");
+        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+    }
 </script>
 </html>

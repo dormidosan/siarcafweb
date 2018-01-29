@@ -127,9 +127,7 @@
                                     <td>
                                         {!! $peticion->descripcion !!}
                                     </td>
-                                    <td>
-                                        {!! $peticion->fecha !!}
-                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($peticion->fecha)->format('d-m-Y h:m A') }}</td>
                                     {{-- <td>
                                         {!! Carbon\Carbon::now() !!}
                                     </td>--}}
