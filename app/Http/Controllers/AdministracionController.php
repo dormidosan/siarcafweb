@@ -600,19 +600,29 @@ class AdministracionController extends Controller
         }
     }
 
-    public function actualizar_plantilla(Request $request)
-    {
-        if ($request->ajax()) {
-            if ($request->hasFile("plantilla")) {
-                $vieja_plantilla_id = $request->id_plantilla;
-                $nueva_plantilla = $this->guardarPlantilla($request->plantilla, $vieja_plantilla_id, 'plantillas');
-                $respuesta = new \stdClass();
-                $respuesta->mensaje = (new Mensaje("Exito", "Plantillas agregadas con exito", "success"))->toArray();
-                return new JsonResponse($respuesta);
-            }
-        }
+    public function registro_permisos_temporales(){
+        $periodo_activo = Periodo::where('activo','=', 1)->first();
+        $asambleistas = Asambleista::where('activo','=', 1)
+            ->where('periodo_id','=',$periodo_activo->id)
+            ->get();
+
+        return view("Administracion.registro_permisos_temporales",['asambleistas'=>$asambleistas]);
     }
 
+    public function mostrar_delegados(Request $request){
+        if ($request->ajax()){
+            $asambleista = Asambleista::find($request->id);
+            $suplentes = Asambleista::where("sector_id",$asambleista->sector_id)->where("activo",1)->where("propietario",0)->get();
+
+            $dropdown = '<option value="">-- Seleccione un delegado --</option>';
+            foreach ($suplentes as $suplente){
+                $dropdown .= '<option value="'.$suplente->id .'">'.$suplente->user->persona->primer_nombre . ' ' .$suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido.'</option>';
+            }
+            $respuesta = new \stdClass();
+            $respuesta->dropdown = $dropdown;
+            return new JsonResponse($respuesta);
+        }
+    }
 
     private function generarTabla($idComision)
     {

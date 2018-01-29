@@ -401,6 +401,16 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
+            'nombre_modulo'  => 'Registro Permisos Temporales',
+            'url' => 'registro_permisos_temporales',
+            'modulo_padre' => '10',
+            'icono'  => 'fa fa-dot-circle-o',
+            'tiene_hijos' => false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ));
+
+        \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Periodo AGU',
             'url' => 'periodos_agu',
             'modulo_padre' => '10',
