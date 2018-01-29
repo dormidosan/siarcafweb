@@ -250,6 +250,12 @@ Route::get('listado_agenda_plenaria_jd', array('as' => 'listado_agenda_plenaria_
 Route::post('eliminar_agenda_creada_jd', array('as' => 'eliminar_agenda_creada_jd', 'uses' => 'JuntaDirectivaController@eliminar_agenda_creada_jd'));
 Route::post('generar_agenda_plenaria_jd', array('as' => 'generar_agenda_plenaria_jd', 'uses' => 'JuntaDirectivaController@generar_agenda_plenaria_jd'));
 
+Route::get('generar_reuniones_jd', array('as' => 'generar_reuniones_jd', 'uses' => 'JuntaDirectivaController@generar_reuniones_jd'));
+
+Route::post('crear_reunion_jd', array('as' => 'crear_reunion_jd', 'uses' => 'JuntaDirectivaController@crear_reunion_jd'));
+Route::post('eliminar_reunion_jd', array('as' => 'eliminar_reunion_jd', 'uses' => 'JuntaDirectivaController@eliminar_reunion_jd'));
+Route::post('enviar_convocatoria_jd', array('as' => 'enviar_convocatoria_jd', 'uses' => 'JuntaDirectivaController@enviar_convocatoria_jd'));
+
 
 
 /*post*/
