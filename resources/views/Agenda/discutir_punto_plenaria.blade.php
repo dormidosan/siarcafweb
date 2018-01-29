@@ -199,7 +199,7 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            var maxChar = 15;
+            var maxChar = 254;
             var maxCharIntevencion = 250;
             $("#caja").removeClass("text-danger");
             $("#caja").addClass("text-green");
