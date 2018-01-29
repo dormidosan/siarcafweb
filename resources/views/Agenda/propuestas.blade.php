@@ -1,32 +1,67 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Propuestas</h3>
+    <div class="panel-heading" role="tab" id="panel_propuestas">
+        <h4 class="panel-title">Propuestas</h4>
     </div>
     <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table table-hover text-center">
-                <thead>
+        {!! Form::open(['route'=>['agregar_propuesta'],'method'=> 'POST','id'=>'agregarPropuesta','class'=>'agregarPropuesta']) !!}
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    {!! Form::label('asambleista_id', 'Asambleista'); !!}
+                    {!! Form::select('asambleista_id',$asambleistas_plenaria,null,['id'=>'asambleista_id','class'=>'form-control','required'=>'required','placeholder' => 'Seleccione asambleista...']) !!}
+                </div>
+            </div>
+
+            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+            <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
+
+            <div class="col-lg-8">
+                <div class="form-group">
+                    {!! Form::label('nueva_propuesta','Propuesta') !!}
+                    {!! Form::textarea('nueva_propuesta', null, ['id'=>'nueva_propuesta','class' => 'form-control','size' => '30x4','maxlength'=>'15','required'=>'required','placeholder'=>'Ingrese la nueva propuesta']) !!}
+                    <div class="pull-right text-green" id="caja">
+                        <span id="chars">15</span> caracteres restantes
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <button type="submit" id="iniciar" name="iniciar" class="btn btn-primary btn-sm">Agregar Propuesta
+                </button>
+            </div>
+        </div>
+        {!! Form::close() !!}
+    </div>
+    <!-- Table -->
+    <div class="table-responsive">
+        <table id="propuestas_tabla" class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre propuesta</th>
+                <th>Asambleista</th>
+                <th>Favor</th>
+                <th>Contra</th>
+                <th>Abstencion</th>
+                <th>Nulos</th>
+                <th>Ronda</th>
+                <!--<th>Activa</th>-->
+                <th colspan="2">Accion</th>
+            </tr>
+            </thead>
+            <tbody id="cuerpoTabla" class="text-center">
+            @php $contador = 1 @endphp
+            @if($propuestas->isEmpty())
                 <tr>
-                    <th>#</th>
-                    <th>Nombre propuesta</th>
-                    <th>Nombre asambleista</th>
-                    <th>favor</th>
-                    <th>contra</th>
-                    <th>abstencion</th>
-                    <th>nulos</th>
-                    <th>ronda</th>
-                    <th>activa</th>
-                    <th>accion</th>
+                    <td colspan="10">No existen propuestas actualmente registradas</td>
                 </tr>
-                </thead>
-                <tbody id="cuerpoTabla" class="text-center">
-                @php $contador = 1 @endphp
+            @else
                 @foreach($propuestas as $propuesta)
                     @if($propuesta->votado == 1)
-                        <tr>
+                        <tr class="text-center">
                             <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
+                                {{ $contador++ }}
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
@@ -46,8 +81,11 @@
                             <td>
                                 {{ $propuesta->nulo }}
                             </td>
-                            <td>{{ $propuesta->ronda }}</td>
-                            <td>{{ $propuesta->activa }}</td>
+                            @if($propuesta->ronda == 1)
+                                <td class="success text-bold">{{ $propuesta->ronda }}</td>
+                            @else
+                                <td class="info text-bold">{{ $propuesta->ronda }}</td>
+                            @endif
                             <td>
                                 @if($propuesta->ronda == 1 and $propuesta->activa == 1)
                                     {!! Form::open(['route'=>['modificar_propuesta'],'method'=> 'POST']) !!}
@@ -56,7 +94,8 @@
                                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                     <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                     <input type="hidden" name="opcion" id="opcion" value="1">
-                                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-warning btn-block">
+                                    <button type="submit" id="iniciar" name="iniciar"
+                                            class="btn btn-warning btn-xs text-center btn-block">
                                         Ronda 2
                                     </button>
                                     {!! Form::close() !!}
@@ -70,8 +109,7 @@
                         <tr>
                             {!! Form::open(['route'=>['guardar_votacion'],'method'=> 'POST']) !!}
                             <td>
-                                {!! $contador !!}
-                                @php $contador++ @endphp
+                                {{ $contador++ }}
                             </td>
                             <td>
                                 {{ $propuesta->nombre_propuesta }}
@@ -79,25 +117,26 @@
                             <td>
                                 {{ $propuesta->asambleista->user->persona->primer_nombre }} {{ $propuesta->asambleista->user->persona->primer_apellido }}
                             </td>
-                            <td>
-                                <input type="text" class="form-control" id="favor" name="favor" value="0">
+                            <td width="7%">
+                                <input type="number" class="form-control input-sm" id="favor" name="favor" value="0">
                             </td>
-                            <td>
-                                <input type="text" class="form-control" id="contra" name="contra" value="0">
+                            <td width="7%">
+                                <input type="number" class="form-control input-sm" id="contra" name="contra" value="0">
                             </td>
-                            <td>
-                                <input type="text" class="form-control" id="abstencion" name="abstencion" value="0">
+                            <td width="7%">
+                                <input type="number" class="form-control input-sm" id="abstencion" name="abstencion"
+                                       value="0">
                             </td>
-                            <td>
-                                <input type="text" class="form-control" id="nulo" name="nulo" value="0">
+                            <td width="7%">
+                                <input type="number" class="form-control input-sm" id="nulo" name="nulo" value="0">
                             </td>
                             <td>{{ $propuesta->ronda }}</td>
-                            <td>{{ $propuesta->activa }}</td>
                             <td>
                                 <input type="hidden" name="id_propuesta" id="id_propuesta" value="{{$propuesta->id}}">
                                 <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                 <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                                <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">
+                                <button type="submit" id="iniciar" name="iniciar"
+                                        class="btn btn-success btn-block btn-xs">
                                     Guardar
                                 </button>
                             </td>
@@ -108,42 +147,21 @@
                                 <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                 <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                 <input type="hidden" name="opcion" id="opcion" value="2">
-                                <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">
+                                <button type="submit" id="iniciar" name="iniciar"
+                                        class="btn btn-danger btn-block btn-xs">
                                     Retirar
                                 </button>
                                 {!! Form::close() !!}
                             </td>
+
                         </tr>
 
                     @endif
                     {{--@empty
                     <p style="color: red ;">No hay criterios de busqueda</p>--}}
                 @endforeach
-                <tr>
-                    {!! Form::open(['route'=>['agregar_propuesta'],'method'=> 'POST']) !!}
-                    <td>
-                        {!! Form::select('asambleista_id',$asambleistas_plenaria,null,
-                        ['id'=>'asambleista_id','class'=>'form-control','required'=>'required','placeholder' => 'Seleccione asambleista...']) !!}
-                        
-                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                        <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
-                    </td>
-                    <td>
-                        <textarea type="text" class="form-control" placeholder="Digite nueva propuesta"
-                                      id="nueva_propuesta" name="nueva_propuesta" required="required"></textarea>
-                        <!-- <input type="text" class="form-control" name="nueva_propuesta" id="nueva_propuesta"
-                               placeholder="Digite nueva propuesta"> -->
-                    </td>
-                    <td>
-                        <button type="submit" id="iniciar" name="iniciar" class="btn btn-success btn-block">Agregar
-                            propuesta
-                        </button>
-                    </td>
-                    {!! Form::close() !!}
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
+            @endif
+            </tbody>
+        </table>
     </div>
 </div>

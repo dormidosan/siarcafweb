@@ -207,12 +207,10 @@ Route::post('finalizar_sesion_plenaria', array('as' => 'finalizar_sesion_plenari
 Route::post('pausar_sesion_plenaria', array('as' => 'pausar_sesion_plenaria', 'uses' => 'AgendaController@pausar_sesion_plenaria'));
 Route::post('comision_punto_plenaria', array('as' => 'comision_punto_plenaria', 'uses' => 'AgendaController@comision_punto_plenaria'));
 Route::post('asignar_comision_punto', array('as' => 'asignar_comision_punto', 'uses' => 'AgendaController@asignar_comision_punto'));
-
 Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleistas_sesion')->name('agregar_asambleistas_sesion');
-
 Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
 Route::post('cambiar_propietaria', array('as' => 'cambiar_propietaria', 'uses' => 'AgendaController@cambiar_propietaria'));
-
+Route::post('obtener_datos_intervencion', 'AgendaController@obtener_datos_intervencion')->name("obtener_datos_intervencion");
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 
@@ -261,6 +259,11 @@ Route::post('agregar_perfiles', "AdministracionController@agregar_perfiles")->na
 Route::post('administrar_acceso_modulos', "AdministracionController@administrar_acceso_modulos")->name("administrar_acceso_modulos");
 Route::post('asignar_acceso_modulos', "AdministracionController@asignar_acceso_modulos")->name("asignar_acceso_modulos");
 Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")->name("agregar_plantillas");
+Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
+
+Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
+
+
 
 /* Asambleistas */
 Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");

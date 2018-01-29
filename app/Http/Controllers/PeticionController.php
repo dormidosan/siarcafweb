@@ -93,7 +93,9 @@ class PeticionController extends Controller
         // ATESTADO = 2
 
         if ($request->hasFile('documento_peticion')) {
-            $archivo = $request->documento_peticion;
+            //$archivo = $request->documento_peticion;
+            $documento = $this->guardarDocumento($request->documento_peticion,'1','documentos');
+            /*
             $documento = new Documento();
             $documento->nombre_documento = $archivo->getClientOriginalName();
             $documento->tipo_documento_id = 1; // PETICION = 1
@@ -108,6 +110,7 @@ class PeticionController extends Controller
             $r1 = Storage::disk('documentos')->put($ruta, \File::get($archivo));
             $documento->path = $ruta;
             $documento->save();
+            */
             array_push($documentos_id, $documento->id);
 
 
@@ -116,6 +119,9 @@ class PeticionController extends Controller
 
         if ($request->hasFile('documento_atestado')) {
             foreach ($request->documento_atestado as $archivo) {
+
+                $documento = $this->guardarDocumento($archivo,'2','documentos');
+                /*
                 $documento = new Documento();
                 $documento->nombre_documento = $archivo->getClientOriginalName();
                 //$documento->tipo = "documento peticion";
@@ -140,6 +146,7 @@ class PeticionController extends Controller
                 //$filename = $documento->nombre_documento;
                 //print_r($ruta."<br>");
                 $documento->save();
+                */
                 array_push($documentos_id, $documento->id);
             }
 
@@ -265,5 +272,41 @@ class PeticionController extends Controller
         $peticionBuscada = Peticion::where("codigo",$request->get("codigo_peticion"))->first();
         return view("General.MonitoreoPeticion", array("peticionBuscada"=>$peticionBuscada));
     }
+
+
+    public function guardarDocumento($doc,$tipo,$destino){
+            $archivo = $doc;
+            $documento = new Documento();
+            $documento->nombre_documento = $archivo->getClientOriginalName();
+            $documento->tipo_documento_id = $tipo; // PETICION = 1
+            $documento->periodo_id = Periodo::latest()->first()->id;
+            $documento->fecha_ingreso = Carbon::now();
+            $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+
+            while (Documento::where('path', '=', $ruta)->first()) {
+                $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+            }
+
+            $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
+            $documento->path = $ruta;
+            $documento->save();
+            return $documento;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

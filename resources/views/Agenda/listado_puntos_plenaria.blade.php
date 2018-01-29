@@ -129,7 +129,7 @@
                                                    value="{{$agenda->id}}">
                                             <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                             <input type="hidden" name="restar" id="restar" value="1">
-                                            <button type="submit" class="btn btn-success">Subir</button>
+                                            <button type="submit" class="btn btn-success btn-xs btn-block"><i class="fa fa-arrow-up"></i> Subir</button>
                                             {!! Form::close() !!}
                                         </td>
                                         <td>
@@ -138,7 +138,7 @@
                                                    value="{{$agenda->id}}">
                                             <input type="hidden" name="id_punto" id="id_punto" value="{{$punto->id}}">
                                             <input type="hidden" name="restar" id="restar" value="0">
-                                            <button type="submit" class="btn btn-danger">Bajar</button>
+                                            <button type="submit" class="btn btn-danger btn-xs btn-block"><i class="fa fa-arrow-down"></i> Bajar</button>
                                             {!! Form::close() !!}
                                         </td>
                                     @else
@@ -150,7 +150,7 @@
                                                 <input type="hidden" name="id_agenda" id="id_agenda"
                                                        value="{{$agenda->id}}">
                                                 <button type="submit" class="btn btn-success btn-xs btn-block">
-                                                    <i class="fa fa-eye"></i> Discutir
+                                                    <i class="fa fa-commenting"></i> Discutir
                                                 </button>
                                                 {!! Form::close() !!}
                                             </td>

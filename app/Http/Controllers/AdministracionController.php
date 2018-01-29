@@ -18,6 +18,13 @@ use App\Parametro;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+
+use Storage;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\PeriodoRequest;
@@ -95,6 +102,13 @@ class AdministracionController extends Controller
     {
         $plantillas = Plantilla::all();
         return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
+    }
+
+    public function descargar_plantilla($id)
+    {
+        $plantilla = Plantilla::find($id);
+        $ruta_plantilla = "../storage/plantillas/".$plantilla->path;
+        return response()->download($ruta_plantilla);
     }
 
     public function mostrar_periodos_agu()
@@ -230,6 +244,17 @@ class AdministracionController extends Controller
         $request->session()->flash("success", "Parametro actualizado con exito");
 
         return redirect()->route("parametros");
+
+    }
+
+    public function almacenar_plantilla(Request $request)
+    {
+       //dd($request->all());
+        $vieja_plantilla_id = $request->id_plantilla;
+        $nueva_plantilla = $this->guardarPlantilla($request->documento_plantilla,$vieja_plantilla_id,'plantillas');
+
+        $plantillas = Plantilla::all();
+        return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
 
     }
 
@@ -676,5 +701,24 @@ class AdministracionController extends Controller
         return $tabla;
     }
 
+public function guardarPlantilla($doc,$plantilla_id,$destino){
+            $archivo = $doc;
+            $vieja_plantilla = Plantilla::where('id', '=', $plantilla_id)->first();
+            $vieja_plantilla->nombre = $archivo->getClientOriginalName();
+
+
+            //$plantilla = new Plantilla();
+            //$plantilla->nombre = $archivo->getClientOriginalName();
+            $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+            while (Plantilla::where('path', '=', $ruta)->first()) {
+                $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+            }
+            //dd($ruta);
+            $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
+            $vieja_plantilla->path = $ruta;
+            $vieja_plantilla->save();
+
+            return $vieja_plantilla;
+        }
 
 }

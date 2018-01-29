@@ -5,29 +5,30 @@
 @endsection
 
 @section("idModal","mostrarIntervencion")
-@section("EncabezadoModal","Encabezado intervencion")
+@section("EncabezadoModal","Detalles Intervencion")
 @section("size","modal-lg")
 
 @section("bodyModal")
-
-  
-        <div class="panel panel-success">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Contenido intervencion</div>
-            <div class="box-body table-responsive">
-            
-
+    <form id="datos_intervencion">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Contenido de la Intervencion</label>
+                    <textarea id="contenido" class="form-control" rows="15" readonly></textarea>
+                </div>
             </div>
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-center">
-            <h4>Agenda {{$agenda->codigo}}</h4>
-        </div>
-
+    </form>
 @endsection
 
 @section("footerModal")
-
+    <div class="modal-footer text-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 @endsection
 
 

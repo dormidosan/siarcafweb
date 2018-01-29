@@ -106,7 +106,7 @@
                         <div class="col-lg-6">
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    @php $contador=0 @endphp 
+                                    @php $contador=0 @endphp
                                     @forelse($asistentes as $asistente)
                                         @if($asistente->propietaria == 1)
                                             @php $contador++ @endphp
@@ -140,10 +140,10 @@
 
                     <table class="table table-bordered text-center table-stripped">
                         <thead>
-                        <tr >
-                            <th  colspan="2">Propietarios electos</th>
+                        <tr>
+                            <th colspan="2">Propietarios electos</th>
                             <th colspan="2">Suplentes electos</th>
-                            <th >Total</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -155,10 +155,10 @@
                             <td>Total de Asistentes</td>
                         </tr>
                         <tr>
-                            <td >{{$conteo["pro"]}}</td>
-                            <td >{{$conteo["csup"]}}</td>
-                            <td >{{$conteo["cpro"]}}</td>
-                            <td >{{$conteo["sup"]}}</td>
+                            <td>{{$conteo["pro"]}}</td>
+                            <td>{{$conteo["csup"]}}</td>
+                            <td>{{$conteo["cpro"]}}</td>
+                            <td>{{$conteo["sup"]}}</td>
                             <td>{{$conteo["total"]}}</td>
                         </tr>
                         </tbody>
@@ -176,71 +176,22 @@
                 <div class="panel-heading">Control de Asistencia</div>
                 <div class="panel-body">
                     <div class="row">
-                    <!--
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <a class="btn btn-block btn-primary btn-xs" href="-{-{- url("GestionarAsistencia") }}">Ciencias
-                                Agónómicas</a>
-                        </div>
-                    -->
-                    @php $contador=1 @endphp
-                    @forelse($facultades as $facultad)
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            {!! Form::open(['route'=>['gestionar_asistencia'],'method'=> 'POST','id'=>$facultad->id]) !!}    
+                        @php $contador=1 @endphp
+                        @foreach($facultades as $facultad)
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {!! Form::open(['route'=>['gestionar_asistencia'],'method'=> 'POST','id'=>$facultad->id]) !!}
                                 <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
-                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">                    
-                                <button type="submit" class="btn btn-primary" >{{$facultad->nombre}}</button>
-                            {!! Form::close() !!}
-                        </div>
-                        @if(($contador % 4) == 0)
-                        </div>
-                        <br>
-                        <div class="row">
-                        @endif 
-                    @php $contador++ @endphp
-                    @empty
-
-                    @endforelse
-                    <!--
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
+                                <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                                <button type="submit" class="btn btn-primary btn-block">{{$facultad->nombre}}</button>
+                                {!! Form::close() !!}
+                            </div>
+                            @if(($contador % 3) == 0)
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-md-3">
-                            <button type="button" class="btn btn-primary">Facultad 1</button>
-                        </div>
-                        -->
+                        @endif
+                        @php $contador++ @endphp
+                        @endforeach
                     </div>
 
                 </div>
