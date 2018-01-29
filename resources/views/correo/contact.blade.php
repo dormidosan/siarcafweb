@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Documento</title>
 </head>
 <body>
 <pre style="font-family: Arial, Verdana; font-size: 16px;">

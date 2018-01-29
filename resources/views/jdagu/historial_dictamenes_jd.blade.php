@@ -12,6 +12,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Historial de  Dictamenes</h3>
         </div>
+        <!--
         <div class="box-body">
             <form id="crearbuscar" name="buscar" method="post" action="#">
                 <div class="row">
@@ -32,6 +33,7 @@
                 </div>
             </form>
         </div>
+        -->
     </div>
 
     <?php $i = 1; ?>
@@ -44,7 +46,7 @@
                    class="table table-striped table-bordered table-condensed table-hover dataTable text-center">
                 <thead>
                 <tr>
-                    <th>Nombre Dictamen</th>
+                    <th colspan="2">Nombre Dictamen</th>
                     <th>Fecha Creacion</th>
                     <th>Lugar</th>
                     <th>Accion</th>
@@ -56,7 +58,8 @@
                     @forelse($reunion->documentos as $documento)
                             @if($documento->tipo_documento_id == 3)
                             <tr>
-                                <td>{!! $documento->nombre_documento !!}</td>                                
+                                <td>{!! $documento->nombre_documento !!}</td>
+                                <td>{!! $documento->tipo_documento->tipo !!}</td>                                
                                 <td>{!! $reunion->codigo !!}</td>
                                 <td>{!! $reunion->lugar !!}</td>
                                 <td>
@@ -71,10 +74,13 @@
                             </tr>
                             @endif
                         @empty
-                        <p style="color: red ;">No hay criterios de busqueda</p>
+                        <!-- <p style="color: red ;">No hay criterios de busqueda</p> -->
+                        <?php $text1 = 1; ?>
                         @endforelse
                 @empty
-                <p style="color: red ;">No hay criterios de busqueda</p>
+                    @if($text1 == 1)
+                        <p style="color: red ;">No hay criterios de busqueda</p>
+                    @endif
                 @endforelse
 
                 </tbody>
@@ -92,7 +98,7 @@
 
 @endsection
 
-@section('scripts')
+@section("scripts")
     <script type="text/javascript">
         $(function () {
             var oTable = $('#resultadoDocs').DataTable({
@@ -120,8 +126,12 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
+                responsive: true,
+                columnDefs: [{orderable: false, targets: [0, 4]}],
+                order: [[1, 'asc']]
 
             });
         });
     </script>
+
 @endsection

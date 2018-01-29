@@ -17,25 +17,26 @@ class PeticionTableSeeder extends Seeder
         //
         $faker = Faker::create();
 
-        \DB::table('documentos')->insert(array (
-		'nombre_documento'  => 'documento'.'1',
-		'tipo_documento_id'  => '1',
-		'periodo_id'  => '2',
-		'fecha_ingreso'  => Carbon::now()->format('Y-m-d H:i:s'),
-		'path'  => '0b17d8a78c9516c900892e6a0ad52809.pdf',
-		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-		));
+        
 
+        for ($k=1; $k <5 ; $k++) { 
+      
+		for ($i=1; $i < 8 ; $i++) { 
 		\DB::table('documentos')->insert(array (
-		'nombre_documento'  => 'documento'.'2',
-		'tipo_documento_id'  => '2',
+		'nombre_documento'  => 'documento'.$k,
+		'tipo_documento_id'  => $i,
 		'periodo_id'  => '2',
 		'fecha_ingreso'  => Carbon::now()->format('Y-m-d H:i:s'),
 		'path'  => '0b17d8a78c9516c900892e6a0ad52809.pdf',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 		));
+		}
+		}
+		
+		
+
+		
 
 
 

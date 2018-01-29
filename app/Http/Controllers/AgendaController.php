@@ -190,8 +190,42 @@ class AgendaController extends Controller
                 $facultades = Facultad::where('id','!=','0')->get();
                 $asistentes = Asistencia::where('agenda_id','=',$agenda->id)->orderBy('created_at', 'DESC')->get();
 
+                $conteo = array(
+                    "pro" => "0",
+                    "csup" => "0",
+                    "cpro" => "0",
+                    "sup" => "0",
+                    "total" => "0",
+                );
+                $conteo["pro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','1')
+                    ->where('asambleistas.propietario','=','1')
+                    ->count();
+
+                $conteo["csup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','0')
+                    ->where('asambleistas.propietario','=','1')
+                    ->count();
+
+                $conteo["cpro"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','1')
+                    ->where('asambleistas.propietario','=','0')
+                    ->count();
+
+                $conteo["sup"] = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+                    ->where('asistencias.agenda_id','=',$agenda->id)
+                    ->where('asistencias.propietaria','=','0')
+                    ->where('asambleistas.propietario','=','0')
+                    ->count();
+
+                $conteo["total"] = Asistencia::where('agenda_id','=',$agenda->id)->count();
+
                 return view('Agenda.sala_sesion_plenaria')        
                 ->with('agenda', $agenda)
+                ->with('conteo', $conteo)
                 ->with('facultades', $facultades)
                 ->with('asistentes', $asistentes)
                 ->with('asambleistas', $asambleistas)

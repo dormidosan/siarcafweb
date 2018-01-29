@@ -358,7 +358,18 @@ class AgendaTableSeeder extends Seeder
             'created_at' => Carbon::now()->addSeconds(6)->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->addSeconds(6)->format('Y-m-d H:i:s')
         ));
-
+        
+        for ($k=1; $k <8 ; $k++) { 
+            
+                for ($i=1; $i < 4 ; $i++) { 
+        \DB::table('documento_reunion')->insert(array (
+        'documento_id'  => $k,
+        'reunion_id'  => $i,
+        'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ));
+        }
+        }
     }
 
 }
