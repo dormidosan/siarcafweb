@@ -9,6 +9,7 @@ use App\Comision;
 use App\Facultad;
 use App\Modulo;
 use App\Periodo;
+use App\Permiso;
 use App\Persona;
 use App\Plantilla;
 use App\Rol;
@@ -605,8 +606,9 @@ class AdministracionController extends Controller
         $asambleistas = Asambleista::where('activo','=', 1)
             ->where('periodo_id','=',$periodo_activo->id)
             ->get();
+        $permisos = Permiso::all();
 
-        return view("Administracion.registro_permisos_temporales",['asambleistas'=>$asambleistas]);
+        return view("Administracion.registro_permisos_temporales",['asambleistas'=>$asambleistas,'permisos'=>$permisos]);
     }
 
     public function mostrar_delegados(Request $request){
@@ -620,6 +622,23 @@ class AdministracionController extends Controller
             }
             $respuesta = new \stdClass();
             $respuesta->dropdown = $dropdown;
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function guardar_permiso(Request $request){
+        if ($request->ajax()){
+            $permiso = new Permiso();
+            $permiso->asambleista_id = $request->get("asambleista");
+            $permiso->delegado_id = $request->get("delegado");
+            $permiso->fecha_permiso = Carbon::now();
+            $permiso->motivo = $request->motivo;
+            $permiso->inicio = Carbon::createFromFormat("d-m-Y", $request->startDate);
+            $permiso->fin = Carbon::createFromFormat("d-m-Y", $request->endDate);
+            $permiso->save();
+
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Permiso Temporal registrado con exito","success"))->toArray();
             return new JsonResponse($respuesta);
         }
     }

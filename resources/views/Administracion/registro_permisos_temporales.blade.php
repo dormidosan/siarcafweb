@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
@@ -104,7 +103,9 @@
 
                 <div class="row text-center">
                     <div class="col-lg-12">
-                        <button type="submit" id="aceptar" name="aceptar" class="btn btn-primary" onclick="enviar()">Aceptar</button>
+                        <button type="submit" id="aceptar" name="aceptar" class="btn btn-primary" onclick="enviar()">
+                            Aceptar
+                        </button>
                     </div>
                 </div>
 
@@ -114,25 +115,35 @@
 
     <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Resultados de Busqueda</h3>
+            <h3 class="box-title">Permisos Temporales</h3>
         </div>
         <div class="box-body table-responsive">
-            <table id="permisos_tabla"
-                   class="table table-striped table-bordered table-hover text-center">
+            <table id="permisos_tabla" class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
                     <th>Nº</th>
-                    <th>Asambleista</th>
-                    <th>Solicitud de Permiso</th>
-                    <th>Motivo del Permiso</th>
+                    <th>Nombre Asambleista</th>
+                    <th>Delegado</th>
+                    <th>Fecha Solicitud Permiso</th>
+                    <th>Razon</th>
                     <th>Inicio</th>
                     <th>Fin</th>
                 </tr>
                 </thead>
 
                 <tbody id="cuerpoTabla">
-
-
+                @php $i = 1 @endphp
+                @foreach($permisos as $permiso)
+                    <tr>
+                        <td>{{ $i++ }}</td>
+                        <td>{{ $permiso->asambleista->user->persona->primer_nombre . ' ' . $permiso->asambleista->user->persona->segundo_apellido }}</td>
+                        <td>{{ $permiso->delegado->user->persona->primer_nombre  . ' ' . $permiso->delegado->user->persona->segundo_apellido }}</td>
+                        <td>{{ date("d/m/Y h:m A",strtotime($permiso->created_at)) }}</td>
+                        <td>{{ $permiso->motivo }}</td>
+                        <td>{{ date("d/m/Y",strtotime($permiso->inicio))}}</td>
+                        <td>{{ date("d/m/Y",strtotime($permiso->fin)) }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -255,22 +266,24 @@
                     // We need to revalidate the start date
                     data.fv.revalidateField('startDate');
                 }
-            });/*.on('success.form.fv', function(e) {
-                    // Prevent form submission
-                    e.preventDefault();
-
-                    var $form = $(e.target), fv    = $form.data('formValidation');
-
-                    // Use Ajax to submit form data
-                    $.ajax({
-                        url: $form.attr('action'),
-                        type: 'POST',
-                        data: $form.serialize(),
-                        success: function(result) {
-                            // ... Process the result ...
-                        }
-                    });
-                });*/
+            }).on('success.form.fv', function (e) {
+                // Prevent form submission
+                e.preventDefault();
+                var $form = $(e.target), fv = $form.data('formValidation');
+                // Using ajax to submit form data
+                console.log($form.serialize());
+                $.ajax({
+                    url: "{{ route("guardar_permiso")}}",
+                    type: 'POST',
+                    data: $form.serialize(),
+                    success: function (response) {
+                        notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                        setTimeout(function () {
+                            window.location.href = '{{ route("registro_permisos_temporales") }}';
+                        }, 1000);
+                    }
+                });
+            });
 
             var oTable = $('#permisos_tabla').DataTable({
                 language: {
@@ -298,8 +311,9 @@
                     }
                 },
                 responsive: true,
-                //columnDefs: [{orderable: false, targets: [0, 4]}],
+                columnDefs: [{orderable: false, targets: [0, 4]}],
                 order: [[1, 'asc']]
+
             });
 
 
