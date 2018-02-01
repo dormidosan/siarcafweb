@@ -149,7 +149,7 @@
                     <th>No. </th>                     
                                  
                     <th>NOMBRES</th>
-                    <th>FACULTAD</th>
+                    <th>DIA</th>
                   
                     </tr>
                   </thead>
@@ -167,7 +167,7 @@
                       <td>
                         {{$result->primer_nombre}} {{$result->segundo_nombre}} {{$result->primer_apellido}} {{$result->segundo_apellido}}
                       </td>
-                      <td>{{$result->NomFac}}</td>
+                      <td>{{substr($result->nacimiento, 8, 9)}}</td>
                     
                     
                       

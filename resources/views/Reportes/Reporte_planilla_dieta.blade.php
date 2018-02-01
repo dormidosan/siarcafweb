@@ -28,7 +28,7 @@
                             <label>Tipo </label>
                             
                              <select required="true" class="form-control" id="tipoDocumento" name="tipoDocumento">
-                                <option value=""  >Seleccione una opcion</option>
+                                <option value="{{old("tipoDocumento")}}"  >Seleccione una opcion</option>
                                 <option value="A" >Por Asambleista</option>
                                 <option value="E" >Consolidados Estudiantil</option>
                                 <option value="D" >Consolidados Profesional Docente</option>
@@ -46,7 +46,7 @@
                             </div>-->
 
                             <select required="true" class="form-control" id="fecha1" name="fecha1">
-                                <option value="">Seleccione un mes</option>
+                                <option value="{{old("fecha1")}}">Seleccione un mes</option>
                                 <option value="1">Enero</option>
                                 <option value="2">Febrero</option>
                                 <option value="3">Marzo</option>
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <label for="anio">Año</label>
                             <input required="true" type="text" class="form-control" placeholder="Año" id="anio"
-                                   name="anio" onkeypress="return justNumbers(event);" maxlength="4" size="4">  
+                                   name="anio" onkeypress="return justNumbers(event);" maxlength="4" size="4" value="{{old("anio")}}">  
                         </div>
                     </div>
                    
@@ -135,7 +135,11 @@
                          CONSOLIDADO DE DIETAS SECTOR no docente
                            @endif
                       </td>
-                      <td>{{$result->mes}} {{$result->anio}} </td>
+                      @if($tipo=="A")
+                      <td>{{$result->anio}}</td>
+                      @else
+                      <td>{{$result->mes}} {{$result->anio}}</td>
+                      @endif
                     
                       <td>
                         @if($tipo=="A")

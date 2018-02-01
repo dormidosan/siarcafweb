@@ -22,6 +22,7 @@ use Dompdf\Options;
 use Illuminate\Http\JsonResponse;
 use App\Clases\Mensaje;
 use App\Periodo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesController extends Controller
 {
@@ -158,8 +159,9 @@ $resultados =DB::table('asambleistas')
         ->where('periodos.id','=',$periodo)
         ->whereMonth('personas.nacimiento','=',$mes)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','facultades.nombre as NomFac','asambleistas.propietario','personas.dui','personas.nit','users.email','periodos.nombre_periodo')
-        ->orderBy('facultades.nombre', 'desc')
+                 'personas.segundo_nombre','facultades.nombre as NomFac','asambleistas.propietario'
+                 ,'personas.dui','personas.nit','users.email','periodos.nombre_periodo','personas.nacimiento')
+       
         ->orderBy('personas.nacimiento','asc')
         ->get();
         
@@ -250,12 +252,16 @@ $resultados =DB::table('asambleistas')
         ->join('personas','users.persona_id','=','personas.id')
         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',$idagenda)//1 por ser permisos temporales 
+        ->where('estado_asistencias.id','=',1)//1 por ser permisos temporales 
         ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietaria')
         ->get();
         
+
+
+
+
 
 
        
@@ -478,6 +484,8 @@ $resultados =DB::table('asambleistas')
 
 
         $resultados = DB::table('peticiones')
+        ->join('estado_peticiones','estado_peticiones.id','=','peticiones.estado_peticion_id')
+       
         ->where
         ([
         ['peticiones.fecha','>=',$fechainicial],
@@ -490,7 +498,7 @@ $resultados =DB::table('asambleistas')
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true);
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
+         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
         $hoy=Carbon::now()->format('Y-m-d');
         if($tipodes==1)
@@ -599,6 +607,19 @@ else{
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->limit(1)->get();
 
 
+       $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada hdp
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->whereYear('fecha','=',$request->anio)
+        ->where('agendas.vigente','<>',1)
+        ->get();
+
+
+        if($agendas_anio==NULL){
+
+            $resultados=NULL;
+
+        }
         //dd($resultados);
 
         
@@ -676,8 +697,6 @@ else{
          ->with('resultados',$resultados)
          ->with('mesnum',$mesnum)
          ->with('tipo',$request->tipoDocumento);
-      
-     return view("Reportes.Reporte_planilla_dieta",['resultados'=>NULL]);
     }
 
 
@@ -882,13 +901,14 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
         $cuenta=0;
         foreach ($busqueda as $busq) {
            
-        $agendas_anio=DB::table('agendas') //todas las agendas vigentes del año seleccionado en las que participo cada hdp
+        $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada hdp
         ->join('asistencias','asistencias.agenda_id','=','agendas.id')
         ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
         ->whereYear('fecha','=',$anio)
         ->where('asambleistas.id','=',$busq->id)
         ->where('agendas.vigente','<>',1)
         ->get();
+
 
         //dd($agendas_anio);
 
@@ -1038,7 +1058,9 @@ public function Reporte_planilla_dieta_prof_Est_pdf($tipo)
         ->select('parametros.valor')
         ->first();
         
-       // dd($monto_dieta->valor);
+        $porcentaje_asistencia=0.0;
+
+      
 
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Est_pdf', compact('resultados','mes','anio','monto_dieta'))->render();
         $pdf = \App::make('dompdf.wrapper');    
@@ -1162,8 +1184,6 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
     }
 
-
-
  
 
 
@@ -1174,10 +1194,12 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
  
         $parametros = explode('.', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
-        $tipodes=$parametros[0];
+        $verdescar=$parametros[0];
         $sector=$parametros[1];
         $mes=$parametros[2];
         $anio=$parametros[3];
+      
+        
 
         $monto_dieta=DB::table('parametros')
         ->where('parametros.parametro','=','mdi')
@@ -1203,7 +1225,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 1)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
           //dd($resultados);
         $sector='ESTUDIANTIL';
 }
@@ -1221,7 +1243,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 2)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
           //dd($resultados);
         $sector='DOCENTE';
 }
@@ -1240,7 +1262,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 3)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
 
         $sector='NO DOCENTE';
 }
@@ -1259,6 +1281,34 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         if($verdescar==2)
         {
             return $pdf->download('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
+        }
+        if($verdescar==3){
+
+
+           Excel::create('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy, function($excel) use($resultados){
+           $excel->sheet('Hoja1', function($sheet) use($resultados) {
+           $data = array();
+           foreach ($resultados as $result) {
+
+        $monto_dieta=DB::table('parametros')
+        ->where('parametros.parametro','=','mdi')
+        ->select('parametros.valor')
+        ->first();
+        
+        $renta=DB::table('parametros')
+        ->where('parametros.parametro','=','ren')
+        ->select('parametros.valor')
+        ->first();
+        
+
+            $result->montodieta=$result->asistencia*$monto_dieta->valor;
+            $result->renta=$result->asistencia*$monto_dieta->valor*$renta->valor;
+            $result->total=$result->montodieta-$result->renta;
+            $data[] = (array)$result;  
+            }
+                $sheet->fromArray($data);
+            });
+        })->export('xls');
         }
 
 

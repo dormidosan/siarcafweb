@@ -140,6 +140,14 @@
                                     <span class="text-danger">{{ $errors->first('nit') }}</span>
                                 </div>
                             </div>
+                            <div class="col-lg-3">
+                              <div class="form-group">
+                            <label for="fecha">FECHA NACIMIENTO</label>
+                            <div class="input-group date fecha">
+                                <input value="{{old("fecha1")}}" required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
@@ -227,6 +235,13 @@
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('libs/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
+    <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+  
 @endsection
 
 
@@ -267,6 +282,31 @@
                 A: { pattern: /[\w@\-.+]/, recursive: true }
             },
             placeholder: "ejemplo@gmail.com"});
+        });
+        $('#fecha').datepicker({
+              format: "yyyy-mm-dd",
+                clearBtn: true,
+                language: "es",
+                autoclose: true,
+                todayHighlight: true
+            });
+
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.input-group.date.fecha').datepicker({
+                format: "yyyy-mm-dd",
+                clearBtn: true,
+                language: "es",
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true
+            });
+
+            $('#hora').datetimepicker({
+                format: 'LT',
+            });
         });
     </script>
 

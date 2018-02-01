@@ -38,6 +38,7 @@ class UsuarioRequest extends Request
             'sector' => 'required',
             'facultad' => 'required',
             'propietario' => 'required',
+            'fecha1' => 'required',
         ];
     }
 

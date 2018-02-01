@@ -128,37 +128,36 @@
 
 @foreach($busqueda as $busque)
 
-   <div style="position: absolute;"  align="left">
-  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
-</div>                                  
- <div  align="right">
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
-</div>                                                                
-                                               
- <div id="p" style="text-align: center;position: absolute;right: 15%;top: 3%;text-transform: uppercase;">
+  <IMG align="left" SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%">
+                         
+
+  <IMG align="right" SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+                                                           
+                                                          
+ <div id="p" style=" text-align: center;right: 25%;text-transform: uppercase;">
     UNIVERSIDAD DE EL SALVADOR<br/>
     ASAMBLEA GENERAL UNIVERSITARIA<br/>
-    CIUDAD UNIVERSITARIA, SAN SALVADOR, EL SALVADOR, C.A.<br/>
+    CIUDAD UNIVERSITARIA, SAN SALVADOR, EL SALVADOR, C.A.<br/><br/><br/><br/><br/>
   </div>   
 
  <div id="nt" style="text-align: left;">
- NIT INSTITUCIONAL: 0614-110121-001-3
+ NIT INSTITUCIONAL: 0614-110121-001-3<br/><br/>
  </div>  
  
 <div id="cp" style="text-align: left;">
-El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): 
+El infrascrito agente de retención, hace constar  que los  ingresos devengados por el Sr(a): <br/><br/><br/>
  </div>  
 
 <div id="cp1" style="text-align: left;">
 NIT No. {{$busque->nit}}<br/>
-NOMBRE: {{$busque->primer_nombre}}
-        {{$busque->segundo_nombre}}
-        {{$busque->primer_apellido}}
-        {{$busque->segundo_apellido}}
+NOMBRE:    {{$busque->primer_nombre}}
+           {{$busque->segundo_nombre}}
+           {{$busque->primer_apellido}}
+           {{$busque->segundo_apellido}}<br/><br/>
  </div>  
 
  <div id="cp2" style="text-align: left;">
-Por el pago de dietas de Junta Directiva de la AGU. del año {{$anio}}. son los que se desglosan de la siguiente manera.
+Por el pago de dietas de Junta Directiva de la AGU. del año {{$anio}}. son los que se desglosan de la siguiente manera.<br/><br/><br/><br/>
  </div>  
 
 <div id="cp3" style="text-align: left;">
@@ -167,7 +166,7 @@ Por el pago de dietas de Junta Directiva de la AGU. del año {{$anio}}. son los 
 
 <div id="cp4" style="text-align: left;">
   <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Ingresos Grabados                                 $        {{$busque->dieta}}<pre/> <br/>
-  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido          $        {{$busque->renta}}<pre/>
+  <pre style=" font-family: "ARIAL", serif;  font-size: 10pt;">Impuestos sobre la renta retenido          $        {{$busque->renta}}<pre/><br/><br/><br/><br/><br/><br/><br/><br/>
  </div> 
 
 <div id="cp5" style="text-align: left;">
