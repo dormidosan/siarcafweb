@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 
 
+use App\Clases\Mensaje;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
@@ -23,6 +25,10 @@ use App\Punto;
 use App\Presente;
 use App\Periodo;
 use DateTime;
+
+use Mail;
+use Session;
+use Illuminate\Support\Facades\Cache;
 
 
 class JuntaDirectivaController extends Controller
@@ -53,6 +59,95 @@ class JuntaDirectivaController extends Controller
         return view('jdagu.listado_reuniones_jd')
             ->with('reuniones', $reuniones);
     }
+
+    public function generar_reuniones_jd()
+    {
+
+        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
+
+        return view('jdagu.generar_reuniones_jd')
+            ->with('reuniones', $reuniones);
+    }
+
+    
+
+    
+    public function crear_reunion_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        //$cargos = $comision->cargos;
+
+
+        $reunion = new Reunion(); 
+          //dd($request->fecha);
+        $reunion->comision_id = $comision->id;      
+        $reunion->periodo_id = Periodo::latest()->first()->id;
+        $reunion->codigo = $comision->codigo." ".DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y'); 
+        $reunion->lugar = $request->lugar;
+        $reunion->convocatoria = DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+          //$reunion->inicio
+          //$reunion->fin           .''.date('H:i:s', strtotime($request->hora))
+        $reunion->vigente = '1';
+        $reunion->activa = '0';
+          //date('j-m-y'); Carbon::now()->format('Y-m-d H:i:s')
+        $reunion->save();
+         
+        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
+
+        return view('jdagu.generar_reuniones_jd')
+            ->with('reuniones', $reuniones);
+    }
+
+    public function eliminar_reunion_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $reunion->delete();
+
+
+
+        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
+
+        return view('jdagu.generar_reuniones_jd')
+            ->with('reuniones', $reuniones);
+    }
+
+    public function enviar_convocatoria_jd(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $cargos = $comision->cargos;
+        //$contador = 0;
+        foreach ($cargos as $cargo) {
+        $destinatario = $cargo->asambleista->user->email;
+        $nombre = $cargo->asambleista->user->persona->primer_nombre." ".$cargo->asambleista->user->persona->segundo_nombre;
+        Mail::queue('correo.contact',$request->all(), function ($message) use ($destinatario,$nombre,$comision) { 
+             $message->from('from@example.com'); 
+             $message->subject("Convocatoria ".$comision->nombre." para: ".$nombre);
+             $message->to($destinatario,$nombre); 
+                  });
+        //$contador++;
+      }
+      
+        //dd($contador);
+        $request->session()->flash("success", 'Correos electronicos enviados');       
+
+
+
+
+        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
+
+        return view('jdagu.generar_reuniones_jd')
+            ->with('reuniones', $reuniones);
+    }
+
+
+    
+
 
     public function seguimiento_peticion_jd(Request $request, Redirector $redirect)
     {
@@ -96,41 +191,45 @@ class JuntaDirectivaController extends Controller
     }
 
     public function generar_agenda_plenaria_jd(Request $request, Redirector $redirect)
-    {   //dd($request->all());
-        $agenda =  new Agenda();
-        $agenda->codigo = $request->codigo;
-        $agenda->periodo_id = Periodo::latest()->first()->id;
-        $agenda->lugar = $request->lugar;
-        $agenda->fecha = DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y'); 
-        $agenda->inicio = DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
-        $agenda->trascendental = 0;
-        if($request->trascendental == 'on')
-            $agenda->trascendental = 1;
+    {
+        if ($request->ajax()){
+            $agenda =  new Agenda();
+            $agenda->codigo = $request->codigo;
+            $agenda->periodo_id = Periodo::latest()->first()->id;
+            $agenda->lugar = $request->lugar;
+            $agenda->fecha = (DateTime::createFromFormat('d-m-Y', $request->fecha))->format('Y-m-d');
+            $agenda->inicio = DateTime::createFromFormat('d-m-Y h:i A' , $request->fecha.' '.date('h:i A', strtotime($request->hora)))->format('Y-m-d H:i:s');
+            $agenda->trascendental = 0;
+            if($request->trascendental == 'on')
+                $agenda->trascendental = 1;
 
-        $agenda->vigente = 1;
-        $agenda->activa = 0;
-        $agenda->fijada = 0;
-        $agenda->save();
+            $agenda->vigente = 1;
+            $agenda->activa = 0;
+            $agenda->fijada = 0;
+            $agenda->save();
 
+            $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+            /*return view('jdagu.listado_agenda_plenaria_jd')
+                ->with('agendas', $agendas);*/
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Agenda creada con exito","success"))->toArray();
+            return new JsonResponse($respuesta);
 
-        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
-
-        return view('jdagu.listado_agenda_plenaria_jd')
-        ->with('agendas', $agendas);
-
+        }
     }
 
     
     public function eliminar_agenda_creada_jd(Request $request, Redirector $redirect)
     {   //dd($request->all());
 
-        $agenda = Agenda::where('id','=',$request->id_agenda)->first(); 
-        $agenda->delete();
-        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
-
-        return view('jdagu.listado_agenda_plenaria_jd')
-        ->with('agendas', $agendas);
-
+        if ($request->ajax()){
+            $agenda = Agenda::where('id','=',$request->id_agenda)->first();
+            $agenda->delete();
+            $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Agenda eliminada con exito","error"))->toArray();
+            return new JsonResponse($respuesta);
+        }
     }
 
     

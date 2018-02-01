@@ -2,8 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
@@ -199,8 +198,8 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            var maxChar = 15;
-            var maxCharIntevencion = 250;
+            var maxChar = 254;
+            var maxCharIntevencion = 1000;
             $("#caja").removeClass("text-danger");
             $("#caja").addClass("text-green");
             $("#caja2").removeClass("text-danger");
@@ -237,8 +236,8 @@
                     nueva_propuesta: {
                         validators: {
                             stringLength: {
-                                max: 15,
-                                message: 'La propuesta no debe de exceder los 15 caracteres'
+                                max: 254,
+                                message: 'La propuesta no debe de exceder los 254 caracteres'
                             },
                             notEmpty: {
                                 message: 'La propuesta es requerida'
@@ -266,8 +265,8 @@
                     nueva_intervencion: {
                         validators: {
                             stringLength: {
-                                max: 250,
-                                message: 'La intervencion no debe de exceder los 250 caracteres'
+                                max: 1000,
+                                message: 'La intervencion no debe de exceder los 1000 caracteres'
                             },
                             notEmpty: {
                                 message: 'La intervencion es requerida'

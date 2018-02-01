@@ -18,9 +18,9 @@
             <div class="col-lg-8">
                 <div class="form-group">
                     {!! Form::label('nueva_intervencion','Intervencion') !!}
-                    {!! Form::textarea('nueva_intervencion', null, ['id'=>'nueva_intervencion','class' => 'form-control','size' => '30x4','maxlength'=>'250','required'=>'required','placeholder'=>'Digite nueva intervencion']) !!}
+                    {!! Form::textarea('nueva_intervencion', null, ['id'=>'nueva_intervencion','class' => 'form-control','size' => '30x4','maxlength'=>'1000','required'=>'required','placeholder'=>'Digite nueva intervencion']) !!}
                     <div class="pull-right text-green" id="caja2">
-                        <span id="chars2">250</span> caracteres restantes
+                        <span id="chars2">1000</span> caracteres restantes
                     </div>
                 </div>
             </div>

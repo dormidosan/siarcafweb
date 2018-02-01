@@ -9,6 +9,7 @@ use App\Comision;
 use App\Facultad;
 use App\Modulo;
 use App\Periodo;
+use App\Permiso;
 use App\Persona;
 use App\Plantilla;
 use App\Rol;
@@ -107,7 +108,7 @@ class AdministracionController extends Controller
     public function descargar_plantilla($id)
     {
         $plantilla = Plantilla::find($id);
-        $ruta_plantilla = "../storage/plantillas/".$plantilla->path;
+        $ruta_plantilla = "../storage/plantillas/" . $plantilla->path;
         return response()->download($ruta_plantilla);
     }
 
@@ -249,10 +250,8 @@ class AdministracionController extends Controller
 
     public function almacenar_plantilla(Request $request)
     {
-       //dd($request->all());
-        $vieja_plantilla_id = $request->id_plantilla;
-        $nueva_plantilla = $this->guardarPlantilla($request->documento_plantilla,$vieja_plantilla_id,'plantillas');
-
+        $vieja_plantilla_id = $request->plantilla_id;
+        $nueva_plantilla = $this->guardarPlantilla($request->plantilla, $vieja_plantilla_id, 'plantillas');
         $plantillas = Plantilla::all();
         return view("Administracion.gestionar_plantillas", ["plantillas" => $plantillas]);
 
@@ -602,6 +601,56 @@ class AdministracionController extends Controller
         }
     }
 
+    public function registro_permisos_temporales(){
+        $periodo_activo = Periodo::where('activo','=', 1)->first();
+        $asambleistas = Asambleista::where('activo','=', 1)
+            ->where('periodo_id','=',$periodo_activo->id)
+            ->get();
+        $permisos = Permiso::all();
+
+        return view("Administracion.registro_permisos_temporales",['asambleistas'=>$asambleistas,'permisos'=>$permisos]);
+    }
+
+    public function mostrar_delegados(Request $request){
+        if ($request->ajax()){
+            $respuesta = new \stdClass();
+            $asambleista = Asambleista::find($request->id);
+
+            if ($asambleista->propietario == 1){
+                $suplentes = Asambleista::where("sector_id",$asambleista->sector_id)->where("activo",1)->where("propietario",0)->where("facultad_id",$asambleista->facultad_id)->get();
+
+                $dropdown = '<option value="">-- Seleccione un delegado --</option>';
+                foreach ($suplentes as $suplente){
+                    $dropdown .= '<option value="'.$suplente->id .'">'.$suplente->user->persona->primer_nombre . ' ' .$suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido.'</option>';
+                }
+                $respuesta->dropdown = $dropdown;
+            }else{
+                $respuesta->esPropietario = 1;
+            }
+            return new JsonResponse($respuesta);
+        }
+    }
+
+    public function guardar_permiso(Request $request){
+        if ($request->ajax()){
+            $permiso = new Permiso();
+            $permiso->asambleista_id = $request->get("asambleista");
+
+            if ($request->delegado != "")
+                $permiso->delegado_id = $request->get("delegado");
+
+            $permiso->fecha_permiso = Carbon::now();
+            $permiso->motivo = $request->motivo;
+            $permiso->inicio = Carbon::createFromFormat("d-m-Y", $request->startDate);
+            $permiso->fin = Carbon::createFromFormat("d-m-Y", $request->endDate);
+            $permiso->save();
+
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito","Permiso Temporal registrado con exito","success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
     private function generarTabla($idComision)
     {
         $comision = Comision::find($idComision);
@@ -701,24 +750,24 @@ class AdministracionController extends Controller
         return $tabla;
     }
 
-public function guardarPlantilla($doc,$plantilla_id,$destino){
-            $archivo = $doc;
-            $vieja_plantilla = Plantilla::where('id', '=', $plantilla_id)->first();
-            $vieja_plantilla->nombre = $archivo->getClientOriginalName();
+    public function guardarPlantilla($doc, $plantilla_id, $destino)
+    {
+        $archivo = $doc;
+        $vieja_plantilla = Plantilla::where('id', '=', $plantilla_id)->first();
+        $vieja_plantilla->nombre = $archivo->getClientOriginalName();
 
-
-            //$plantilla = new Plantilla();
-            //$plantilla->nombre = $archivo->getClientOriginalName();
+        //$plantilla = new Plantilla();
+        //$plantilla->nombre = $archivo->getClientOriginalName();
+        $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+        while (Plantilla::where('path', '=', $ruta)->first()) {
             $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
-            while (Plantilla::where('path', '=', $ruta)->first()) {
-                $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
-            }
-            //dd($ruta);
-            $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
-            $vieja_plantilla->path = $ruta;
-            $vieja_plantilla->save();
-
-            return $vieja_plantilla;
         }
+        //dd($ruta);
+        $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
+        $vieja_plantilla->path = $ruta;
+        $vieja_plantilla->save();
+
+        return $vieja_plantilla;
+    }
 
 }

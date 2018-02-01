@@ -96,7 +96,7 @@
                     @php $i=1 @endphp
                     @foreach($documentos as $documento)
                         <tr>
-                            <td>{{ $i }}</td>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $documento->nombre_documento }}</td>
                             <td>{{ $documento->tipo_documento->tipo }}</td>
                             <td>{{ $documento->fecha_ingreso }}</td>
@@ -109,7 +109,6 @@
                                     <i class="fa fa-download"></i> Descargar</a>
                             </td>
                         </tr>
-                        @php $i++ @endphp
                     @endforeach
                 @endif
                 </tbody>

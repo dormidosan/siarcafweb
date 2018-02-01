@@ -4,7 +4,11 @@
 
 namespace Composer\Autoload;
 
+<<<<<<< HEAD
 class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
+=======
+class ComposerStaticInit889f62302c17823e54ea0934e503b5f9
+>>>>>>> origin
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -12,12 +16,12 @@ class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -339,10 +343,6 @@ class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
         ),
         'J' => 
         array (
-            'Jaspersoft' => 
-            array (
-                0 => __DIR__ . '/..' . '/jaspersoft/rest-client/src',
-            ),
             'JakubOnderka\\PhpConsoleHighlighter' => 
             array (
                 0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -400,6 +400,7 @@ class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
         'App\\Http\\Requests\\DocumentoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/DocumentoRequest.php',
         'App\\Http\\Requests\\PeriodoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PeriodoRequest.php',
         'App\\Http\\Requests\\PeticionRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PeticionRequest.php',
+        'App\\Http\\Requests\\PropuestaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PropuestaRequest.php',
         'App\\Http\\Requests\\ReporteAsambleistaPeriodoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ReporteAsambleistaPeriodoRequest.php',
         'App\\Http\\Requests\\ReportesAsistenciasRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ReportesAsistenciasRequest.php',
         'App\\Http\\Requests\\ReportesConsolidadosRentaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ReportesConsolidadosRentaRequest.php',
@@ -1714,79 +1715,6 @@ class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
-        'Jaspersoft\\Client\\Client' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Client/Client.php',
-        'Jaspersoft\\Dto\\Attribute\\Attribute' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Attribute/Attribute.php',
-        'Jaspersoft\\Dto\\ImportExport\\ExportTask' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/ImportExport/ExportTask.php',
-        'Jaspersoft\\Dto\\ImportExport\\ImportTask' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/ImportExport/ImportTask.php',
-        'Jaspersoft\\Dto\\ImportExport\\TaskState' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/ImportExport/TaskState.php',
-        'Jaspersoft\\Dto\\Job\\Alert' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/Alert.php',
-        'Jaspersoft\\Dto\\Job\\CalendarTrigger' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/CalendarTrigger.php',
-        'Jaspersoft\\Dto\\Job\\Job' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/Job.php',
-        'Jaspersoft\\Dto\\Job\\JobState' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/JobState.php',
-        'Jaspersoft\\Dto\\Job\\JobSummary' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/JobSummary.php',
-        'Jaspersoft\\Dto\\Job\\MailNotification' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/MailNotification.php',
-        'Jaspersoft\\Dto\\Job\\OutputFTPInfo' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/OutputFTPInfo.php',
-        'Jaspersoft\\Dto\\Job\\RepositoryDestination' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/RepositoryDestination.php',
-        'Jaspersoft\\Dto\\Job\\SimpleTrigger' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/SimpleTrigger.php',
-        'Jaspersoft\\Dto\\Job\\Source' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/Source.php',
-        'Jaspersoft\\Dto\\Job\\Trigger' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Job/Trigger.php',
-        'Jaspersoft\\Dto\\Options\\ReportOptions' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Options/ReportOptions.php',
-        'Jaspersoft\\Dto\\Organization\\Organization' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Organization/Organization.php',
-        'Jaspersoft\\Dto\\Permission\\RepositoryPermission' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Permission/RepositoryPermission.php',
-        'Jaspersoft\\Dto\\ReportExecution\\Execution' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/ReportExecution/Execution.php',
-        'Jaspersoft\\Dto\\ReportExecution\\ExecutionRequest' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/ReportExecution/ExecutionRequest.php',
-        'Jaspersoft\\Dto\\Report\\InputControl' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Report/InputControl.php',
-        'Jaspersoft\\Dto\\Resource\\AdhocDataView' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/AdhocDataView.php',
-        'Jaspersoft\\Dto\\Resource\\AwsDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/AwsDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\BeanDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/BeanDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\CollectiveResource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/CollectiveResource.php',
-        'Jaspersoft\\Dto\\Resource\\CompositeResource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/CompositeResource.php',
-        'Jaspersoft\\Dto\\Resource\\CustomDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/CustomDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\Dashboard' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/Dashboard.php',
-        'Jaspersoft\\Dto\\Resource\\DataType' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/DataType.php',
-        'Jaspersoft\\Dto\\Resource\\DomainTopic' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/DomainTopic.php',
-        'Jaspersoft\\Dto\\Resource\\File' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/File.php',
-        'Jaspersoft\\Dto\\Resource\\Folder' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/Folder.php',
-        'Jaspersoft\\Dto\\Resource\\InputControl' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/InputControl.php',
-        'Jaspersoft\\Dto\\Resource\\JdbcDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/JdbcDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\JndiJdbcDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/JndiJdbcDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\ListOfValues' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/ListOfValues.php',
-        'Jaspersoft\\Dto\\Resource\\MondrianConnection' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/MondrianConnection.php',
-        'Jaspersoft\\Dto\\Resource\\MondrianXmlaDefinition' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/MondrianXmlaDefinition.php',
-        'Jaspersoft\\Dto\\Resource\\OlapUnit' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/OlapUnit.php',
-        'Jaspersoft\\Dto\\Resource\\Query' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/Query.php',
-        'Jaspersoft\\Dto\\Resource\\ReportOptions' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/ReportOptions.php',
-        'Jaspersoft\\Dto\\Resource\\ReportUnit' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/ReportUnit.php',
-        'Jaspersoft\\Dto\\Resource\\Resource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/Resource.php',
-        'Jaspersoft\\Dto\\Resource\\ResourceLookup' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/ResourceLookup.php',
-        'Jaspersoft\\Dto\\Resource\\SecureMondrianConnection' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/SecureMondrianConnection.php',
-        'Jaspersoft\\Dto\\Resource\\SemanticLayerDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/SemanticLayerDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\VirtualDataSource' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/VirtualDataSource.php',
-        'Jaspersoft\\Dto\\Resource\\XmlaConnection' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Resource/XmlaConnection.php',
-        'Jaspersoft\\Dto\\Role\\Role' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/Role/Role.php',
-        'Jaspersoft\\Dto\\User\\User' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/User/User.php',
-        'Jaspersoft\\Dto\\User\\UserLookup' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Dto/User/UserLookup.php',
-        'Jaspersoft\\Exception\\RESTRequestException' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Exception/RESTRequestException.php',
-        'Jaspersoft\\Exception\\ResourceServiceException' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Exception/ResourceServiceException.php',
-        'Jaspersoft\\Service\\Criteria\\Criterion' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/Criteria/Criterion.php',
-        'Jaspersoft\\Service\\Criteria\\RepositorySearchCriteria' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/Criteria/RepositorySearchCriteria.php',
-        'Jaspersoft\\Service\\ImportExportService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/ImportExportService.php',
-        'Jaspersoft\\Service\\JobService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/JobService.php',
-        'Jaspersoft\\Service\\OptionsService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/OptionsService.php',
-        'Jaspersoft\\Service\\OrganizationService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/OrganizationService.php',
-        'Jaspersoft\\Service\\PermissionService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/PermissionService.php',
-        'Jaspersoft\\Service\\QueryService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/QueryService.php',
-        'Jaspersoft\\Service\\ReportService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/ReportService.php',
-        'Jaspersoft\\Service\\RepositoryService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/RepositoryService.php',
-        'Jaspersoft\\Service\\Result\\SearchResourcesResult' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/Result/SearchResourcesResult.php',
-        'Jaspersoft\\Service\\RoleService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/RoleService.php',
-        'Jaspersoft\\Service\\UserService' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Service/UserService.php',
-        'Jaspersoft\\Tool\\CompositeDTOMapper' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/CompositeDTOMapper.php',
-        'Jaspersoft\\Tool\\DTOMapper' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/DTOMapper.php',
-        'Jaspersoft\\Tool\\MimeMapper' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/MimeMapper.php',
-        'Jaspersoft\\Tool\\RESTRequest' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/RESTRequest.php',
-        'Jaspersoft\\Tool\\TestUtils' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/TestUtils.php',
-        'Jaspersoft\\Tool\\Util' => __DIR__ . '/..' . '/jaspersoft/rest-client/src/Jaspersoft/Tool/Util.php',
         'Laracasts\\Flash\\Flash' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/Flash.php',
         'Laracasts\\Flash\\FlashNotifier' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashNotifier.php',
         'Laracasts\\Flash\\FlashServiceProvider' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashServiceProvider.php',
@@ -4077,10 +4005,17 @@ class ComposerStaticInitbdcf37bbf3199524b1531ea036559805
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+<<<<<<< HEAD
             $loader->prefixLengthsPsr4 = ComposerStaticInitbdcf37bbf3199524b1531ea036559805::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbdcf37bbf3199524b1531ea036559805::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitbdcf37bbf3199524b1531ea036559805::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitbdcf37bbf3199524b1531ea036559805::$classMap;
+=======
+            $loader->prefixLengthsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$classMap;
+>>>>>>> origin
 
         }, null, ClassLoader::class);
     }
