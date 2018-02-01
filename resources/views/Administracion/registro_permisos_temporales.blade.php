@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <div class="box box-solid box-default">
+    <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Permisos Temporales</h3>
         </div>
@@ -133,6 +133,7 @@
 
                 <tbody id="cuerpoTabla">
                 @php $i = 1 @endphp
+
                 @foreach($permisos as $permiso)
                     <tr>
                         <td>{{ $i++ }}</td>
@@ -144,6 +145,7 @@
                         <td>{{ date("d/m/Y",strtotime($permiso->fin)) }}</td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -350,8 +352,5 @@
 
         }
 
-        function enviar() {
-
-        }
     </script>
 @endsection
