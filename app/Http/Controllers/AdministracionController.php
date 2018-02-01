@@ -613,15 +613,20 @@ class AdministracionController extends Controller
 
     public function mostrar_delegados(Request $request){
         if ($request->ajax()){
-            $asambleista = Asambleista::find($request->id);
-            $suplentes = Asambleista::where("sector_id",$asambleista->sector_id)->where("activo",1)->where("propietario",0)->get();
-
-            $dropdown = '<option value="">-- Seleccione un delegado --</option>';
-            foreach ($suplentes as $suplente){
-                $dropdown .= '<option value="'.$suplente->id .'">'.$suplente->user->persona->primer_nombre . ' ' .$suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido.'</option>';
-            }
             $respuesta = new \stdClass();
-            $respuesta->dropdown = $dropdown;
+            $asambleista = Asambleista::find($request->id);
+
+            if ($asambleista->propietario == 1){
+                $suplentes = Asambleista::where("sector_id",$asambleista->sector_id)->where("activo",1)->where("propietario",0)->where("facultad_id",$asambleista->facultad_id)->get();
+
+                $dropdown = '<option value="">-- Seleccione un delegado --</option>';
+                foreach ($suplentes as $suplente){
+                    $dropdown .= '<option value="'.$suplente->id .'">'.$suplente->user->persona->primer_nombre . ' ' .$suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido.'</option>';
+                }
+                $respuesta->dropdown = $dropdown;
+            }else{
+                $respuesta->esPropietario = 1;
+            }
             return new JsonResponse($respuesta);
         }
     }
@@ -630,7 +635,10 @@ class AdministracionController extends Controller
         if ($request->ajax()){
             $permiso = new Permiso();
             $permiso->asambleista_id = $request->get("asambleista");
-            $permiso->delegado_id = $request->get("delegado");
+
+            if ($request->delegado != "")
+                $permiso->delegado_id = $request->get("delegado");
+
             $permiso->fecha_permiso = Carbon::now();
             $permiso->motivo = $request->motivo;
             $permiso->inicio = Carbon::createFromFormat("d-m-Y", $request->startDate);

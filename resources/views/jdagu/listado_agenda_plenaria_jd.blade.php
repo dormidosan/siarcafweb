@@ -3,13 +3,35 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset("libs/pretty-checkbox/pretty-checkbox.min.css") }}">
+    <link href="{{ asset("libs/MaterialDesign/css/materialdesignicons.css") }}" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        table.dataTable thead > tr > th {
+            padding-right: 0 !important;
+        }
+
+
+    </style>
+
 @endsection
 
 @section('breadcrumb')
-    <section>
-
+    <section class="">
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
+            <li class="active">Generar Agenda Plenaria</li>
+        </ol>
     </section>
 @endsection
 
@@ -20,96 +42,119 @@
             <h3 class="box-title">Listado de Sesiones Plenarias</h3>
         </div>
         <div class="box-body">
-        --
-        <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
-             {{ csrf_field() }}
-              {{ Form::hidden('id_comision', '1') }}
+            <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
+                {{ csrf_field() }}
+                {{ Form::hidden('id_comision', '1') }}
                 <div class="row">
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                    <input name="codigo" type="text" class="form-control" id="codigo" placeholder="Ingrese codigo" required>
-                </div>
-                    <div class="col-lg-4 col-sm-12 col-md-12">
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label>Codigo</label>
+                            <input name="codigo" type="text" class="form-control" id="codigo"
+                                   placeholder="Ingrese un codigo" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="lugar">Lugar</label>
-                            <input name="lugar" type="text" id="lugar" class="form-control">
+                            <input name="lugar" type="text" id="lugar" class="form-control"
+                                   placeholder="Ingrese el lugar de reunion">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-12">
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label for="fecha">Fecha</label>
-                            <div class="input-group date fecha">
-                                <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            <label class="control-label">Fecha</label>
+                            <div class="input-group input-append date" id="fechaSesion">
+                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="dd-mm-yyyy"/>
+                                <span class="input-group-addon add-on"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
                             </div>
+                            <span class="help-block">La fecha debe ser mayor o igual {{ \Carbon\Carbon::now()->format("d-m-Y") }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12 col-md-12">
+                    <div class="col-lg-6 col-sm-12 col-md-12">
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" />
+                                <input name="hora" type='text' id="hora" class="form-control" placeholder="H:m AM"/>
                                 <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
+                        <span class="glyphicon glyphicon-time"></span></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                    <label for="tra">¿trascendental?</label>
-                    <input type="checkbox" name="trascendental" >
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        <div class="pretty p-icon p-smooth">
+                            <input type="checkbox" name="trascendental"/>
+                            <div class="state p-success">
+                                <i class="icon mdi mdi-check"></i>
+                                <label style="font-weight: bold">¿Es trascendental?</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <br>
+
                 <div class="row text-center">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
                     </div>
                 </div>
             </form>
-        --
+        </div>
+    </div>
 
-        <br>
-       
-
+    <div class="box box-default">
+        <div class="box-header">
+            <h3 class="box-title">Listado Sesiones Plenarias</h3>
+        </div>
+        <div class="box-body">
             <div class="table-responsive">
-                <table class="table text-center table-striped table-bordered table-hover table-condensed">
+                <table id="agendas" class="table text-center table-striped table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>codigo</th>
-                        <th>fecha</th>
-                        <th>lugar</th>
-                        <th>trascendental</th>
-                        <th>vigente</th>
-                        <th>activa</th>
+                        <th>Numero</th>
+                        <th>Codigo</th>
+                        <th>Fecha</th>
+                        <th>Lugar</th>
+                        <th>Trascendental</th>
+                        <th>Vigente</th>
+                        <th>Activa</th>
                         <th>Accion</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php $contador=1 @endphp
                     @forelse($agendas as $agenda)
-                    {!! Form::open(['route'=>['eliminar_agenda_creada_jd'],'method'=> 'POST']) !!}
-                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
+                        {!! Form::open(['route'=>['eliminar_agenda_creada_jd'],'method'=> 'POST','id'=>'eliminar_agenda_creada_jd'.$contador]) !!}
+                        <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                         <tr>
-                            <td>{!! $contador !!} @php $contador++ @endphp</td>
+                            <td>{!! $contador !!}</td>
                             <td>{!! $agenda->codigo !!}</td>
                             <td>{!! $agenda->fecha !!}</td>
                             <td>{!! $agenda->lugar !!}</td>
-                            <td>{!! $agenda->trascendental !!}</td>
-                            <td>{!! $agenda->vigente !!}</td>
-                            <td>{!! $agenda->activa !!}</td>
+                            <td>{!! $agenda->trascendental?'Si':'No' !!}</td>
+                            <td>{!!  $agenda->vigente?'Si':'No' !!}</td>
+                            <td>{!! $agenda->activa?'Si':'No' !!}</td>
                             <td>
                                 @php $puntos=0 @endphp
-                                @forelse($agenda->puntos as $punto) 
+                                @forelse($agenda->puntos as $punto)
                                     @php $puntos++ @endphp
                                 @empty
                                 @endforelse
                                 @if($puntos == 0)
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    <button type="button" class="btn btn-danger btn-xs" onclick="eliminar({{$contador}})"><i class="fa fa-trash-o"></i>
+                                        Eliminar
+                                    </button>
                                 @endif
-                                
+
                             </td>
                         </tr>
-                    {!! Form::close() !!}
+                        {!! Form::close() !!}
+                        @php $contador++ @endphp
                     @empty
                         <p style="color: red ;">No hay criterios de busqueda</p>
                     @endforelse
@@ -119,7 +164,6 @@
                 </table>
             </div>
         </div>
-    </div>
     </div>
 
 @endsection @section("js")
@@ -133,41 +177,144 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            $('.input-group.date.fecha').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                language: "es",
-                autoclose: true,
-                todayHighlight: true,
-                toggleActive: true
+
+            $('#fecha').mask("99-99-9999", {placeholder: "dd-mm-yyyy"});
+
+            $('#fechaSesion')
+                .datepicker({
+                    format: 'dd-mm-yyyy',
+                    clearBtn: true,
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                    toggleActive: true
+                }).on('changeDate', function (e) {
+                // Revalidate the start date field
+                $('#convocatoria').formValidation('revalidateField', 'fecha');
             });
 
             $('#hora').datetimepicker({
-                format: 'LT',
+                format: 'LT'
+            }).on('dp.change', function (e) {
+                // Revalidate the start date field
+                $('#convocatoria').formValidation('revalidateField', 'hora');
+
+            });
+
+            $('#convocatoria').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    codigo: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El codigo de la sesión es requerido'
+                            }
+                        }
+                    },
+                    lugar: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El lugar de la sesión es requerido'
+                            }
+                        }
+                    },
+                    fecha: {
+                        validators: {
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                min: "{{ \Carbon\Carbon::now()->format("d-m-Y") }}",
+                                message: 'La fecha no es una fecha valida'
+                            },
+                            notEmpty: {
+                                message: 'La fecha de la sesion es requerida'
+                            }
+                        }
+                    },
+                    hora: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La hora de la sesion es requerida'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.fv', function(e) {
+                // Prevent form submission
+                e.preventDefault();
+
+                var form = $("#convocatoria").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('generar_agenda_plenaria_jd') }}",
+                    data: form,
+                    success: function (response) {
+                        notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                        setTimeout(function () {
+                            window.location.href = '{{ route("listado_agenda_plenaria_jd") }}';
+                        }, 500);
+                    }
+                });
+            });
+
+            var oTable = $('#agendas').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "order": [[1, 'asc']],
+                "columnDefs": [
+                    { "orderable": false, "targets": [0,5,6,7] }
+                ]
             });
         });
 
-
-        function cambiar_estado_peticion(id) {
+        function eliminar(i) {
+            var form = $("#eliminar_agenda_creada_jd"+i).serialize();
             $.ajax({
-                //se envia un token, como medida de seguridad ante posibles ataques
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
                 type: 'POST',
-                url: "{{ route('actualizar_comision') }}",
-                data: {
-                    "id": id
-                },
+                url: "{{ route('eliminar_agenda_creada_jd') }}",
+                data: form,
                 success: function (response) {
                     notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                    setTimeout(function () {
+                        window.location.href = '{{ route("listado_agenda_plenaria_jd") }}';
+                    }, 400);
                 }
             });
+
         }
     </script>
 @endsection
