@@ -16,7 +16,7 @@ class CreatePermisosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('asambleista_id');
-            $table->unsignedInteger('delegado_id');
+            $table->unsignedInteger('delegado_id')->nullable();
             $table->dateTime('fecha_permiso')->nullable();
             $table->string('motivo', 45)->nullable();
             $table->date('inicio')->nullable();
