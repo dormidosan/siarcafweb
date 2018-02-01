@@ -155,7 +155,7 @@ class EstadosTableSeeder extends Seeder
 		));
 
 		\DB::table('parametros')->insert(array (
-		'parametro'  => 'mdt',
+		'parametro'  => 'qmt',
 		'nombre_parametro'  => 'quorum_minimo_trascendental',
 		'valor'  => '48',
 		'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
