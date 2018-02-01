@@ -20,9 +20,11 @@
 @section("content")
     @include("Modal.ActualizarPlantillaModal")
 
-    <div class="panel panel-success">
-        <div class="panel-heading">Plantillas del Sistema</div>
-        <div class="panel-body">
+    <div class="box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">Plantillas del Sistema</h3>
+        </div>
+        <div class="box-body">
             <table id="parametros"
                    class="table table-striped table-bordered table-condensed table-hover text-center">
                 <thead>

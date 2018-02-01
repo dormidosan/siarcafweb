@@ -304,9 +304,12 @@ Route::post('enlazar_comision', array('as' => 'enlazar_comision', 'uses' => 'Jun
 Route::post('historial_bitacoras_jd', array('as' => 'historial_bitacoras_jd', 'uses' => 'JuntaDirectivaController@historial_bitacoras_jd'));
 Route::post('historial_dictamenes_jd', array('as' => 'historial_dictamenes_jd', 'uses' => 'JuntaDirectivaController@historial_dictamenes_jd'));
 
-Route::get('listado_agenda_plenaria_jd', array('as' => 'listado_agenda_plenaria_jd', 'uses' => 'JuntaDirectivaController@listado_agenda_plenaria_jd'));
-Route::post('eliminar_agenda_creada_jd', array('as' => 'eliminar_agenda_creada_jd', 'uses' => 'JuntaDirectivaController@eliminar_agenda_creada_jd'));
-Route::post('generar_agenda_plenaria_jd', array('as' => 'generar_agenda_plenaria_jd', 'uses' => 'JuntaDirectivaController@generar_agenda_plenaria_jd'));
+//Route::get('listado_agenda_plenaria_jd', array('as' => 'listado_agenda_plenaria_jd', 'uses' => 'JuntaDirectivaController@listado_agenda_plenaria_jd'));
+Route::get('listado_agenda_plenaria_jd', 'JuntaDirectivaController@listado_agenda_plenaria_jd')->name('listado_agenda_plenaria_jd');
+//Route::post('eliminar_agenda_creada_jd', array('as' => 'eliminar_agenda_creada_jd', 'uses' => 'JuntaDirectivaController@eliminar_agenda_creada_jd'));
+//Route::post('generar_agenda_plenaria_jd', array('as' => 'generar_agenda_plenaria_jd', 'uses' => 'JuntaDirectivaController@generar_agenda_plenaria_jd'));
+Route::post('eliminar_agenda_creada_jd', 'JuntaDirectivaController@eliminar_agenda_creada_jd')->name('eliminar_agenda_creada_jd');
+Route::post('generar_agenda_plenaria_jd', 'JuntaDirectivaController@generar_agenda_plenaria_jd')->name("generar_agenda_plenaria_jd");
 
 Route::get('generar_reuniones_jd', array('as' => 'generar_reuniones_jd', 'uses' => 'JuntaDirectivaController@generar_reuniones_jd'));
 
