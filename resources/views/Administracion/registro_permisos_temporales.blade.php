@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
@@ -138,7 +139,11 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $permiso->asambleista->user->persona->primer_nombre . ' ' . $permiso->asambleista->user->persona->segundo_apellido }}</td>
-                        <td>{{ $permiso->delegado->user->persona->primer_nombre  . ' ' . $permiso->delegado->user->persona->segundo_apellido }}</td>
+                        @if($permiso->delegado)
+                            <td>{{ $permiso->delegado->user->persona->primer_nombre  . ' ' . $permiso->delegado->user->persona->segundo_apellido }}</td>
+                        @else
+                            <td>-----</td>
+                        @endif
                         <td>{{ date("d/m/Y h:m A",strtotime($permiso->created_at)) }}</td>
                         <td>{{ $permiso->motivo }}</td>
                         <td>{{ date("d/m/Y",strtotime($permiso->inicio))}}</td>
@@ -211,6 +216,7 @@
                     asambleista: {
                         validators: {
                             notEmpty: {
+                                enabled: false,
                                 message: 'Seleccione un asambleista'
                             }
                         }
@@ -218,6 +224,7 @@
                     delegado: {
                         validators: {
                             notEmpty: {
+                                enabled: false,
                                 message: 'Seleccione un delegado'
                             }
                         }
@@ -273,7 +280,6 @@
                 e.preventDefault();
                 var $form = $(e.target), fv = $form.data('formValidation');
                 // Using ajax to submit form data
-                console.log($form.serialize());
                 $.ajax({
                     url: "{{ route("guardar_permiso")}}",
                     type: 'POST',
@@ -328,8 +334,6 @@
         });
 
         function mostrar_delegados(id_asambleista) {
-            $("#delegado").empty();
-            $('#registro_permisos_temporales').formValidation('revalidateField', 'delegado');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -340,13 +344,23 @@
                     "id": id_asambleista
                 },
                 success: function (response) {
-                    $("#delegado").append(response.dropdown);
-                    $('#delegado').select2({
-                        placeholder: 'Seleccione un asambleista',
-                        language: "es",
-                        width: '100%'
-                    });
-                    $("#delegados").removeClass("hidden");
+                    if (response.esPropietario != 1) {
+                        $("#delegado").empty();
+                        $('#registro_permisos_temporales').formValidation('enableFieldValidators', 'delegado', true);
+                        //$('#registro_permisos_temporales').formValidation('revalidateField', 'delegado');
+
+                        $("#delegado").append(response.dropdown);
+                        $('#delegado').select2({
+                            placeholder: 'Seleccione un asambleista',
+                            language: "es",
+                            width: '100%'
+                        });
+                        $("#delegados").removeClass("hidden");
+                    } else {
+                        $('#registro_permisos_temporales').formValidation('revalidateField', 'delegado');
+                        $('#registro_permisos_temporales').formValidation('enableFieldValidators', 'delegado', false);
+                        $("#delegados").addClass("hidden");
+                    }
                 }
             });
 
