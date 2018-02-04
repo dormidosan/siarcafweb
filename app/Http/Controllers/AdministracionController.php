@@ -121,7 +121,6 @@ class AdministracionController extends Controller
     public function guardar_periodo(PeriodoRequest $request)
     {
         $periodo_activo = Periodo::where("activo", 1)->first();
-
         if (!empty($periodo_activo)) {
             $request->session()->flash("error", "Ya existe un periodo activo");
             return redirect()->back();
@@ -137,8 +136,7 @@ class AdministracionController extends Controller
                 $extension = $request->excel->extension();
                 if ($extension == "xlsx" || $extension == "csv") {
                     $path = $request->excel->path();
-                    $data = Excel::load($path, function ($reader) {
-                    })->get();
+                    $data = Excel::load($path, function ($reader) {})->get();
                     if (!empty($data) && $data->count()) {
                         foreach ($data as $key => $value) {
                             //$asambleistas[] = ['name' => $value->name, 'phone' => $value->phone, 'email' => $value->email];
@@ -177,13 +175,14 @@ class AdministracionController extends Controller
                             $usuario->activo = 1;
                             $usuario->save();
 
-                            $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                            //$periodo_activo = Periodo::where("activo", "=", 1)->first();
                             //dd($periodo_activo);
                             $asambleista = new Asambleista();
                             $asambleista->user_id = $usuario->id;
-                            $asambleista->periodo_id = $periodo_activo->id;
+                            $asambleista->periodo_id = $periodo->id;
                             $asambleista->facultad_id = (Facultad::where("nombre", strtoupper($value->facultad))->first())->id;
                             $asambleista->sector_id = (Sector::where("nombre", $value->sector)->first())->id;
+
                             switch ($value->propetario) {
                                 case "Si":
                                     $asambleista->propietario = 1;
@@ -196,7 +195,7 @@ class AdministracionController extends Controller
                             $asambleista->activo = 1;
 
                             $hoy = Carbon::now();
-                            $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
+                            $inicio_periodo = $periodo->inicio;
 
                             if ($hoy > $inicio_periodo) {
                                 $asambleista->inicio = $hoy;
