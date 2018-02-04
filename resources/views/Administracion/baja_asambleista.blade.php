@@ -35,7 +35,7 @@
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Administracion</a></li>
             <li><a>Gestionar Usuarios</a></li>
-            <li class="active">Baja Asambleista</li>
+            <li class="active">Estados Asambleistas</li>
         </ol>
     </section>
 @endsection

@@ -50,9 +50,9 @@
                     <div class="box box-danger">
                         <div class="box-body">
                             <div class="text-center">
-                                <i class="fa fa-user-times fa-4x text-danger"></i>
+                                <i class="fa fa-file fa-4x text-danger"></i>
                             </div>
-                            <h3 class="profile-username text-center">Dar de Baja Asambleista</h3>
+                            <h3 class="profile-username text-center">Estados Asambleistas</h3>
                             <a class="btn btn-danger btn-block btn-sm"
                                href="{{route("baja_asambleista")}}"><b>Acceder</b></a>
                         </div>
