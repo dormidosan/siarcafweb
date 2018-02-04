@@ -380,7 +380,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
-        \DB::table('modulos')->insert(array (
+        /*\DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Registrar Usuarios',
             'url' => 'registrar_usuario',
             'modulo_padre' => '11',
@@ -388,7 +388,7 @@ class ModulosTableSeeder extends Seeder
             'tiene_hijos' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
+        ));*/
 
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Gestionar Perfiles',
@@ -401,7 +401,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Registro Permisos Temporales',
+            'nombre_modulo'  => 'Permisos Temporales',
             'url' => 'registro_permisos_temporales',
             'modulo_padre' => '10',
             'icono'  => 'fa fa-dot-circle-o',

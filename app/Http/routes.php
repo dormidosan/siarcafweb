@@ -247,6 +247,7 @@ Route::get('cambiar_cargos_comision', "AdministracionController@cambiar_cargos_c
 Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_cargos_junta_directiva")->name("cambiar_cargos_junta_directiva");
 Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
+Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
@@ -263,6 +264,7 @@ Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")
 Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
 Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
+Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 
 
 
