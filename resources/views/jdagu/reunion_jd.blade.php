@@ -193,7 +193,7 @@
                                         </td>
 
                                         <td>
-                                            {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST','id'=>$peticion->id.'4']) !!}
+                                            {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'4']) !!}
                                             <input type="hidden" name="id_peticion" id="id_peticion"
                                                    value="{{$peticion->id}}">
                                             <input type="hidden" name="id_comision" id="id_comision"

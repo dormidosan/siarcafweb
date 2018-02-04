@@ -1,27 +1,48 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Seguimiento</h3>
+            <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
             <div class="row">
-            @if($es_reunion == 1)
-            <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
-                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Reunion JD</button>
-                   
-                    {!! Form::close() !!}
+
+            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post" action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
+            {{ csrf_field() }} 
+            <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+            <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label>Seleccione comision</label>
+                        {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                            <label for="documento">Seleccione documento (1)</label>
+                            <div class="file-loading">
+
+                                <input id="documento_jd" name="documento_jd" type="file"   required="required" data-show-preview="false">
+                            </div>
+
+                        </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label></label>
+                        <input type="submit" class="btn btn-success" name="guardar" id="guardar" value="guardar">
+                    </div>
+                </div>
             </div>
-            @else
-            <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
-                   href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
-            </div>
-            @endif
+        </form>
                 
 
                 
@@ -29,6 +50,7 @@
 
             </div>
         </div>
+        <br>
         <div class="box-body">
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-md-4">
@@ -138,3 +160,39 @@
     </div>
 @endsection
 
+@section("js")
+    <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
+    <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+@endsection
+
+@section("scripts")
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#documento_jd").fileinput({
+                theme: "explorer",
+                previewFileType: "pdf, xls, xlsx, doc, docx",
+                language: "es",
+                //minFileCount: 1,
+                maxFileCount: 3,
+                allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
+                showUpload: false,
+                fileActionSettings: {
+                    showRemove: true,
+                    showUpload: false,
+                    showZoom: true,
+                    showDrag: false
+                },
+                hideThumbnailContent: true
+            });
+            
+        });
+
+        
+        
+        
+
+    </script>
+    
+@endsection
