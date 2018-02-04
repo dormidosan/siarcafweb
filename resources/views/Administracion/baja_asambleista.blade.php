@@ -16,11 +16,11 @@
             padding-right: 0 !important;
         }
 
-        table{
+        table {
             width: 100% !important;
         }
 
-        table tbody tr.group td{
+        table tbody tr.group td {
             font-weight: bold;
             text-align: left;
             background: #ddd;
@@ -50,7 +50,7 @@
                 <table class="table" id="listado">
                     <thead>
                     <tr>
-                        <th class="text-center" style="padding-right: 15px !important;">Numero </th>
+                        <th class="text-center" style="padding-right: 20px !important;">Numero</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Facultad</th>
                         <th class="text-center">Sector</th>
@@ -62,12 +62,43 @@
                     @php $i = 1 @endphp
                     @foreach($asambleistas as $asambleista)
                         <tr>
-                            <td style="vertical-align: middle">{{ $i++ }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->facultad->nombre }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->sector->nombre }}</td>
-                            <td style="vertical-align: middle">{{ $asambleista->propietario?'Propetario':'Suplente' }}</td>
-                            <td><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o" onclick="dar_baja({{$asambleista->id}})"></i> Dar de baja</button></td>
+                            <td>{{ $i++ }}</td>
+                            <td>{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</td>
+                            <td>{{ $asambleista->facultad->nombre }}</td>
+                            <td>{{ $asambleista->sector->nombre }}</td>
+                            <td>{{ $asambleista->propietario?'Propetario':'Suplente' }}</td>
+                            <td class="row text-center">
+                                <div class="col-lg-6 col-sm-6 col-lg-push-1">
+                                    @if($asambleista->baja == 0)
+                                        <button class="btn btn-danger btn-xs btn-block"
+                                                onclick="modificar_estado({{ $asambleista->id }},1)"><i
+                                                    class="fa fa-minus-circle"></i>
+                                            Baja
+                                        </button>
+                                    @else
+                                        <button class="btn btn-success btn-xs btn-block"
+                                                onclick="modificar_estado({{ $asambleista->id }},2)"><i
+                                                    class="fa fa-plus-circle"></i>
+                                            Alta
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    @if($asambleista->activo == 1)
+                                        <button class="btn btn-warning btn-xs btn-block"
+                                                onclick="modificar_estado({{ $asambleista->id }},3)"><i
+                                                    class="fa fa-lock"></i>
+                                            Desactivar
+                                        </button>
+                                    @else
+                                        <button class="btn btn-primary btn-xs btn-block"
+                                                onclick="modificar_estado({{ $asambleista->id }},4)">
+                                            <i class="fa fa-unlock"></i>
+                                            Activar
+                                        </button>
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -115,55 +146,62 @@
                     }
                 },
                 "columnDefs": [
-                    { "visible": false, "targets": 2 },
-                    { "orderable": false, "targets": [1,2,3,4,5]}
+                    {"visible": false, "targets": 2},
+                    {"orderable": false, "targets": [1, 2, 3, 4, 5]}
                 ],
                 "searching": true,
-                "order": [[0,'asc'],[ 2, 'asc' ]],
+                "order": [[0, 'asc'], [2, 'asc']],
                 "displayLength": 25,
                 "paging": true,
-                "drawCallback": function ( settings ) {
+                "drawCallback": function (settings) {
                     var api = this.api();
-                    var rows = api.rows( {page:'current'} ).nodes();
-                    var last=null;
+                    var rows = api.rows({page: 'current'}).nodes();
+                    var last = null;
 
-                    api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-                        if ( last !== group ) {
-                            $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    api.column(2, {page: 'current'}).data().each(function (group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="5">' + group + '</td></tr>'
                             );
 
                             last = group;
                         }
-                    } );
+                    });
                 }
-            } );
+            });
 
             // Order by the grouping
-            $('#listado tbody').on( 'click', 'tr.group', function () {
+            $('#listado tbody').on('click', 'tr.group', function () {
                 var currentOrder = table.order()[0];
-                if ( currentOrder[0] === 2 && currentOrder[1] === 'asc' ) {
-                    table.order( [ 2, 'desc' ] ).draw();
+                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                    table.order([2, 'desc']).draw();
                 }
                 else {
-                    table.order( [ 2, 'asc' ] ).draw();
+                    table.order([2, 'asc']).draw();
                 }
-            } );
+            });
         });
 
-        function dar_baja(id) {
+        function modificar_estado(id, accion) {
+
+            console.log("A");
             $.ajax({
                 //se envia un token, como medida de seguridad ante posibles ataques
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 type: 'POST',
-                url: "{{ route('dar_baja') }}",
+                url: "{{ route('modificar_estado_asambleista') }}",
                 data: {
-                    "idAsambleista": id
+                    "id": id,
+                    "accion": accion
+                },
+                success: function (response) {
+                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                    setTimeout(function () {
+                        window.location.href = "{{ route("baja_asambleista") }}"
+                    }, 900);
                 }
-            }).done(function (response) {
-                notificacion(response.mensaje.titulo,response.mensaje.contenido,response.mensaje.tipo);
             });
         }
     </script>

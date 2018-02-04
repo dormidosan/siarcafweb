@@ -132,7 +132,8 @@ class AdministracionController extends Controller
                 $extension = $request->excel->extension();
                 if ($extension == "xlsx" || $extension == "csv") {
                     $path = $request->excel->path();
-                    $data = Excel::load($path, function ($reader) {})->get();
+                    $data = Excel::load($path, function ($reader) {
+                    })->get();
                     if (!empty($data) && $data->count()) {
                         foreach ($data as $key => $value) {
                             //$asambleistas[] = ['name' => $value->name, 'phone' => $value->phone, 'email' => $value->email];
@@ -252,13 +253,42 @@ class AdministracionController extends Controller
 
     }
 
-    public function baja_asambleista(){
+    public function baja_asambleista()
+    {
         $facultades = Facultad::all();
-        $asambleistas = Asambleista::join("periodos","asambleistas.periodo_id","=","periodos.id")
-            ->where("periodos.activo","=",1)
-            ->get();
-        return view("Administracion.baja_asambleista",["facultades"=>$facultades,"asambleistas"=>$asambleistas]);
+        //muestra incluso los asambleistas que no estan activos (0)
+        $periodo = Periodo::where('activo', 1)->first();
+        $asambleistas = Asambleista::where('periodo_id', $periodo->id)->get();
+
+        return view("Administracion.baja_asambleista", ["facultades" => $facultades, "asambleistas" => $asambleistas]);
     }
+
+    public function modificar_estado_asambleista(Request $request)
+    {
+        if ($request->ajax()) {
+            $asambleista = Asambleista::where("id", $request->get('id'))->first();
+            //$asambleista->activo = 0;
+            switch ($request->accion) {
+                case 1:
+                    $asambleista->baja = 1;
+                    break;
+                case 2:
+                    $asambleista->baja = 0;
+                    break;
+                case 3:
+                    $asambleista->activo = 0;
+                    break;
+                case 4:
+                    $asambleista->activo = 1;
+                    break;
+            }
+            $asambleista->save();
+            $respuesta = new \stdClass();
+            $respuesta->mensaje = (new Mensaje("Exito", "Asambleista modificado con exito", "success"))->toArray();
+            return new JsonResponse($respuesta);
+        }
+    }
+
     public function administracion_usuarios()
     {
         $comisiones = Comision::where("activa", 1)->get();
@@ -603,38 +633,41 @@ class AdministracionController extends Controller
         }
     }
 
-    public function registro_permisos_temporales(){
-        $periodo_activo = Periodo::where('activo','=', 1)->first();
-        $asambleistas = Asambleista::where('activo','=', 1)
-            ->where('periodo_id','=',$periodo_activo->id)
+    public function registro_permisos_temporales()
+    {
+        $periodo_activo = Periodo::where('activo', '=', 1)->first();
+        $asambleistas = Asambleista::where('activo', '=', 1)
+            ->where('periodo_id', '=', $periodo_activo->id)
             ->get();
         $permisos = Permiso::all();
 
-        return view("Administracion.registro_permisos_temporales",['asambleistas'=>$asambleistas,'permisos'=>$permisos]);
+        return view("Administracion.registro_permisos_temporales", ['asambleistas' => $asambleistas, 'permisos' => $permisos]);
     }
 
-    public function mostrar_delegados(Request $request){
-        if ($request->ajax()){
+    public function mostrar_delegados(Request $request)
+    {
+        if ($request->ajax()) {
             $respuesta = new \stdClass();
             $asambleista = Asambleista::find($request->id);
 
-            if ($asambleista->propietario == 1){
-                $suplentes = Asambleista::where("sector_id",$asambleista->sector_id)->where("activo",1)->where("propietario",0)->where("facultad_id",$asambleista->facultad_id)->get();
+            if ($asambleista->propietario == 1) {
+                $suplentes = Asambleista::where("sector_id", $asambleista->sector_id)->where("activo", 1)->where("propietario", 0)->where("facultad_id", $asambleista->facultad_id)->get();
 
                 $dropdown = '<option value="">-- Seleccione un delegado --</option>';
-                foreach ($suplentes as $suplente){
-                    $dropdown .= '<option value="'.$suplente->id .'">'.$suplente->user->persona->primer_nombre . ' ' .$suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido.'</option>';
+                foreach ($suplentes as $suplente) {
+                    $dropdown .= '<option value="' . $suplente->id . '">' . $suplente->user->persona->primer_nombre . ' ' . $suplente->user->persona->segundo_nombre . ' ' . $suplente->user->persona->primer_apellido . ' ' . $suplente->user->persona->segundo_apellido . '</option>';
                 }
                 $respuesta->dropdown = $dropdown;
-            }else{
+            } else {
                 $respuesta->esPropietario = 1;
             }
             return new JsonResponse($respuesta);
         }
     }
 
-    public function guardar_permiso(Request $request){
-        if ($request->ajax()){
+    public function guardar_permiso(Request $request)
+    {
+        if ($request->ajax()) {
             $permiso = new Permiso();
             $permiso->asambleista_id = $request->get("asambleista");
 
@@ -648,7 +681,7 @@ class AdministracionController extends Controller
             $permiso->save();
 
             $respuesta = new \stdClass();
-            $respuesta->mensaje = (new Mensaje("Exito","Permiso Temporal registrado con exito","success"))->toArray();
+            $respuesta->mensaje = (new Mensaje("Exito", "Permiso Temporal registrado con exito", "success"))->toArray();
             return new JsonResponse($respuesta);
         }
     }
@@ -770,14 +803,6 @@ class AdministracionController extends Controller
         $vieja_plantilla->save();
 
         return $vieja_plantilla;
-    }
-
-    public function dar_baja(Request $request){
-        if ($request->ajax()){
-            $asambleista = Asambleista::where("id",$request->get('asambleista'))->get();
-            $asambleista->activo = 0;
-
-        }
     }
 
 }

@@ -264,7 +264,7 @@ Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")
 Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
 Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
-Route::post('dar_baja', "AdministracionController@dar_baja")->name("dar_baja");
+Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 
 
 
