@@ -95,10 +95,6 @@ class AdministracionController extends Controller
         return redirect()->route("mostrar_formulario_registrar_usuario");
     }
 
-    /*
-     * Funcion que esta asociada a un metodo GET, que muestra todos los periodos AGU
-     * hasta la fecha
-     */
     public function gestionar_plantillas()
     {
         $plantillas = Plantilla::all();
@@ -256,6 +252,13 @@ class AdministracionController extends Controller
 
     }
 
+    public function baja_asambleista(){
+        $facultades = Facultad::all();
+        $asambleistas = Asambleista::join("periodos","asambleistas.periodo_id","=","periodos.id")
+            ->where("periodos.activo","=",1)
+            ->get();
+        return view("Administracion.baja_asambleista",["facultades"=>$facultades,"asambleistas"=>$asambleistas]);
+    }
     public function administracion_usuarios()
     {
         $comisiones = Comision::where("activa", 1)->get();
@@ -767,6 +770,14 @@ class AdministracionController extends Controller
         $vieja_plantilla->save();
 
         return $vieja_plantilla;
+    }
+
+    public function dar_baja(Request $request){
+        if ($request->ajax()){
+            $asambleista = Asambleista::where("id",$request->get('asambleista'))->get();
+            $asambleista->activo = 0;
+
+        }
     }
 
 }
