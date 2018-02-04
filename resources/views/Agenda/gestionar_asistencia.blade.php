@@ -69,6 +69,7 @@
                     <th>Hora de entrada</th>
                     <th>Rol en plenaria</th>
                     <th>Cambiar a</th>
+                    <th>Retiro</th>
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla" class="text-center">
@@ -95,7 +96,7 @@
                                     <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
                                     <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
                                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                    <td><button type="submit" class="btn btn-primary btn-block" >Suplente</button></td>
+                                    <td><button type="submit" class="btn btn-primary btn-block btn-sm" >Suplente</button></td>
                                     {!! Form::close() !!}
                                 @else
                                     <td>Suplente en plenaria</td>
@@ -105,10 +106,10 @@
                                             <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
                                             <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
                                             <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                            <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
+                                            <td><button type="submit" class="btn btn-primary btn-block btn-sm" >Propietario</button></td>
                                             {!! Form::close() !!}
                                         @else
-                                            <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
+                                            <td><button type="submit" class="btn btn-primary btn-block btn-sm" disabled="disabled">Propietario</button></td>
                                         @endif
                                     @endif
 
@@ -118,7 +119,7 @@
                                             <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
                                             <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
                                             <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                            <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
+                                            <td><button type="submit" class="btn btn-primary btn-block btn-sm" >Propietario</button></td>
                                             {!! Form::close() !!}
                                         @else
                                             <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
@@ -134,7 +135,7 @@
                                             <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
                                             {!! Form::close() !!}
                                         @else
-                                            <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
+                                            <td><button type="submit" class="btn btn-primary btn-block btn-sm" disabled="disabled">Propietario</button></td>
                                         @endif
                                     @endif
 
@@ -152,9 +153,14 @@
                             <td class="danger">-</td>
                             <td class="danger">-</td>
                         @endif
-
-
-
+                        <td class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                <button class="btn btn-warning btn-sm btn-block">Temporal</button>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                <button class="btn btn-danger btn-sm btn-block">Permanente</button>
+                            </div>
+                        </td>
                     </tr>
                 @empty
 
@@ -206,7 +212,7 @@
                 },
                 "columnDefs": [
                     { "visible": false, "targets": 2 },
-                    { "orderable": false, "targets": [0,1,2,3,4,5]}
+                    { "orderable": false, "targets": [0,1,2,3,4,5,6]}
                 ],
                 "searching": false,
                 "order": [[ 2, 'asc' ]],
@@ -220,7 +226,7 @@
                     api.column(2, {page:'current'} ).data().each( function ( group, i ) {
                         if ( last !== group ) {
                             $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                                '<tr class="group"><td colspan="6">'+group+'</td></tr>'
                             );
 
                             last = group;
