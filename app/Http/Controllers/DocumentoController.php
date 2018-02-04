@@ -25,7 +25,7 @@ class DocumentoController extends Controller
         $disco = "../storage/documentos/";
         $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id');
         $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id');
-        $documentos = Documento::all();
+        //$documentos = Documento::all();
 
         return view('General.BusquedaDocumentos')
         ->with('periodo', $periodo)
@@ -34,7 +34,7 @@ class DocumentoController extends Controller
         ->with('tipo_documento', $tipo_documento)
         ->with('tipo_documentos', $tipo_documentos)
         ->with('nombre_documento', $nombre_documento)
-        ->with('documentos', $documentos)
+        //->with('documentos', $documentos)
         ->with('disco', $disco);
 
 
