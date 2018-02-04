@@ -22,16 +22,20 @@ class DocumentoController extends Controller
         $tipo_documento = null ;
         $periodo = null;
         $descripcion = null;
-        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id'); 
-        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
+        $disco = "../storage/documentos/";
+        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id');
+        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id');
+        $documentos = Documento::all();
 
-        return view('General.BusquedaDocumentos')        
+        return view('General.BusquedaDocumentos')
         ->with('periodo', $periodo)
         ->with('periodos', $periodos)
         ->with('descripcion', $descripcion)
         ->with('tipo_documento', $tipo_documento)
         ->with('tipo_documentos', $tipo_documentos)
-        ->with('nombre_documento', $nombre_documento);
+        ->with('nombre_documento', $nombre_documento)
+        ->with('documentos', $documentos)
+        ->with('disco', $disco);
 
 
     }
@@ -47,33 +51,47 @@ class DocumentoController extends Controller
 
         //variables generales
         $disco = "../storage/documentos/";
-        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id'); 
-        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
+        $tipo_documentos = TipoDocumento::where('id', '!=', '0')->pluck('tipo', 'id');
+        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id');
 
 
-        if (empty($periodo)) {
+        /*if (empty($periodo)) {
             $documentos = Documento::leftJoin("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
                 ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
                 ->where("documentos.tipo_documento_id", $tipo_documento)
-                ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
-                ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
+                ->orWhere("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
+                ->orWhere("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
                 ->get();
         } else {
             $documentos = Documento::leftJoin("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
                 ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
                 ->where("documentos.tipo_documento_id", $tipo_documento)
-                ->where("documentos.nombre_documento", "LIKE", "%" . $nombre_documento . "%")
-                ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%")
                 ->where("documentos.periodo_id", $periodo)
                 ->get();
-        }
+        }*/
 
-        return view('General.BusquedaDocumentos')   
-        ->with('disco', $disco)  
-        ->with('documentos', $documentos)   
+        $documentos = Documento::query();
+
+        if($tipo_documento != "")
+            $documentos = $documentos->where("documentos.tipo_documento_id", $tipo_documento);
+        if($nombre_documento != "")
+            $documentos = $documentos->where("documentos.nombre_documento","LIKE","%".$nombre_documento."%");
+        if ($periodo != "")
+            $documentos = $documentos->where("documentos.periodo_id", $periodo);
+        if ($descripcion != "")
+            $documentos = $documentos->join("seguimientos", "seguimientos.documento_id", "=", "documentos.id")
+                ->join("peticiones", "seguimientos.peticion_id", "=", "peticiones.id")
+                ->where("peticiones.descripcion", "LIKE", "%" . $descripcion . "%");
+
+        $documentos = $documentos->get();
+
+
+        return view('General.BusquedaDocumentos')
+        ->with('disco', $disco)
+        ->with('documentos', $documentos)
         ->with('periodo', $periodo)
         ->with('periodos', $periodos)
-        ->with('descripcion', $descripcion)     
+        ->with('descripcion', $descripcion)
         ->with('tipo_documento', $tipo_documento)
         ->with('tipo_documentos', $tipo_documentos)
         ->with('nombre_documento', $nombre_documento);
