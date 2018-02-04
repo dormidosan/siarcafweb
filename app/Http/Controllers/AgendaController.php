@@ -170,9 +170,9 @@ class AgendaController extends Controller
             $quorum_minimo = Parametro::where('parametro','=','qmn')->first();
         }
         
-
+        
         $quorum_actual = Asistencia::where('agenda_id','=',$agenda->id)->where('propietaria','=','1')->count();
-
+ 
         //si el quorum actual es menor que el minimo requerido , regresa a la pantalla anterior
         if($quorum_actual < $quorum_minimo->valor ){
 
