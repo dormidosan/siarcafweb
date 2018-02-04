@@ -220,6 +220,7 @@ class PersonasTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2017, 6, 28, 0, 0, 0),
 		'activo'  => '1',
+		'retiro_temporal' => '0',
 		'ruta'  => '0b17d8a78c9516c900892e6a0ad52808.pdf',
 		'created_at' => Carbon::create(2015, 5, 1, 0, 0, 0),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -271,6 +272,7 @@ class PersonasTableSeeder extends Seeder
 		'inicio'  => Carbon::create(2013, 6, 28, 0, 0, 0),
 		'fin'     => Carbon::create(2015, 6, 28, 0, 0, 0),
 		'activo'  => '0',
+		'retiro_temporal' => '0',
 		'ruta'  => '0b17d8a78c9516c900892e6a0ad52808.pdf',
 		'created_at' => Carbon::create(2013, 5, 1, 0, 0, 0),
 		'updated_at' => Carbon::now()->format('Y-m-d H:i:s')

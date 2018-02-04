@@ -23,6 +23,7 @@ class CreateAsambleistasTable extends Migration
             $table->date('inicio')->nullable();
             $table->date('fin')->nullable();
             $table->integer('activo')->nullable();
+            $table->integer('retiro_temporal')->nullable();
             $table->string('ruta', 45)->nullable();
 
             $table->index(["facultad_id"], 'fk_asambleistas_facultades1_idx');
