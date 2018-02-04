@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit889f62302c17823e54ea0934e503b5f9
+class ComposerStaticInit4aca0a874fd14bba231248caa81f758d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -3853,7 +3853,9 @@ class ComposerStaticInit889f62302c17823e54ea0934e503b5f9
         'Symfony\\Polyfill\\Util\\Binary' => __DIR__ . '/..' . '/symfony/polyfill-util/Binary.php',
         'Symfony\\Polyfill\\Util\\BinaryNoFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryNoFuncOverload.php',
         'Symfony\\Polyfill\\Util\\BinaryOnFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryOnFuncOverload.php',
+        'Symfony\\Polyfill\\Util\\LegacyTestListener' => __DIR__ . '/..' . '/symfony/polyfill-util/LegacyTestListener.php',
         'Symfony\\Polyfill\\Util\\TestListener' => __DIR__ . '/..' . '/symfony/polyfill-util/TestListener.php',
+        'Symfony\\Polyfill\\Util\\TestListenerTrait' => __DIR__ . '/..' . '/symfony/polyfill-util/TestListenerTrait.php',
         'TCPDF' => __DIR__ . '/..' . '/laurentbrieu/tcpdf/src/TCPDF/src/tcpdf.php',
         'TCPDF2DBarcode' => __DIR__ . '/..' . '/laurentbrieu/tcpdf/src/TCPDF/src/tcpdf_barcodes_2d.php',
         'TCPDFBarcode' => __DIR__ . '/..' . '/laurentbrieu/tcpdf/src/TCPDF/src/tcpdf_barcodes_1d.php',
@@ -4001,10 +4003,10 @@ class ComposerStaticInit889f62302c17823e54ea0934e503b5f9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit889f62302c17823e54ea0934e503b5f9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4aca0a874fd14bba231248caa81f758d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4aca0a874fd14bba231248caa81f758d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4aca0a874fd14bba231248caa81f758d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4aca0a874fd14bba231248caa81f758d::$classMap;
 
         }, null, ClassLoader::class);
     }
