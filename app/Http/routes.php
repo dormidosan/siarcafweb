@@ -319,6 +319,8 @@ Route::post('crear_reunion_jd', array('as' => 'crear_reunion_jd', 'uses' => 'Jun
 Route::post('eliminar_reunion_jd', array('as' => 'eliminar_reunion_jd', 'uses' => 'JuntaDirectivaController@eliminar_reunion_jd'));
 Route::post('enviar_convocatoria_jd', array('as' => 'enviar_convocatoria_jd', 'uses' => 'JuntaDirectivaController@enviar_convocatoria_jd'));
 
+Route::post('subir_documento_jd', array('as' => 'subir_documento_jd', 'uses' => 'JuntaDirectivaController@subir_documento_jd'));
+Route::post('guardar_documento_jd', array('as' => 'guardar_documento_jd', 'uses' => 'JuntaDirectivaController@guardar_documento_jd'));
 
 
 /*post*/
