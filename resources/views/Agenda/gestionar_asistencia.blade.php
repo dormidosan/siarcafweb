@@ -185,9 +185,30 @@
                                                     disabled="disabled">Temporal
                                             </button>
                                         @else
-                                            <button class="btn btn-warning btn-sm btn-block"
-                                                    onclick="modal_retiro_temporal({{$asambleista->id}})">Temporal
-                                            </button>
+                                            @if($asistente->temporal == 1)
+                                                @if($asistente->temporal != 2)
+                                                    <button class="btn btn-success btn-sm btn-block"
+                                                            onclick="modal_reincorporar({{$asambleista->id}})">
+                                                        Reincorporar
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-success btn-sm btn-block disabled"
+                                                            disabled="disabled">Reincorporar
+                                                    </button>
+                                                @endif
+                                            @else
+                                                @if($asistente->temporal != 2)
+                                                    <button class="btn btn-warning btn-sm btn-block"
+                                                            onclick="modal_retiro_temporal({{$asambleista->id}})">
+                                                        Temporal
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-warning btn-sm btn-block disabled"
+                                                            disabled="disabled">
+                                                        Temporal
+                                                    </button>
+                                                @endif
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 ">
@@ -196,9 +217,16 @@
                                                     disabled="disabled">Permanente
                                             </button>
                                         @else
-                                            <button class="btn btn-danger btn-sm btn-block"
-                                                    onclick="modal_retiro_permanente({{$asambleista->id}})">Permanente
-                                            </button>
+                                            @if($asistente->temporal != 2)
+                                                <button class="btn btn-danger btn-sm btn-block"
+                                                        onclick="modal_retiro_permanente({{$asambleista->id}})">
+                                                    Permanente
+                                                </button>
+                                            @else
+                                                <button class="btn btn-danger btn-sm btn-block disabled"
+                                                        disabled="disabled">Permanente
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
@@ -228,17 +256,18 @@
 
     @include("Modal.RetiroTemporaModal")
 
-    <div class="modal fade" id="@yield("idModal")" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-        <div class="modal-dialog @yield("size")" role="document">
+    <div class="modal fade" id="retiro_permanente_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel2">@yield("EncabezadoModal") </h4>
+                    <h4 class="modal-title" id="myModalLabel2">Retiro Permanente</h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">¿Desea retirar permanentemente al asambleista: <span id="nombre_asambleista"
-                                                                                                class="text-bold"></span>?
+                    <p class="text-center">¿Desea retirar permanentemente al asambleista: <span
+                                id="nombre_asambleista_permanente"
+                                class="text-bold"></span>?
                     </p>
                     <form id="retiro_permanente" name="retiro_permanente" action="{{route("retiro_temporal")}}"
                           method="post">
@@ -284,6 +313,65 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="reincorporar_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Reincorporar Asambleista</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Desea reincorporar al asambleista: <span
+                                id="nombre_asambleista_reincorporar"
+                                class="text-bold"></span>?
+                    </p>
+                    <form id="reincorporar" name="reincorporar" action="{{route("retiro_temporal")}}"
+                          method="post">
+                        {{ csrf_field() }}
+                        <div class="row hidden">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Agenda</label>
+                                    <input type="text" id="agenda_reincorporar" name="agenda">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Asambleisa</label>
+                                    <input type="text" id="asambleista_reincorporar" name="asambleista_reincorporar">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Tipo Retiro</label>
+                                    <input type="text" id="tipo" name="tipo" value="3">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Facultad</label>
+                                    <input type="text" id="facultad_modal_reincorporar" name="facultad_modal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-lg-6 col-lg-push-1">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            <div class="col-lg-6 col-lg-pull-1">
+                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -370,38 +458,24 @@
             $("#retiroTemporal").modal('show');
         }
 
-        /*function retiro_temporal_asambleista() {
-            var form_retiro = $("#retiro_temporal").serialize();
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
-                type: 'POST',
-                url: "{{ route('retiro_temporal') }}",
-                data: form_retiro,
-                success: function (response) {
-                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
-                    setTimeout(function () {
-                        window.location.href = '{{ route("gestionar_asistencia") }}';
-                    }, 350);
-                }
-            });
-        }*/
-
         function modal_retiro_permanente(id) {
             var nombre = $("#nombre" + id).text();
-            console.log("A");
             $("#nombre_asambleista_permanente").text(nombre);
-            console.log("B");
             $("#agenda_permanente").attr('value', $("#id_agenda").val());
-            console.log("C");
             $("#facultad_modal_permanente").attr('value', $("#id_facultad").val());
-            console.log("D");
             $("#asambleista_permanente").attr('value', id);
-            console.log("E");
-            $("#retiro_permanente").modal('show');
-            console.log("F");
+            $("#retiro_permanente_modal").modal('show');
         }
+
+        function modal_reincorporar(id) {
+            var nombre = $("#nombre" + id).text();
+            $("#nombre_asambleista_reincorporar").text(nombre);
+            $("#agenda_reincorporar").attr('value', $("#id_agenda").val());
+            $("#facultad_modal_reincorporar").attr('value', $("#id_facultad").val());
+            $("#asambleista_reincorporar").attr('value', id);
+            $("#reincorporar_modal").modal('show');
+        }
+
     </script>
 
 @endsection
@@ -412,11 +486,13 @@
     @if(Session::has('success'))
         <script>
             notificacion("Exito", "{{ Session::get('success') }}", "success");
+            {{ Session::forget('success') }}
         </script>
     @endif
     @if(Session::has('warning'))
         <script>
             notificacion("Error", "{{ Session::get('warning') }}", "warning");
+            {{ Session::forget('success') }}
         </script>
     @endif
 
