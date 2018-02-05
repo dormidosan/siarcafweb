@@ -287,6 +287,23 @@ class JuntaDirectivaController extends Controller
         ->with('peticiones',$peticiones);
     }
 
+    public function subir_dictamen_jd(Request $request,Redirector $redirect){
+        $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        
+        $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
+        $reunion->activa = '1';
+        $reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
+        $reunion->save();
+        $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
+
+        $todos_puntos = 1;
+        return view('jdagu.subir_dictamen_jd')
+        ->with('todos_puntos',$todos_puntos)
+        ->with('reunion',$reunion)
+        ->with('comision',$comision)
+        ->with('peticiones',$peticiones);
+    }
+
 
 
     public function puntos_agendados(Request $request,Redirector $redirect){
@@ -590,12 +607,74 @@ class JuntaDirectivaController extends Controller
             ->with('peticion', $peticion);
     }
 
+    public function subir_bitacora_jd(Request $request, Redirector $redirect)
+    {   
+        //$id_peticion = $request->id_peticion;
+        //$peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $comision = Comision::where('id', '=', '1')->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+
+        //$seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+        //$tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id'); 
+        //dd($tipo_documentos);
+
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.subir_bitacora_jd')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision);
+    }
+
+    public function guardar_bitacora_jd(Request $request, Redirector $redirect)
+    {   
+        //dd($request->all());
+        //$id_peticion = $request->id_peticion;
+        //$tipo_documento = $request->tipo_documentos;
+        //$peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $comision = Comision::where('id', '=', '1')->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+
+        if ($request->hasFile('documento_jd')) {
+            $documento_jd = $this->guardarDocumento($request->documento_jd,'7','documentos'); //7 es bitacora
+           //dd();
+            $reunion->documentos()->attach($documento_jd);
+
+        }
+
+        
+
+        //**************************************************
+
+        
+
+
+
+
+        //**************************************************
+        //$seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+        //$tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id'); 
+        //dd($tipo_documentos);
+
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.subir_bitacora_jd')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision);
+    }
+
     public function subir_documento_jd(Request $request, Redirector $redirect)
     {   
         $id_peticion = $request->id_peticion;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', '1')->first();
+        if(($request->id_reunion) and ($request->id_reunion != 0)){
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        }else {
+        $reunion = '0';
+        }
+        
 
         $seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
         $tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id'); 
@@ -619,7 +698,12 @@ class JuntaDirectivaController extends Controller
         $tipo_documento = $request->tipo_documentos;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', '1')->first();
+
+        if(($request->id_reunion) and ($request->id_reunion != 0)){
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        }else {
+        $reunion = '0';
+        }
 
         if ($request->hasFile('documento_jd')) {
             $documento_jd = $this->guardarDocumento($request->documento_jd,$tipo_documento,'documentos');
@@ -639,6 +723,12 @@ class JuntaDirectivaController extends Controller
 
         $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id; // CR estado creado
         $seguimiento->documento_id = $documento_jd->id;
+
+        if($reunion != 0){
+        $seguimiento->reunion_id = $reunion->id;
+        }
+
+        
         $seguimiento->inicio = Carbon::now();
         $seguimiento->fin = Carbon::now();
         $seguimiento->activo = '0';

@@ -101,6 +101,7 @@ class AgendaTableSeeder extends Seeder
                 'entrada' => Carbon::create(2017, 11, 10, 8, 0)->toTimeString(),
                 'salida' => Carbon::create(2017, 11, 10, 8, 0)->addHours(5)->toTimeString(),
                 'propietaria' => '1',
+                'temporal' => '0',
                 'dieta' => '1',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -115,6 +116,7 @@ class AgendaTableSeeder extends Seeder
                 'entrada' => Carbon::create(2017, 11, 10, 8, 0)->toTimeString(),
                 'salida' => Carbon::create(2017, 11, 10, 8, 0)->addHours(5)->toTimeString(),
                 'propietaria' => '0',
+                'temporal' => '0',
                 'dieta' => '0',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -129,6 +131,7 @@ class AgendaTableSeeder extends Seeder
                 'entrada' => Carbon::create(2017, 11, 10, 8, 0)->toTimeString(),
                 'salida' => Carbon::create(2017, 11, 10, 8, 0)->addHours(4)->toTimeString(),
                 'propietaria' => '1',
+                'temporal' => '0',
                 'dieta' => '1',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -145,6 +148,7 @@ class AgendaTableSeeder extends Seeder
                 'entrada' => Carbon::create(2017, 11, 10, 8, 0)->toTimeString(),
                 'salida' => Carbon::create(2017, 11, 10, 8, 0)->addHours(5)->toTimeString(),
                 'propietaria' => '1',
+                'temporal' => '0',
                 'dieta' => '1',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -159,6 +163,7 @@ class AgendaTableSeeder extends Seeder
                 'entrada' => Carbon::create(2017, 11, 10, 8, 0)->toTimeString(),
                 'salida' => Carbon::create(2017, 11, 10, 8, 0)->addHours(5)->toTimeString(),
                 'propietaria' => '0',
+                'temporal' => '0',
                 'dieta' => '0',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')

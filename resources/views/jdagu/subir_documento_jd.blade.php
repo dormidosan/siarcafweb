@@ -17,11 +17,15 @@
             {{ csrf_field() }} 
             <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
             <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                @if($reunion != 0)
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                @else
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="0">
+                @endif
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <label>Seleccione comision</label>
+                        <label>Seleccione Tipo Documento</label>
                         {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
                     </div>
                 </div>
