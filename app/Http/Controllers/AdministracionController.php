@@ -681,7 +681,7 @@ class AdministracionController extends Controller
             $permiso->save();
 
             $respuesta = new \stdClass();
-            $respuesta->mensaje = (new Mensaje("Exito", "Permiso Temporal registrado con exito", "success"))->toArray();
+            $respuesta->mensaje = (new Mensaje("Exito", "Retiro Temporal registrado con exito", "success"))->toArray();
             return new JsonResponse($respuesta);
         }
     }
