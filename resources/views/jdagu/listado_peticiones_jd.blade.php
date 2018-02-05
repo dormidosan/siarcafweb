@@ -93,17 +93,17 @@
                                 <button type="submit" class="btn btn-primary btn-xs btn-block">
                                     <i class="fa fa-eye"></i> Ver
                                 </button>
-                            </td>
                             {!! Form::close() !!}
+                            </td>
+                            <td>
                             {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
                             <input type="hidden" name="id_comision" id="id_comision" value="1">
                             <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
-                                <td>
                                     <button type="submit" class="btn btn-warning btn-xs btn-block" >
                                     <i class="fa fa-eye"></i> Subir documentacion
                                     </button>
-                                </td>
                             {!! Form::close() !!}
+                            </td>
                         </tr>
                         
                     @empty

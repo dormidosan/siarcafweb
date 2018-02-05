@@ -642,13 +642,9 @@ class JuntaDirectivaController extends Controller
 
         }
 
-        
+    
 
         //**************************************************
-
-        
-
-
 
 
         //**************************************************
@@ -662,6 +658,42 @@ class JuntaDirectivaController extends Controller
             ->with('disco', $disco)
             ->with('reunion', $reunion)
             ->with('comision', $comision);
+    }
+
+    public function subir_acta_plenaria(Request $request, Redirector $redirect)
+    {   
+        //$id_peticion = $request->id_peticion;
+        //$peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+        //$reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+
+        //$seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+        //$tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id'); 
+        //dd($tipo_documentos);
+
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.subir_acta_plenaria')
+            ->with('disco', $disco)
+            ->with('agenda', $agenda);
+    }
+
+    public function guardar_acta_plenaria(Request $request, Redirector $redirect)
+    {   
+
+        $agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+
+        if ($request->hasFile('documento_jd')) {
+            $documento_jd = $this->guardarDocumento($request->documento_jd,'5','documentos'); //5 es acta plenaria
+            $agenda->documentos()->attach($documento_jd);
+
+        }
+
+        $disco = "../storage/documentos/";
+
+        return view('jdagu.subir_acta_plenaria')
+            ->with('disco', $disco)
+            ->with('agenda', $agenda);
     }
 
     public function subir_documento_jd(Request $request, Redirector $redirect)

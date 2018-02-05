@@ -3,8 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset("libs/pretty-checkbox/pretty-checkbox.min.css") }}">
-    <link href="{{ asset("libs/MaterialDesign/css/materialdesignicons.css") }}" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('libs/pretty-checkbox/pretty-checkbox.min.css') }}">
+    <link href="{{ asset('libs/MaterialDesign/css/materialdesignicons.css') }}" media="all" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
@@ -41,70 +41,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Listado de Sesiones Plenarias</h3>
         </div>
-        <div class="box-body">
-            <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
-                {{ csrf_field() }}
-                {{ Form::hidden('id_comision', '1') }}
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label>Codigo</label>
-                            <input name="codigo" type="text" class="form-control" id="codigo"
-                                   placeholder="Ingrese un codigo" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="lugar">Lugar</label>
-                            <input name="lugar" type="text" id="lugar" class="form-control"
-                                   placeholder="Ingrese el lugar de reunion">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label class="control-label">Fecha</label>
-                            <div class="input-group input-append date" id="fechaSesion">
-                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="dd-mm-yyyy"/>
-                                <span class="input-group-addon add-on"><span
-                                            class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                            <span class="help-block">La fecha debe ser mayor o igual {{ \Carbon\Carbon::now()->format("d-m-Y") }}</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-sm-12 col-md-12">
-                        <label>Hora</label>
-                        <div class="form-group">
-                            <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" placeholder="H:m AM"/>
-                                <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12 col-md-12">
-                        <div class="pretty p-icon p-smooth">
-                            <input type="checkbox" name="trascendental"/>
-                            <div class="state p-success">
-                                <i class="icon mdi mdi-check"></i>
-                                <label style="font-weight: bold">¿Es trascendental?</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row text-center">
-                    <div class="col-lg-12 col-sm-12 col-md-12">
-                        <button type="submit" class="btn btn-primary">Aceptar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        
     </div>
 
     <div class="box box-default">
@@ -121,9 +58,7 @@
                         <th>Fecha</th>
                         <th>Lugar</th>
                         <th>Trascendental</th>
-                        <th>Vigente</th>
-                        <th>Activa</th>
-                        <th>Accion</th>
+                        <th colspan="2">Accion</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -136,37 +71,27 @@
                             <td>{!! $agenda->fecha !!}</td>
                             <td>{!! $agenda->lugar !!}</td>
                             <td>{!! $agenda->trascendental?'Si':'No' !!}</td>
-                            <td>{!!  $agenda->vigente?'Si':'No' !!}</td>
-                            <td>{!! $agenda->activa?'Si':'No' !!}</td>
+                            @php $ultimo_documento= null @endphp
+                            @forelse($agenda->documentos as $documento)
+                                @php $ultimo_documento = $documento @endphp
+                            @empty
+                            @endforelse
+
+                            @if($ultimo_documento )
                             <td>
-                            {!! Form::open(['route'=>['eliminar_agenda_creada_jd'],'method'=> 'POST','id'=>'eliminar_agenda_creada_jd'.$contador]) !!}
-                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                @php $puntos=0 @endphp
-                                @forelse($agenda->puntos as $punto)
-                                    @php $puntos++ @endphp
-                                @empty
-                                @endforelse
-                                @if($puntos == 0)
-                                <!--                                                        USA EL ID DE LA AGENDA, NO EL CONTADOR       -->
-                                <!--                                                        USA EL ID DE LA AGENDA, NO EL CONTADOR       -->
-                                <!--                                                        USA EL ID DE LA AGENDA, NO EL CONTADOR       -->
-                                <!--                                                        USA EL ID DE LA AGENDA, NO EL CONTADOR       -->                                
-                                    <button type="button" class="btn btn-danger btn-xs" onclick="eliminar({{$contador}})"><i class="fa fa-trash-o"></i>
-                                        Eliminar
-                                    </button>
-                                @endif
-                            {!! Form::close() !!}
+                                    <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$ultimo_documento->path) }}"
+                                       role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
                             </td>
                             <td>
-                                @if($agenda->vigente ==0 )
-                                    {!! Form::open(['route'=>['subir_acta_plenaria'],'method'=> 'POST']) !!}
-                                    <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                        <button type="submit" class="btn btn-info btn-xs btn-block" ><i
-                                                    class="fa fa-eye"></i>Subir Acta Plenaria
-                                        </button>
-                                    {!! Form::close() !!}
-                                @endif
+                                    <a class="btn btn-success btn-xs btn-block"
+                                       href="descargar_documento/<?= $ultimo_documento->id; ?>" role="button">
+                                        <i class="fa fa-download"></i> Descargar</a>
                             </td>
+                            @else
+                            <td></td>
+                            <td></td>
+                            @endif
+
                         </tr>
                         
                         @php $contador++ @endphp
@@ -311,7 +236,7 @@
                 },
                 "order": [[0, 'asc']],
                 "columnDefs": [
-                    { "orderable": false, "targets": [0,5,6,7] }
+                    { "orderable": false, "targets": [0,4,5,6] }
                 ]
             });
         });

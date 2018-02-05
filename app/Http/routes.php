@@ -215,8 +215,11 @@ Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento'
 
 
 
+
 });
 
+// Pantalla publica
+Route::get('historial_agendas', array('as' => 'historial_agendas', 'uses' => 'AgendaController@historial_agendas'));
 
 /*
 Route:: get('/GestionarAsistencia', function () {
@@ -227,10 +230,11 @@ Route:: get('/GestionarAsistencia', function () {
 Route::get('/IniciarSesionPlenaria', function () {
     return view('Agenda.IniciarSesionPlenaria');
 });
-*/
+
 Route::get('historial_agendas', function () {
     return view('Agenda.HistorialAgendas');
 });
+*/
 Route::get("consultar_agendas_vigentes", "AgendaController@consultar_agendas_vigentes")->name("consultar_agenda_vigentes");
 Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->name("detalles_punto_agenda");
 
@@ -327,6 +331,9 @@ Route::post('guardar_bitacora_jd', array('as' => 'guardar_bitacora_jd', 'uses' =
 
 Route::post('subir_dictamen_jd', array('as' => 'subir_dictamen_jd', 'uses' => 'JuntaDirectivaController@subir_dictamen_jd'));
 Route::post('guardar_dictamen_jd', array('as' => 'guardar_dictamen_jd', 'uses' => 'JuntaDirectivaController@guardar_dictamen_jd'));
+
+Route::post('subir_acta_plenaria', array('as' => 'subir_acta_plenaria', 'uses' => 'JuntaDirectivaController@subir_acta_plenaria'));
+Route::post('guardar_acta_plenaria', array('as' => 'guardar_acta_plenaria', 'uses' => 'JuntaDirectivaController@guardar_acta_plenaria'));
 
 
 /*post*/
