@@ -186,8 +186,7 @@
                                             </button>
                                         @else
                                             <button class="btn btn-warning btn-sm btn-block"
-                                                    onclick="modal_retiro_temporal({{$asambleista->id}})">
-                                                Temporal
+                                                    onclick="modal_retiro_temporal({{$asambleista->id}})">Temporal
                                             </button>
                                         @endif
                                     </div>
@@ -197,7 +196,9 @@
                                                     disabled="disabled">Permanente
                                             </button>
                                         @else
-                                            <button class="btn btn-danger btn-sm btn-block" onclick="modal_retiro_permanente({{$asambleista->id}})">Permanente</button>
+                                            <button class="btn btn-danger btn-sm btn-block"
+                                                    onclick="modal_retiro_permanente({{$asambleista->id}})">Permanente
+                                            </button>
                                         @endif
                                     </div>
                                 </td>
@@ -236,10 +237,13 @@
                     <h4 class="modal-title" id="myModalLabel2">@yield("EncabezadoModal") </h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">¿Desea retirar permanentemente al asambleista: <span id="nombre_asambleista" class="text-bold"></span>?</p>
-                    <form id="retiro_permanente" name="retiro_permanente" action="{{route("retiro_temporal")}}" method="post">
+                    <p class="text-center">¿Desea retirar permanentemente al asambleista: <span id="nombre_asambleista"
+                                                                                                class="text-bold"></span>?
+                    </p>
+                    <form id="retiro_permanente" name="retiro_permanente" action="{{route("retiro_temporal")}}"
+                          method="post">
                         {{ csrf_field() }}
-                        <div class="row hidden" >
+                        <div class="row hidden">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Agenda</label>
@@ -257,13 +261,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Tipo Retiro</label>
-                                    <input type="text"  id="tipo" name="tipo" value="2">
+                                    <input type="text" id="tipo" name="tipo" value="2">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Facultad</label>
-                                    <input type="text"  id="facultad_modal_permanente" name="facultad_modal">
+                                    <input type="text" id="facultad_modal_permanente" name="facultad_modal">
                                 </div>
                             </div>
                         </div>
@@ -384,7 +388,7 @@
             });
         }*/
 
-        function modal_retiro_permanente(id){
+        function modal_retiro_permanente(id) {
             var nombre = $("#nombre" + id).text();
             console.log("A");
             $("#nombre_asambleista_permanente").text(nombre);

@@ -25,13 +25,13 @@ class CreateAsistenciasTable extends Migration
 
             $table->boolean('dieta')->nullable();
 
-            
+
 
             $table->index(["asambleista_id"], 'fk_asistencias_asambleistas1_idx');
 
             $table->index(["agenda_id"], 'fk_asistencias_agendas1_idx');
 
-            
+
 
 
             $table->foreign('agenda_id', 'fk_asistencias_agendas1_idx')
