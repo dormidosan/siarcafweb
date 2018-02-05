@@ -211,6 +211,7 @@ Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleista
 Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
 Route::post('cambiar_propietaria', array('as' => 'cambiar_propietaria', 'uses' => 'AgendaController@cambiar_propietaria'));
 Route::post('obtener_datos_intervencion', 'AgendaController@obtener_datos_intervencion')->name("obtener_datos_intervencion");
+Route::post('retiro_temporal', 'AgendaController@retiro_temporal')->name("retiro_temporal");
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 
@@ -319,6 +320,8 @@ Route::post('crear_reunion_jd', array('as' => 'crear_reunion_jd', 'uses' => 'Jun
 Route::post('eliminar_reunion_jd', array('as' => 'eliminar_reunion_jd', 'uses' => 'JuntaDirectivaController@eliminar_reunion_jd'));
 Route::post('enviar_convocatoria_jd', array('as' => 'enviar_convocatoria_jd', 'uses' => 'JuntaDirectivaController@enviar_convocatoria_jd'));
 
+Route::post('subir_documento_jd', array('as' => 'subir_documento_jd', 'uses' => 'JuntaDirectivaController@subir_documento_jd'));
+Route::post('guardar_documento_jd', array('as' => 'guardar_documento_jd', 'uses' => 'JuntaDirectivaController@guardar_documento_jd'));
 
 
 /*post*/

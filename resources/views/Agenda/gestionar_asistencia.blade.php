@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
@@ -16,11 +17,11 @@
             padding-right: 0 !important;
         }
 
-        table{
+        table {
             width: 100% !important;
         }
 
-        table tbody tr.group td{
+        table tbody tr.group td {
             font-weight: bold;
             text-align: left;
             background: #ddd;
@@ -35,7 +36,8 @@
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Agenda</a></li>
             <li><a href="{{ route("consultar_agenda_vigentes") }}">Consultar Agendas Vigentes</a></li>
-            <li><a href="javascript:document.getElementById('sala_sesion_plenaria').submit();">Sesion Plenaria de Agenda {{ $agenda->codigo }}</a></li>
+            <li><a href="javascript:document.getElementById('sala_sesion_plenaria').submit();">Sesion Plenaria de
+                    Agenda {{ $agenda->codigo }}</a></li>
             <li class="active">Control de Asistencias</li>
         </ol>
     </section>
@@ -69,13 +71,14 @@
                     <th>Hora de entrada</th>
                     <th>Rol en plenaria</th>
                     <th>Cambiar a</th>
+                    <th>Retiro</th>
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla" class="text-center">
 
                 @forelse($asambleistas as $asambleista)
                     <tr>
-                        <td>{{$asambleista->user->persona->primer_nombre." ".$asambleista->user->persona->primer_apellido}}</td>
+                        <td id="nombre{{$asambleista->id}}">{{$asambleista->user->persona->primer_nombre." ".$asambleista->user->persona->primer_apellido}}</td>
                         <td>
                             @if($asambleista->propietario == 1)
                                 Propietario oficial
@@ -90,60 +93,117 @@
                                 @php $presente_plenaria = 1 @endphp
                                 <td>{{\Carbon\Carbon::parse($asistente->entrada)->format('h:m A')}}</td>
                                 @if($asistente->propietaria == 1)
-                                    <td class="success" >Propietario en plenaria</td>
+                                    <td class="success">Propietario en plenaria</td>
                                     {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'1']) !!}
-                                    <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
+                                    <input type="hidden" name="id_asistente" id="id_asistente"
+                                           value="{{$asistente->id}}">
                                     <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
                                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                    <td><button type="submit" class="btn btn-primary btn-block" >Suplente</button></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-block btn-sm">Suplente</button>
+                                    </td>
                                     {!! Form::close() !!}
                                 @else
                                     <td>Suplente en plenaria</td>
                                     @if($asambleista->sector_id == 1)
                                         @if($sector1 < 2)
                                             {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'2']) !!}
-                                            <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
-                                            <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
-                                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                            <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
+                                            <input type="hidden" name="id_asistente" id="id_asistente"
+                                                   value="{{$asistente->id}}">
+                                            <input type="hidden" name="id_facultad" id="id_facultad"
+                                                   value="{{$facultad->id}}">
+                                            <input type="hidden" name="id_agenda" id="id_agenda"
+                                                   value="{{$agenda->id}}">
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block btn-sm">
+                                                    Propietario
+                                                </button>
+                                            </td>
                                             {!! Form::close() !!}
                                         @else
-                                            <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block btn-sm"
+                                                        disabled="disabled">Propietario
+                                                </button>
+                                            </td>
                                         @endif
                                     @endif
 
                                     @if($asambleista->sector_id == 2)
                                         @if($sector2 < 2)
                                             {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'3']) !!}
-                                            <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
-                                            <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
-                                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                            <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
+                                            <input type="hidden" name="id_asistente" id="id_asistente"
+                                                   value="{{$asistente->id}}">
+                                            <input type="hidden" name="id_facultad" id="id_facultad"
+                                                   value="{{$facultad->id}}">
+                                            <input type="hidden" name="id_agenda" id="id_agenda"
+                                                   value="{{$agenda->id}}">
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block btn-sm">
+                                                    Propietario
+                                                </button>
+                                            </td>
                                             {!! Form::close() !!}
                                         @else
-                                            <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block"
+                                                        disabled="disabled">Propietario
+                                                </button>
+                                            </td>
                                         @endif
                                     @endif
 
                                     @if($asambleista->sector_id == 3)
                                         @if($sector3 < 2)
                                             {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'4']) !!}
-                                            <input type="hidden" name="id_asistente" id="id_asistente" value="{{$asistente->id}}">
-                                            <input type="hidden" name="id_facultad" id="id_facultad" value="{{$facultad->id}}">
-                                            <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
-                                            <td><button type="submit" class="btn btn-primary btn-block" >Propietario</button></td>
+                                            <input type="hidden" name="id_asistente" id="id_asistente"
+                                                   value="{{$asistente->id}}">
+                                            <input type="hidden" name="id_facultad" id="id_facultad"
+                                                   value="{{$facultad->id}}">
+                                            <input type="hidden" name="id_agenda" id="id_agenda"
+                                                   value="{{$agenda->id}}">
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block">Propietario
+                                                </button>
+                                            </td>
                                             {!! Form::close() !!}
                                         @else
-                                            <td><button type="submit" class="btn btn-primary btn-block" disabled="disabled">Propietario</button></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block btn-sm"
+                                                        disabled="disabled">Propietario
+                                                </button>
+                                            </td>
                                         @endif
                                     @endif
 
-
                                 @endif
 
+                                <td class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                        @if($asistente->propietaria == 1)
+                                            <button type="button" class="btn btn-warning btn-sm btn-block disabled"
+                                                    disabled="disabled">Temporal
+                                            </button>
+                                        @else
+                                            <button class="btn btn-warning btn-sm btn-block"
+                                                    onclick="modal_retiro_temporal({{$asambleista->id}})">Temporal
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                        @if($asistente->propietaria == 1)
+                                            <button type="button" class="btn btn-danger btn-sm btn-block disabled"
+                                                    disabled="disabled">Permanente
+                                            </button>
+                                        @else
+                                            <button class="btn btn-danger btn-sm btn-block"
+                                                    onclick="modal_retiro_permanente({{$asambleista->id}})">Permanente
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+
                             @endif
-
-
                         @empty
 
                         @endforelse
@@ -151,10 +211,8 @@
                             <td class="danger">No presente</td>
                             <td class="danger">-</td>
                             <td class="danger">-</td>
+                            <td class="danger">-</td>
                         @endif
-
-
-
                     </tr>
                 @empty
 
@@ -167,12 +225,74 @@
         </div>
 
     </div>
+
+    @include("Modal.RetiroPermanenteModal")
+
+    <div class="modal fade" id="@yield("idModal")" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog @yield("size")" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">@yield("EncabezadoModal") </h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Desea retirar permanentemente al asambleista: <span id="nombre_asambleista"
+                                                                                                class="text-bold"></span>?
+                    </p>
+                    <form id="retiro_permanente" name="retiro_permanente" action="{{route("retiro_temporal")}}"
+                          method="post">
+                        {{ csrf_field() }}
+                        <div class="row hidden">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Agenda</label>
+                                    <input type="text" id="agenda_permanente" name="agenda">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Asambleisa</label>
+                                    <input type="text" id="asambleista_permanente" name="asambleista_permanente">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Tipo Retiro</label>
+                                    <input type="text" id="tipo" name="tipo" value="2">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Facultad</label>
+                                    <input type="text" id="facultad_modal_permanente" name="facultad_modal">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-lg-6 col-lg-push-1">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            <div class="col-lg-6 col-lg-pull-1">
+                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section("js")
     <!-- Datatables -->
     <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
 @endsection
 
 
@@ -205,41 +325,99 @@
                     }
                 },
                 "columnDefs": [
-                    { "visible": false, "targets": 2 },
-                    { "orderable": false, "targets": [0,1,2,3,4,5]}
+                    {"visible": false, "targets": 2},
+                    {"orderable": false, "targets": [0, 1, 2, 3, 4, 5, 6]}
                 ],
                 "searching": false,
-                "order": [[ 2, 'asc' ]],
+                "order": [[2, 'asc']],
                 //"displayLength": 25,
                 "paging": false,
-                "drawCallback": function ( settings ) {
+                "drawCallback": function (settings) {
                     var api = this.api();
-                    var rows = api.rows( {page:'current'} ).nodes();
-                    var last=null;
+                    var rows = api.rows({page: 'current'}).nodes();
+                    var last = null;
 
-                    api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-                        if ( last !== group ) {
-                            $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    api.column(2, {page: 'current'}).data().each(function (group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="6">' + group + '</td></tr>'
                             );
 
                             last = group;
                         }
-                    } );
+                    });
                 }
-            } );
+            });
 
             // Order by the grouping
-            $('#asistencia tbody').on( 'click', 'tr.group', function () {
+            $('#asistencia tbody').on('click', 'tr.group', function () {
                 var currentOrder = table.order()[0];
-                if ( currentOrder[0] === 2 && currentOrder[1] === 'asc' ) {
-                    table.order( [ 2, 'desc' ] ).draw();
+                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                    table.order([2, 'desc']).draw();
                 }
                 else {
-                    table.order( [ 2, 'asc' ] ).draw();
+                    table.order([2, 'asc']).draw();
                 }
-            } );
+            });
         });
+
+        function modal_retiro_temporal(id) {
+            var nombre = $("#nombre" + id).text();
+            $("#nombre_asambleista").text(nombre);
+            $("#agenda").attr('value', $("#id_agenda").val());
+            $("#facultad_modal").attr('value', $("#id_facultad").val());
+            $("#asambleista").attr('value', id);
+            $("#retiroTemporal").modal('show');
+        }
+
+        /*function retiro_temporal_asambleista() {
+            var form_retiro = $("#retiro_temporal").serialize();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                type: 'POST',
+                url: "{{ route('retiro_temporal') }}",
+                data: form_retiro,
+                success: function (response) {
+                    notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
+                    setTimeout(function () {
+                        window.location.href = '{{ route("gestionar_asistencia") }}';
+                    }, 350);
+                }
+            });
+        }*/
+
+        function modal_retiro_permanente(id) {
+            var nombre = $("#nombre" + id).text();
+            console.log("A");
+            $("#nombre_asambleista_permanente").text(nombre);
+            console.log("B");
+            $("#agenda_permanente").attr('value', $("#id_agenda").val());
+            console.log("C");
+            $("#facultad_modal_permanente").attr('value', $("#id_facultad").val());
+            console.log("D");
+            $("#asambleista_permanente").attr('value', id);
+            console.log("E");
+            $("#retiro_permanente").modal('show');
+            console.log("F");
+        }
     </script>
+
+@endsection
+
+
+@section("lobibox")
+
+    @if(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
+    @if(Session::has('warning'))
+        <script>
+            notificacion("Error", "{{ Session::get('warning') }}", "warning");
+        </script>
+    @endif
 
 @endsection
