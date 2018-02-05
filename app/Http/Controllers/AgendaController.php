@@ -90,9 +90,19 @@ class AgendaController extends Controller
     public function sala_sesion_plenaria(Request $request,Redirector $redirect)
     {
 
-    	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
-    	$periodo_activo = Periodo::where('activo','=', 1)->first();
 
+    	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+
+        if ($agenda->puntos->isEmpty()) {
+
+            $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
+            $request->session()->flash("warning_puntos", 'La agenda "'.$agenda->codigo.'"  contiene 0 PUNTOS asociados');
+
+            return view('Agenda.consultar_agendas_vigentes')
+            ->with('agendas',$agendas);
+        }
+
+        $periodo_activo = Periodo::where('activo','=', 1)->first();
         $array_asambleistas_sesion = Asistencia::where('agenda_id','=',$agenda->id)->pluck('asambleista_id')->toArray();
 
 

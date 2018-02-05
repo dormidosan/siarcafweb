@@ -32,10 +32,9 @@
                     </thead>
                     <tbody id="cuerpoTabla">
                     @php $contador =1 @endphp @forelse($reuniones as $reunion)
-                        {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!}
+                        
                         <tr>
-                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
-                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                            
                             <td>
                                 {!! $contador !!} @php $contador++ @endphp
                             </td>
@@ -45,6 +44,9 @@
                             <td>{!! $reunion->inicio !!}</td>
                             <td>{!! $reunion->fin !!}</td>
                             @if($reunion->vigente == 1)
+                            {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                             <!--
                                 <td>
                                     <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
@@ -65,7 +67,7 @@
                                     </button>
                                 </td>
                                 @endif
-                                
+                             {!! Form::close() !!}   
                                 
                             @else
                             <!--
@@ -80,15 +82,44 @@
                                                 class="fa fa-eye"></i> Iniciar
                                     </button>
                                 </td>
+                                {!! Form::open(['route'=>['subir_dictamen_jd'],'method'=> 'POST']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                <td>
+                                    <button type="submit" class="btn btn-warning btn-xs btn-block" >
+                                    <i class="fa fa-eye"></i> Subir dictamenes
+                                    </button>
+                                </td>
+                            {!! Form::close() !!}
+                            {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                <td>
+                                    <button type="submit" class="btn btn-info btn-xs btn-block" ><i
+                                                class="fa fa-eye"></i>Subir Bitacora
+                                    </button>
+                                </td>
+                            {!! Form::close() !!}
+                                
                                 -->
                                 <td>
                                     <button type="submit" class="btn btn-warning btn-xs btn-block" disabled><i
                                                 class="fa fa-eye"></i> Continuar
                                     </button>
                                 </td>
+                                {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                <td>
+                                    <button type="submit" class="btn btn-info btn-xs btn-block" ><i
+                                                class="fa fa-eye"></i>Subir Bitacora
+                                    </button>
+                                </td>
+                            {!! Form::close() !!}
+                            
                             @endif
                         </tr>
-                        {!! Form::close() !!} @empty
+                        @empty
                         <p style="color: red ;">No hay criterios de busqueda</p>
                     @endforelse
                     </tbody>

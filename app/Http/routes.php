@@ -322,6 +322,12 @@ Route::post('enviar_convocatoria_jd', array('as' => 'enviar_convocatoria_jd', 'u
 Route::post('subir_documento_jd', array('as' => 'subir_documento_jd', 'uses' => 'JuntaDirectivaController@subir_documento_jd'));
 Route::post('guardar_documento_jd', array('as' => 'guardar_documento_jd', 'uses' => 'JuntaDirectivaController@guardar_documento_jd'));
 
+Route::post('subir_bitacora_jd', array('as' => 'subir_bitacora_jd', 'uses' => 'JuntaDirectivaController@subir_bitacora_jd'));
+Route::post('guardar_bitacora_jd', array('as' => 'guardar_bitacora_jd', 'uses' => 'JuntaDirectivaController@guardar_bitacora_jd'));
+
+Route::post('subir_dictamen_jd', array('as' => 'subir_dictamen_jd', 'uses' => 'JuntaDirectivaController@subir_dictamen_jd'));
+Route::post('guardar_dictamen_jd', array('as' => 'guardar_dictamen_jd', 'uses' => 'JuntaDirectivaController@guardar_dictamen_jd'));
+
 
 /*post*/
 Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
