@@ -21,6 +21,11 @@ class Documento extends Model
         return $this->belongsToMany('App\Reunion','documento_reunion')->withTimestamps();
     }
 
+    public function agendas()
+    {
+        return $this->belongsToMany('App\Agenda','agenda_documento')->withTimestamps();
+    }
+
     public function versiones()
     {
         return $this->hasMany('App\Version');

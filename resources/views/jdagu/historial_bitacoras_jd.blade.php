@@ -139,7 +139,7 @@
                     }
                 },
                 responsive: true,
-                columnDefs: [{orderable: false, targets: [0, 4]}],
+                columnDefs: [{orderable: false, targets: [0, 5]}],
                 order: [[1, 'asc']]
 
             });
