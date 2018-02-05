@@ -1031,6 +1031,8 @@ class AgendaController extends Controller
             //retiro temporal
             case 1:
                 $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista)->first();
+                $asistencia->temporal = 1;
+                $asistencia->save();
                 $tiempo = Tiempo::where("asistencia_id",$asistencia->id)->orderBy('updated_at','desc')->first();
                 $tiempo->estado_asistencia_id = 1;
                 $tiempo->salida = Carbon::now();
@@ -1041,6 +1043,7 @@ class AgendaController extends Controller
             case 2:
                 $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista_permanente)->first();
                 $asistencia->salida = Carbon::now();
+                $asistencia->temporal = 2; //se concluyo
                 $asistencia->save();
                 $tiempo = Tiempo::where("asistencia_id",$asistencia->id)->orderBy('updated_at','desc')->first();
                 $tiempo->estado_asistencia_id = 2;
@@ -1048,7 +1051,20 @@ class AgendaController extends Controller
                 $tiempo->save();
                 $request->session()->flash("success", "Retiro Permanente realizado con exito ");
                 break;
+            //reincorporar
+            case 3:
+                $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista_reincorporar)->first();
+                $asistencia->temporal = 0;
+                $asistencia->save();
+                $tiempo = new Tiempo();
+                $tiempo->asistencia_id = $asistencia->id;
+                $tiempo->estado_asistencia_id = 3; //normal
+                $tiempo->tiempo_propietario = 0;
+                $tiempo->entrada = Carbon::now();
+                $tiempo->save();
 
+                $request->session()->flash("success", "Asambleista reincorporado a la sesion vigente con exito ");
+                break;
         }
 
         $facultad = Facultad::where('id', '=', $request->facultad_modal)->first();
