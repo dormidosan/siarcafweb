@@ -34,15 +34,15 @@
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acción</th>
                     </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
                     @php $contador =1 @endphp
                     @forelse($peticiones as $peticion)
-                        {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST']) !!}
+                        
                         <tr>
-                            {{ Form::hidden('id_peticion', $peticion->id) }}
+
                             <td>
                                 {!! $contador !!}
                                 @php $contador++ @endphp
@@ -87,13 +87,25 @@
                                 {!! $i !!}
                             </td>
                             <td>
+                            {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST','id'=>$peticion->id.'1']) !!}
+                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
                             <input type="hidden" name="es_reunion"  id="es_reunion"  value="0">
                                 <button type="submit" class="btn btn-primary btn-xs btn-block">
                                     <i class="fa fa-eye"></i> Ver
                                 </button>
                             </td>
+                            {!! Form::close() !!}
+                            {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="1">
+                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
+                                <td>
+                                    <button type="submit" class="btn btn-warning btn-xs btn-block" >
+                                    <i class="fa fa-eye"></i> Subir documentacion
+                                    </button>
+                                </td>
+                            {!! Form::close() !!}
                         </tr>
-                        {!! Form::close() !!}
+                        
                     @empty
                         <p style="color: red ;">No hay criterios de busqueda</p>
                     @endforelse
