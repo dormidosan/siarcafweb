@@ -22,7 +22,7 @@ class CreateAsistenciasTable extends Migration
             $table->Time('salida')->nullable();
 
             $table->boolean('propietaria')->nullable();
-
+            $table->boolean('temporal')->nullable();
             $table->boolean('dieta')->nullable();
 
             
