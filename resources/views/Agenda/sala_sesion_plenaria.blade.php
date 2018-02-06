@@ -263,11 +263,13 @@
     @if(Session::has('success'))
         <script>
             notificacion("Exito", "{{ Session::get('success') }}", "success");
+            {{ Session::forget('success') }}
         </script>
     @endif
     @if(Session::has('warning'))
         <script>
             notificacion("Error", "{{ Session::get('warning') }}", "warning");
+            {{ Session::forget('success') }}
         </script>
     @endif
 

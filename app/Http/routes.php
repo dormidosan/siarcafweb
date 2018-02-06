@@ -213,6 +213,7 @@ Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleista
 Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
 Route::post('cambiar_propietaria', array('as' => 'cambiar_propietaria', 'uses' => 'AgendaController@cambiar_propietaria'));
 Route::post('obtener_datos_intervencion', 'AgendaController@obtener_datos_intervencion')->name("obtener_datos_intervencion");
+Route::post('retiro_temporal', 'AgendaController@retiro_temporal')->name("retiro_temporal");
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 
