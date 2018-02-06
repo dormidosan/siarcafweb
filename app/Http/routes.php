@@ -20,6 +20,11 @@ Route::get('/home', 'HomeController@index');
 
 
 /* Routes para Comisiones */
+Route::group(['prefix' => 'comisiones'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
 
 Route::get('comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
 Route::get('administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
@@ -62,6 +67,11 @@ Route::get('/discutir/{comision}/{id}', function () {
     return view('Comisiones.AdminstrarPuntoComision');
 });
 
+Route::group(['prefix' => 'reportes'], function() {
+//AUN NO METAS REPORTES POR QUE ESTO HAY QUE TENER CUIDADO COMO TRARTARLOS xD
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+});
 
 Route::post('buscar_planilla_dieta', 'ReportesController@buscar_planilla_dieta')->name("buscar_planilla_dieta");
 
@@ -89,12 +99,22 @@ Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("bu
 
 Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");
 
+
+
 /* Peticiones */
+Route::group(['prefix' => 'peticiones'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
+
+
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
 //Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
 Route::get('monitoreo_peticion', array('as' => 'monitoreo_peticion', 'uses' => 'PeticionController@monitoreo_peticion'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
+Route::get('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
 
 
 /* Reportes */
@@ -147,6 +167,16 @@ Route::get('/Reporte_constancias_renta_JD', function () {
 });
 Route::get('/Reporte_constancias_renta_JD/{tipo}', 'ReportesController@Reporte_constancias_renta_JD');
 
+
+// PLANTILLAS
+Route::group(['prefix' => 'plantillas'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
+
+
+
 Route::get('/Plantilla_Actas', function () {
     return view('Plantillas.Plantilla_actas', ['resultados' => NULL]);
 });
@@ -192,6 +222,11 @@ R-o-u-t-e:-:-g-e-t-(-'-/sesion_plenaria', function () {
     return view('Agenda.sesion_plenaria');
 });
 */
+
+
+
+
+
 Route::group(['prefix' => 'plenarias'], function() {
 Route::post('sala_sesion_plenaria', array('as' => 'sala_sesion_plenaria', 'uses' => 'AgendaController@sala_sesion_plenaria'));
 Route::post('iniciar_sesion_plenaria', array('as' => 'iniciar_sesion_plenaria', 'uses' => 'AgendaController@iniciar_sesion_plenaria'));
@@ -224,6 +259,8 @@ Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento'
 // Pantalla publica
 Route::get('historial_agendas', array('as' => 'historial_agendas', 'uses' => 'AgendaController@historial_agendas'));
 
+
+
 /*
 Route:: get('/GestionarAsistencia', function () {
     return view('Agenda.GestionarAsistencia');
@@ -242,6 +279,14 @@ Route::get("consultar_agendas_vigentes", "AgendaController@consultar_agendas_vig
 Route::post('detalles_punto_agenda', 'AgendaController@detalles_punto_agenda')->name("detalles_punto_agenda");
 
 /* Routes Administracion */
+Route::group(['prefix' => 'administracion'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
+
+
+
 
 Route::get('GestionarUsuarios', function () {return view('Administracion.GestionarUsuario');})->name("administracion_usuario");
 Route::get('gestionar_plantillas', "AdministracionController@gestionar_plantillas")->name("gestionar_plantillas");
@@ -277,11 +322,29 @@ Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")
 
 
 /* Asambleistas */
+Route::group(['prefix' => 'asambleistas'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
+
+
+
+
 Route::get('listado_asambleistas_facultad', "AsambleistaController@listado_asambleistas_facultad");
 Route::get('listado_asambleistas_comision', "AsambleistaController@listado_asambleistas_comision");
 Route::get('listado_asambleistas_junta', "AsambleistaController@listado_asambleistas_junta");
 
 /* Junta Directiva*/
+Route::group(['prefix' => 'juntadirectiva'], function() {
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+});
+
+
+
+
 
 Route::get('crear_convocatoria', array('as' => 'crear_convocatoria', 'uses' => 'MailController@crear_convocatoria'));
 Route::get('convocatoria_jd', array('as' => 'convocatoria_jd', 'uses' => 'MailController@convocatoria_jd'));
@@ -340,7 +403,7 @@ Route::post('guardar_acta_plenaria', array('as' => 'guardar_acta_plenaria', 'use
 
 
 /*post*/
-Route::post('registrar_peticion', 'PeticionController@registrar_peticion');
+
 Route::post('registrar_asistencia', 'JuntaDirectivaController@registrar_asistencia')->name('registrar_asistencia');
 /*
  *
