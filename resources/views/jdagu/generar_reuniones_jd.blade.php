@@ -34,14 +34,14 @@
                       <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="lugar">Lugar</label>
-                            <input name="lugar" type="text" id="lugar" class="form-control">
+                            <input name="lugar" type="text" id="lugar" class="form-control" required="required">
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
                             <div class="input-group date fecha">
-                                <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th" required="required"></i></span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" />
+                                <input name="hora" type='text' id="hora" class="form-control" required="required">
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>

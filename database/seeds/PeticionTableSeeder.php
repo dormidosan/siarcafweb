@@ -51,6 +51,7 @@ class PeticionTableSeeder extends Seeder
 
 		\DB::table('peticiones')->insert(array (
 		'estado_peticion_id'  => $est,
+		'periodo_id'  => '2',
 		'codigo'  => $i.'-1234ABC',
 		'descripcion'  => 'Prueba por seed',
 		'peticionario'  => 'peticionario'.' '.$i,

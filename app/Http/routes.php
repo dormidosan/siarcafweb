@@ -91,8 +91,10 @@ Route::post('Mensaje', 'ReportesController@Mensaje')->name("Mensaje");
 
 /* Peticiones */
 Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
-Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
+//Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
+Route::get('monitoreo_peticion', array('as' => 'monitoreo_peticion', 'uses' => 'PeticionController@monitoreo_peticion'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
+Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
 
 
 /* Reportes */

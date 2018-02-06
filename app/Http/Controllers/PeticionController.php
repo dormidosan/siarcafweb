@@ -33,6 +33,16 @@ class PeticionController extends Controller
             ->with('peticion', $peticion);
     }
 
+    public function listado_peticiones()
+    {
+
+        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
+        $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get();
+
+        return view('General.listado_peticiones')
+            ->with('peticiones', $peticiones);
+    }
+
 
     public function registrar_peticion(Request $request, Redirector $redirect)
     {
@@ -66,6 +76,7 @@ class PeticionController extends Controller
 
         // O USANDO LA MANERA TOSCA ANTIGUA
         $peticion->estado_peticion_id = '2'; // NUEVAS PETICIONES EN ESTADO JD
+        $peticion->periodo_id = Periodo::latest()->first()->id;
         $peticion->codigo = hash("crc32", microtime(), false);
         //$peticion->nombre = $request->nombre;
         $peticion->descripcion = $request->descripcion;
