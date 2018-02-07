@@ -44,58 +44,59 @@
                     <tbody id="cuerpoTabla">
                     @php $contador =1 @endphp
                     @forelse($reuniones as $reunion)
-                        <form id="iniciar_reunion_comision" name="iniciar_reunion_comision" method="post"
-                              action="{{ url("iniciar_reunion_comision") }}" class="text-center">
-                            <tr>
-                                <td class="hidden">{{ csrf_field() }}</td>
-                                <td class="hidden">
-                                    <input type="hidden" id="id_reunion" name="id_reunion" value="{{ $reunion->id }}">
-                                </td>
-                                <td class="hidden">
-                                    <input type="hidden" id="id_comision" name="id_comision" value="{{ $comision->id }}">
-                                </td>
-                                <td>{{ $contador }} @php $contador++ @endphp</td>
-                                <td>{{ $reunion->codigo }}</td>
-                                <td>{{ $reunion->lugar }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:m:i A') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reunion->inicio)->format('d-m-Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reunion->fin)->format('d-m-Y') }}</td>
-                                @if($reunion->vigente == 1)
-                                    <td>
-                                        <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
-                                                    class="fa fa-eye"></i> Ver
-                                        </button>
-                                    </td>
+                        <tr>
+                            <td class="hidden">{{ csrf_field() }}</td>
+                            <td class="hidden">
+                                <input type="hidden" id="id_reunion" name="id_reunion" value="{{ $reunion->id }}">
+                            </td>
+                            <td class="hidden">
+                                <input type="hidden" id="id_comision" name="id_comision" value="{{ $comision->id }}">
+                            </td>
+                            <td>{{ $contador }} @php $contador++ @endphp</td>
+                            <td>{{ $reunion->codigo }}</td>
+                            <td>{{ $reunion->lugar }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:m A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reunion->inicio)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reunion->fin)->format('d-m-Y') }}</td>
+                            @if($reunion->vigente == 1)
+                                {!! Form::open(['route'=>['iniciar_reunion_comision'],'method'=> 'POST']) !!}
+                                <input type="hidden" name="id_comision" id="id_comision"
+                                       value="{{$reunion->comision_id}}">
+                                <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                @if($reunion->activa == 0)
                                     <td>
                                         <button type="submit" class="btn btn-success btn-xs btn-block"><i
-                                                    class="fa fa-eye"></i>
-                                            Iniciar
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
-                                                    class="fa fa-eye"></i> Continuar
+                                                    class="fa fa-arrow-right"></i>Iniciar
                                         </button>
                                     </td>
                                 @else
                                     <td>
-                                        <button type="submit" class="btn btn-primary btn-xs btn-block" disabled><i
-                                                    class="fa fa-eye"></i> Ver
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
-                                                    class="fa fa-eye"></i> Iniciar
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success btn-xs btn-block" disabled><i
-                                                    class="fa fa-eye"></i> Continuar
+                                        <button type="submit" class="btn btn-success btn-xs btn-block"><i
+                                                    class="fa fa-arrow-right"></i> Continuar
                                         </button>
                                     </td>
                                 @endif
-                            </tr>
-                        </form>
+                                {!! Form::close() !!}
+
+                            @else
+                                <td>
+                                    <button type="submit" class="btn btn-warning btn-xs btn-block" disabled><i
+                                                class="fa fa-arrow-right"></i> Continuar
+                                    </button>
+                                </td>
+                                {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
+                                <input type="hidden" name="id_comision" id="id_comision"
+                                       value="{{$reunion->comision_id}}">
+                                <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                <td>
+                                    <button type="submit" class="btn btn-info btn-xs btn-block"><i
+                                                class="fa fa-upload"></i> Subir Bitacora
+                                    </button>
+                                </td>
+                                {!! Form::close() !!}
+
+                            @endif
+                        </tr>
                     @empty
                         <tr>
                             <td colspan="7">No hay reuniones que mostrar</td>

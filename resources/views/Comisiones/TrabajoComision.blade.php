@@ -22,7 +22,7 @@
         </div>
 
         <div class="box-body">
-            <h4 class="text-center text-bold">Administrar trabajo de {{ $comision->nombre }}</h4>
+            <h4 class="text-center text-bold hidden">Administrar trabajo de {{ $comision->nombre }}</h4>
 
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
@@ -51,7 +51,7 @@
                                 <div class="text-center">
                                     <i class="fa fa-book fa-4x text-red"></i>
                                 </div>
-                                <h3 class="profile-username text-center">Generar Bitacora</h3>
+                                <h3 class="profile-username text-center">Generar Agenda Comision</h3>
                                 <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                 <button type="submit" class="btn btn-danger btn-block btn-sm"><b>Acceder</b></button>
                             </form>
@@ -64,13 +64,13 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
                     <div class="box box-success">
                         <div class="box-body">
-                            <form id="listado_peticiones_comision" name="listado_peticiones_comision"
+                            <form id="convocatoria" name="convocatoria"
                                   method="post" action="{{ url('convocatoria_comision') }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-envelope fa-4x text-green"></i>
                                 </div>
-                                <h3 class="profile-username text-center">Convocatorias</h3>
+                                <h3 class="profile-username text-center">Generar Reuniones Comision</h3>
                                 <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                 <button type="submit" class="btn btn-success btn-block btn-sm"><b>Acceder</b></button>
                             </form>

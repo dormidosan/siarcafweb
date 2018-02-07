@@ -21,6 +21,10 @@ class Agenda extends Model
         return $this->hasMany('App\Asistencia');
     }
 	
+    public function documentos()
+    {
+        return $this->belongsToMany('App\Documento','agenda_documento')->withTimestamps();
+    }
 
     //LLAVE FORANEA
 	public function periodo()
