@@ -32,7 +32,7 @@ class CreatePeticionesTable extends Migration
 
             $table->index(["estado_peticion_id"], 'fk_peticiones_estado_peticiones1_idx');
 
-            $table->index(["periodo_id"], 'fk_peticiones_periodo1_idx');
+            $table->index(["periodo_id"], 'fk_peticiones_periodos1_idx');
 
 
             $table->foreign('estado_peticion_id', 'fk_peticiones_estado_peticiones1_idx')
@@ -40,8 +40,8 @@ class CreatePeticionesTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('periodo_id', 'fk_peticiones_periodo1_idx')
-                ->references('id')->on('peirodos')
+            $table->foreign('periodo_id', 'fk_peticiones_periodos1_idx')
+                ->references('id')->on('periodos')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
