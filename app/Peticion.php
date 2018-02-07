@@ -37,6 +37,11 @@ class Peticion extends Model
         return $this->belongsTo('App\EstadoPeticion');
     }
 
+    public function periodo()
+    {
+        return $this->belongsTo('App\Periodo');
+    }
+
 
 
 }

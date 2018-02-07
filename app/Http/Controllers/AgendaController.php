@@ -60,6 +60,17 @@ class AgendaController extends Controller
         return $res;
     }
 
+    public function historial_agendas(Request $request,Redirector $redirect)
+    {
+        $agendas = Agenda::where('id','!=','0')->orderBy('created_at', 'ASC')->get();
+        $disco = "../storage/documentos/";
+        
+        return view('Agenda.historial_agendas')
+        ->with('disco', $disco)
+        ->with('agendas',$agendas);
+    }
+
+
     public function resolverPunto($id_punto,$id_agenda) //$this->resolverPunto($request->id_punto,$request->id_agenda);
     {
         // ******* CUERPO DEL METODO
