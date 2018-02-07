@@ -45,6 +45,11 @@ Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_
 Route::post('historial_bitacoras', 'ComisionController@historial_bitacoras')->name('historial_bitacoras');
 Route::post('historial_dictamenes', 'ComisionController@historial_dictamenes')->name('historial_dictamenes');
 Route::post('convocatoria_comision', 'ComisionController@convocatoria_comision')->name('convocatoria_comision');
+Route::post('subir_documento_comision', 'ComisionController@subir_documento_comision')->name('subir_documento_comision');
+
+Route::post('crear_reunion_comision', array('as' => 'crear_reunion_comision', 'uses' => 'ComisionController@crear_reunion_comision'));
+Route::post('eliminar_reunion_comision', array('as' => 'eliminar_reunion_comision', 'uses' => 'ComisionController@eliminar_reunion_comision'));
+Route::post('enviar_convocatoria_comision', array('as' => 'enviar_convocatoria_comision', 'uses' => 'ComisionController@enviar_convocatoria_comision'));
 
 
 //rutas q aun no uso

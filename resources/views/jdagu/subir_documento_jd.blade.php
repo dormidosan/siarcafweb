@@ -5,57 +5,58 @@
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
 @endsection
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a href="{{url('listado_peticiones_jd')}}">Listado de Peticiones JD</a></li>
+            <li class="active">Subir Documento</li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
             <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
-            <div class="row">
 
             <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post" action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
             {{ csrf_field() }} 
             <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
             <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
                 @if($is_reunion == 0)
+
                     <input type="hidden" name="id_reunion" id="id_reunion" value="0">
                 @else
                     <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                 @endif
-            <div class="row">
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                        <label>Seleccione Tipo Documento</label>
-                        {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>Seleccione Tipo Documento</label>
+                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="form-group">
                             <label for="documento">Seleccione documento (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_jd" name="documento_jd" type="file"   required="required" data-show-preview="false">
+                                <input id="documento_jd" name="documento_jd" type="file" required="required"
+                                       data-show-preview="false">
                             </div>
 
                         </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                        <label></label>
-                        <input type="submit" class="btn btn-success" name="guardar" id="guardar" value="guardar">
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                        <input type="submit" class="btn btn-primary" name="Guardar" id="Guardar" value="Guardar">
                     </div>
                 </div>
-            </div>
-        </form>
-                
-
-                
-
-
-            </div>
-        </div>
-        <br>
-        <div class="box-body">
+            </form>
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-md-4">
                     <div class="form-group">
@@ -171,7 +172,7 @@
 @endsection
 
 @section("scripts")
-   
+
     <script type="text/javascript">
         $(function () {
             $("#documento_jd").fileinput({
@@ -180,7 +181,7 @@
                 language: "es",
                 //minFileCount: 1,
                 maxFileCount: 3,
-                allowedFileExtensions: ['docx','doc','pdf','xls','xlsx'],
+                allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
                 showUpload: false,
                 fileActionSettings: {
                     showRemove: true,
@@ -190,13 +191,10 @@
                 },
                 hideThumbnailContent: true
             });
-            
+
         });
 
-        
-        
-        
 
     </script>
-    
+
 @endsection

@@ -1,37 +1,83 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+@endsection
+
 @section('breadcrumb')
     <section>
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a>Junta Directiva</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
-            <li><a href="{{url('listado_peticiones_jd')}}">Listado de Peticiones JD</a></li>
-            <li class="active">Peticion {{ $peticion->codigo }}</li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
+            <li><a href="javascript:document.getElementById('listado_peticiones_comision').submit();">Listado de Peticiones</a></li>
+            <li class="active">Subir Documento</li>
         </ol>
     </section>
 @endsection
 
 @section("content")
+
+    <div class="hidden">
+        <form id="trabajo_comision" name="trabajo_comision" method="post"
+              action="{{ url("trabajo_comision") }}">
+            {{ csrf_field() }}
+            <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+            <button class="btn btn-success btn-xs">Acceder</button>
+        </form>
+
+        <form id="listado_peticiones_comision" name="listado_peticiones_comision"
+              method="post" action="{{ url("listado_peticiones_comision") }}">
+            {{ csrf_field() }}
+            <div class="text-center">
+                <i class="fa fa-file-text-o fa-4x text-info"></i>
+            </div>
+            <h3 class="profile-username text-center">Peticiones</h3>
+            <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+            <button type="submit" class="btn btn-info btn-block btn-sm"><b>Acceder</b></button>
+        </form>
+    </div>
+
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Seguimiento</h3>
+            <h3 class="box-title">Subir documento</h3>
         </div>
-
         <div class="box-body">
-            @if($es_reunion == 1)
+            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post"
+                  action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                @if($reunion != 0)
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                @else
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="0">
+                @endif
                 <div class="row">
-                    <div class="col-lg-3 col-sm-12">
-                        {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!}
-                        <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                        <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Reunion JD
-                        </button>
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>Seleccione Tipo Documento</label>
+                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="documento">Seleccione documento (1)</label>
+                            <div class="file-loading">
 
-                        {!! Form::close() !!}
+                                <input id="documento_jd" name="documento_jd" type="file" required="required"
+                                       data-show-preview="false">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                        <input type="submit" class="btn btn-primary" name="Guardar" id="Guardar" value="Guardar">
                     </div>
                 </div>
-            @endif
+            </form>
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-md-4">
                     <div class="form-group">
@@ -140,3 +186,36 @@
     </div>
 @endsection
 
+@section("js")
+    <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
+    <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+@endsection
+
+@section("scripts")
+
+    <script type="text/javascript">
+        $(function () {
+            $("#documento_jd").fileinput({
+                theme: "explorer",
+                previewFileType: "pdf, xls, xlsx, doc, docx",
+                language: "es",
+                //minFileCount: 1,
+                maxFileCount: 3,
+                allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
+                showUpload: false,
+                fileActionSettings: {
+                    showRemove: true,
+                    showUpload: false,
+                    showZoom: true,
+                    showDrag: false
+                },
+                hideThumbnailContent: true
+            });
+
+        });
+
+
+    </script>
+
+@endsection

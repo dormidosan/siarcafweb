@@ -88,10 +88,7 @@ class JuntaDirectivaController extends Controller
 
     public function generar_reuniones_jd()
     {
-
-        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
-
         return view('jdagu.generar_reuniones_jd')
             ->with('reuniones', $reuniones);
     }
@@ -132,8 +129,6 @@ class JuntaDirectivaController extends Controller
         $reunion = Reunion::where('id','=',$request->id_reunion)->first();
         $reunion->delete();
 
-
-
         //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
 
@@ -159,10 +154,7 @@ class JuntaDirectivaController extends Controller
       }
       
         //dd($contador);
-        $request->session()->flash("success", 'Correos electronicos enviados');       
-
-
-
+        $request->session()->flash("success", 'Correos electronicos enviados');
 
         //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();

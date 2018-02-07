@@ -7,7 +7,7 @@
             <li><a>Comisiones</a></li>
             <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
             <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
-            <li><a class="active">Listado de Peticiones</a></li>
+            <li class="active">Listado de Peticiones</li>
         </ol>
     </section>
 @endsection
@@ -15,7 +15,7 @@
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Listado de peticiones de {{ $comision->nombre }}</h3>
+            <h3 class="box-title">Listado de Peticiones de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
             <div class="hidden">
@@ -38,7 +38,7 @@
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acción</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,7 +66,6 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                {{-- Visto anteriormente por  --}}
                                 @php
                                     $i = ''
                                 @endphp
@@ -89,6 +88,16 @@
                                     </button>
                                 </form>
                             </td>
+
+                            {!! Form::open(['route'=>['subir_documento_comision'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
+                            <input type="hidden" name="id_comision" id="id_comision" value="{{ $comision->id }}">
+                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
+                            <td>
+                                <button type="submit" class="btn btn-warning btn-xs btn-block" >
+                                    <i class="fa fa-eye"></i> Subir documentacion
+                                </button>
+                            </td>
+                            {!! Form::close() !!}
                             @php $contador++ @endphp
                         </tr>
                     @endforeach
