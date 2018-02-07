@@ -264,6 +264,7 @@ class JuntaDirectivaController extends Controller
     public function agendar_plenaria(Request $request,Redirector $redirect){
 
     //dd($request->all());    
+        dd(Carbon::now()->format('l jS \\of F Y'));
     $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
     if ($peticion->agendado == 1) {
         $peticion->agendado = 0;
@@ -273,9 +274,6 @@ class JuntaDirectivaController extends Controller
         $peticion->estado_peticion_id = EstadoPeticion::where('estado', '=', 'aa')->first()->id;    
     }
 
-    
-
-
 
     $peticion->save();
 
@@ -283,6 +281,31 @@ class JuntaDirectivaController extends Controller
     $reunion = Reunion::where('id','=',$request->id_reunion)->firstOrFail();
     $comision = Comision::where('id','=',$request->id_comision)->firstOrFail();
     $peticiones = Peticion::where('id','!=',0)->orderBy('estado_peticion_id','ASC')->orderBy('updated_at','ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+
+//********************************************************************************
+//********************************************************************************
+        $seguimiento = new Seguimiento();
+
+        $seguimiento->peticion_id = $peticion->id;
+        $seguimiento->comision_id = $comision->id;
+
+        $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ds")->first()->id; // ds estado discutido
+        //$seguimiento->documento_id = $documento_jd->id;
+
+        $seguimiento->reunion_id = $reunion->id;
+        $seguimiento->inicio = Carbon::now();
+        $seguimiento->fin = Carbon::now();
+        $seguimiento->activo = '0';
+        $seguimiento->agendado = '0';
+
+        //$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+        
+
+        $seguimiento->descripcion = 'Peticion discutida en JD';
+        $seguimiento->save();
+
+//********************************************************************************
+//********************************************************************************
 
     $todos_puntos = 1;
 
