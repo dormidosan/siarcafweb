@@ -119,6 +119,7 @@ class ModulosTableSeeder extends Seeder
         ));
 
         //Modulos Hijos
+        //11
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Crear Comision',
             'url' => 'comisiones',
@@ -129,6 +130,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //12
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Administrar Comisiones',
             'url' => 'administrar_comisiones',
@@ -139,6 +141,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //13
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Consultar agenda vigente',
             'url' => 'consultar_agendas_vigentes',
@@ -149,6 +152,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //14
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Historial de Agendas',
             'url' => 'historial_agendas',
@@ -159,6 +163,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //15
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Listado de Asambleistas',
             'url' => 'listado_asambleistas_facultad',
@@ -169,6 +174,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //16
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Asambleistas por Comision',
             'url' => 'listado_asambleistas_comision',
@@ -179,6 +185,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //17
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Asambleistas de JD',
             'url' => 'listado_asambleistas_junta',
@@ -189,7 +196,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
-
+        //18
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Registrar Peticiones',
             'url' => 'RegistrarPeticion',
@@ -200,6 +207,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //19
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Monitoreo Peticion',
             'url' => 'monitoreo_peticion',
@@ -210,6 +218,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //20
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Trabajo JD',
             'url' => 'trabajo_junta_directiva',
@@ -220,6 +229,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //21
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Parametros',
             'url' => 'parametros',
@@ -230,6 +240,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //22
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Plantillas',
             'url' => 'gestionar_plantillas',
@@ -240,6 +251,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //23
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Administracion Usuarios',
             'url' => 'GestionarUsuarios',
@@ -260,6 +272,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));*/
 
+        //24
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Gestionar Perfiles',
             'url' => 'gestionar_perfiles',
@@ -270,6 +283,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //25
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Permisos Temporales',
             'url' => 'registro_permisos_temporales',
@@ -280,6 +294,7 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
+        //26
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Periodo AGU',
             'url' => 'periodos_agu',
@@ -289,12 +304,6 @@ class ModulosTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
-
-
-
-
-
-
 
     }
 }
