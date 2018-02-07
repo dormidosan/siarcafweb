@@ -1,15 +1,5 @@
 @extends('layouts.app')
 
-@section('breadcrumb')
-    <section class="">
-        <ol class="breadcrumb">
-            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
-            <li><a class="active">Listado de Reuniones</a></li>
-        </ol>
-    </section>
-@endsection
-
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
@@ -18,20 +8,30 @@
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
+@section('breadcrumb')
+    <section class="">
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
+            <li><a class="active">Generar Reunion</a></li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
             <h3 class="box-title">Listado de Reuniones</h3>
-            
+
         </div>
 
         <div class="box-body">
 
-        <form id="convocatoria" method="post" action="{{ url('crear_reunion_jd') }}">
-             {{ csrf_field() }}
-              {{ Form::hidden('id_comision', '1') }}
+            <form id="convocatoria" method="post" action="{{ url('crear_reunion_jd') }}">
+                {{ csrf_field() }}
+                {{ Form::hidden('id_comision', '1') }}
                 <div class="row">
-                      <div class="col-lg-4 col-sm-12 col-md-12">
+                    <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="lugar">Lugar</label>
                             <input name="lugar" type="text" id="lugar" class="form-control">
@@ -41,7 +41,8 @@
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
                             <div class="input-group date fecha">
-                                <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <input name="fecha" id="fecha" type="text" class="form-control"><span
+                                        class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +50,7 @@
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" />
+                                <input name="hora" type='text' id="hora" class="form-control"/>
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>
@@ -57,13 +58,13 @@
                         </div>
                     </div>
                 </div>
-                <br>
                 <div class="row text-center">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
                     </div>
                 </div>
             </form>
+            <br>
             <div class="table-responsive">
                 <table class="table text-center table-bordered hover">
                     <thead>
@@ -79,42 +80,46 @@
                     </thead>
                     <tbody id="cuerpoTabla">
                     @php $contador =1 @endphp @forelse($reuniones as $reunion)
-                        
+
                         <tr>
-                            
+
                             <td>
                                 {!! $contador !!} @php $contador++ @endphp
                             </td>
                             <td>{!! $reunion->codigo !!}</td>
                             <td>{!! $reunion->lugar !!}</td>
                             <td>{!! $reunion->convocatoria !!}</td>
-                            <td>{!! $reunion->inicio !!}</td>
-                            <td>{!! $reunion->fin !!}</td>
+                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->inicio)) }}</td>
+                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->fin)) }}</td>
                             @if($reunion->vigente == 1)
-                            
+
                                 <td>
                                     {!! Form::open(['route'=>['enviar_convocatoria_jd'],'method'=> 'POST','id'=>"c".$reunion->id]) !!}
-                                    <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                                    <input type="hidden" name="id_comision" id="id_comision"
+                                           value="{{$reunion->comision_id}}">
                                     <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                                    <button type="submit" class="btn btn-info btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Enviar convocatoria </button>
-                                    {!! Form::close() !!} 
+                                    <button type="submit" class="btn btn-info btn-xs btn-block">
+                                        <i class="fa fa-eye"></i> Enviar convocatoria
+                                    </button>
+                                    {!! Form::close() !!}
                                 </td>
-                            
-                                @if($reunion->activa == 0)  
-                            
-                                <td>
-                                    {!! Form::open(['route'=>['eliminar_reunion_jd'],'method'=> 'POST','id'=>"d".$reunion->id]) !!}
-                                    <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
-                                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                                    <button type="submit" class="btn btn-danger btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Eliminar reunion </button>
-                                    {!! Form::close() !!} 
-                                </td>
+
+                                @if($reunion->activa == 0)
+
+                                    <td>
+                                        {!! Form::open(['route'=>['eliminar_reunion_jd'],'method'=> 'POST','id'=>"d".$reunion->id]) !!}
+                                        <input type="hidden" name="id_comision" id="id_comision"
+                                               value="{{$reunion->comision_id}}">
+                                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                        <button type="submit" class="btn btn-danger btn-xs btn-block">
+                                            <i class="fa fa-eye"></i> Eliminar reunion
+                                        </button>
+                                        {!! Form::close() !!}
+                                    </td>
                                 @endif
                             @endif
                         </tr>
-                        @empty
+                    @empty
                         <p style="color: red ;">No hay criterios de busqueda</p>
                     @endforelse
                     </tbody>
@@ -162,6 +167,7 @@
     @if(Session::has('success'))
         <script>
             notificacion("Exito", "{{ Session::get('success') }}", "success");
+            {{ Session::forget('success') }}
         </script>
     @endif
 
