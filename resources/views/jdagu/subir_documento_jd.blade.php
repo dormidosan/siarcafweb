@@ -23,15 +23,16 @@
             <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
-            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post"
-                  action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
-                <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                @if($reunion != 0)
-                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                @else
+
+            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post" action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
+            {{ csrf_field() }} 
+            <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+            <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                @if($is_reunion == 0)
+
                     <input type="hidden" name="id_reunion" id="id_reunion" value="0">
+                @else
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                 @endif
                 <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">

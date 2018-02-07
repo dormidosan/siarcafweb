@@ -29,5 +29,10 @@ class Periodo extends Model
         return $this->hasMany('App\Agenda');
     }
 
+    public function peticiones()
+    {
+        return $this->hasMany('App\Peticion');
+    }
+
 
 }

@@ -16,6 +16,7 @@ class CreatePeticionesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('estado_peticion_id');
+            $table->unsignedInteger('periodo_id')->nullable();
             $table->string('codigo', 10)->nullable();
             //$table->string('nombre', 45)->nullable();
             $table->string('descripcion', 45)->nullable();
@@ -31,11 +32,19 @@ class CreatePeticionesTable extends Migration
 
             $table->index(["estado_peticion_id"], 'fk_peticiones_estado_peticiones1_idx');
 
+            $table->index(["periodo_id"], 'fk_peticiones_periodos1_idx');
+
 
             $table->foreign('estado_peticion_id', 'fk_peticiones_estado_peticiones1_idx')
                 ->references('id')->on('estado_peticiones')
                 ->onDelete('no action')
                 ->onUpdate('no action');
+
+            $table->foreign('periodo_id', 'fk_peticiones_periodos1_idx')
+                ->references('id')->on('periodos')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->timestamps();
         });
     }

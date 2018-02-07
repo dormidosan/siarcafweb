@@ -69,16 +69,17 @@
                                                 class="fa fa-arrow-right"></i> Continuar
                                     </button>
                                 </td>
-                                {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
-                                <input type="hidden" name="id_comision" id="id_comision"
-                                       value="{{$reunion->comision_id}}">
-                                <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+
+                                
                                 <td>
-                                    <button type="submit" class="btn btn-info btn-xs btn-block"><i
-                                                class="fa fa-upload"></i> Subir Bitacora
+                                {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
+                                <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
+                                <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                                    <button type="submit" class="btn btn-info btn-xs btn-block" ><i
+                                                class="fa fa-eye"></i>Subir Bitacora
                                     </button>
-                                </td>
                                 {!! Form::close() !!}
+                                </td>
 
                             @endif
                         </tr>
