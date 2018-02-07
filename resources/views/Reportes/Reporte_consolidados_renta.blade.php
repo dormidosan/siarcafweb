@@ -101,6 +101,8 @@
                       
                       <th>Ver</th>
                       <th>Descargar</th>
+                      <th>Descargar Excel</th>
+                      
                     </tr></thead>
                     <tbody>
                       @if(!($resultados==NULL))
@@ -114,7 +116,7 @@
                     
                       <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
                       <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
+                      <td><a href="{{url("/Reporte_consolidados_renta/3.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR EXCEL</a></td>
                     </tr>
                     @endif
                       @if($tipo=='ND')
@@ -126,7 +128,7 @@
                     
                       <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
                       <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
+                      <td><a href="{{url("/Reporte_consolidados_renta/3.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR EXCEL</a></td>
                     </tr>
                     @endif
                     @if($tipo=='D')
@@ -138,7 +140,7 @@
                     
                       <td><a href="{{url("/Reporte_consolidados_renta/1.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >VER</a></td>
                       <td><a href="{{url("/Reporte_consolidados_renta/2.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR</a></td>
-                    
+                      <td><a href="{{url("/Reporte_consolidados_renta/3.$tipo.$result->mes.$result->anio")}}" class="btn btn-block btn-success btn-xs" >DESCARGAR EXCEL</a></td>
                     </tr>
                     @endif
                    @endforeach

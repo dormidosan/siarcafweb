@@ -60,7 +60,13 @@
                 <thead>
                 <tr>
 
+                    <th>Num</th>
+
+                    <th>Codigo</th>
+
                     <th>Nombre</th>
+
+                     <th>Trascendental</th>
 
                     <th>Fecha</th>
 
@@ -70,15 +76,38 @@
                 </thead>
                 <tbody>
                 @if(!($resultados==NULL))
+
+                 @php $i=1 @endphp
+
+                
+
                     @foreach($resultados as $result)
                 <tr>
                     <td>
+                        {{$i}}
+                    </td>
+                     <td>
+                        {{$result->codigo}}
+                    </td>
+
+                    <td>
                         {{$result->lugar}}
                     </td>
+                      @if($result->trascendental==0)
+                     <td>
+                        NO
+                    </td>
+                    @else
+                     <td>
+                        SI
+                    </td>
+                    @endif
+
                     <td>de {{$result->inicio}} al {{$result->fin}}</td>
                     <td><a href="{{url("/desc_Plantilla_acuerdos/$result->id.$result->periodo_id.$result->codigo.$result->fecha.$result->lugar")}}" class="btn btn-block btn-success btn-xs">DESCARGAR</a>
                     </td>
                 </tr>
+                  @php $i=$i+1 @endphp
                 @endforeach
                 @endif
                 </tbody>

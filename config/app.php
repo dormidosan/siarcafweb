@@ -126,6 +126,8 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -150,8 +152,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-
 
 
         /*

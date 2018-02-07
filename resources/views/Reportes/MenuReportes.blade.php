@@ -106,7 +106,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+
+
+             <div class="row">
+
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
@@ -134,6 +137,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
 

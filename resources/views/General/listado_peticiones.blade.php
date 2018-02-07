@@ -29,12 +29,17 @@
                         <th>#</th>
                         <th>Codigo</th>
                         <th>Descripcion</th>
+                        <th>Correo</th>
                         <th>Fecha de creación</th>
                         {{-- <th>Fecha actual</th> --}}
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
-                        <th colspan="2">Acción</th>
+                        <th>Resuelto</th>
+                        <th>Agendado</th>
+                        <th>Comision</th>
+
+
                     </tr>
                     </thead>
                     <tbody id="cuerpoTabla">
@@ -53,7 +58,10 @@
                             <td>
                                 {!! $peticion->descripcion !!}
                             </td>
-                            <td>{{ date("m-d-Y h:m A",strtotime($peticion->fecha)) }}</td>
+                            <td>
+                                {!! $peticion->correo !!}
+                            </td>
+                            <td>{{ date("m/d/Y h:m A",strtotime($peticion->fecha)) }}</td>
                             {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>
                                 {!! $peticion->peticionario !!}
@@ -86,24 +94,38 @@
                                 @endforeach
                                 {!! $i !!}
                             </td>
-                            <td>
-                            {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST','id'=>$peticion->id.'1']) !!}
-                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
-                            <input type="hidden" name="es_reunion"  id="es_reunion"  value="0">
-                                <button type="submit" class="btn btn-primary btn-xs btn-block">
-                                    <i class="fa fa-eye"></i> Ver
-                                </button>
-                            {!! Form::close() !!}
-                            </td>
-                            <td>
-                            {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
-                            <input type="hidden" name="id_comision" id="id_comision" value="1">
-                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
-                                    <button type="submit" class="btn btn-warning btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Subir documentacion
-                                    </button>
-                            {!! Form::close() !!}
-                            </td>
+                            @if($peticion->resuelto == 1)
+                                <td class="success">
+                                    Resuelto
+                                </td>
+                            @else
+                                <td class="danger">
+                                    No Resuelto
+                                </td>
+                            @endif
+                            @if($peticion->asignado_agenda == 1)
+                                <td class="success">
+                                    Agendado
+                                </td>
+                            @else
+                                <td class="danger">
+                                    No Agendado
+                                </td>
+                            @endif
+                            @if($peticion->comision == 1)
+                                <td class="success">
+                                    En comision
+                                </td>
+                            @else
+                                <td >
+                                    En JD
+                                </td>
+                            @endif
+
+
+
+
+                            
                         </tr>
                         
                     @empty

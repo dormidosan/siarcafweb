@@ -113,26 +113,22 @@
 
 </style>
   
-  <div style="position: absolute;"  align="left">
-  <IMG SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%" >
-</div>                                  
- <div  align="right">
-  <IMG SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
-</div>
+  <IMG align="left" SRC="{{ asset('images/Logo_UES.jpg') }}" width="13%" height="10%">
+                         
 
-                                         
+  <IMG align="right" SRC="{{ asset('images/agu_web.jpg') }}" width="15%" height="15%" >
+                                                                        
                                                
- <div id="p" style="text-align: center;position: absolute;right: 15%;top: 5%" >
+  <div id="p" style=" text-align: center;right: 25%;text-transform: uppercase;">
     Sesión Plenaria de Asamblea General Universitaria {{$fechainicial}} AL {{$fechafinal}}<br/>
-    Solicitudes de PERMISOS DEFINITIVOS<br/>
+    Solicitudes de PERMISOS DEFINITIVOS<br/><br/><br/><br/>
      
   </div>   
                    
 </head>
   <body>
  
-<div id="nt">
-                <table  border="1" cellpadding="0" cellspacing="0" style="text-align: center;">
+ <table style="text-align: center; position: center;" align="center" border="1" cellpadding="0" cellspacing="0" >   
                    
                   <thead>  <!-- ENCABEZADO TABLA-->
                     <tr>                     
@@ -151,7 +147,7 @@
                           <tr>                                     
                            <td><pre>
 Asambleista: {{$result->primer_nombre}} {{$result->primer_apellido}} <br/>
-Delego a: _____________</pre></td>
+Delego a: {{$result->delegado}}</pre></td>
                           
                            <td><pre>{{$result->motivo}}</pre></td>
                            <td><pre>{{substr($result->fecha_permiso, 0, 10)}}</pre></td>
@@ -162,7 +158,7 @@ Delego a: _____________</pre></td>
                    </tbody>
 
                 </table>
- </div>
+
 
   </body>
 </html>

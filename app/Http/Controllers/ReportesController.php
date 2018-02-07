@@ -21,10 +21,8 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\JsonResponse;
 use App\Clases\Mensaje;
-<<<<<<< HEAD
 use App\Periodo;
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesController extends Controller
 {
@@ -34,7 +32,6 @@ class ReportesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-<<<<<<< HEAD
  public function buscar_periodo()
     {
       
@@ -42,7 +39,7 @@ class ReportesController extends Controller
        $resultados=NULL;
        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
 
-        return view('Reportes.Reporte_Asambleistas_Periodo')        
+        return view('Reportes.Reporte_Asambleistas_Periodo')         
         ->with('periodo', $periodo)
         ->with('periodos', $periodos)
         ->with('resultados',$resultados);
@@ -162,12 +159,14 @@ $resultados =DB::table('asambleistas')
         ->where('periodos.id','=',$periodo)
         ->whereMonth('personas.nacimiento','=',$mes)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','facultades.nombre as NomFac','asambleistas.propietario','personas.dui','personas.nit','users.email','periodos.nombre_periodo')
-        ->orderBy('facultades.nombre', 'desc')
+                 'personas.segundo_nombre','facultades.nombre as NomFac','asambleistas.propietario'
+                 ,'personas.dui','personas.nit','users.email','periodos.nombre_periodo','personas.nacimiento')
+       
         ->orderBy('personas.nacimiento','asc')
         ->get();
         
         //dd($resultados);
+
 
          $mesnom=$this->numero_mes($mes);
     
@@ -175,13 +174,14 @@ $resultados =DB::table('asambleistas')
          $pdf = \App::make('dompdf.wrapper');   
          $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+         $hoy=Carbon::now()->format('Y-m-d');
            if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Cumple_'.$mesnom.'_'.$nombre_periodos->nombre_periodo.'_'.$hoy.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Cumple_'.$mesnom.'_'.$nombre_periodos->nombre_periodo.'_'.$hoy.'.pdf'); 
         }
 
     }
@@ -213,13 +213,14 @@ $resultados =DB::table('asambleistas')
          $pdf = \App::make('dompdf.wrapper');   
          $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
+          $hoy=Carbon::now()->format('Y-m-d');
            if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Asambleistas_'.$nombre_periodos->nombre_periodo.'_'.$hoy.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Asambleistas_'.$nombre_periodos->nombre_periodo.'_'.$hoy.'.pdf'); 
         }
 
     }
@@ -227,10 +228,6 @@ $resultados =DB::table('asambleistas')
 
     public function Reporte_permisos_temporales($tipo) 
     {
-=======
-    public function Reporte_permisos_temporales($tipo) 
-    {
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 
         $parametros = explode('.', $tipo);
@@ -255,7 +252,7 @@ $resultados =DB::table('asambleistas')
         ->join('personas','users.persona_id','=','personas.id')
         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',$idagenda)//1 por ser permisos temporales 
+        ->where('estado_asistencias.id','=',1)//1 por ser permisos temporales 
         ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','asistencias.salida','asistencias.propietaria')
@@ -263,36 +260,26 @@ $resultados =DB::table('asambleistas')
         
 
 
+
+
+
+
        
         $view =  \View::make('Reportes/Reporte_permisos_temporales_pdf', compact('resultados','fecha'))->render();
-<<<<<<< HEAD
 
         $pdf = \App::make('dompdf.wrapper');      
-        $pdf->getDomPDF()->set_option("enable_php", true); //estas ondas no furulan :v
-        $pdf->getDomPDF()->set_option('margin-top',0);
-        $pdf->getDomPDF()->set_option('margin-bottom',0);
-        $pdf->getDomPDF()->set_option('margin-left',0);
-        $pdf->getDomPDF()->set_option('margin-right',0);
+     
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
-=======
 
-        $pdf = \App::make('dompdf.wrapper');      
-        $pdf->getDomPDF()->set_option("enable_php", true); //estas ondas no furulan :v
-        $pdf->getDomPDF()->set_option('margin-top',0);
-        $pdf->getDomPDF()->set_option('margin-bottom',0);
-        $pdf->getDomPDF()->set_option('margin-left',0);
-        $pdf->getDomPDF()->set_option('margin-right',0);
-        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
-
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-        if($tipodes==1)
+         $hoy=Carbon::now()->format('Y-m-d');
+           if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Permisos_Temporales_'.$fecha.'_'.$hoy.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Permisos_Temporales_'.$fecha.'_'.$hoy.'.pdf'); 
         }
 
 
@@ -302,46 +289,68 @@ $resultados =DB::table('asambleistas')
     public function Reporte_permisos_permanentes($tipo) 
     {
 
-      //dd($tipo);
-      $parametros = explode('.', $tipo);
+        //dd($tipo);
+        $parametros = explode('.', $tipo);
         $tipodes=$parametros[0];
         $fechainicial=$parametros[1];
         $fechafinal=$parametros[2];
 
 
-$resultados = DB::table('permisos')
-->join('asambleistas','permisos.asambleista_id','=','asambleistas.id')
-->join('users','asambleistas.user_id','=','users.id')   
-->join('personas','users.persona_id','=','personas.id')
-->where
-([
-  ['permisos.fecha_permiso','>=',$fechainicial],
-  ['permisos.fecha_permiso','<=',$fechafinal]
-])
-->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-'personas.segundo_nombre','personas.dui','personas.nit','personas.afp','personas.cuenta','permisos.motivo',
-'permisos.fecha_permiso','permisos.inicio','permisos.fin')
-->get();
+        $resultados = DB::table('permisos')
+        ->join('asambleistas','permisos.asambleista_id','=','asambleistas.id')
+        ->join('users','asambleistas.user_id','=','users.id')   
+        ->join('personas','users.persona_id','=','personas.id')
+        ->where
+        ([
+          ['permisos.fecha_permiso','>=',$fechainicial],
+          ['permisos.fecha_permiso','<=',$fechafinal]
+        ])
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+        'personas.segundo_nombre','personas.dui','personas.nit','personas.afp','personas.cuenta','permisos.motivo',
+        'permisos.fecha_permiso','permisos.inicio','permisos.fin','permisos.delegado_id','personas.primer_apellido as delegado')
+        ->get();
 
-//dd($resultados);
+
+        $i=0;
+        foreach ($resultados as $resultado) {
+
+        $delegado=DB::table('asambleistas')
+        ->join('users','asambleistas.user_id','=','users.id')   
+        ->join('personas','users.persona_id','=','personas.id')
+        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
+        'personas.segundo_nombre')
+        ->where('asambleistas.id','=',$resultado->delegado_id)
+        ->first();
+
+        if($delegado==NULL){
+
+        $resultados[$i]->delegado='No Delegado';
+
+
+        }
+        else{
+
+        $resultados[$i]->delegado=$delegado->primer_nombre.' '.$delegado->primer_apellido;
+
+        }
+
+        }
+
 
         $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('resultados','fechainicial','fechafinal'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+         $hoy=Carbon::now()->format('Y-m-d');
         if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Permisos_permanentes_del_'.$fechainicial.'_al_'.$fechafinal.'_'.$hoy.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Permisos_permanentes_del_'.$fechainicial.'_al_'.$fechafinal.'_'.$hoy.'.pdf'); 
         }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
 
     }
 
@@ -363,8 +372,12 @@ $resultados = DB::table('permisos')
         ->select('periodos.nombre_periodo')
         ->get();
 
+        $nombre_agenda=DB::table('agendas')
+        ->where('agendas.id','=',$idagenda)
+        ->first();
+
+
         $nombreperiodo=$nombreperiodo1[0]->nombre_periodo;
-        //dd($nombreperiodo);
 
         if($sector=='E'){
 
@@ -376,9 +389,7 @@ $resultados = DB::table('permisos')
          ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
         ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
-
         ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
-      
         ->where('asambleistas.sector_id','=',1)//sector estudiantil
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
@@ -388,8 +399,6 @@ $resultados = DB::table('permisos')
         $sector='ESTUDIANTIL';
 }
 
-<<<<<<< HEAD
-=======
 
         if($sector=='D'){
 
@@ -401,9 +410,7 @@ $resultados = DB::table('permisos')
          ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
         ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
-
-        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
-      
+        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el i
         ->where('asambleistas.sector_id','=',2)//sector estudiantil
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
@@ -424,56 +431,7 @@ $resultados = DB::table('permisos')
          ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
         ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
-
         ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
-      
-        ->where('asambleistas.sector_id','=',3)//sector estudiantil
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
-        ->orderBy('facultades.nombre', 'desc')
-
-        ->get();
-        $sector='NO DOCENTE';
-}
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-
-        if($sector=='D'){
-
-         $resultados=DB::table('asistencias')
-        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
-         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
-        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
-
-        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
-      
-        ->where('asambleistas.sector_id','=',2)//sector estudiantil
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
-        ->orderBy('facultades.nombre', 'desc')
-
-        ->get();
-        $sector='DOCENTE';
-}
-
-
-<<<<<<< HEAD
-        if($sector=='ND'){
-
-         $resultados=DB::table('asistencias')
-        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->join('facultades','asambleistas.facultad_id','=','facultades.id')
-         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
-        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',3)//3 por ser asistencias 
-
-        ->where('asistencias.agenda_id','=',$idagenda)//por el momento solo filtro por el id
-      
         ->where('asambleistas.sector_id','=',3)//sector estudiantil
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','asistencias.entrada','tiempos.salida','asistencias.propietaria','facultades.nombre')
@@ -485,8 +443,6 @@ $resultados = DB::table('permisos')
 
 
 
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 
 
@@ -494,15 +450,16 @@ $resultados = DB::table('permisos')
         $view =  \View::make('Reportes/Reporte_asistencias_sesion_plenaria_pdf', compact('resultados','sector','nombreperiodo'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true);
-         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
+        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
+        $hoy=Carbon::now()->format('Y-m-d');
         if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Asistencias_'.$nombre_agenda->codigo.'_'. $nombre_agenda->fecha.'_'.$hoy.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Asistencias_'.$nombre_agenda->codigo.'_'. $nombre_agenda->fecha.'_'.$hoy.'.pdf'); 
         }
 
         //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
@@ -510,33 +467,6 @@ $resultados = DB::table('permisos')
 
 
     }
-
-          public function Reporte_inasistencias_sesion_plenaria_pdf($tipo) 
-    {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_inasistencias_sesion_plenaria_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-        $pdf->getDomPDF()->set_option("enable_php", true);
-        $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
-
-        if($tipo==1)
-        {
-            return $pdf->stream('reporte');
-        }
-        if($tipo==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
-    }
-
 
     
 
@@ -554,6 +484,8 @@ $resultados = DB::table('permisos')
 
 
         $resultados = DB::table('peticiones')
+        ->join('estado_peticiones','estado_peticiones.id','=','peticiones.estado_peticion_id')
+       
         ->where
         ([
         ['peticiones.fecha','>=',$fechainicial],
@@ -566,15 +498,16 @@ $resultados = DB::table('permisos')
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true);
         //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
+         $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
+        $hoy=Carbon::now()->format('Y-m-d');
         if($tipodes==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Bitacora_Correspondeica_del_'.$fechainicial.'_al_'.$fechafinal.'.pdf');
         }
         if($tipodes==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Bitacora_Correspondeica_del_'.$fechainicial.'_al_'.$fechafinal.'.pdf'); 
         }
 
         //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
@@ -587,7 +520,6 @@ public function buscar_consolidados_renta(ReportesConsolidadosRentaRequest $requ
 //dd($request->all());
   
         $mes=$this->numero_mes($request->fecha1);
-<<<<<<< HEAD
 
         $mesnum=$request->fecha1;
 
@@ -630,57 +562,9 @@ if($resultados==NULL){
 else{
  $request->session()->flash("success", "Busqueda terminada con exito");
 }
-=======
-
-        $mesnum=$request->fecha1;
-
-        $tipodoc=0;
-
-       //dd($agenda);
-
-
-if($request->tipoDocumento=='E'){
- $tipodoc=1;   
-}
-  if($request->tipoDocumento=='D'){
- $tipodoc=2;
-     
-}
-  if($request->tipoDocumento=='ND'){
-$tipodoc=3;
-   
-}
-     
-
-$resultados = DB::table('dietas')
-        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('sectores','asambleistas.sector_id','=','sectores.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->where('dietas.mes','=', $mes)
-        ->where('dietas.anio','=', $request->anio)
-        ->where('sectores.id','=', $tipodoc)
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre')
-        ->limit(1)
-        ->get();
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-
-if($resultados==NULL){
-
-<<<<<<< HEAD
-
-=======
- $request->session()->flash("warning", "No se encontraron registros");
-
-}
-else{
- $request->session()->flash("success", "Busqueda terminada con exito");
-}
 
 
 
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
          return view("Reportes.Reporte_consolidados_renta")
          ->with('resultados',$resultados)
          ->with('mes',$mes)
@@ -723,6 +607,19 @@ else{
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre','dietas.asambleista_id')->limit(1)->get();
 
 
+       $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada hdp
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->whereYear('fecha','=',$request->anio)
+        ->where('agendas.vigente','<>',1)
+        ->get();
+
+
+        if($agendas_anio==NULL){
+
+            $resultados=NULL;
+
+        }
         //dd($resultados);
 
         
@@ -780,13 +677,6 @@ if($request->tipoDocumento=='E'){
         ->join('users','asambleistas.user_id','=','users.id')
         ->whereColumn(['users.name','like', $request->nombre],
                       ['dietas.mes','=',$mes])->select('users.name')->first();*/
-<<<<<<< HEAD
-
-        
-        if($resultados==NULL){
-
- $request->session()->flash("warning", "No se encontraron registros");
-=======
 
         
         if($resultados==NULL){
@@ -797,28 +687,16 @@ if($request->tipoDocumento=='E'){
 else{
  $request->session()->flash("success", "Busqueda terminada con exito");
 }
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
-}
-else{
- $request->session()->flash("success", "Busqueda terminada con exito");
-}
 
 
             //echo($dieta->name);
 
-<<<<<<< HEAD
-            //echo($dieta->name);
-
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
          
          return view("Reportes.Reporte_planilla_dieta")
          ->with('resultados',$resultados)
          ->with('mesnum',$mesnum)
          ->with('tipo',$request->tipoDocumento);
-      
-     return view("Reportes.Reporte_planilla_dieta",['resultados'=>NULL]);
     }
 
 
@@ -829,25 +707,7 @@ else{
 
 
         $fechainicial=$request->fecha1;
-        $fechafinal=$request->fecha2;
-        
-        
-       // $fechainicial=date('Y-m-d');
-       //$fechafinal=date('Y-m-d');
-       // dd($fechafinal);
-//if($request->nombre==''){
-
-
-      /*  $resultados = DB::table('asambleistas')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->join('permisos','permisos.asambleista_id','=','asambleistas.id')
-        ->whereBetween('permisos.fecha_permiso', [$fechainicial,$fechafinal])
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre')->limit(1)->get();*/
-
-
-
+        $fechafinal=$request->fecha2;      
          $resultados=DB::table('agendas')
         ->join('asistencias','asistencias.agenda_id','=','agendas.id')
         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
@@ -948,7 +808,6 @@ else{
  $request->session()->flash("success", "Busqueda terminada con exito");
 }
 
-
         
         return view("Reportes.Reporte_asistencias_sesion_plenaria")
          ->with('resultados',$resultados)
@@ -963,46 +822,14 @@ else{
 
     
 
-<<<<<<< HEAD
 
 
-=======
-
-
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
  public function buscar_bitacora_correspondencia(BuscarBitacoraCorrespRequest $request){
 
 $fechainicial=$request->fecha1;
-//dd($fechainicial);
-//$fechainicial=str_replace('/','-',$fechainicial);
-//$fecha = DateTime::createFromFormat('Y-m-d', $fechainicial);
-//$fechainicial = $fecha->format('Y-m-d');
 
-/*$fecha1conver= explode('/', $fechainicial); si sirve
-$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
-$fechainicial = date('Y-m-d', strtotime($fechatrans));*/
-
-//dd($this->convertirfecha($fechainicial));
-
-//$fechainicial =strtotime($fechainicial);
 $fechafinal=$request->fecha2;
 
-//$fechafinal=str_replace('/','-',$fechafinal);
-//$fechafinal = date('Y-m-d', strtotime($fechafinal));
-
-
-<<<<<<< HEAD
-=======
-
-$resultados = DB::table('peticiones')
-->where
-([
-  ['peticiones.fecha','>=',$this->convertirfecha($fechainicial)],
-  ['peticiones.fecha','<=',$this->convertirfecha($fechafinal)]
-])
-->limit(1)
-->get();
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 $resultados = DB::table('peticiones')
 ->where
@@ -1013,34 +840,6 @@ $resultados = DB::table('peticiones')
 ->limit(1)
 ->get();
 
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-/*$resultados = DB::table('peticiones')
-->where('peticiones.id','=',1)
-->get();*/
-
-//dd($fechainicial);
-//dd($request->all());
-//dd($resultados);
-
-
-<<<<<<< HEAD
-=======
-
-if($resultados==NULL){
-
- $request->session()->flash("warning", "No se encontraron registros");
-
-}
-else{
- $request->session()->flash("success", "Busqueda terminada con exito");
-}
-
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
 
 if($resultados==NULL){
 
@@ -1070,48 +869,7 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
 
  }
 
-<<<<<<< HEAD
-=======
 
-    $uno=$this->convertirfecha($fechainicial);
-    $dos=$this->convertirfecha($fechafinal);
-         return view("Reportes.Reporte_bitacora_correspondencia")
-         ->with('fechainicial',$uno)
-         ->with('fechafinal',$dos)
-         ->with('resultados',$resultados);
-
-
-
-
-return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
-
-
-
- }
-
->>>>>>> 37933456c62873145bd0726da8a2bed21f723ef2
-public function porcAsistencia($idAsambleista,$idSesion,$tipoasistencia){
-
-    $horasreunion=DB::table('reuniones')
-        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
-        ->where('reuniones.id','=',$idSesion) //por el momento solo filtro por el id 
-        ->where('reuniones.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
-        ->get();
-
-
-    $horasasistencia=DB::table('asistencias')
-        ->selectRaw('ABS(sum(time_to_sec(timediff(entrada,salida)))/3600) as suma') 
-        ->where('asistencias.asambleista_id','=',$idAsambleista) 
-        ->where('asistencias.agenda_id','=',$idSesion)//por el momento solo filtro por el id
-        ->where('asistencias.estado_asistencia_id','=',$tipoasistencia) 
-        ->get();
-        
-$porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
-
-
-return $porcAsistencia; 
-
-}
 
 
       public function Reporte_planilla_dieta($tipo) 
@@ -1124,106 +882,59 @@ return $porcAsistencia;
         $anio=$parametros[3];
         $mesnum=$parametros[4];
 
-
-
-       /* $agenda=DB::table('agendas')     //agendas del mes y año seleccionado
-        ->whereMonth('fecha','=',$mesnum)
-        ->whereYear('fecha','=',$anio)
-        ->get();
-
-        dd($agenda);*/
-
-
-
-    /*    $busqueda = DB::table('asambleistas')
+        $busqueda=DB::table('asambleistas')
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
         ->join('personas','users.persona_id','=','personas.id')
-        ->where('asambleistas.id','=', $id)
         ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','sectores.nombre','personas.dui',
-                 'personas.nit','personas.afp','personas.cuenta')->first();*/
-      
+                 'personas.nit','personas.afp','personas.cuenta','asambleistas.id',DB::raw('0 AS dieta'),DB::raw('0 AS renta'))
+        ->get(); //todos los asambleistas
 
-         
-/*
-          $busqueda = DB::table('dietas')
-        ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
-        ->join('users','asambleistas.user_id','=','users.id')
-        ->join('sectores','asambleistas.sector_id','=','sectores.id')
-        ->join('personas','users.persona_id','=','personas.id')
-        ->where('dietas.anio','=', $anio)
-        ->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-                 'personas.segundo_nombre','dietas.anio','sectores.id','sectores.nombre', DB::raw('SUM(dietas.anio) as total_sales'))
-        ->groupBy('personas.primer_nombre')
-        ->limit(3)
-        ->get();*/
+        //dd($busqueda);
 
+        $iva=0.0;
+        $porcentaje_asistencia=0.0;
+        $renta=0.0;
+        $monto_dieta=0.0;
 
-$busqueda=DB::table('asambleistas')
-->join('users','asambleistas.user_id','=','users.id')
-->join('sectores','asambleistas.sector_id','=','sectores.id')
-->join('personas','users.persona_id','=','personas.id')
-->select('personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
-         'personas.segundo_nombre','sectores.nombre','personas.dui',
-         'personas.nit','personas.afp','personas.cuenta','asambleistas.id',DB::raw('0 AS dieta'),DB::raw('0 AS renta'))
-->get(); //todos los asambleistas
-
-//dd($busqueda);
-
-$iva=0.0;
-$porcentaje_asistencia=0.0;
-$renta=0.0;
-$monto_dieta=0.0;
+        $cuenta=0;
+        foreach ($busqueda as $busq) {
+           
+        $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada asambleista
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->whereYear('fecha','=',$anio)
+        ->where('asambleistas.id','=',$busq->id)
+        ->where('agendas.vigente','<>',1)
+        ->get();
 
 
-//dd($parametros);
-//dd($prueba);
-//dd($iva,$porcentaje_asistencia,$renta,$monto_dieta);
+        //dd($agendas_anio);
 
-//if($porcAsistencia<=$porcentaje_asistencia){ // se generara planilla de dieta si alcanza el porcentage de asistencia
-                                               //toda la conprobacion del 80 porciento tiene que hacerse en otro lado
+        foreach ($agendas_anio as $agendas) {
+            
+            $parametros=DB::table('parametros')->get();
 
-//retorn
+        foreach ($parametros as $parametro) {
 
-//}
-$cuenta=0;
-foreach ($busqueda as $busq) {
-   
-$agendas_anio=DB::table('agendas') //todas las agendas vigentes del año seleccionado en las que participo cada hdp
-->join('asistencias','asistencias.agenda_id','=','agendas.id')
-->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
-->whereYear('fecha','=',$anio)
-->where('asambleistas.id','=',$busq->id)
-->where('agendas.vigente','<>',1)
-->get();
+        if($parametro->nombre_parametro=='iva'){ 
+            $iva=$parametro->valor;
+        }
 
-//dd($agendas_anio);
+        if($parametro->nombre_parametro=='porcentaje_asistencia'){ 
+            $porcentaje_asistencia=($parametro->valor)*100;
+        }
 
-foreach ($agendas_anio as $agendas) {
-    
-    $parametros=DB::table('parametros')->get();
+        if($parametro->nombre_parametro=='renta'){ 
+            $renta=$parametro->valor;
+        }
 
-foreach ($parametros as $parametro) {
+        if($parametro->nombre_parametro=='monto_dieta'){ 
+            $monto_dieta=$parametro->valor;
+        }
 
-if($parametro->nombre_parametro=='iva'){ 
-    $iva=$parametro->valor;
-}
-
-if($parametro->nombre_parametro=='porcentaje_asistencia'){ 
-    $porcentaje_asistencia=($parametro->valor)*100;
-}
-
-if($parametro->nombre_parametro=='renta'){ 
-    $renta=$parametro->valor;
-}
-
-if($parametro->nombre_parametro=='monto_dieta'){ 
-    $monto_dieta=$parametro->valor;
-}
-//echo($parametro->nombre_parametro);
-//$prueba=$parametro->nombre_parametro;
-}
+        }
 
 
         $horasreunion=DB::table('agendas')
@@ -1234,7 +945,7 @@ if($parametro->nombre_parametro=='monto_dieta'){
 
 
 
-$horasasistencia=DB::table('asistencias')
+        $horasasistencia=DB::table('asistencias')
         ->selectRaw('ABS(sum(time_to_sec(timediff(tiempos.entrada,tiempos.salida)))/3600) as suma') 
         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
         ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
@@ -1245,121 +956,54 @@ $horasasistencia=DB::table('asistencias')
         
 
 
-if($horasreunion[0]->suma>0.0){
+        if($horasreunion[0]->suma>0.0){
 
-$porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
-}
-else{
+        $porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
+        }
+        else{
 
-$porcAsistencia=0.0;
+        $porcAsistencia=0.0;
 
-}
-
-
-//dd($porcAsistencia);
+        }
 
 
-if($porcAsistencia>=$porcentaje_asistencia){
+        if($porcAsistencia>=$porcentaje_asistencia){
 
-$cantDiet = DB::table('dietas')  
-->where('dietas.asambleista_id','=',$busq->id)
-->where('dietas.anio','=',$anio)
-->selectRaw('SUM(asistencia) AS asistencia')
-->get();
-
-
-$asistencianum=$cantDiet[0]->asistencia;
-
-//dd($asistencianum);
-
-
-if($asistencianum==0)
-{
-$monto_dieta=0.0;
-}
-else{
-
-$monto_dieta=$monto_dieta*$asistencianum;
-
-}
-
-
-$busqueda[$cuenta]->dieta=$busqueda[$cuenta]->dieta+$monto_dieta;
-
-$renta=$monto_dieta*$renta;
-$renta=round($renta,2);
-$busqueda[$cuenta]->renta=$busqueda[$cuenta]->renta+$renta;
-}
-
-    }
-
-
-
-if($busqueda[$cuenta]->dieta==0.0){
-unset($busqueda[$cuenta]);
-}
-
-
-
-    $cuenta=$cuenta+1;
-
-}
-
-
-/*
-        $horasreunion=DB::table('agendas')
-        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
-        ->where('agendas.id','=',1) //por el momento solo filtro por el id 
-        ->where('agendas.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
+        $cantDiet = DB::table('dietas')  
+        ->where('dietas.asambleista_id','=',$busq->id)
+        ->where('dietas.anio','=',$anio)
+        ->selectRaw('SUM(asistencia) AS asistencia')
         ->get();
 
-        
 
-$horasasistencia=DB::table('asistencias')
-        ->selectRaw('ABS(sum(time_to_sec(timediff(tiempos.entrada,tiempos.salida)))/3600) as suma') 
-        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
-        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',3)//1 por ser permisos temporales 
-        ->where('asistencias.asambleista_id','=',$id) 
-        ->where('asistencias.agenda_id','=',1)//por el momento solo filtro por el id       
-        ->get();
-        
-*/
-//$porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
-
-//$porcAsistencia=this->porcAsistencia($id,);
-
-//dd($porcAsistencia);
+        $asistencianum=$cantDiet[0]->asistencia;
 
 
+        if($asistencianum==0)
+        {
+        $monto_dieta=0.0;
+        }
+        else{
 
+        $monto_dieta=$monto_dieta*$asistencianum;
 
+        }
 
- //debe devolver siempre un registro porque ya se realizao previamente esta busqueda
+        $busqueda[$cuenta]->dieta=$busqueda[$cuenta]->dieta+$monto_dieta;
 
-//dd($cantDiet);
+        $renta=$monto_dieta*$renta;
+        $renta=round($renta,2);
+        $busqueda[$cuenta]->renta=$busqueda[$cuenta]->renta+$renta;
+        }
 
+            }
 
+        if($busqueda[$cuenta]->dieta==0.0){
+        unset($busqueda[$cuenta]);
+        }
+            $cuenta=$cuenta+1;
+        }
 
-//dd($monto_dieta);
-
-
-
-//dd($renta);
-    //dd($horasreunion);
-    //dd($horasasistencia);
-     
-
-       /* $nombre1=$busqueda->primer_nombre;
-        $nombre2=$busqueda->segundo_nombre;
-        $apellido1=$busqueda->primer_apellido;
-        $apellido2=$busqueda->segundo_apellido;*/
-
-      /*  $sector=$busqueda->nombre;
-        $dui=$busqueda->dui;
-        $nit=$busqueda->nit;
-        $afp=$busqueda->afp;
-        $cuenta=$busqueda->cuenta;*/
 
         $sector=0;
         $dui=0;
@@ -1367,26 +1011,19 @@ $horasasistencia=DB::table('asistencias')
         $afp=0;
         $cuenta=0;
 
-      //  dd($busqueda);
 
-      /*  $nombrecompleto=$nombre1.' '.$nombre2.' '.$apellido1.' '.$apellido2;*/
-
-        //dd($nombrecompleto,$dui,$nit,$mes,$anio,$sector);
 
         $view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('busqueda','sector','nit', 'mes', 'anio','horasreunion','monto_dieta','renta'))->render();
-      //$view =\View::make('Reportes/Reporte_planilla_dieta_pdf', compact('nombrecompleto','sector','nit', 'mes', 'anio','horasreunion','monto_dieta','renta'))->render();
-     
         $pdf =\App::make('dompdf.wrapper');      
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
-
+        $hoy=Carbon::now()->format('Y-m-d');
          if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Planilla_Dieta_'.$anio.'_'.$sector.'_'.$hoy.'.pdf');
         }
         if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Planilla_Dieta_'.$anio.'_'.$sector.'_'.$hoy.'.pdf'); 
         }
         //return $pdf->stream('reporte.pdf'); //mostrar pdf en pagina
         //return $pdf->download('reporte.pdf'); // descargar el archivo pdf
@@ -1403,7 +1040,7 @@ public function Reporte_planilla_dieta_prof_Est_pdf($tipo)
         $anio=$parametros[2];
 
 
-     $resultados = DB::table('dietas')
+        $resultados = DB::table('dietas')
         ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
@@ -1414,52 +1051,134 @@ public function Reporte_planilla_dieta_prof_Est_pdf($tipo)
         ->where('sectores.id','=', 1)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia')->orderBy('nom_fact', 'desc')->get();
-
-
-      /*  $agenda=DB::table('agendas')     //agendas del mes y año seleccionado
-        ->whereMonth('fecha','=',$mes)
-        ->whereYear('fecha','=',$anio)
-        ->where('vigente','=',0) //cero para agendas que estan vigentes 
-        ->orderBy('fecha', 'asc')
-        ->get();//esto devolvera un numero N (0-4) de reuniones hechas en el mes
-*/
-
-     
-       /* $agendas=DB::table('agendas')
-        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
-        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
-        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',3)//1 por ser permisos temporales 
-        ->whereMonth('agendas.fecha','=',$mes)
-        ->whereYear('agendas.fecha','=',$anio)
-        ->select('asistencias.asambleista_id','agendas.id')
-        ->get();*/
+                 'facultades.nombre as nom_fact','dietas.asistencia',DB::raw('0 AS dieta'),DB::raw('0 AS renta'))->orderBy('nom_fact', 'desc')->get();
 
         $monto_dieta=DB::table('parametros')
         ->where('parametros.parametro','=','mdi')
         ->select('parametros.valor')
         ->first();
+
+      /*  $iva=0.0;
+        $porcentaje_asistencia=0.0;
+        $renta=0.0;
+        $monto_dieta=0.0;
+        $cuenta=0;
+        //dd($resultados);
+        foreach ($resultados as $resul) {
+
+        $agendas_anio=DB::table('agendas') //todas las agendas 
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->whereYear('fecha','=',$anio)
+        ->whereMonth('fecha','=',$mes)
+        ->where('asambleistas.id','=',$resul->id)
+        ->where('agendas.vigente','<>',1)
+        ->get();
+
+        dd($agendas_anio);
+
+        foreach ($agendas_anio as $agendas) {
+
+        $parametros=DB::table('parametros')->get();
+        foreach ($parametros as $parametro) {
+        if($parametro->nombre_parametro=='iva'){ 
+            $iva=$parametro->valor;
+        }
+        if($parametro->nombre_parametro=='porcentaje_asistencia'){ 
+            $porcentaje_asistencia=($parametro->valor)*100;
+        }
+        if($parametro->nombre_parametro=='renta'){ 
+            $renta=$parametro->valor;
+        }
+        if($parametro->nombre_parametro=='monto_dieta'){ 
+            $monto_dieta=$parametro->valor;
+        }
+        }
+
+
+        $horasreunion=DB::table('agendas')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
+        ->where('agendas.id','=',$agendas->id) //por el momento solo filtro por el id 
+        ->where('agendas.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
+        ->get();
+
+
+           $horasasistencia=DB::table('asistencias')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(tiempos.entrada,tiempos.salida)))/3600) as suma') 
+        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
+        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
+        ->where('estado_asistencias.id','=',3)//3 por ser asistencia normal 
+        ->where('asistencias.asambleista_id','=',$resul->id) 
+        ->where('asistencias.agenda_id','=',$agendas->id)//por el momento solo filtro por el id       
+        ->get();
         
-       // dd($monto_dieta->valor);
+
+        if($horasreunion[0]->suma>0.0){
+
+        $porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
+        }
+        else{
+
+        $porcAsistencia=0.0;
+
+        }
+
+
+        if($porcAsistencia>=$porcentaje_asistencia){
+
+        $cantDiet = DB::table('dietas')  
+        ->where('dietas.asambleista_id','=',$resul->id)
+        ->where('dietas.anio','=',$anio)
+        ->where('dietas.mes','=',$mes)
+        ->selectRaw('SUM(asistencia) AS asistencia')
+        ->get();
+
+
+        $asistencianum=$cantDiet[0]->asistencia;
+
+
+        if($asistencianum==0)
+        {
+        $monto_dieta=0.0;
+        }
+        else{
+
+        $monto_dieta=$monto_dieta*$asistencianum;
+
+        }
+
+        $resultados[$cuenta]->dieta=$resultados[$cuenta]->dieta+$monto_dieta;
+
+        $renta=$monto_dieta*$renta;
+        $renta=round($renta,2);
+        $resultados[$cuenta]->renta=$resultados[$cuenta]->renta+$renta;
+        }
+        }
+
+         if($resultados[$cuenta]->dieta==0.0){
+        unset($resultados[$cuenta]);
+        }
+            $cuenta=$cuenta+1;
+
+        }
+
+*/
+      
 
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Est_pdf', compact('resultados','mes','anio','monto_dieta'))->render();
         $pdf = \App::make('dompdf.wrapper');    
         $pdf->getDomPDF()->set_option("enable_php", true);  
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+        $hoy=Carbon::now()->format('Y-m-d');
         if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Dieta_Estudiantes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf');
         }
         if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Dieta_Estudiantes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
         }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
 
     }
 
@@ -1495,48 +1214,27 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
                  'facultades.nombre as nom_fact','dietas.asistencia')->orderBy('nom_fact', 'desc')->get();
 
 
-      /*  $agenda=DB::table('agendas')     //agendas del mes y año seleccionado
-        ->whereMonth('fecha','=',$mes)
-        ->whereYear('fecha','=',$anio)
-        ->where('vigente','=',0) //cero para agendas que estan vigentes 
-        ->orderBy('fecha', 'asc')
-        ->get();//esto devolvera un numero N (0-4) de reuniones hechas en el mes
-*/
-
-     
-       /* $agendas=DB::table('agendas')
-        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
-        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
-        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
-        ->where('estado_asistencias.id','=',3)//1 por ser permisos temporales 
-        ->whereMonth('agendas.fecha','=',$mes)
-        ->whereYear('agendas.fecha','=',$anio)
-        ->select('asistencias.asambleista_id','agendas.id')
-        ->get();*/
-
         $monto_dieta=DB::table('parametros')
         ->where('parametros.parametro','=','mdi')
         ->select('parametros.valor')
         ->first();
         
-       // dd($monto_dieta->valor);
 
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Doc_pdf', compact('resultados','mes','anio','monto_dieta'))->render();
         $pdf = \App::make('dompdf.wrapper');      
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+        
+        $hoy=Carbon::now()->format('Y-m-d');
         if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Dieta_Docentes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf');
         }
         if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Dieta_Docentes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
         }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
 
 
     }
@@ -1577,19 +1275,17 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
 
+        $hoy=Carbon::now()->format('Y-m-d');
         if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Dieta_No_Docentes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf');
         }
         if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Dieta_No_Docentes_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
         }
-        
 
     }
-
-
 
  
 
@@ -1601,12 +1297,12 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
  
         $parametros = explode('.', $tipo); //se reciben id asambleista mes y año de la dieta separados por un espacio
-        $tipodes=$parametros[0];
+        $verdescar=$parametros[0];
         $sector=$parametros[1];
         $mes=$parametros[2];
         $anio=$parametros[3];
-
       
+        
 
         $monto_dieta=DB::table('parametros')
         ->where('parametros.parametro','=','mdi')
@@ -1618,13 +1314,6 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->select('parametros.valor')
         ->first();
         
-
-        //dd($tipo);
-
-       
-
-
-
 
         if($sector=='E'){
 
@@ -1639,7 +1328,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 1)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
           //dd($resultados);
         $sector='ESTUDIANTIL';
 }
@@ -1657,7 +1346,7 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 2)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
           //dd($resultados);
         $sector='DOCENTE';
 }
@@ -1676,15 +1365,10 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         ->where('sectores.id','=', 3)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia','personas.nit',DB::raw('0 as montodieta'),DB::raw('0 as renta'),DB::raw('0 as total'))->orderBy('nom_fact', 'desc')->get();
 
         $sector='NO DOCENTE';
 }
-
-
-
-
-
 
 
         $view =  \View::make('Reportes/Reporte_consolidados_renta_pdf', compact('resultados','sector','monto_dieta','renta','mes','anio'))->render();
@@ -1692,15 +1376,43 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         $pdf->getDomPDF()->set_option("enable_php", true);
          $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
-        if($tipodes==1)
+        $hoy=Carbon::now()->format('Y-m-d');
+        if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy.'.pdf');
         }
-        if($tipodes==2)
+        if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
         }
+        if($verdescar==3){
 
+
+           Excel::create('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy, function($excel) use($resultados){
+           $excel->sheet('Hoja1', function($sheet) use($resultados) {
+           $data = array();
+           foreach ($resultados as $result) {
+
+        $monto_dieta=DB::table('parametros')
+        ->where('parametros.parametro','=','mdi')
+        ->select('parametros.valor')
+        ->first();
+        
+        $renta=DB::table('parametros')
+        ->where('parametros.parametro','=','ren')
+        ->select('parametros.valor')
+        ->first();
+        
+
+            $result->montodieta=$result->asistencia*$monto_dieta->valor;
+            $result->renta=$result->asistencia*$monto_dieta->valor*$renta->valor;
+            $result->total=$result->montodieta-$result->renta;
+            $data[] = (array)$result;  
+            }
+                $sheet->fromArray($data);
+            });
+        })->export('xls');
+        }
 
 
     }
@@ -1782,13 +1494,14 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
         $pdf->getDomPDF()->set_option("enable_php", true);
          $pdf->loadHTML($view)->setPaper('letter','landscape')->setWarnings(false);
 
-        if($tipodes==1)
+         $hoy=Carbon::now()->format('Y-m-d');
+        if($verdescar==1)
         {
-            return $pdf->stream('reporte');
+            return $pdf->stream('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy.'.pdf');
         }
-        if($tipodes==2)
+        if($verdescar==2)
         {
-            return $pdf->download('reporte.pdf'); 
+            return $pdf->download('Consolidado_Renta_'.$sector.'_'.$mes.'_'.$anio.'_'.$hoy.'.pdf'); 
         }
 
 
@@ -1796,201 +1509,42 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
     }
     
 
-       public function Reporte_constancias_renta($tipo) 
-    {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
 
-        dd($tipo);
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');     
-        $pdf->getDomPDF()->set_option("enable_php", true); 
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
-
-        if($tipo==1)
-        {
-            return $pdf->stream('reporte');
-        }
-        if($tipo==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
-    }
-
-    
-
-    
-       public function Reporte_constancias_renta_JD($tipo) 
-    {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        dd($tipo);
-        $view =  \View::make('Reportes/Reporte_permisos_permanentes_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-        $pdf->getDomPDF()->set_option("enable_php", true);
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
-
-        if($tipo==1)
-        {
-            return $pdf->stream('reporte');
-
-        }
-        if($tipo==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
-    }
-
-     
-       public function Reporte_Convocatorias($tipo) 
-    {
-      
-        $data = $this->getData();
-        $date = date('Y-m-d');
-        $invoice = "2222";
-        $view =  \View::make('Reportes/Reporte_Convocatorias_pdf', compact('data', 'date', 'invoice'))->render();
-        $pdf = \App::make('dompdf.wrapper');      
-        $pdf->getDomPDF()->set_option("enable_php", true);
-        //$pdf->loadHTML($view)->setPaper('a4')->setOrientation('landscape'); // cambiar tamaño y orientacion del papel
-        $pdf->loadHTML($view)->setPaper('letter','portrait')->setWarnings(false);
-
-        if($tipo==1)
-        {
-            return $pdf->stream('reporte');
-        }
-        if($tipo==2)
-        {
-            return $pdf->download('reporte.pdf'); 
-        }
-
-        //return $pdf->stream('invoice.pdf'); //mostrar pdf en pagina
-        //return $pdf->download('invoice.pdf'); // descargar el archivo pdf
-
-
-    }
 
     public function buscar_permisos_permanentes(ReportesPermisospermanentesRequest $request){
 
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;
+
+        $resultados = DB::table('permisos')
+        ->where
+        ([
+          ['permisos.fecha_permiso','>=',$this->convertirfecha($fechainicial)],
+          ['permisos.fecha_permiso','<=',$this->convertirfecha($fechafinal)]
+        ])
+        ->limit(1)
+        ->get();
 
 
-$fechainicial=$request->fecha1;
-//dd($fechainicial);
-//$fechainicial=str_replace('/','-',$fechainicial);
-//$fecha = DateTime::createFromFormat('Y-m-d', $fechainicial);
-//$fechainicial = $fecha->format('Y-m-d');
+        if($resultados==NULL){
 
-/*$fecha1conver= explode('/', $fechainicial); si sirve
-$fechatrans=$fecha1conver[2].'-'.$fecha1conver[1].'-'.$fecha1conver[0];
-$fechainicial = date('Y-m-d', strtotime($fechatrans));*/
+         $request->session()->flash("warning", "No se encontraron registros");
 
-//dd($this->convertirfecha($fechainicial));
-
-//$fechainicial =strtotime($fechainicial);
-$fechafinal=$request->fecha2;
-
-//$fechafinal=str_replace('/','-',$fechafinal);
-//$fechafinal = date('Y-m-d', strtotime($fechafinal));
+        }
+        else{
+         $request->session()->flash("success", "Busqueda terminada con exito");
+        }
+            $uno=$this->convertirfecha($fechainicial);
+            $dos=$this->convertirfecha($fechafinal);
+                 return view("Reportes.Reporte_permisos_permanentes")
+                 ->with('fechainicial',$uno)
+                 ->with('fechafinal',$dos)
+                 ->with('resultados',$resultados);
 
 
-
-$resultados = DB::table('permisos')
-->where
-([
-  ['permisos.fecha_permiso','>=',$this->convertirfecha($fechainicial)],
-  ['permisos.fecha_permiso','<=',$this->convertirfecha($fechafinal)]
-])
-->limit(1)
-->get();
-
-
-
-
-/*$resultados = DB::table('peticiones')
-->where('peticiones.id','=',1)
-->get();*/
-
-//dd($fechainicial);
-//dd($request->all());
-//dd($resultados);
-if($resultados==NULL){
-
- $request->session()->flash("warning", "No se encontraron registros");
-
-}
-else{
- $request->session()->flash("success", "Busqueda terminada con exito");
-}
-    $uno=$this->convertirfecha($fechainicial);
-    $dos=$this->convertirfecha($fechafinal);
-         return view("Reportes.Reporte_permisos_permanentes")
-         ->with('fechainicial',$uno)
-         ->with('fechafinal',$dos)
-         ->with('resultados',$resultados);
-
-
-
-
-
-return view("Reportes.Reporte_permisos_permanentes",['resultados'=>NULL]);
+        return view("Reportes.Reporte_permisos_permanentes",['resultados'=>NULL]);
     }
 
-    
-
-    public function Mensaje(ReportesPermisosTemporalesRequest $request)
-    {
-      
-
-       // dd($request->all());
-
-           
-          $respuesta = new \stdClass();
-          // $respuesta->mensaje = (new Mensaje("Exito", "Comision: establecida como inactiva", "warning"))->toArray();  
-          $respuesta->mensaje = (new Mensaje("Exito", "Comision:  establecida como activa", "success"))->toArray();
-          $request->session()->flash("success", "Comision agregada con exito");
-
-         return view("Reportes.Reporte_permisos_temporales")
-         ->with('resultados',NULL);
-
-    }
-
-   // public function listado(){
-   // return view("Reportes.listado_reportes");
-  //  }
-
-
-    public function getData() 
-    {
-
-        $data=Array(1);
-        $data =  [
-            'quantity'      => '1' ,
-            'description'   => 'some ramdom text',
-            'price'   => '500',
-            'total'     => '500'
-        ];
-
-        
-      
-
-        return $data;
-    }
-    
 
     public function index()
     {

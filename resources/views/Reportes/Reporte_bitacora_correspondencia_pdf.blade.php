@@ -26,7 +26,6 @@
   #p {
   font-family: "ARIAL", serif;
   font-size: 12pt;
- 
   top: 5%;
   text-align: center;
   aling-items: center;
@@ -141,6 +140,8 @@
                     <th>TELEFONO</th>
                     <th>CODIGO</th>
                     <th>RESOLUCION POR J.D</th>
+                    <th>RESUELTO</th>
+                   
                     </tr>
                   </thead>
                    
@@ -155,7 +156,13 @@
                            <td>{{$result->descripcion}}</td>
                            <td>{{$result->telefono}}</td>   
                            <td>{{$result->codigo}}</td>   
-                           <td></td>         
+                           <td>{{$result->nombre_estado}}</td>   
+                           @if($result->resuelto==1)
+                           <td>SI</td> 
+                           @ELSE
+                           <td>NO</td> 
+                           @ENDIF
+                         
                           </tr> 
                          
                    @php $i=$i+1 @endphp
@@ -169,7 +176,7 @@
   <script type="text/php">
     if ( isset($pdf) ) {
         $font = $fontMetrics->getFont("arial", "bold");
-        $pdf->page_text(510,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
+        $pdf->page_text(650,15, "Pagina: {PAGE_NUM}/{PAGE_COUNT}", $font, 15, array(0,0,0));
     }
 </script>
 </html>

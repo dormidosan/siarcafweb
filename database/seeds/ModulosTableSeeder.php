@@ -61,10 +61,11 @@ class ModulosTableSeeder extends Seeder
 
         //6
         \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Descargar Plantillas',
+            'nombre_modulo'  => 'Plantillas',
+            'url' => 'Menu_plantillas',
             'modulo_padre' => '5',
             'icono'  => 'fa-dot-circle-o',
-            'tiene_hijos' => true,
+            'tiene_hijos' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
@@ -72,9 +73,10 @@ class ModulosTableSeeder extends Seeder
         //7
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Reportes',
+            'url' => 'Menu_reportes',
             'icono'  => 'fa-dot-circle-o',
             'modulo_padre' => '5',
-            'tiene_hijos' => true,
+            'tiene_hijos' => false,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
@@ -187,138 +189,6 @@ class ModulosTableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ));
 
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Acuerdos',
-            'url' => 'plantilla_actas',
-            'modulo_padre' => '6',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Actas JD',
-            'url' => '/',
-            'modulo_padre' => '6',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Actas AGU',
-            'url' => '/',
-            'modulo_padre' => '6',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Dictamenes',
-            'url' => '/',
-            'modulo_padre' => '6',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Permisos de Inasistencia',
-            'url' => '/',
-            'modulo_padre' => '6',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            //'nombre_modulo'  => 'Listado de permisos de sesion plenaria temporales',
-            'nombre_modulo'  => 'Permisos Temporales',
-            'url' => 'Reporte_permisos_temporales',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            //'nombre_modulo'  => 'Listado de permisos de sesión plenaria permanentes',
-            'nombre_modulo'  => 'Permisos Permanentes',
-            'url' => 'Reporte_permisos_permanentes',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            //'nombre_modulo'  => 'Listado de asistencia de asambleístas a sesión plenaria',
-            'nombre_modulo'  => 'Asistencia a plenarias',
-            'url' => 'Reporte_asistencias_sesion_plenaria',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Bitacora Correspondencia',
-            'url' => 'Reporte_bitacora_correspondencia',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Planilla de Dietas',
-            'url' => 'Reporte_planilla_dieta',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Consolidados de renta',
-            'url' => 'Reporte_consolidados_renta',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Constancias de renta',
-            'url' => 'Reporte_constancias_renta',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
-
-        \DB::table('modulos')->insert(array (
-            'nombre_modulo'  => 'Convocatorias',
-            'url' => 'Reporte_Convocatorias',
-            'modulo_padre' => '7',
-            'icono'  => 'fa fa-dot-circle-o',
-            'tiene_hijos' => false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-        ));
 
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Registrar Peticiones',

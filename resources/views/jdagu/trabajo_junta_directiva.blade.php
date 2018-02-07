@@ -123,10 +123,10 @@
                 </thead>
                 <tbody id="cuerpoTabla">
                 <tr>
-                    <td>4</td>
-                    <td>50</td>
-                    <td>30</td>
-                    <td>45</td>
+                    <td>{{$no_resueltos}}</td>
+                    <td>{{$resueltos}}</td>
+                    <td>{{$dic_reuniones}}</td>
+                    <td>{{$no_reuniones}}</td>
                 </tr>
                 </tbody>
             </table>
