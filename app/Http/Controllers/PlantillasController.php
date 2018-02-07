@@ -343,8 +343,12 @@ foreach ($puntos as $punto) {
     ->where('propuestas.punto_id','=',$punto->id)
     ->get();
     foreach ($propuestas as $propuesta) {
-    $section->addListItem($propuesta->nombre_propuesta, 1, null, 'multilevel');
-
+   if($propuesta->ganadora==1){
+    $section->addListItem($propuesta->nombre_propuesta.' (PROPUESTA GANADORA) '.' FAVOR: '.$propuesta->favor.' CONTRA: '.$propuesta->contra, 1, null, 'multilevel');   
+    }
+    else{
+    $section->addListItem($propuesta->nombre_propuesta.' FAVOR: '.$propuesta->favor.' CONTRA: '.$propuesta->contra, 1, null, 'multilevel');
+    }
     }
     
 }
@@ -539,10 +543,14 @@ foreach ($puntos as $punto) {
 
     $propuestas=DB::table('propuestas')
     ->where('propuestas.punto_id','=',$punto->id)
-    ->where('propuestas.nulo','=',0)
     ->get();
     foreach ($propuestas as $propuesta) {
+    if($propuesta->ganadora==1){
+     $section->addListItem($propuesta->nombre_propuesta.' (PROPUESTA GANADORA) '.' FAVOR: '.$propuesta->favor.' CONTRA: '.$propuesta->contra, 1, null, 'multilevel');   
+     }
+    else{
     $section->addListItem($propuesta->nombre_propuesta.' FAVOR: '.$propuesta->favor.' CONTRA: '.$propuesta->contra, 1, null, 'multilevel');
+    }
 
     }
     

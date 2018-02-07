@@ -39,7 +39,7 @@ class ReportesController extends Controller
        $resultados=NULL;
        $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id'); 
 
-        return view('Reportes.Reporte_Asambleistas_Periodo')        
+        return view('Reportes.Reporte_Asambleistas_Periodo')         
         ->with('periodo', $periodo)
         ->with('periodos', $periodos)
         ->with('resultados',$resultados);
@@ -901,7 +901,7 @@ return view('Reportes.Reporte_bitacora_correspondencia',['resultados'=>NULL]);
         $cuenta=0;
         foreach ($busqueda as $busq) {
            
-        $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada hdp
+        $agendas_anio=DB::table('agendas') //todas las agendas no vigentes del año seleccionado en las que participo cada asambleista
         ->join('asistencias','asistencias.agenda_id','=','agendas.id')
         ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
         ->whereYear('fecha','=',$anio)
@@ -1040,7 +1040,7 @@ public function Reporte_planilla_dieta_prof_Est_pdf($tipo)
         $anio=$parametros[2];
 
 
-     $resultados = DB::table('dietas')
+        $resultados = DB::table('dietas')
         ->join('asambleistas','dietas.asambleista_id','=','asambleistas.id')
         ->join('users','asambleistas.user_id','=','users.id')
         ->join('sectores','asambleistas.sector_id','=','sectores.id')
@@ -1051,15 +1051,118 @@ public function Reporte_planilla_dieta_prof_Est_pdf($tipo)
         ->where('sectores.id','=', 1)  //serctor 2 por ser profesional docente
         ->select('asambleistas.id','personas.primer_apellido','personas.primer_nombre','personas.segundo_apellido',
                  'personas.segundo_nombre','dietas.mes','dietas.anio','sectores.id','sectores.nombre as nom_sect',
-                 'facultades.nombre as nom_fact','dietas.asistencia')->orderBy('nom_fact', 'desc')->get();
+                 'facultades.nombre as nom_fact','dietas.asistencia',DB::raw('0 AS dieta'),DB::raw('0 AS renta'))->orderBy('nom_fact', 'desc')->get();
 
         $monto_dieta=DB::table('parametros')
         ->where('parametros.parametro','=','mdi')
         ->select('parametros.valor')
         ->first();
-        
-        $porcentaje_asistencia=0.0;
 
+      /*  $iva=0.0;
+        $porcentaje_asistencia=0.0;
+        $renta=0.0;
+        $monto_dieta=0.0;
+        $cuenta=0;
+        //dd($resultados);
+        foreach ($resultados as $resul) {
+
+        $agendas_anio=DB::table('agendas') //todas las agendas 
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('asambleistas','asistencias.asambleista_id','=','asambleistas.id')
+        ->whereYear('fecha','=',$anio)
+        ->whereMonth('fecha','=',$mes)
+        ->where('asambleistas.id','=',$resul->id)
+        ->where('agendas.vigente','<>',1)
+        ->get();
+
+        dd($agendas_anio);
+
+        foreach ($agendas_anio as $agendas) {
+
+        $parametros=DB::table('parametros')->get();
+        foreach ($parametros as $parametro) {
+        if($parametro->nombre_parametro=='iva'){ 
+            $iva=$parametro->valor;
+        }
+        if($parametro->nombre_parametro=='porcentaje_asistencia'){ 
+            $porcentaje_asistencia=($parametro->valor)*100;
+        }
+        if($parametro->nombre_parametro=='renta'){ 
+            $renta=$parametro->valor;
+        }
+        if($parametro->nombre_parametro=='monto_dieta'){ 
+            $monto_dieta=$parametro->valor;
+        }
+        }
+
+
+        $horasreunion=DB::table('agendas')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma') 
+        ->where('agendas.id','=',$agendas->id) //por el momento solo filtro por el id 
+        ->where('agendas.vigente','<>',1) //este where tiene que ir para no mostrar reuniones no terminadas        
+        ->get();
+
+
+           $horasasistencia=DB::table('asistencias')
+        ->selectRaw('ABS(sum(time_to_sec(timediff(tiempos.entrada,tiempos.salida)))/3600) as suma') 
+        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
+        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
+        ->where('estado_asistencias.id','=',3)//3 por ser asistencia normal 
+        ->where('asistencias.asambleista_id','=',$resul->id) 
+        ->where('asistencias.agenda_id','=',$agendas->id)//por el momento solo filtro por el id       
+        ->get();
+        
+
+        if($horasreunion[0]->suma>0.0){
+
+        $porcAsistencia=($horasasistencia[0]->suma/$horasreunion[0]->suma)*100;
+        }
+        else{
+
+        $porcAsistencia=0.0;
+
+        }
+
+
+        if($porcAsistencia>=$porcentaje_asistencia){
+
+        $cantDiet = DB::table('dietas')  
+        ->where('dietas.asambleista_id','=',$resul->id)
+        ->where('dietas.anio','=',$anio)
+        ->where('dietas.mes','=',$mes)
+        ->selectRaw('SUM(asistencia) AS asistencia')
+        ->get();
+
+
+        $asistencianum=$cantDiet[0]->asistencia;
+
+
+        if($asistencianum==0)
+        {
+        $monto_dieta=0.0;
+        }
+        else{
+
+        $monto_dieta=$monto_dieta*$asistencianum;
+
+        }
+
+        $resultados[$cuenta]->dieta=$resultados[$cuenta]->dieta+$monto_dieta;
+
+        $renta=$monto_dieta*$renta;
+        $renta=round($renta,2);
+        $resultados[$cuenta]->renta=$resultados[$cuenta]->renta+$renta;
+        }
+        }
+
+         if($resultados[$cuenta]->dieta==0.0){
+        unset($resultados[$cuenta]);
+        }
+            $cuenta=$cuenta+1;
+
+        }
+
+*/
       
 
         $view =  \View::make('Reportes/Reporte_planilla_dieta_prof_Est_pdf', compact('resultados','mes','anio','monto_dieta'))->render();
