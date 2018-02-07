@@ -707,7 +707,18 @@ else{
 
 
         $fechainicial=$request->fecha1;
-        $fechafinal=$request->fecha2;      
+        $fechafinal=$request->fecha2;   
+
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_permisos_temporales")
+        ->with('resultados',NULL);
+        }
+
          $resultados=DB::table('agendas')
         ->join('asistencias','asistencias.agenda_id','=','agendas.id')
         ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
@@ -756,7 +767,15 @@ else{
         $sector=$request->tipoDocumento;
         $tipo=$request->tipoDocumento;
         
-      
+       $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_asistencias_sesion_plenaria")
+        ->with('resultados',NULL);
+        }
+
 
 
      if($sector=='E'){
@@ -829,6 +848,16 @@ else{
 $fechainicial=$request->fecha1;
 
 $fechafinal=$request->fecha2;
+
+   $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_bitacora_correspondencia")
+        ->with('resultados',NULL);
+        }
+
 
 
 $resultados = DB::table('peticiones')
@@ -1515,6 +1544,15 @@ public function Reporte_planilla_dieta_prof_Doc_pdf($tipo)
 
         $fechainicial=$request->fecha1;
         $fechafinal=$request->fecha2;
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_permisos_permanentes")
+        ->with('resultados',NULL);
+        }
 
         $resultados = DB::table('permisos')
         ->where

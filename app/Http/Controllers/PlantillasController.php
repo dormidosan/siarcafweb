@@ -22,6 +22,18 @@ class PlantillasController extends Controller
  public function buscar_actas(ActasRequest $request){
         $fechainicial=$request->fecha1;
         $fechafinal=$request->fecha2;   
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Plantillas.Plantilla_actas")
+        ->with('resultados',NULL);
+        }
+
+
+
         $resultados=DB::table('agendas')
      
         ->where('agendas.vigente','=',0)//0 por ser agenda vigente
@@ -52,8 +64,18 @@ else{
  public function buscar_acuerdos(ActasRequest $request){
         $fechainicial=$request->fecha1;
         $fechafinal=$request->fecha2;   
+
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Plantillas.Plantilla_acuerdos")
+        ->with('resultados',NULL);
+        }
+
         $resultados=DB::table('agendas')
-     
         ->where('agendas.vigente','=',0)//0 por ser agenda vigente
         ->where
 ([
@@ -82,6 +104,16 @@ else{
 public function buscar_dictamenes(ActasRequest $request){
         $fechainicial=$request->fecha1;
         $fechafinal=$request->fecha2;   
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Plantillas.Plantilla_acuerdos")
+        ->with('resultados',NULL);
+        }
+
         $resultados=DB::table('agendas')
      
         ->where('agendas.vigente','=',0)//0 por ser agenda vigente
