@@ -10,6 +10,8 @@ use App\Comision;
 use App\Peticion;
 use App\Presente;
 use App\Reunion;
+use App\Seguimiento;
+use App\TipoDocumento;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -315,11 +317,91 @@ class ComisionController extends Controller
 
     public function convocatoria_comision(Request $request, Redirector $redirect)
     {
-       
-        return view('Comisiones.convocatoria_comision');
+        $comision = Comision::where("id",$request->comision_id)->first();
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->comision_id)->orderBy('created_at', 'DESC')->get();
+        return view('Comisiones.convocatoria_comision')
+            ->with('reuniones', $reuniones)
+            ->with('comision', $comision);
     }
 
-    
+    public function subir_documento_comision(Request $request, Redirector $redirect)
+    {
+        $id_peticion = $request->id_peticion;
+        $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+        if(($request->id_reunion) and ($request->id_reunion != 0)){
+            $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        }else {
+            $reunion = '0';
+        }
+
+        $seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+        $tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id');
+        //dd($tipo_documentos);
+
+        $disco = "../storage/documentos/";
+
+        return view('Comisiones.subir_documento_comision')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('peticion', $peticion)
+            ->with('seguimientos', $seguimientos)
+            ->with('tipo_documentos', $tipo_documentos);
+    }
+
+    public function crear_reunion_comision(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $reunion = new Reunion();
+        $reunion->comision_id = $comision->id;
+        $reunion->periodo_id = Periodo::latest()->first()->id;
+        $reunion->codigo = $comision->codigo." ".\DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y');
+        $reunion->lugar = $request->lugar;
+        $reunion->convocatoria = \DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+        $reunion->vigente = '1';
+        $reunion->activa = '0';
+        $reunion->save();
+
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
+
+        return view('Comisiones.convocatoria_comision')
+            ->with('reuniones', $reuniones)
+            ->with('comision', $comision);
+    }
+
+    public function eliminar_reunion_comision(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $reunion->delete();
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
+        $request->session()->flash("error", 'Reunion eliminada con exito');
+        return view('Comisiones.convocatoria_comision')
+            ->with('reuniones', $reuniones)
+            ->with('comision', $comision);
+    }
+
+    public function enviar_convocatoria_comision(Request $request, Redirector $redirect)
+    {
+        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $cargos = $comision->cargos;
+        foreach ($cargos as $cargo) {
+            $destinatario = $cargo->asambleista->user->email;
+            $nombre = $cargo->asambleista->user->persona->primer_nombre." ".$cargo->asambleista->user->persona->segundo_nombre;
+            Mail::queue('correo.contact',$request->all(), function ($message) use ($destinatario,$nombre,$comision) {
+                $message->from('from@example.com');
+                $message->subject("Convocatoria ".$comision->nombre." para: ".$nombre);
+                $message->to($destinatario,$nombre);
+            });
+        }
+
+        $request->session()->flash("success", 'Correos electronicos enviados');
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=',$request->id_comision)->orderBy('created_at', 'DESC')->get();
+        return view('Comisiones.convocatoria_comision')
+            ->with('reuniones', $reuniones);
+    }
 
 
 }

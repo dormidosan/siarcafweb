@@ -90,9 +90,19 @@ class AgendaController extends Controller
     public function sala_sesion_plenaria(Request $request,Redirector $redirect)
     {
 
-    	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
-    	$periodo_activo = Periodo::where('activo','=', 1)->first();
 
+    	$agenda = Agenda::where('id', '=', $request->id_agenda)->first();
+
+        if ($agenda->puntos->isEmpty()) {
+
+            $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
+            $request->session()->flash("warning_puntos", 'La agenda "'.$agenda->codigo.'"  contiene 0 PUNTOS asociados');
+
+            return view('Agenda.consultar_agendas_vigentes')
+            ->with('agendas',$agendas);
+        }
+
+        $periodo_activo = Periodo::where('activo','=', 1)->first();
         $array_asambleistas_sesion = Asistencia::where('agenda_id','=',$agenda->id)->pluck('asambleista_id')->toArray();
 
 
@@ -1014,4 +1024,93 @@ class AgendaController extends Controller
             return new JsonResponse($respuesta);
         }
     }
+
+    public function retiro_temporal(Request $request)
+    {
+        switch ($request->tipo) {
+            //retiro temporal
+            case 1:
+                $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista)->first();
+                $asistencia->temporal = 1;
+                $asistencia->save();
+                $tiempo = Tiempo::where("asistencia_id",$asistencia->id)->orderBy('updated_at','desc')->first();
+                $tiempo->estado_asistencia_id = 1;
+                $tiempo->salida = Carbon::now();
+                $tiempo->save();
+                $request->session()->flash("success", "Retiro temporal realizado con exito ");
+                break;
+            //retiro permanente
+            case 2:
+                $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista_permanente)->first();
+                $asistencia->salida = Carbon::now();
+                $asistencia->temporal = 2; //se concluyo
+                $asistencia->save();
+                $tiempo = Tiempo::where("asistencia_id",$asistencia->id)->orderBy('updated_at','desc')->first();
+                $tiempo->estado_asistencia_id = 2;
+                $tiempo->salida = Carbon::now();
+                $tiempo->save();
+                $request->session()->flash("success", "Retiro Permanente realizado con exito ");
+                break;
+            //reincorporar
+            case 3:
+                $asistencia = Asistencia::where("agenda_id", $request->agenda)->where("asambleista_id",$request->asambleista_reincorporar)->first();
+                $asistencia->temporal = 0;
+                $asistencia->save();
+                $tiempo = new Tiempo();
+                $tiempo->asistencia_id = $asistencia->id;
+                $tiempo->estado_asistencia_id = 3; //normal
+                $tiempo->tiempo_propietario = 0;
+                $tiempo->entrada = Carbon::now();
+                $tiempo->save();
+
+                $request->session()->flash("success", "Asambleista reincorporado a la sesion vigente con exito ");
+                break;
+        }
+
+        $facultad = Facultad::where('id', '=', $request->facultad_modal)->first();
+        $agenda = Agenda::where('id', '=', $request->agenda)->first();
+        $periodo = Periodo::where('activo', '=', '1')->first();
+
+        $asambleistas = Asambleista::where('activo', '=', 1)
+            ->where('periodo_id', '=', $periodo->id)
+            ->where('facultad_id', '=', $facultad->id)
+            ->get();
+
+        $asistentes = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id', '=', $agenda->id)
+            ->where('asambleistas.facultad_id', '=', $facultad->id)
+            ->select('asistencias.*')
+            ->get();
+
+        //$sector1 =
+        /* */
+        $sector1 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id', '=', $agenda->id)
+            ->where('asistencias.propietaria', '=', '1')
+            ->where('asambleistas.facultad_id', '=', $facultad->id)
+            ->where('asambleistas.sector_id', '=', '1')
+            ->count();
+        $sector2 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id', '=', $agenda->id)
+            ->where('asistencias.propietaria', '=', '1')
+            ->where('asambleistas.facultad_id', '=', $facultad->id)
+            ->where('asambleistas.sector_id', '=', '2')
+            ->count();
+        $sector3 = Asistencia::join("asambleistas", "asambleistas.id", "=", "asistencias.asambleista_id")
+            ->where('asistencias.agenda_id', '=', $agenda->id)
+            ->where('asistencias.propietaria', '=', '1')
+            ->where('asambleistas.facultad_id', '=', $facultad->id)
+            ->where('asambleistas.sector_id', '=', '3')
+            ->count();
+
+        return view('Agenda.gestionar_asistencia')
+            ->with('sector1', $sector1)
+            ->with('sector2', $sector2)
+            ->with('sector3', $sector3)
+            ->with('agenda', $agenda)
+            ->with('facultad', $facultad)
+            ->with('asistentes', $asistentes)
+            ->with('asambleistas', $asambleistas);
+    }
+
 }

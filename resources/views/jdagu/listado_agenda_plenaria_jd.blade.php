@@ -294,7 +294,7 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                "order": [[1, 'asc']],
+                "order": [[0, 'asc']],
                 "columnDefs": [
                     { "orderable": false, "targets": [0,5,6,7] }
                 ]

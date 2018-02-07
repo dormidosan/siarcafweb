@@ -193,14 +193,14 @@
                                         </td>
 
                                         <td>
-                                            {!! Form::open(['route'=>['asignar_comision_jd'],'method'=> 'POST','id'=>$peticion->id.'4']) !!}
+                                            {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'4']) !!}
                                             <input type="hidden" name="id_peticion" id="id_peticion"
                                                    value="{{$peticion->id}}">
                                             <input type="hidden" name="id_comision" id="id_comision"
                                                    value="{{$comision->id}}">
                                             <input type="hidden" name="id_reunion" id="id_reunion"
                                                    value="{{$reunion->id}}">
-                                            <button type="submit" class="btn btn-success btn-xs">Subir Atestado</button>
+                                            <button type="submit" class="btn btn-success btn-xs"> Subir documentacion</button>
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

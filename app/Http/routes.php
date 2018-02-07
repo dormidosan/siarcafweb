@@ -40,6 +40,11 @@ Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_
 Route::post('historial_bitacoras', 'ComisionController@historial_bitacoras')->name('historial_bitacoras');
 Route::post('historial_dictamenes', 'ComisionController@historial_dictamenes')->name('historial_dictamenes');
 Route::post('convocatoria_comision', 'ComisionController@convocatoria_comision')->name('convocatoria_comision');
+Route::post('subir_documento_comision', 'ComisionController@subir_documento_comision')->name('subir_documento_comision');
+
+Route::post('crear_reunion_comision', array('as' => 'crear_reunion_comision', 'uses' => 'ComisionController@crear_reunion_comision'));
+Route::post('eliminar_reunion_comision', array('as' => 'eliminar_reunion_comision', 'uses' => 'ComisionController@eliminar_reunion_comision'));
+Route::post('enviar_convocatoria_comision', array('as' => 'enviar_convocatoria_comision', 'uses' => 'ComisionController@enviar_convocatoria_comision'));
 
 
 //rutas q aun no uso
@@ -211,6 +216,7 @@ Route::post('agregar_asambleistas_sesion', 'AgendaController@agregar_asambleista
 Route::post('gestionar_asistencia', array('as' => 'gestionar_asistencia', 'uses' => 'AgendaController@gestionar_asistencia'));
 Route::post('cambiar_propietaria', array('as' => 'cambiar_propietaria', 'uses' => 'AgendaController@cambiar_propietaria'));
 Route::post('obtener_datos_intervencion', 'AgendaController@obtener_datos_intervencion')->name("obtener_datos_intervencion");
+Route::post('retiro_temporal', 'AgendaController@retiro_temporal')->name("retiro_temporal");
 Route::get('descargar_documento/{id}', 'DocumentoController@descargar_documento')->name("descargar_documento");
 
 
@@ -247,6 +253,7 @@ Route::get('cambiar_cargos_comision', "AdministracionController@cambiar_cargos_c
 Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_cargos_junta_directiva")->name("cambiar_cargos_junta_directiva");
 Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
+Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
@@ -263,6 +270,7 @@ Route::post('agregar_plantillas', "AdministracionController@agregar_plantillas")
 Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla")->name("almacenar_plantilla");
 Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
+Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 
 
 
@@ -317,6 +325,14 @@ Route::post('crear_reunion_jd', array('as' => 'crear_reunion_jd', 'uses' => 'Jun
 Route::post('eliminar_reunion_jd', array('as' => 'eliminar_reunion_jd', 'uses' => 'JuntaDirectivaController@eliminar_reunion_jd'));
 Route::post('enviar_convocatoria_jd', array('as' => 'enviar_convocatoria_jd', 'uses' => 'JuntaDirectivaController@enviar_convocatoria_jd'));
 
+Route::post('subir_documento_jd', array('as' => 'subir_documento_jd', 'uses' => 'JuntaDirectivaController@subir_documento_jd'));
+Route::post('guardar_documento_jd', array('as' => 'guardar_documento_jd', 'uses' => 'JuntaDirectivaController@guardar_documento_jd'));
+
+Route::post('subir_bitacora_jd', array('as' => 'subir_bitacora_jd', 'uses' => 'JuntaDirectivaController@subir_bitacora_jd'));
+Route::post('guardar_bitacora_jd', array('as' => 'guardar_bitacora_jd', 'uses' => 'JuntaDirectivaController@guardar_bitacora_jd'));
+
+Route::post('subir_dictamen_jd', array('as' => 'subir_dictamen_jd', 'uses' => 'JuntaDirectivaController@subir_dictamen_jd'));
+Route::post('guardar_dictamen_jd', array('as' => 'guardar_dictamen_jd', 'uses' => 'JuntaDirectivaController@guardar_dictamen_jd'));
 
 
 /*post*/

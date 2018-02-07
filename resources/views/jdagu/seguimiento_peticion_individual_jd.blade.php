@@ -1,35 +1,37 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a href="{{url('listado_peticiones_jd')}}">Listado de Peticiones JD</a></li>
+            <li class="active">Peticion {{ $peticion->codigo }}</li>
+        </ol>
+    </section>
+@endsection
+
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
             <h3 class="box-title">Seguimiento</h3>
         </div>
+
         <div class="box-body">
-            <div class="row">
             @if($es_reunion == 1)
-            <div class="col-lg-3 col-sm-12">
-                    {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!} 
-                    <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                    <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Reunion JD</button>
-                   
-                    {!! Form::close() !!}
-            </div>
-            @else
-            <div class="col-lg-4 col-lg-offset-1 col-sm-12">
-                <a id="iniciar" name="iniciar" class="btn btn-danger btn-block"
-                   href="{{ url('listado_peticiones_jd') }}">Regresar a - Listado de peticiones JD</a>
-            </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-12">
+                        {!! Form::open(['route'=>['iniciar_reunion_jd'],'method'=> 'POST']) !!}
+                        <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
+                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
+                        <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger btn-block">Reunion JD
+                        </button>
+
+                        {!! Form::close() !!}
+                    </div>
+                </div>
             @endif
-                
-
-                
-
-
-            </div>
-        </div>
-        <div class="box-body">
             <div class="row">
                 <div class="col-lg-4 col-sm-12 col-md-4">
                     <div class="form-group">
