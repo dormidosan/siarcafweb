@@ -26,12 +26,13 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="">
+    <section>
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="">Junta Directiva</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
-            <li class="active">Generar Agenda Plenaria</li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
+            <li class="active">Listado de Reuniones</li>
         </ol>
     </section>
 @endsection
@@ -43,6 +44,14 @@
             <h3 class="box-title">Generar Agenda Plenaria</h3>
         </div>
         <div class="box-body">
+            <div class="hidden">
+                <form id="trabajo_comision" name="trabajo_comision" method="post"
+                      action="{{ url("trabajo_comision") }}">
+                    {{ csrf_field() }}
+                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                    <button class="btn btn-success btn-xs">Acceder</button>
+                </form>
+            </div>
             <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
                 {{ csrf_field() }}
                 {{ Form::hidden('id_comision', '1') }}
