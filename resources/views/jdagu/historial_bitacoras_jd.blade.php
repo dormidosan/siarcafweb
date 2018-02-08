@@ -6,7 +6,7 @@
     <link rel="stylesheet"
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 
-          <style>
+    <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
             margin-right: 0;
             margin-left: 0;
@@ -19,48 +19,29 @@
     </style>
 @endsection
 
-@section('content')
-    <div class="box box-danger">
-        <div class="box-header with-border">
-            <h3 class="box-title">Historial de  Bitacoras</h3>
-        </div>
-        <!--
-        <div class="box-body">
-            <form id="crearbuscar" name="buscar" method="post" action="#">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label>Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Ingrese una descripcion"
-                                   id="descripcion"
-                                   name="descripcion">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <button type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        -->
-    </div>
+@section('breadcrumb')
+    <section>
+        <ol class="breadcrumb">
+            <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a class="active">Historial Bitacoras JD</a></li>
+        </ol>
+    </section>
+@endsection
 
+@section('content')
     <?php $i = 1; ?>
-    <div class="box box-solid box-default">
+    <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">Listado de Bitacoras</h3>
         </div>
         <div class="box-body table-responsive">
-            <table id="resultadoDocs"
-                   class="table table-striped table-bordered table-hover text-center">
+            <table id="resultadoDocs" class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
-                    <th colspan="2">Nombre Bitacora</th>
+                    <th>Nombre Bitacora</th>
                     <th>Fecha Creacion</th>
-                    <th>Lugar</th>
                     <th>Accion</th>
                 </tr>
                 </thead>
@@ -68,33 +49,35 @@
                 <tbody id="cuerpoTabla">
                 @forelse($reuniones as $reunion)
                     @forelse($reunion->documentos as $documento)
-                            @if($documento->tipo_documento_id == 7)
+                        @if($documento->tipo_documento_id == 7)
                             <tr>
                                 <td>{!! $documento->nombre_documento !!}</td>
-                                <td>{!! $documento->tipo_documento->tipo !!}</td>                                  
-                                <td>{!! $reunion->codigo !!}</td>
-                                <td>{!! $reunion->lugar !!}</td>
+                                <td>{{ date("d-m-Y h:m A",strtotime($documento->fecha_ingreso)) }}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$documento->path) }}"
-                                       role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-success btn-xs btn-block"
-                                       href="descargar_documento/<?= $documento->id; ?>" role="button">
-                                        <i class="fa fa-download"></i> Descargar</a>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$documento->path) }}"
+                                               role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <a class="btn btn-success btn-xs btn-block"
+                                               href="descargar_documento/<?= $documento->id; ?>" role="button">
+                                                <i class="fa fa-download"></i> Descargar</a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                            @endif
-                        @empty
+                        @endif
+                    @empty
                         <!-- <p style="color: red ;">No hay criterios de busqueda</p> -->
                         <?php $text1 = 1; ?>
-                        @endforelse
+                    @endforelse
                 @empty
                     @if($text1 == 1)
                         <p style="color: red ;">No hay criterios de busqueda</p>
                     @endif
                 @endforelse
-                
+
                 </tbody>
 
             </table>
@@ -139,7 +122,7 @@
                     }
                 },
                 responsive: true,
-                columnDefs: [{orderable: false, targets: [0, 5]}],
+                columnDefs: [{orderable: false, targets: [0, 2]}],
                 order: [[1, 'asc']]
 
             });

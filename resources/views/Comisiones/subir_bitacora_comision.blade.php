@@ -22,12 +22,14 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="">
+    <section>
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
-            <li><a href="{{ url("listado_reuniones_jd") }}">Listado de Reuniones</a></li>
-            <li class="active">Subir Documento</li>
+            <li><a>Comisiones</a></li>
+            <li><a href="{{ route("administrar_comisiones") }}">Listado de Comisiones</a></li>
+            <li><a href="javascript:document.getElementById('trabajo_comision').submit();">Trabajo de Comision</a></li>
+            <li><a href="javascript:document.getElementById('listado_reuniones_comision').submit();">Listado de Reuniones</a></li>
+            <li>Subir Documento</li>
         </ol>
     </section>
 @endsection
@@ -38,30 +40,38 @@
             <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
-            <form class="form-group" id="guardar_bitacora_jd" name="guardar_bitacora_jd" method="post"
-                  action="{{ url('guardar_bitacora_jd') }}" enctype="multipart/form-data">
+            <div class="hidden">
+                <form id="listado_reuniones_comision" name="listado_reuniones_comision"
+                      method="post" action="{{ url("listado_reuniones_comision") }}" {{-- --}}>
+                    {{ csrf_field() }}
+                    <div class="text-center">
+                        <i class="fa fa-group fa-4x text-maroon"></i>
+                    </div>
+                    <h3 class="profile-username text-center">Reuniones</h3>
+                    <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+                    <button type="submit" class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></button>
+                </form>
+            </div>
+            <form class="form-group" id="guardar_bitacora_comision" name="guardar_bitacora_comision" method="post"
+                  action="{{ route("guardar_bitacora_comision")}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
                 <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                 <div class="row">
+
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="documento">Seleccione bitacora (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_jd" name="documento_jd" type="file" required="required"
+                                <input id="documento_comision" name="documento_comision" type="file" required="required"
                                        data-show-preview="false">
                             </div>
-
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12 text-center">
                         <div class="form-group">
-                            <label></label>
-                            <input type="submit" class="btn btn-primary" name="guardar" id="guardar"
-                                   value="Aceptar">
+                            <input type="submit" class="btn btn-primary" name="guardar" id="guardar" value="Aceptar">
                         </div>
                     </div>
                 </div>
@@ -135,7 +145,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#documento_jd").fileinput({
+            $("#documento_comision").fileinput({
                 theme: "explorer",
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
@@ -189,6 +199,7 @@
     </script>
 
 @endsection
+
 
 @section("lobibox")
 
