@@ -79,7 +79,7 @@
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" placeholder="H:m AM"/>
+                                <input name="hora" type='text' id="hora" class="form-control" placeholder="h:i AM"/>
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span></span>
                             </div>

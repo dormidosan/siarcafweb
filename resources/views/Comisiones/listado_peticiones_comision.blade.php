@@ -48,7 +48,7 @@
                             <td>{!! $contador !!}</td>
                             <td>{{ $peticion->codigo }}</td>
                             <td>{{ $peticion->descripcion }}</td>
-                            <td>{{ \Carbon\Carbon::parse($peticion->fecha)->format('d-m-Y h:m A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($peticion->fecha)->format('d-m-Y h:i A') }}</td>
                             {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>{{ $peticion->peticionario }}</td>
                             <td>

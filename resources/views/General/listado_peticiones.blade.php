@@ -61,7 +61,7 @@
                             <td>
                                 {!! $peticion->correo !!}
                             </td>
-                            <td>{{ date("m/d/Y h:m A",strtotime($peticion->fecha)) }}</td>
+                            <td>{{ date("m/d/Y h:i A",strtotime($peticion->fecha)) }}</td>
                             {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>
                                 {!! $peticion->peticionario !!}

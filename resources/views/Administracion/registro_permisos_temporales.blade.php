@@ -144,7 +144,7 @@
                         @else
                             <td>-----</td>
                         @endif
-                        <td>{{ date("d/m/Y h:m A",strtotime($permiso->created_at)) }}</td>
+                        <td>{{ date("d/m/Y h:i A",strtotime($permiso->created_at)) }}</td>
                         <td>{{ $permiso->motivo }}</td>
                         <td>{{ date("d/m/Y",strtotime($permiso->inicio))}}</td>
                         <td>{{ date("d/m/Y",strtotime($permiso->fin)) }}</td>
