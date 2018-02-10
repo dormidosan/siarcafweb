@@ -93,8 +93,8 @@
                             <input type="hidden" name="id_comision" id="id_comision" value="{{ $comision->id }}">
                             <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
                             <td>
-                                <button type="submit" class="btn btn-warning btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Subir documentacion
+                                <button type="submit" class="btn btn-info btn-xs btn-block" >
+                                    <i class="fa fa-upload"></i> Subir documentacion
                                 </button>
                             </td>
                             {!! Form::close() !!}

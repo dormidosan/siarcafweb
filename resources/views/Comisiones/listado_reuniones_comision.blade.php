@@ -66,7 +66,7 @@
                                 @if($reunion->activa == 0)
                                     <td>
                                         <button type="submit" class="btn btn-success btn-xs btn-block"><i
-                                                    class="fa fa-arrow-right"></i>Iniciar
+                                                    class="fa fa-arrow-right"></i> Iniciar
                                         </button>
                                     </td>
                                 @else
@@ -84,7 +84,7 @@
                                                 class="fa fa-arrow-right"></i> Continuar
                                     </button>
                                 </td>
-                                {!! Form::open(['route'=>['subir_bitacora_jd'],'method'=> 'POST']) !!}
+                                {!! Form::open(['route'=>['subir_bitacora_comision'],'method'=> 'POST']) !!}
                                 <input type="hidden" name="id_comision" id="id_comision"
                                        value="{{$reunion->comision_id}}">
                                 <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">

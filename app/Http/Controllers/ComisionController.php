@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Documento;
 use App\Periodo;
 use App\Asambleista;
 use App\Cargo;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ComisionRequest;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 
 class ComisionController extends Controller
@@ -191,7 +193,6 @@ class ComisionController extends Controller
         return view('Comisiones.listado_reuniones_comision', ["reuniones" => $reuniones, "comision" => $comision]);
     }
 
-
     public function iniciar_reunion_comision(Request $request)
     {
 
@@ -261,13 +262,12 @@ class ComisionController extends Controller
         $peticion = Peticion::find($request->get("id_peticion"));
         $comision = Comision::find($request->get("id_comision"));
 
-        if ($request->get("id_reunion") == ""){
-            return view('Comisiones.seguimiento_peticion_comision',array("disco"=>$disco,"comision"=>$comision,"peticion"=>$peticion));
-        }else{
+        if ($request->get("id_reunion") == "") {
+            return view('Comisiones.seguimiento_peticion_comision', array("disco" => $disco, "comision" => $comision, "peticion" => $peticion));
+        } else {
             $reunion = Reunion::find($request->get("id_reunion"));
-            return view('Comisiones.seguimiento_peticion_comision',array("disco"=>$disco,"comision"=>$comision,"reunion"=>$reunion,"peticion"=>$peticion));
+            return view('Comisiones.seguimiento_peticion_comision', array("disco" => $disco, "comision" => $comision, "reunion" => $reunion, "peticion" => $peticion));
         }
-
 
 
     }
@@ -283,14 +283,14 @@ class ComisionController extends Controller
         $reunion->save();
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
         $comision = Comision::find($request->get("id_comision"));
-        return view('Comisiones.listado_reuniones_comision',array("reuniones"=>$reuniones,"comision"=>$comision));
+        return view('Comisiones.listado_reuniones_comision', array("reuniones" => $reuniones, "comision" => $comision));
 
     }
 
     public function historial_bitacoras(Request $request, Redirector $redirect)
     {
         $id_comision = $request->comision_id;
-        $comision = Comision::where('id', '=',$id_comision)->first();
+        $comision = Comision::where('id', '=', $id_comision)->first();
         $periodo = Periodo::latest()->first();
         $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
         $disco = "../storage/documentos/";
@@ -304,7 +304,7 @@ class ComisionController extends Controller
     public function historial_dictamenes(Request $request, Redirector $redirect)
     {
         $id_comision = $request->comision_id;
-        $comision = Comision::where('id', '=',$id_comision)->first();
+        $comision = Comision::where('id', '=', $id_comision)->first();
         $periodo = Periodo::latest()->first();
         $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
         $disco = "../storage/documentos/";
@@ -317,7 +317,7 @@ class ComisionController extends Controller
 
     public function convocatoria_comision(Request $request, Redirector $redirect)
     {
-        $comision = Comision::where("id",$request->comision_id)->first();
+        $comision = Comision::where("id", $request->comision_id)->first();
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->comision_id)->orderBy('created_at', 'DESC')->get();
         return view('Comisiones.convocatoria_comision')
             ->with('reuniones', $reuniones)
@@ -329,9 +329,9 @@ class ComisionController extends Controller
         $id_peticion = $request->id_peticion;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->first();
-        if(($request->id_reunion) and ($request->id_reunion != 0)){
+        if (($request->id_reunion) and ($request->id_reunion != 0)) {
             $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
-        }else {
+        } else {
             $reunion = '0';
         }
 
@@ -352,13 +352,13 @@ class ComisionController extends Controller
 
     public function crear_reunion_comision(Request $request, Redirector $redirect)
     {
-        $comision = Comision::where('id','=',$request->id_comision)->first();
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
         $reunion = new Reunion();
         $reunion->comision_id = $comision->id;
         $reunion->periodo_id = Periodo::latest()->first()->id;
-        $reunion->codigo = $comision->codigo." ".\DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y');
+        $reunion->codigo = $comision->codigo . " " . \DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y');
         $reunion->lugar = $request->lugar;
-        $reunion->convocatoria = \DateTime::createFromFormat('d/m/Y H:i:s' , $request->fecha.''.date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+        $reunion->convocatoria = \DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha . '' . date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
         $reunion->vigente = '1';
         $reunion->activa = '0';
         $reunion->save();
@@ -372,8 +372,8 @@ class ComisionController extends Controller
 
     public function eliminar_reunion_comision(Request $request, Redirector $redirect)
     {
-        $comision = Comision::where('id','=',$request->id_comision)->first();
-        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->first();
         $reunion->delete();
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
         $request->session()->flash("error", 'Reunion eliminada con exito');
@@ -384,24 +384,78 @@ class ComisionController extends Controller
 
     public function enviar_convocatoria_comision(Request $request, Redirector $redirect)
     {
-        $comision = Comision::where('id','=',$request->id_comision)->first();
-        $reunion = Reunion::where('id','=',$request->id_reunion)->first();
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->first();
         $cargos = $comision->cargos;
         foreach ($cargos as $cargo) {
             $destinatario = $cargo->asambleista->user->email;
-            $nombre = $cargo->asambleista->user->persona->primer_nombre." ".$cargo->asambleista->user->persona->segundo_nombre;
-            Mail::queue('correo.contact',$request->all(), function ($message) use ($destinatario,$nombre,$comision) {
+            $nombre = $cargo->asambleista->user->persona->primer_nombre . " " . $cargo->asambleista->user->persona->segundo_nombre;
+            Mail::queue('correo.contact', $request->all(), function ($message) use ($destinatario, $nombre, $comision) {
                 $message->from('from@example.com');
-                $message->subject("Convocatoria ".$comision->nombre." para: ".$nombre);
-                $message->to($destinatario,$nombre);
+                $message->subject("Convocatoria " . $comision->nombre . " para: " . $nombre);
+                $message->to($destinatario, $nombre);
             });
         }
 
         $request->session()->flash("success", 'Correos electronicos enviados');
-        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=',$request->id_comision)->orderBy('created_at', 'DESC')->get();
+        $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', $request->id_comision)->orderBy('created_at', 'DESC')->get();
         return view('Comisiones.convocatoria_comision')
             ->with('reuniones', $reuniones);
     }
 
+    public function subir_bitacora_comision(Request $request)
+    {
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+        $disco = "../storage/documentos/";
+        return view('Comisiones.subir_bitacora_comision')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision);
+    }
 
+    public function guardar_bitacora_comision(Request $request)
+    {
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+        $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+
+        if ($request->hasFile('documento_comision')) {
+            $documento_comision = $this->guardarDocumento($request->documento_comision, '7', 'documentos'); //7 es bitacora
+            $reunion->documentos()->attach($documento_comision);
+        }
+        $request->session()->flash("success", 'Archivo guardado con exito');
+        $disco = "../storage/documentos/";
+        return view('Comisiones.subir_bitacora_comision')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision);
+    }
+
+    public function guardarDocumento($doc, $tipo, $destino)
+    {
+        $archivo = $doc;
+        $documento = new Documento();
+        $documento->nombre_documento = $archivo->getClientOriginalName();
+        $documento->tipo_documento_id = $tipo; // PETICION = 1
+        $documento->periodo_id = Periodo::latest()->first()->id;
+        $documento->fecha_ingreso = Carbon::now();
+        $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+
+        while (Documento::where('path', '=', $ruta)->first()) {
+            $ruta = MD5(microtime()) . "." . $archivo->getClientOriginalExtension();
+        }
+
+        $r1 = Storage::disk($destino)->put($ruta, \File::get($archivo));
+        $documento->path = $ruta;
+        $documento->save();
+        return $documento;
+    }
+
+    public function listado_agenda_comision(Request $request, Redirector $redirect)
+    {
+        $agendas = Agenda::where('id','!=',0)->orderBy('updated_at','DESC')->get();
+        return view('jdagu.listado_agenda_plenaria_jd')
+            ->with('agendas', $agendas);
+
+    }
 }
