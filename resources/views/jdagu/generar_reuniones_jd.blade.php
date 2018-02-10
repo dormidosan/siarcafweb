@@ -92,8 +92,8 @@
                             <td>{!! $reunion->codigo !!}</td>
                             <td>{!! $reunion->lugar !!}</td>
                             <td>{!! $reunion->convocatoria !!}</td>
-                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->inicio)) }}</td>
-                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->fin)) }}</td>
+                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->inicio)) }}</td>
+                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->fin)) }}</td>
                             @if($reunion->vigente == 1)
 
                                 <td>

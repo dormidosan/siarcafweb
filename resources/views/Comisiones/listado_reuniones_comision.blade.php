@@ -55,7 +55,7 @@
                             <td>{{ $contador }} @php $contador++ @endphp</td>
                             <td>{{ $reunion->codigo }}</td>
                             <td>{{ $reunion->lugar }}</td>
-                            <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:m A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:i A') }}</td>
                             <td>{{ \Carbon\Carbon::parse($reunion->inicio)->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($reunion->fin)->format('d-m-Y') }}</td>
                             @if($reunion->vigente == 1)

@@ -70,7 +70,7 @@
                                             <div class="col-lg-6">
                                                 <dl class="dl-horizontal">
                                                     <dt>Fecha y Hora de Inicio</dt>
-                                                    <dd>{{ date("d/m/Y h:m A",strtotime($agenda->inicio)) }}</dd>
+                                                    <dd>{{ date("d/m/Y h:i A",strtotime($agenda->inicio)) }}</dd>
                                                     <dt>Lugar de Reunion</dt>
                                                     <dd>{{ $agenda->lugar    }}</dd>
                                                     <dt>Transcendental</dt>
@@ -113,7 +113,7 @@
                                                 <td>{{ $j }}</td>
                                                 <td>{{ $punto->peticion->codigo }}</td>
                                                 <td>{{ $punto->peticion->descripcion }}</td>
-                                                <td>{{ date("d/m/Y h:m A",strtotime($punto->peticion->created_at)) }}</td>
+                                                <td>{{ date("d/m/Y h:i A",strtotime($punto->peticion->created_at)) }}</td>
                                                 <td>{{ $punto->peticion->peticionario }}</td>
                                                 <td>
                                                     {!! Form::open(['route'=>['detalles_punto_agenda'],'method'=> 'POST']) !!}

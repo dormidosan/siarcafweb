@@ -8,7 +8,9 @@
     <div class="box-body">
        
         <form class="form-group" id="enlazar_comision" name="enlazar_comision" method="post" action="{{ url('enlazar_comision') }}" enctype="multipart/form-data">
-            {{ csrf_field() }} {{ Form::hidden('id_peticion', $peticion->id) }}
+            {{ csrf_field() }} 
+            <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+            <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">

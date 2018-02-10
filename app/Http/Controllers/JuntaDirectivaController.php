@@ -256,7 +256,8 @@ class JuntaDirectivaController extends Controller
     public function agendar_plenaria(Request $request,Redirector $redirect){
 
     //dd($request->all());    
-        dd(Carbon::now()->format('l jS \\of F Y'));
+        //dd(Carbon::now()->format('l jS \\of F Y'));
+        //dd(Carbon::now()->year);
     $peticion = Peticion::where('id','=',$request->id_peticion)->firstOrFail();
     if ($peticion->agendado == 1) {
         $peticion->agendado = 0;
@@ -276,6 +277,16 @@ class JuntaDirectivaController extends Controller
 
 //********************************************************************************
 //********************************************************************************
+    $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision->id,EstadoSeguimiento::where('estado', '=', "ds")->first()->id);
+     //$seguimiento_exist = Seguimiento::where('peticion_id','=',$peticion->id)
+    //->where('comision_id','=',$comision->id)
+    //->where('estado_seguimiento_id','=',EstadoSeguimiento::where('estado', '=', "ds")->first()->id)
+    //->where('inicio','=',Carbon::now()->toDateString())
+    //->first();
+
+
+
+    if ($seguimiento_exist == 0) {
         $seguimiento = new Seguimiento();
 
         $seguimiento->peticion_id = $peticion->id;
@@ -293,8 +304,11 @@ class JuntaDirectivaController extends Controller
         //$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
         
 
-        $seguimiento->descripcion = 'Peticion discutida en JD';
+        $seguimiento->descripcion = 'Peticion discutida en JD'; //COLOCAR FECHA DESPUES
         $seguimiento->save();
+    }
+
+        
 
 //********************************************************************************
 //********************************************************************************
@@ -841,11 +855,41 @@ class JuntaDirectivaController extends Controller
     {
         //dd($request->all());
         $id_peticion = $request->id_peticion;
+        $id_reunion = $request->id_reunion;
         $id_comision = $request->comisiones;
         $descripcion = $request->descripcion;
+        $comision_jd = '1';
 
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', $id_comision)->firstOrFail();
+        $reunion = Reunion::where('id', '=', $id_reunion)->firstOrFail();
+
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+        $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision_jd,EstadoSeguimiento::where('estado', '=', "ds")->first()->id);
+
+        if ($seguimiento_exist == 0) {
+            $seguimiento = new Seguimiento();
+
+            $seguimiento->peticion_id = $peticion->id;
+            //$seguimiento->comision_id = $comision->id;
+            $seguimiento->comision_id = $comision_jd; // ya que $comision->id esta guardando la comision a la cual se enviara, no la comision que esta trabajando
+
+            $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ds")->first()->id; // ds estado discutido
+            //$seguimiento->documento_id = $documento_jd->id;
+
+            $seguimiento->reunion_id = $reunion->id;
+            $seguimiento->inicio = Carbon::now();
+            $seguimiento->fin = Carbon::now();
+            $seguimiento->activo = '0';
+            $seguimiento->agendado = '0';
+
+            $seguimiento->descripcion = 'Peticion discutida en JD'; //COLOCAR FECHA DESPUES
+            $seguimiento->save();
+        }
+
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
 
 
         if (!$peticion->comisiones->contains($id_comision)) {
@@ -854,6 +898,7 @@ class JuntaDirectivaController extends Controller
             $seguimiento->peticion_id = $peticion->id;
             $seguimiento->comision_id = $comision->id;
             $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "se")->first()->id; // SE Seguimiento
+            $seguimiento->reunion_id = $reunion->id;
             $seguimiento->inicio = Carbon::now();
             //$seguimiento->fin = Carbon::now();
             $seguimiento->activo = '1';
@@ -870,6 +915,7 @@ class JuntaDirectivaController extends Controller
             $seguimiento->peticion_id = $peticion->id;
             $seguimiento->comision_id = $comision->id;
             $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "as")->first()->id; // AS Asignado
+            $seguimiento->reunion_id = $reunion->id;
             $seguimiento->inicio = Carbon::now();
             $seguimiento->fin = Carbon::now();
             $seguimiento->activo = '0';
@@ -903,7 +949,8 @@ class JuntaDirectivaController extends Controller
         return view('jdagu.lista_asignacion')
             ->with('comisiones', $comisiones)
             ->with('seguimientos', $seguimientos)
-            ->with('peticion', $peticion);
+            ->with('peticion', $peticion)
+            ->with('reunion', $reunion);
     }
 
     public function historial_bitacoras_jd(Request $request, Redirector $redirect)
@@ -1016,10 +1063,74 @@ class JuntaDirectivaController extends Controller
              return $res;
     }
 
+    public function convertirMes($mes) {
+         
+
+             switch ($mes) {
+                 case 'january':
+                     return 'Enero';
+                     break;
+                 case 'february':
+                     return 'Febrero';
+                     break;
+                 case 'march':
+                     return 'Marzo';
+                     break;
+                 case 'april':
+                     return 'Abril';
+                     break;
+                 case 'may':
+                     return 'Mayo';
+                     break;
+                 case 'june':
+                     return 'Junio';
+                     break;
+                 case 'july':
+                     return 'Julio';
+                     break;
+                 case 'august':
+                     return 'Agosto';
+                     break;
+                 case 'september':
+                     return 'Septiembre';
+                     break;
+                 case 'october':
+                     return 'Octubre';
+                     break;
+                 case 'november':
+                     return 'Noviembre';
+                     break;
+                 case 'december':
+                     return 'Diciembre';
+                     break;
+                 
+             }
+
+       
+    }
+
             
 
+  
+    public function existeSeguimiento($peticion_id,$comision_id,$estado_seguimiento_id) {
+        //dd($comision_id);
+         
+        $seguimiento_exist = Seguimiento::where('peticion_id','=',$peticion_id)
+        ->where('comision_id','=',$comision_id)
+        ->where('estado_seguimiento_id','=',$estado_seguimiento_id)
+        ->where('inicio','=',Carbon::now()->toDateString())
+        ->first();
 
+        //dd($seguimiento_exist);
+        if ($seguimiento_exist) {
+            return '1';
+        } else {
+            return '0';
+        }
+    
 
+    
+    }
 
 
 
