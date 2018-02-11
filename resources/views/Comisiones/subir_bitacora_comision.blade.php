@@ -5,8 +5,8 @@
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
@@ -74,7 +74,6 @@
                         <div class="form-group">
                             <label for="documento">Seleccione bitacora (1)</label>
                             <div class="file-loading">
-
                                 <input id="documento_comision" name="documento_comision" type="file" required="required"
                                        data-show-preview="false">
                             </div>
@@ -161,7 +160,7 @@
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
                 //minFileCount: 1,
-                maxFileCount: 3,
+                maxFileCount: 1,
                 allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
                 showUpload: false,
                 fileActionSettings: {
@@ -171,6 +170,28 @@
                     showDrag: false
                 },
                 hideThumbnailContent: true
+            }).on('change', function(event) {
+                $('#guardar_bitacora_comision').formValidation('revalidateField', 'documento_comision');
+            }).on('filecleared', function(event) {
+                $('#guardar_bitacora_comision').formValidation('revalidateField', 'documento_comision');
+            });
+
+            $('#guardar_bitacora_comision').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    documento_comision: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El documento es requerido'
+                            }
+                        }
+                    }
+                }
             });
 
             var oTable = $('#tabla').DataTable({
