@@ -97,6 +97,7 @@
                 theme: "explorer",
                 uploadAsync: false, //para enviar todos los archivos como uno solo
                 language: "es",
+                //minFileCount: 1,
                 maxFileCount: 1,
                 allowedFileExtensions: ['doc', 'docx', 'xls', 'xlsx', 'pdf'],
                 fileActionSettings: {
@@ -110,6 +111,10 @@
                 showPreview: false,
                 hideThumbnailContent: true,
                 maxFileSize: 10000,
+            }).on('change', function(event) {
+                $('#actualizar_plantilla').formValidation('revalidateField', 'plantilla');
+            }).on('filecleared', function(event) {
+                $('#actualizar_plantilla').formValidation('revalidateField', 'plantilla');
             });
             // CATCH RESPONSE, usa si se envia por ajax con el boton q este js trae
             {{--$('#plantilla').on('filebatchuploaderror', function (event, data, previewId, index) {
