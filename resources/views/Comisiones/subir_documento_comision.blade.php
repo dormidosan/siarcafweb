@@ -4,6 +4,7 @@
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -60,7 +61,7 @@
                     <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label>Seleccione Tipo Documento</label>
-                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'tipo_documentos', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -69,7 +70,7 @@
                             <div class="file-loading">
 
                                 <input id="documento_comision" name="documento_comision" type="file" required="required"
-                                       data-show-preview="false">
+                                       data-show-preview="false" accept=".doc, .docx, .pdf, .xls, .xlsx">
                             </div>
 
                         </div>
@@ -193,6 +194,9 @@
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
+
 @endsection
 
 @section("scripts")
@@ -204,7 +208,7 @@
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
                 //minFileCount: 1,
-                maxFileCount: 3,
+                maxFileCount: 1,
                 allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
                 showUpload: false,
                 fileActionSettings: {
@@ -214,6 +218,35 @@
                     showDrag: false
                 },
                 hideThumbnailContent: true
+            }).on('change', function(event) {
+                $('#guardar_documento_comision').formValidation('revalidateField', 'documento_comision');
+            }).on('filecleared', function(event) {
+                $('#guardar_documento_comision').formValidation('revalidateField', 'documento_comision');
+            });
+
+            $('#guardar_documento_comision').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    tipo_documentos: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El tipo de documento es requerido'
+                            }
+                        }
+                    },
+                    documento_comision: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El documento es requerido'
+                            }
+                        }
+                    }
+                }
             });
 
         });

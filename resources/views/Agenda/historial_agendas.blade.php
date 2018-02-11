@@ -38,13 +38,6 @@
 
 @section("content")
     <div class="box box-danger">
-        <div class="box-header with-border">
-            <h3 class="box-title">Listado de Sesiones Plenarias</h3>
-        </div>
-        
-    </div>
-
-    <div class="box box-default">
         <div class="box-header">
             <h3 class="box-title">Listado Sesiones Plenarias</h3>
         </div>
@@ -68,7 +61,7 @@
                         <tr>
                             <td>{!! $contador !!}</td>
                             <td>{!! $agenda->codigo !!}</td>
-                            <td>{!! $agenda->fecha !!}</td>
+                            <td>{{ date("d-m-Y",strtotime($agenda->fecha)) }}</td>
                             <td>{!! $agenda->lugar !!}</td>
                             <td>{!! $agenda->trascendental?'Si':'No' !!}</td>
                             @php $ultimo_documento= null @endphp
