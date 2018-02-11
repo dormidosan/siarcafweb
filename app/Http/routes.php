@@ -121,7 +121,7 @@ Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'Pe
 Route::get('monitoreo_peticion', array('as' => 'monitoreo_peticion', 'uses' => 'PeticionController@monitoreo_peticion'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
-Route::get('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
+Route::post('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
 
 
 /* Reportes */
