@@ -428,12 +428,43 @@ class JuntaDirectivaController extends Controller
 
             $peticion->asignado_agenda = 1;
             $peticion->save();
+
+            // #####################################
+            $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision->id,EstadoSeguimiento::where('estado', '=', "ag")->first()->id);
+
+            if ($seguimiento_exist == 0) {
+                $seguimiento = new Seguimiento();
+                $seguimiento->peticion_id = $peticion->id;
+                $seguimiento->comision_id = $comision->id;
+                $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ag")->first()->id; // ds estado discutido
+                //$seguimiento->documento_id = $documento_jd->id;
+                $seguimiento->reunion_id = $reunion->id;
+                $seguimiento->inicio = Carbon::now();
+                $seguimiento->fin = Carbon::now();
+                $seguimiento->activo = '0';
+                $seguimiento->agendado = '0';
+                //$seguimiento->descripcion = Parametro::where('parametro','=','des_nuevo_seguimiento')->get('valor');
+                $seguimiento->descripcion = 'Peticion agendada para Sesion Plenaria'; //COLOCAR FECHA DESPUES
+                $seguimiento->save();
+            }
+            // #####################################
+
         } else {
             $punto_eliminado = Punto::where('peticion_id', '=', $peticion->id)->where('agenda_id', '=', $agenda->id)->first();
             $punto_eliminado->delete();
 
             $peticion->asignado_agenda = 0;
             $peticion->save();
+
+            // #####################################
+            $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision->id,EstadoSeguimiento::where('estado', '=', "ag")->first()->id); // ag estado agendado
+
+            if ($seguimiento_exist != 0) {
+
+                $seguimiento_eliminado = Seguimiento::where('id', '=', $seguimiento_exist)->first();
+                $seguimiento_eliminado->delete();
+            }
+            // #####################################
 
             $puntos_desordenados = Punto::where('agenda_id', '=', $agenda->id)->orderBy('numero', 'ASC')->get();
             $contador = 1;
@@ -755,11 +786,41 @@ class JuntaDirectivaController extends Controller
         $tipo_documento = $request->tipo_documentos;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', '1')->first();
+        $comision_jd = $comision->id;
 
         $is_reunion = '0';
         if (($request->id_reunion) and ($request->id_reunion != 0)) {
             $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
             $is_reunion = '1';
+
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision_jd,EstadoSeguimiento::where('estado', '=', "ds")->first()->id);
+
+            if ($seguimiento_exist == 0) {
+                $seguimiento = new Seguimiento();
+
+                $seguimiento->peticion_id = $peticion->id;
+                //$seguimiento->comision_id = $comision->id;
+                $seguimiento->comision_id = $comision_jd; // ya que $comision->id esta guardando la comision a la cual se enviara, no la comision que esta trabajando
+
+                $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ds")->first()->id; // ds estado discutido
+                //$seguimiento->documento_id = $documento_jd->id;
+                
+                $seguimiento->reunion_id = $reunion->id; 
+                
+                
+                $seguimiento->inicio = Carbon::now();
+                $seguimiento->fin = Carbon::now();
+                $seguimiento->activo = '0';
+                $seguimiento->agendado = '0';
+
+                $seguimiento->descripcion = 'Peticion discutida en JD'; //COLOCAR FECHA DESPUES
+                $seguimiento->save();
+            }
+
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
         } else {
             $reunion = '0';
         }
@@ -771,6 +832,8 @@ class JuntaDirectivaController extends Controller
 
         }
 
+
+        
 
         //**************************************************
 
@@ -1066,7 +1129,7 @@ class JuntaDirectivaController extends Controller
 
         //dd($seguimiento_exist);
         if ($seguimiento_exist) {
-            return '1';
+            return $seguimiento_exist->id;
         } else {
             return '0';
         }

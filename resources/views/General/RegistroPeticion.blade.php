@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <label for="mail">Peticionario</label>
 
-                            <input name="peticionario" type="text" class="form-control" id="peticionario" placeholder="Ingrese el peticionario" required>
+                            <input name="peticionario" type="text" class="form-control" id="peticionario" placeholder="Ingrese el peticionario" required >
 
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                             <label for="documento">Seleccione peticion (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_peticion" name="documento_peticion" type="file"   required>
+                                <input id="documento_peticion" name="documento_peticion" type="file"   required="required"   accept=".doc, .docx, .pdf, .xls, .xlsx" >
 
                             </div>
 
@@ -108,7 +108,7 @@
                             <label for="documento">Seleccione atestados (1-3)</label>
                             <div class="file-loading">
 
-                                <input id="documento_atestado" name="documento_atestado[]" type="file" multiple  required>
+                                <input id="documento_atestado" name="documento_atestado[]" type="file" multiple  required="required"   accept=".doc, .docx, .pdf, .xls, .xlsx">
 
                             </div>
 
