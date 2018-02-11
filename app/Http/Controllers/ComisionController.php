@@ -356,6 +356,7 @@ class ComisionController extends Controller
 
     public function guardar_documento_comision(Request $request, Redirector $redirect)
     {
+        //dd($request->all());
         $id_peticion = $request->id_peticion;
         $tipo_documento = $request->tipo_documentos;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
