@@ -122,7 +122,7 @@ class ModulosTableSeeder extends Seeder
         //11
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Crear Comision',
-            'url' => 'comisiones',
+            'url' => 'comisiones/comisiones',
             'modulo_padre' => '2',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,
@@ -133,7 +133,7 @@ class ModulosTableSeeder extends Seeder
         //12
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Administrar Comisiones',
-            'url' => 'administrar_comisiones',
+            'url' => 'comisiones/administrar_comisiones',
             'modulo_padre' => '2',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,
