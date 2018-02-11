@@ -32,7 +32,7 @@
             <h3 class="box-title">Administrar Integrantes de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
-            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ url("agregar_asambleistas_comision") }}">
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ route("agregar_asambleistas_comision") }}">
                 {{ csrf_field() }}
                 <div class="row hidden">
                     <div class="col-lg-12 col-sm-12 col-md-12">
@@ -86,7 +86,7 @@
                             <td>{{ $integrante->asambleista->facultad->nombre }}</td>
                             <td>{{ $integrante->cargo }}</td>
                             <td>
-                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ url("retirar_asambleista_comision") }}">
+                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ route("retirar_asambleista_comision") }}">
                                     {{ csrf_field() }}
                                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                     <input class="hidden" id="asambleista_id" name="asambleista_id" value="{{$integrante->asambleista_id}}">

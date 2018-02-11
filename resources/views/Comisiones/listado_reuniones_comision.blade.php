@@ -21,7 +21,7 @@
             <!-- forms utilizados para retornar a paginas previas con breadcrumbs !-->
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>

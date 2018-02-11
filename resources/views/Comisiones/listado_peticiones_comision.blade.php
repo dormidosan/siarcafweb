@@ -20,7 +20,7 @@
         <div class="box-body">
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>
@@ -79,7 +79,7 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <form id="ver_peticion_comision" action="{{ url("seguimiento_peticion_comision") }}" method="post">
+                                <form id="ver_peticion_comision" action="{{ route("seguimiento_peticion_comision") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="text" id="id_peticion" name="id_peticion" class="hidden" value="{{ $peticion->id }}">
                                     <input type="text" id="id_comision" name="id_comision" class="hidden" value="{{ $comision->id }}">

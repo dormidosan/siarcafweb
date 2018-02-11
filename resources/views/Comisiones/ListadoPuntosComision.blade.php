@@ -25,7 +25,7 @@
                        <td>Punto 1</td>
                        <td>01/02/03</td>
                        <td>Junta Directiva</td>
-                       <td><a class="btn btn-success btn-xs" href="{{url("/discutir/comisionName/1")}}">Discutir</a></td>
+                       <td><a class="btn btn-success btn-xs" href="{{route("/discutir/comisionName/1")}}">Discutir</a></td>
                    </tr>
                    <tr>
                        <td>Punto 1</td>
@@ -34,13 +34,13 @@
 
                        <!-- ALBERTO OJO -->
                        <!-- enlace para discutir punto, parametros: la comision y el id del punto -->
-                       <td><a class="btn btn-success btn-xs" href="{{url("/discutir/comisionName/2")}}">Discutir</a></td>
+                       <td><a class="btn btn-success btn-xs" href="{{route("/discutir/comisionName/2")}}">Discutir</a></td>
                    </tr>
                    <tr>
                        <td>Punto 1</td>
                        <td>01/02/03</td>
                        <td>-</td>
-                       <td><a class="btn btn-success btn-xs" href="{{url("/discutir/comisionName/3")}}">Discutir</a></td>
+                       <td><a class="btn btn-success btn-xs" href="{{route("/discutir/comisionName/3")}}">Discutir</a></td>
                    </tr>
                    </tbody>
                </table>
