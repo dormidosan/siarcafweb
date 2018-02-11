@@ -46,13 +46,13 @@
         <div class="box-body">
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>
                 </form>
             </div>
-            <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
+            <form id="convocatoria" method="post" action="{{ route('generar_agenda_plenaria_jd') }}">
                 {{ csrf_field() }}
                 {{ Form::hidden('id_comision', '1') }}
                 <div class="row">
@@ -283,7 +283,7 @@
                 var form = $("#convocatoria").serialize();
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('generar_agenda_plenaria_jd') }}",
+                    route: "{{ route('generar_agenda_plenaria_jd') }}",
                     data: form,
                     success: function (response) {
                         notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
@@ -330,7 +330,7 @@
             var form = $("#eliminar_agenda_creada_jd"+i).serialize();
             $.ajax({
                 type: 'POST',
-                url: "{{ route('eliminar_agenda_creada_jd') }}",
+                route: "{{ route('eliminar_agenda_creada_jd') }}",
                 data: form,
                 success: function (response) {
                     notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);

@@ -35,6 +35,17 @@
 @endsection
 
 @section("content")
+
+    <div class="hidden">
+        <form id="trabajo_comision" name="trabajo_comision" method="post"
+              action="{{ route("trabajo_comision") }}">
+            {{ csrf_field() }}
+            <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
+            <button class="btn btn-success btn-xs">Acceder</button>
+        </form>
+
+    </div>
+
     <div class="box box-danger">
         <div class="box-header">
             <h3 class="box-title">Subir documento</h3>
@@ -42,7 +53,7 @@
         <div class="box-body">
             <div class="hidden">
                 <form id="listado_reuniones_comision" name="listado_reuniones_comision"
-                      method="post" action="{{ url("listado_reuniones_comision") }}" {{-- --}}>
+                      method="post" action="{{ route("listado_reuniones_comision") }}" {{-- --}}>
                     {{ csrf_field() }}
                     <div class="text-center">
                         <i class="fa fa-group fa-4x text-maroon"></i>

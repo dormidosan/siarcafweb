@@ -18,12 +18,13 @@
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
 
-<style type="text/css">
+    <style type="text/css">
         .fileUpload {
             position: relative;
             overflow: hidden;
             margin: 0px;
         }
+
         .fileUpload input.upload {
             position: absolute;
             top: 0;
@@ -35,7 +36,7 @@
             opacity: 0;
             filter: alpha(opacity=0);
         }
-</style>
+    </style>
 @endsection
 
 @section("content")
@@ -47,21 +48,21 @@
             <!-- forms utilizados para retornar a paginas previas con breadcrumbs !-->
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>
                 </form>
 
                 <form id="listado_reuniones_comision" name="listado_reuniones_comision"
-                      method="post" action="{{ url("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
+                      method="post" action="{{ route("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button type="submit" class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></button>
                 </form>
 
                 <form id="iniciar_reunion_comision" name="iniciar_reunion_comision" method="post"
-                      action="{{ url("iniciar_reunion_comision") }}" class="text-center">
+                      action="{{ route("iniciar_reunion_comision") }}" class="text-center">
                     <tr>
                         <td class="hidden">{{ csrf_field() }}</td>
                         <td class="hidden">
@@ -151,9 +152,6 @@
                                         {!! $i !!}
                                     </td>
                                     <td>
-                                        <!--
-                                           <a class="btn btn-info" href="#" role="button">Ver</a>
-                                           -->
                                         {!! Form::open(['route'=>['seguimiento_peticion_comision'],'method'=> 'POST']) !!}
                                         {{ Form::hidden('id_peticion', $peticion->id) }}
                                         {{ Form::hidden('id_reunion', $reunion->id) }}
@@ -164,10 +162,16 @@
                                         {!! Form::close() !!}
                                     </td>
                                     <td>
-                                    <div class="fileUpload btn btn-primary btn-xs btn-block">
-                                        Subir atestado
-                                        <input type="file" class="upload" />
-                                    </div>
+                                        {!! Form::open(['route'=>['subir_documento_comision'],'method'=> 'POST','id'=>$peticion->id]) !!}
+                                        <input type="hidden" name="id_peticion" id="id_peticion"
+                                               value="{{$peticion->id}}">
+                                        <input type="hidden" name="id_comision" id="id_comision"
+                                               value="{{$comision->id}}">
+                                        <input type="hidden" name="id_reunion" id="id_reunion"
+                                               value="{{$reunion->id}}">
+                                        <button type="submit" class="btn btn-success btn-xs"> Subir documentacion
+                                        </button>
+                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @empty

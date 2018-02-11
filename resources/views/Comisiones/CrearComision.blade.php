@@ -23,7 +23,7 @@
         </div>
         <div class="box-body">
 
-            <form id="crearComision" action="{{ url("crear_comision") }}" method="post">
+            <form id="crearComision" action="{{ route("crear_comision") }}" method="post">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-lg-6 col-sm-12 col-md-6">
@@ -147,7 +147,7 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 type: 'POST',
-                url: "{{ route('actualizar_comision') }}",
+                route: "{{ route('actualizar_comision') }}",
                 data: {
                     "id": id
                 },

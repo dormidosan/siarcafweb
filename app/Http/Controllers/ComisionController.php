@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Documento;
+use App\EstadoSeguimiento;
 use App\Periodo;
 use App\Asambleista;
 use App\Cargo;
@@ -329,15 +330,17 @@ class ComisionController extends Controller
         $id_peticion = $request->id_peticion;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
         $comision = Comision::where('id', '=', $request->id_comision)->first();
+
+        $is_reunion = '0';
         if (($request->id_reunion) and ($request->id_reunion != 0)) {
             $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+            $is_reunion = '1';
         } else {
             $reunion = '0';
         }
 
         $seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
         $tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id');
-        //dd($tipo_documentos);
 
         $disco = "../storage/documentos/";
 
@@ -346,6 +349,65 @@ class ComisionController extends Controller
             ->with('reunion', $reunion)
             ->with('comision', $comision)
             ->with('peticion', $peticion)
+            ->with('is_reunion', $is_reunion)
+            ->with('seguimientos', $seguimientos)
+            ->with('tipo_documentos', $tipo_documentos);
+    }
+
+    public function guardar_documento_comision(Request $request, Redirector $redirect)
+    {
+        $id_peticion = $request->id_peticion;
+        $tipo_documento = $request->tipo_documentos;
+        $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
+        $comision = Comision::where('id', '=', $request->id_comision)->first();
+
+        $is_reunion = '0';
+        if (($request->id_reunion) and ($request->id_reunion != 0)) {
+            $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
+            $is_reunion = '1';
+        } else {
+            $reunion = '0';
+        }
+
+
+        if ($request->hasFile('documento_comision')) {
+            $documento_comision = $this->guardarDocumento($request->documento_comision, $tipo_documento, 'documentos');
+
+        }
+
+        $seguimiento = new Seguimiento();
+
+        $seguimiento->peticion_id = $peticion->id;
+        $seguimiento->comision_id = $comision->id;
+
+        $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "cr")->first()->id; // CR estado creado
+        $seguimiento->documento_id = $documento_comision->id;
+
+        if (!($is_reunion == 0)) {
+            $seguimiento->reunion_id = $reunion->id;
+        }
+
+
+        $seguimiento->inicio = Carbon::now();
+        $seguimiento->fin = Carbon::now();
+        $seguimiento->activo = '0';
+        $seguimiento->agendado = '0';
+
+        $seguimiento->descripcion = 'carga de ' . TipoDocumento::where('id', '=', $tipo_documento)->first()->tipo;
+        $seguimiento->save();
+
+        $seguimientos = Seguimiento::where('peticion_id', '=', $id_peticion)->where('activo', '=', 1)->get();
+        $tipo_documentos = TipoDocumento::where('tipo', '=', 'atestado')->orWhere('tipo', '=', 'dictamen')->pluck('tipo', 'id');
+
+        $disco = "../storage/documentos/";
+        $request->session()->flash("success", "Documento creado con exito");
+
+        return view('Comisiones.subir_documento_comision')
+            ->with('disco', $disco)
+            ->with('reunion', $reunion)
+            ->with('comision', $comision)
+            ->with('peticion', $peticion)
+            ->with('is_reunion', $is_reunion)
             ->with('seguimientos', $seguimientos)
             ->with('tipo_documentos', $tipo_documentos);
     }

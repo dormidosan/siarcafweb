@@ -28,7 +28,7 @@
 
     <div class="hidden">
         <form id="trabajo_comision" name="trabajo_comision" method="post"
-              action="{{ url("trabajo_comision") }}">
+              action="{{ route("trabajo_comision") }}">
             {{ csrf_field() }}
             <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
             <button class="btn btn-success btn-xs">Acceder</button>
@@ -42,7 +42,7 @@
 
         <div class="box-body">
 
-            <form id="convocatoria" method="post" action="{{ url('crear_reunion_comision') }}">
+            <form id="convocatoria" method="post" action="{{ route('crear_reunion_comision') }}">
                 {{ csrf_field() }}
                 {{ Form::hidden('id_comision', $comision->id) }}
                 <div class="row">

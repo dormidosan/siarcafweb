@@ -54,7 +54,7 @@
                             </td>
                             <td>
                                 <form id="gestionar_asambleistas_comision" name="gestionar_asambleistas_comision"
-                                      method="post" action="{{ url("gestionar_asambleistas_comision") }}">
+                                      method="post" action="{{ route("gestionar_asambleistas_comision") }}">
                                     {{ csrf_field() }}
                                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                     <button class="btn btn-primary btn-xs">Gestionar</button>
@@ -62,7 +62,7 @@
                             </td>
                             <td>
                                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                                      action="{{ url("trabajo_comision") }}">
+                                      action="{{ route("trabajo_comision") }}">
                                     {{ csrf_field() }}
                                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                     <button class="btn btn-success btn-xs">Acceder</button>
@@ -97,6 +97,7 @@
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "sInfoPostFix": "",
                     "sSearch": "Buscar:",
+                    "sUrl": "",
                     "sUrl": "",
                     "sInfoThousands": ",",
                     "sLoadingRecords": "Cargando...",

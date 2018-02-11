@@ -30,21 +30,21 @@
             <!-- forms utilizados para retornar a paginas previas con breadcrumbs !-->
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>
                 </form>
 
                 <form id="listado_reuniones_comision" name="listado_reuniones_comision"
-                      method="post" action="{{ url("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
+                      method="post" action="{{ route("listado_reuniones_comision") }}" {{-- target="_blank" --}}>
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button type="submit" class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></button>
                 </form>
 
                 <form id="iniciar_reunion_comision" name="iniciar_reunion_comision" method="post"
-                      action="{{ url("iniciar_reunion_comision") }}" class="text-center">
+                      action="{{ route("iniciar_reunion_comision") }}" class="text-center">
                     <tr>
                         <td class="hidden">{{ csrf_field() }}</td>
                         <td class="hidden">

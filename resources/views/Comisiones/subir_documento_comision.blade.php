@@ -22,14 +22,14 @@
 
     <div class="hidden">
         <form id="trabajo_comision" name="trabajo_comision" method="post"
-              action="{{ url("trabajo_comision") }}">
+              action="{{ route("trabajo_comision") }}">
             {{ csrf_field() }}
             <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
             <button class="btn btn-success btn-xs">Acceder</button>
         </form>
 
         <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-              method="post" action="{{ url("listado_peticiones_comision") }}">
+              method="post" action="{{ route("listado_peticiones_comision") }}">
             {{ csrf_field() }}
             <div class="text-center">
                 <i class="fa fa-file-text-o fa-4x text-info"></i>
@@ -45,8 +45,8 @@
             <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
-            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post"
-                  action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
+            <form class="form-group" id="guardar_documento_comision" name="guardar_documento_comision" method="post"
+                  action="{{ route('guardar_documento_comision') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
                 <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
@@ -67,7 +67,7 @@
                             <label for="documento">Seleccione documento (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_jd" name="documento_jd" type="file" required="required"
+                                <input id="documento_comision" name="documento_comision" type="file" required="required"
                                        data-show-preview="false">
                             </div>
 
@@ -196,7 +196,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#documento_jd").fileinput({
+            $("#documento_comision").fileinput({
                 theme: "explorer",
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
@@ -218,4 +218,17 @@
 
     </script>
 
+@endsection
+
+
+@section("lobibox")
+    @if(Session::has('error'))
+        <script>
+            notificacion("Error", "{{ Session::get('error') }}", "error");
+        </script>
+    @elseif(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+        </script>
+    @endif
 @endsection

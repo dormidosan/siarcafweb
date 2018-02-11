@@ -18,7 +18,7 @@
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Trabajo de Comision</h3>
+            <h3 class="box-title text-bold">Trabajo de  {{ucwords($comision->nombre)}}</h3>
         </div>
 
         <div class="box-body">
@@ -29,7 +29,7 @@
                     <div class="box box-info">
                         <div class="box-body">
                             <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-                                  method="post" action="{{ url("listado_peticiones_comision") }}">
+                                  method="post" action="{{ route("listado_peticiones_comision") }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-file-text-o fa-4x text-info"></i>
@@ -46,7 +46,7 @@
                     <div class="box box-success">
                         <div class="box-body">
                             <form id="convocatoria" name="convocatoria"
-                                  method="post" action="{{ url('convocatoria_comision') }}">
+                                  method="post" action="{{ route('convocatoria_comision') }}">
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-envelope fa-4x text-green"></i>
@@ -65,7 +65,7 @@
                     <div class="box" style="border-top-color: #D81B60">
                         <div class="box-body">
                             <form id="listado_reunione_comision" name="listado_reuniones_comision"
-                                  method="post" action="{{ url("listado_reuniones_comision") }}" {{-- --}}>
+                                  method="post" action="{{ route("listado_reuniones_comision") }}" {{-- --}}>
                                 {{ csrf_field() }}
                                 <div class="text-center">
                                     <i class="fa fa-group fa-4x text-maroon"></i>
