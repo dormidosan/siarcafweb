@@ -75,7 +75,7 @@
                             <label for="documento">Seleccione bitacora (1)</label>
                             <div class="file-loading">
                                 <input id="documento_comision" name="documento_comision" type="file" required="required"
-                                       data-show-preview="false">
+                                       data-show-preview="false" accept=".doc, .docx, .pdf, .xls, .xlsx">
                             </div>
                         </div>
                     </div>
