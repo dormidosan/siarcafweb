@@ -17,10 +17,9 @@ use App\TipoDocumento;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\ComisionRequest;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use DateTime;
 
 
 class ComisionController extends Controller
@@ -96,7 +95,7 @@ class ComisionController extends Controller
     }
 
     //funcion que se encarga de crear una comision
-    public function crear_comision(ComisionRequest $request)
+    public function crear_comision(Request $request)
     {
         $comision = new Comision();
         $comision->codigo = $request->get("codigo");
@@ -418,9 +417,9 @@ class ComisionController extends Controller
         $reunion = new Reunion();
         $reunion->comision_id = $comision->id;
         $reunion->periodo_id = Periodo::latest()->first()->id;
-        $reunion->codigo = $comision->codigo . " " . \DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y');
+        $reunion->codigo = $comision->codigo . " " . \DateTime::createFromFormat('d-m-Y', $request->fecha)->format('d-m-y');
         $reunion->lugar = $request->lugar;
-        $reunion->convocatoria = \DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha . '' . date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
+        $reunion->convocatoria = DateTime::createFromFormat('d-m-Y h:i A', $request->fecha . ' ' . date('h:i A', strtotime($request->hora)))->format('Y-m-d H:i:s');
         $reunion->vigente = '1';
         $reunion->activa = '0';
         $reunion->save();

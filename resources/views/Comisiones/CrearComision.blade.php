@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/icheck/skins/square/green.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/toogle/css/bootstrap-toggle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -30,7 +31,7 @@
                         <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                             <label>Nombre Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre" id="nombre"
-                                   name="nombre" value="{{old(" nombre ")}}">
+                                   name="nombre" value="{{old(" nombre ")}}" required>
                             <span class="text-danger">{{ $errors->first('nombre') }}</span>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                         <div class="form-group ">
                             <label>codigo Comision <span class="text-red text-bold">*</span></label>
                             <input type="text" class="form-control" placeholder="Ingrese un codigo" id="codigo"
-                                   name="codigo">
+                                   name="codigo" required>
                             <span class="text-danger"></span>
                         </div>
                     </div>
@@ -127,16 +128,44 @@
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
     <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+
             $('.toogle').bootstrapToggle({
                 on: 'Activa',
                 off: 'Inactiva',
                 onstyle: 'success',
                 offstyle: 'danger'
+            });
+
+            $('#crearComision').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    nombre: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ingrese un nombre para la comision.'
+                            }
+                        }
+                    },
+                    codigo: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ingrese un codigo para la comision'
+                            }
+                        }
+                    }
+                }
             });
         });
 
