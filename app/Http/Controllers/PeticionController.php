@@ -103,7 +103,7 @@ class PeticionController extends Controller
 
         // PETICION = 1
         // ATESTADO = 2
-
+        
         if ($request->hasFile('documento_peticion')) {
             //$archivo = $request->documento_peticion;
             $documento = $this->guardarDocumento($request->documento_peticion,'1','documentos');

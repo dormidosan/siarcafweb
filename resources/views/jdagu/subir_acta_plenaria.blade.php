@@ -23,7 +23,7 @@
                             <label for="documento">Seleccione acta plenaria (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_jd" name="documento_jd" type="file"   required="required" data-show-preview="false">
+                                <input id="documento_jd" name="documento_jd" type="file"   required="required" data-show-preview="false"  accept=".doc, .docx, .pdf">
                             </div>
 
                         </div>
