@@ -169,7 +169,9 @@
                                                value="{{$comision->id}}">
                                         <input type="hidden" name="id_reunion" id="id_reunion"
                                                value="{{$reunion->id}}">
-                                        <button type="submit" class="btn btn-success btn-xs"> Subir documentacion
+                                        <button type="submit" class="btn btn-info btn-xs btn-block">
+                                            <i class="fa fa-upload"></i> Subir documentacion
+                                        </button>
                                         </button>
                                         {!! Form::close() !!}
                                     </td>

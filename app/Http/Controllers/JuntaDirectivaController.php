@@ -8,11 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-
 use Storage;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use App\Peticion;
 use App\Comision;
 use App\Seguimiento;
@@ -27,10 +23,9 @@ use App\Periodo;
 use App\TipoDocumento;
 use App\Documento;
 use DateTime;
-
 use Mail;
 use Session;
-use Illuminate\Support\Facades\Cache;
+
 
 
 class JuntaDirectivaController extends Controller
