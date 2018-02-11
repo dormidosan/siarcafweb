@@ -3,6 +3,7 @@
 @section('styles')
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -50,10 +51,10 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
                 <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                @if($reunion != 0)
-                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                @else
+                @if($is_reunion == 0)
                     <input type="hidden" name="id_reunion" id="id_reunion" value="0">
+                @else
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                 @endif
                 <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -187,6 +188,8 @@
 @endsection
 
 @section("js")
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
@@ -225,10 +228,12 @@
     @if(Session::has('error'))
         <script>
             notificacion("Error", "{{ Session::get('error') }}", "error");
+            {{ Session::forget('Error') }}
         </script>
     @elseif(Session::has('success'))
         <script>
             notificacion("Exito", "{{ Session::get('success') }}", "success");
+            {{ Session::forget('success') }}
         </script>
     @endif
 @endsection
