@@ -5,7 +5,11 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ asset("images/default-user.png") }}" class="img-circle" alt="User Image">
+                    @if(Auth::guest())
+                        <img src="{{ asset('images/default-user.png') }}" class="img-circle" alt="User Image">
+                    @else
+                        <img src="../storage/fotos/{!!Auth::user()->persona->foto!!}" class="img-circle" alt="User Image" >
+                    @endif
                 </div>
                 <div class="pull-left info">
                     @if(Auth::guest())

@@ -13,6 +13,7 @@
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -32,7 +33,7 @@
             <h3 class="box-title">Administrar Integrantes de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
-            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ url("agregar_asambleistas_comision") }}">
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ route("agregar_asambleistas_comision") }}">
                 {{ csrf_field() }}
                 <div class="row hidden">
                     <div class="col-lg-12 col-sm-12 col-md-12">
@@ -46,7 +47,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label for="nombre">Asambleista</label>
+                            <label for="asambleistas">Asambleista</label>
                             <select id="asambleistas" name="asambleistas[]" class="form-control" multiple="multiple">
                                 @foreach($asambleistas as $asambleista)
                                     <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
@@ -86,7 +87,7 @@
                             <td>{{ $integrante->asambleista->facultad->nombre }}</td>
                             <td>{{ $integrante->cargo }}</td>
                             <td>
-                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ url("retirar_asambleista_comision") }}">
+                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ route("retirar_asambleista_comision") }}">
                                     {{ csrf_field() }}
                                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                                     <input class="hidden" id="asambleista_id" name="asambleista_id" value="{{$integrante->asambleista_id}}">
@@ -110,6 +111,8 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 @endsection
 
 @section("scripts")
@@ -150,6 +153,56 @@
                 language: "es",
                 width: '100%'
             });
+
+            /*$('#AgregarAsambleista').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    "asambleistas[]": {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ingrese un asambleista.'
+                            }
+                        }
+                    }
+                }
+            });*/
+
+            $('#AgregarAsambleista')
+                .find('[name="asambleistas[]"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function(e) {
+                    $('#AgregarAsambleista').formValidation('revalidateField', 'asambleistas[]');
+                })
+                .end()
+                .formValidation({
+                    framework: 'bootstrap',
+                    excluded: ':disabled',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        "asambleistas[]": {
+                            validators: {
+                                callback: {
+                                    message: 'Seleccione al menos un asambleista',
+                                    callback: function(value, validator, $field) {
+                                        // Get the selected options
+                                        var options = validator.getFieldElements('asambleistas[]').val();
+                                        return (options != null && options.length >= 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
         });
     </script>
 @endsection

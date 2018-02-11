@@ -14,7 +14,7 @@
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Junta Directiva</a></li>
             <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
-            <li><a class="active">Convocatoria</a></li>
+            <li><a class="active">Generar Reunion</a></li>
         </ol>
     </section>
 @endsection
@@ -22,7 +22,7 @@
 @section("content")
     <div class="box box-solid box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Convocatoria de Comision</h3>
+            <h3 class="box-title">Generar Reunion</h3>
         </div>
 
         <div class="box-body">

@@ -3,6 +3,8 @@
 @section('styles')
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -22,14 +24,14 @@
 
     <div class="hidden">
         <form id="trabajo_comision" name="trabajo_comision" method="post"
-              action="{{ url("trabajo_comision") }}">
+              action="{{ route("trabajo_comision") }}">
             {{ csrf_field() }}
             <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
             <button class="btn btn-success btn-xs">Acceder</button>
         </form>
 
         <form id="listado_peticiones_comision" name="listado_peticiones_comision"
-              method="post" action="{{ url("listado_peticiones_comision") }}">
+              method="post" action="{{ route("listado_peticiones_comision") }}">
             {{ csrf_field() }}
             <div class="text-center">
                 <i class="fa fa-file-text-o fa-4x text-info"></i>
@@ -45,21 +47,21 @@
             <h3 class="box-title">Subir documento</h3>
         </div>
         <div class="box-body">
-            <form class="form-group" id="guardar_documento_jd" name="guardar_documento_jd" method="post"
-                  action="{{ url('guardar_documento_jd') }}" enctype="multipart/form-data">
+            <form class="form-group" id="guardar_documento_comision" name="guardar_documento_comision" method="post"
+                  action="{{ route('guardar_documento_comision') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
                 <input type="hidden" name="id_comision" id="id_comision" value="{{$comision->id}}">
-                @if($reunion != 0)
-                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
-                @else
+                @if($is_reunion == 0)
                     <input type="hidden" name="id_reunion" id="id_reunion" value="0">
+                @else
+                    <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                 @endif
                 <div class="row">
                     <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label>Seleccione Tipo Documento</label>
-                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'tipo_documentos', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -67,8 +69,8 @@
                             <label for="documento">Seleccione documento (1)</label>
                             <div class="file-loading">
 
-                                <input id="documento_jd" name="documento_jd" type="file" required="required"
-                                       data-show-preview="false">
+                                <input id="documento_comision" name="documento_comision" type="file" required="required"
+                                       data-show-preview="false" accept=".doc, .docx, .pdf, .xls, .xlsx">
                             </div>
 
                         </div>
@@ -187,21 +189,26 @@
 @endsection
 
 @section("js")
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
+
 @endsection
 
 @section("scripts")
 
     <script type="text/javascript">
         $(function () {
-            $("#documento_jd").fileinput({
+            $("#documento_comision").fileinput({
                 theme: "explorer",
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
                 //minFileCount: 1,
-                maxFileCount: 3,
+                maxFileCount: 1,
                 allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
                 showUpload: false,
                 fileActionSettings: {
@@ -211,6 +218,35 @@
                     showDrag: false
                 },
                 hideThumbnailContent: true
+            }).on('change', function(event) {
+                $('#guardar_documento_comision').formValidation('revalidateField', 'documento_comision');
+            }).on('filecleared', function(event) {
+                $('#guardar_documento_comision').formValidation('revalidateField', 'documento_comision');
+            });
+
+            $('#guardar_documento_comision').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    tipo_documentos: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El tipo de documento es requerido'
+                            }
+                        }
+                    },
+                    documento_comision: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El documento es requerido'
+                            }
+                        }
+                    }
+                }
             });
 
         });
@@ -218,4 +254,19 @@
 
     </script>
 
+@endsection
+
+
+@section("lobibox")
+    @if(Session::has('error'))
+        <script>
+            notificacion("Error", "{{ Session::get('error') }}", "error");
+            {{ Session::forget('Error') }}
+        </script>
+    @elseif(Session::has('success'))
+        <script>
+            notificacion("Exito", "{{ Session::get('success') }}", "success");
+            {{ Session::forget('success') }}
+        </script>
+    @endif
 @endsection

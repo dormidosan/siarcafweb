@@ -11,7 +11,7 @@
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Junta Directiva</a></li>
             <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
-            <li><a href="{{url('listado_peticiones_jd')}}">Listado de Peticiones JD</a></li>
+            <li><a href="{{route('listado_peticiones_jd')}}">Listado de Peticiones JD</a></li>
             <li class="active">Subir Documento</li>
         </ol>
     </section>
@@ -180,7 +180,7 @@
                 previewFileType: "pdf, xls, xlsx, doc, docx",
                 language: "es",
                 //minFileCount: 1,
-                maxFileCount: 3,
+                maxFileCount: 1,
                 allowedFileExtensions: ['docx', 'doc', 'pdf', 'xls', 'xlsx'],
                 showUpload: false,
                 fileActionSettings: {

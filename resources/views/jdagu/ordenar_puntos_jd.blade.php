@@ -126,7 +126,7 @@
                                         <td>{!! $punto->romano !!} {!! $punto->numero !!}</td>
                                         <td>{!! $punto->peticion->peticionario !!}</td>
                                         <td>{!! $punto->descripcion !!}</td>
-                                        <td>{{ \Carbon\Carbon::parse($punto->peticion->fecha)->format('d-m-Y h:m A') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($punto->peticion->fecha)->format('d-m-Y h:i A') }}</td>
                                         <td>{!! Carbon\Carbon::now() !!}</td>
                                         <td>
                                            @php $i = '' @endphp @foreach($punto->peticion->seguimientos as $seguimiento) @if($seguimiento->estado_seguimiento->estado !== 'cr' and $seguimiento->estado_seguimiento->estado !== 'se' and $seguimiento->estado_seguimiento->estado !== 'as') @php $i = $seguimiento->comision->nombre @endphp @endif @endforeach {!! $i !!}

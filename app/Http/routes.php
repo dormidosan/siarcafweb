@@ -23,33 +23,35 @@ Route::get('/home', 'HomeController@index');
 Route::group(['prefix' => 'comisiones'], function() {
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
+    Route::get('listado_agenda_comision', 'ComisionController@listado_agenda_comision')->name('listado_agenda_comision');
+    Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
+    Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
+    Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
+    Route::post('trabajo_comision', 'ComisionController@trabajo_comision')->name("trabajo_comision");
+    Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
+    Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
+    Route::post('listado_peticiones_comision', 'ComisionController@listado_peticiones_comision')->name("listado_peticiones_comision");
+    Route::post('seguimiento_peticion_comision', 'ComisionController@seguimiento_peticion_comision')->name("seguimiento_peticion_comision");
+    Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_comision')->name("listado_reuniones_comision");
+    Route::post('iniciar_reunion_comision', 'ComisionController@iniciar_reunion_comision')->name("iniciar_reunion_comision");
+    Route::post('asistencia_comision', array('as' => 'asistencia_comision', 'uses' => 'ComisionController@asistencia_comision'));
+    Route::post('registrar_asistencia_comision', 'ComisionController@registrar_asistencia_comision')->name('registrar_asistencia_comision');
+    Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_comision')->name('finalizar_reunion_comision');
+    Route::post('historial_bitacoras', 'ComisionController@historial_bitacoras')->name('historial_bitacoras');
+    Route::post('historial_dictamenes', 'ComisionController@historial_dictamenes')->name('historial_dictamenes');
+    Route::post('convocatoria_comision', 'ComisionController@convocatoria_comision')->name('convocatoria_comision');
+    Route::post('subir_documento_comision', 'ComisionController@subir_documento_comision')->name('subir_documento_comision');
+    Route::post('subir_atestado_comision', 'ComisionController@subir_atestado_comision')->name('subir_atestado_comision');
+    Route::post('crear_reunion_comision', array('as' => 'crear_reunion_comision', 'uses' => 'ComisionController@crear_reunion_comision'));
+    Route::post('eliminar_reunion_comision', array('as' => 'eliminar_reunion_comision', 'uses' => 'ComisionController@eliminar_reunion_comision'));
+    Route::post('enviar_convocatoria_comision', array('as' => 'enviar_convocatoria_comision', 'uses' => 'ComisionController@enviar_convocatoria_comision'));
+    Route::post('subir_bitacora_comision',array('as'=>'subir_bitacora_comision','uses'=>'ComisionController@subir_bitacora_comision'));
+    Route::post('guardar_bitacora_comision', array('as' => 'guardar_bitacora_comision', 'uses' => 'ComisionController@guardar_bitacora_comision'));
+    Route::get('comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
+    Route::get('administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
+    Route::post('guardar_documento_comision','ComisionController@guardar_documento_comision')->name("guardar_documento_comision");
 });
 
-Route::get('comisiones', 'ComisionController@mostrar_comisiones')->name("mostrar_comisiones");
-Route::get('administrar_comisiones', 'ComisionController@administrar_comisiones')->name("administrar_comisiones");
-Route::post('crear_comision', 'ComisionController@crear_comision')->name("crear_comision");
-Route::post('actualizar_comision', 'ComisionController@actualizar_comision')->name("actualizar_comision");
-Route::post('gestionar_asambleistas_comision', 'ComisionController@gestionar_asambleistas_comision')->name("gestionar_asambleistas_comision");
-Route::post('trabajo_comision', 'ComisionController@trabajo_comision')->name("trabajo_comision");
-Route::post('agregar_asambleistas_comision', 'ComisionController@agregar_asambleistas_comision')->name("agregar_asambleistas_comision");
-Route::post('retirar_asambleista_comision', 'ComisionController@retirar_asambleista_comision')->name("retirar_asambleista_comision");
-Route::post('listado_peticiones_comision', 'ComisionController@listado_peticiones_comision')->name("listado_peticiones_comision");
-Route::post('seguimiento_peticion_comision', 'ComisionController@seguimiento_peticion_comision')->name("seguimiento_peticion_comision");
-Route::post('listado_reuniones_comision', 'ComisionController@listado_reuniones_comision')->name("listado_reuniones_comision");
-Route::post('iniciar_reunion_comision', 'ComisionController@iniciar_reunion_comision')->name("iniciar_reunion_comision");
-Route::post('asistencia_comision', array('as' => 'asistencia_comision', 'uses' => 'ComisionController@asistencia_comision'));
-Route::post('registrar_asistencia_comision', 'ComisionController@registrar_asistencia_comision')->name('registrar_asistencia_comision');
-Route::post('finalizar_reunion_comision', 'ComisionController@finalizar_reunion_comision')->name('finalizar_reunion_comision');
-
-Route::post('historial_bitacoras', 'ComisionController@historial_bitacoras')->name('historial_bitacoras');
-Route::post('historial_dictamenes', 'ComisionController@historial_dictamenes')->name('historial_dictamenes');
-Route::post('convocatoria_comision', 'ComisionController@convocatoria_comision')->name('convocatoria_comision');
-Route::post('subir_documento_comision', 'ComisionController@subir_documento_comision')->name('subir_documento_comision');
-
-Route::post('crear_reunion_comision', array('as' => 'crear_reunion_comision', 'uses' => 'ComisionController@crear_reunion_comision'));
-Route::post('eliminar_reunion_comision', array('as' => 'eliminar_reunion_comision', 'uses' => 'ComisionController@eliminar_reunion_comision'));
-Route::post('enviar_convocatoria_comision', array('as' => 'enviar_convocatoria_comision', 'uses' => 'ComisionController@enviar_convocatoria_comision'));
 
 
 //rutas q aun no uso
@@ -121,7 +123,7 @@ Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'Pe
 Route::get('monitoreo_peticion', array('as' => 'monitoreo_peticion', 'uses' => 'PeticionController@monitoreo_peticion'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
-Route::get('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
+Route::post('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
 
 
 /* Reportes */

@@ -91,7 +91,7 @@
                         @forelse($asistentes as $asistente)
                             @if($asistente->asambleista_id == $asambleista->id)
                                 @php $presente_plenaria = 1 @endphp
-                                <td>{{\Carbon\Carbon::parse($asistente->entrada)->format('h:m A')}}</td>
+                                <td>{{\Carbon\Carbon::parse($asistente->entrada)->format('h:i A')}}</td>
                                 @if($asistente->propietaria == 1)
                                     <td class="success">Propietario en plenaria</td>
                                     {!! Form::open(['route'=>['cambiar_propietaria'],'method'=> 'POST','id'=>$asistente->id.'1']) !!}

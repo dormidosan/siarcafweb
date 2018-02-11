@@ -20,7 +20,7 @@
         <div class="box-body">
             <div class="hidden">
                 <form id="trabajo_comision" name="trabajo_comision" method="post"
-                      action="{{ url("trabajo_comision") }}">
+                      action="{{ route("trabajo_comision") }}">
                     {{ csrf_field() }}
                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
                     <button class="btn btn-success btn-xs">Acceder</button>
@@ -48,7 +48,7 @@
                             <td>{!! $contador !!}</td>
                             <td>{{ $peticion->codigo }}</td>
                             <td>{{ $peticion->descripcion }}</td>
-                            <td>{{ \Carbon\Carbon::parse($peticion->fecha)->format('d-m-Y h:m A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($peticion->fecha)->format('d-m-Y h:i A') }}</td>
                             {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>{{ $peticion->peticionario }}</td>
                             <td>
@@ -79,7 +79,7 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                <form id="ver_peticion_comision" action="{{ url("seguimiento_peticion_comision") }}" method="post">
+                                <form id="ver_peticion_comision" action="{{ route("seguimiento_peticion_comision") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="text" id="id_peticion" name="id_peticion" class="hidden" value="{{ $peticion->id }}">
                                     <input type="text" id="id_comision" name="id_comision" class="hidden" value="{{ $comision->id }}">
@@ -93,8 +93,8 @@
                             <input type="hidden" name="id_comision" id="id_comision" value="{{ $comision->id }}">
                             <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
                             <td>
-                                <button type="submit" class="btn btn-warning btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Subir documentacion
+                                <button type="submit" class="btn btn-info btn-xs btn-block" >
+                                    <i class="fa fa-upload"></i> Subir documentacion
                                 </button>
                             </td>
                             {!! Form::close() !!}

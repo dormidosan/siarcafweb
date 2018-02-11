@@ -13,7 +13,7 @@ class ModuloRolTableSeeder extends Seeder
     public function run()
     {
         //
-        for ($i=1;$i<=26;$i++){
+        for ($i=1;$i<=27;$i++){
             \DB::table('modulo_rol')->insert(array (
                 'rol_id'  => 1,
                 'modulo_id'  => $i,

@@ -60,26 +60,30 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ asset('images/default-user.png') }}" class="user-image" alt="User Image">
+                            
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             @if(Auth::guest())
+                                <img src="{{ asset('images/default-user.png') }}" class="user-image" alt="User Image">
                                 <span class="hidden-xs">Usuario Invitado</span>
                             @else
+                                <img src="../storage/fotos/{!!Auth::user()->persona->foto!!}" class="user-image" alt="User Image">
                                 <span class="hidden-xs">{{ Auth::user()->name }}</span>
                             @endif
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ asset("images/default-user.png") }}"
-                                     class="img-circle" alt="User Image">
+                                
                                 @if(Auth::guest())
+                                    <img src="{{ asset('images/default-user.png') }}" class="img-circle" alt="User Image">
                                     <p>
                                         Usuario Invitado
                                         <!--<small>ROL</small>-->
                                     </p>
                                 @else
-                                    <p>
+                                    <img src="../storage/fotos/{!!Auth::user()->persona->foto!!}" class="img-circle" alt="User Image" >
+                                    <p>                                    
+                                    <!-- <img src="../storage/fotos/{!!Auth::user()->persona->foto!!}" class="img-circle" alt="User Image" width="70%"> -->
                                         {{ Auth::user()->name }}
                                         <small>{{ ucfirst(Auth::user()->rol->nombre_rol) }}</small>
                                     </p>

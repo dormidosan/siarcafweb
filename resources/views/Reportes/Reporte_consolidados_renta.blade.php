@@ -198,7 +198,7 @@ $('#fecha').datepicker({
         return true;
          
         return /\d/.test(String.fromCharCode(keynum));
-        };
+        }
     </script>
 @endsection
 @section("lobibox")

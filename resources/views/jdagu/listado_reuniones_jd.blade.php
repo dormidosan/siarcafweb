@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-    <section class="">
+    <section>
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
-            <li><a class="active">Listado de Reuniones</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
+            <li><a class="active">Reuniones</a></li>
         </ol>
     </section>
 @endsection
@@ -40,7 +41,7 @@
                             </td>
                             <td>{!! $reunion->codigo !!}</td>
                             <td>{!! $reunion->lugar !!}</td>
-                            <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:m A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reunion->convocatoria)->format('d-m-Y h:i A') }}</td>
                             <td>{{ \Carbon\Carbon::parse($reunion->inicio)->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($reunion->fin)->format('d-m-Y') }}</td>
                             @if($reunion->vigente == 1)
@@ -76,7 +77,7 @@
                                 <input type="hidden" name="id_comision" id="id_comision" value="{{$reunion->comision_id}}">
                                 <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                                     <button type="submit" class="btn btn-info btn-xs btn-block" ><i
-                                                class="fa fa-eye"></i>Subir Bitacora
+                                                class="fa fa-upload"></i> Subir Bitacora
                                     </button>
                                 {!! Form::close() !!}
                                 </td>

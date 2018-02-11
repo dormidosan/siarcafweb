@@ -247,7 +247,7 @@ $('#fecha').datepicker({
         return true;
          
         return /\d/.test(String.fromCharCode(keynum));
-        };
+        }
         function cambiar_estado_comision(id) {
         $.ajax({
             //se envia un token, como medida de seguridad ante posibles ataques

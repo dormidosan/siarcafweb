@@ -29,7 +29,8 @@
     <section class="">
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
+            <li><a href="">Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
             <li class="active">Generar Agenda Plenaria</li>
         </ol>
     </section>
@@ -39,7 +40,7 @@
 @section("content")
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Listado de Sesiones Plenarias</h3>
+            <h3 class="box-title">Generar Agenda Plenaria</h3>
         </div>
         <div class="box-body">
             <form id="convocatoria" method="post" action="{{ url('generar_agenda_plenaria_jd') }}">
@@ -78,7 +79,7 @@
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
-                                <input name="hora" type='text' id="hora" class="form-control" placeholder="H:m AM"/>
+                                <input name="hora" type='text' id="hora" class="form-control" placeholder="h:i AM"/>
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span></span>
                             </div>

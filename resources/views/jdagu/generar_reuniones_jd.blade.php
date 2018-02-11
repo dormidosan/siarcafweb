@@ -9,10 +9,11 @@
 @endsection
 
 @section('breadcrumb')
-    <section class="">
+    <section>
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
             <li><a class="active">Generar Reunion</a></li>
         </ol>
     </section>
@@ -92,8 +93,8 @@
                             <td>{!! $reunion->codigo !!}</td>
                             <td>{!! $reunion->lugar !!}</td>
                             <td>{!! $reunion->convocatoria !!}</td>
-                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->inicio)) }}</td>
-                            <td>{{ date("m-d-Y h:m A",strtotime($reunion->fin)) }}</td>
+                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->inicio)) }}</td>
+                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->fin)) }}</td>
                             @if($reunion->vigente == 1)
 
                                 <td>
@@ -165,6 +166,7 @@
         });
     </script>
 @endsection
+
 @section("lobibox")
 
     @if(Session::has('success'))
