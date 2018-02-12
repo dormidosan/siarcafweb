@@ -42,7 +42,7 @@ class AdministracionController extends Controller
         return view("Administracion.RegistrarUsuarios", ["facultades" => $facultades, "sectores" => $sectores, "tipos_usuario" => $tipos_usuario]);
     }
 
-    public function guardar_usuario(UsuarioRequest $request)
+    public function guardar_usuario(Request $request)
     {
         //Se crea un objeto de tipo persona y se asocia lo que se recibe del form a su respectiva variable,
         //una vez ingresado la nueva persona, ya se tiene acceso a todos sus datos.

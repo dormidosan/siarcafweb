@@ -3,6 +3,8 @@
 @section('styles')
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -38,7 +40,7 @@
                     <div class="col-lg-6 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label>Seleccione Tipo Documento</label>
-                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'comision>', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
+                            {!! Form::select('tipo_documentos',$tipo_documentos,null,['id'=>'tipo_documentos', 'class'=>'form-control', 'required'=>'required', 'placeholder' => 'Seleccione tipo...']) !!}
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -47,7 +49,7 @@
                             <div class="file-loading">
 
                                 <input id="documento_jd" name="documento_jd" type="file" required="required"
-                                       data-show-preview="false">
+                                       data-show-preview="false"  accept=".doc, .docx, .pdf, .xls, .xlsx">
                             </div>
 
                         </div>
@@ -154,7 +156,9 @@
                                     @endif
                                 </tr>
                             @empty
-                                <p style="color: red ;">No hay criterios de busqueda</p>
+                                <tr>
+                                    <td colspan="5">No hay informacion que presentar</td>
+                                </tr>
                             @endforelse
                             </tbody>
                         </table>
@@ -166,9 +170,13 @@
 @endsection
 
 @section("js")
+    <script src="{{ asset('libs/utils/utils.js') }}"></script>
+    <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('libs/file/themes/explorer/theme.min.js') }}"></script>
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 @endsection
 
 @section("scripts")
@@ -190,6 +198,35 @@
                     showDrag: false
                 },
                 hideThumbnailContent: true
+            }).on('change', function(event) {
+                $('#guardar_documento_jd').formValidation('revalidateField', 'documento_jd');
+            }).on('filecleared', function(event) {
+                $('#guardar_documento_jd').formValidation('revalidateField', 'documento_jd');
+            });
+
+            $('#guardar_documento_jd').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    tipo_documentos: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El tipo de documento es requerido'
+                            }
+                        }
+                    },
+                    documento_jd: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El documento es requerido'
+                            }
+                        }
+                    }
+                }
             });
 
         });

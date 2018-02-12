@@ -3,9 +3,9 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -41,19 +41,18 @@
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
-                            <div class="input-group date fecha">
-
+                            <div class="input-group date fecha" id="fechaReunion">
                                 <input name="fecha" id="fecha" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th" required="required"></i></span>
-
                             </div>
                         </div>
+
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-12">
                         <label>Hora</label>
                         <div class="form-group">
                             <div class='input-group date'>
 
-                                <input name="hora" type='text' id="hora" class="form-control" required="required">
+                                <input name="hora" type='text' id="hora" class="form-control" required="required" placeholder="h:i AM">
 
                                 <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
@@ -70,7 +69,7 @@
             </form>
             <br>
             <div class="table-responsive">
-                <table class="table text-center table-bordered hover">
+                <table class="table text-center table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -82,7 +81,7 @@
                         <th colspan="3">Accion</th>
                     </tr>
                     </thead>
-                    <tbody id="cuerpoTabla">
+                    <tbody id="cuerpoTabla" class="table-hover">
                     @php $contador =1 @endphp @forelse($reuniones as $reunion)
 
                         <tr>
@@ -92,11 +91,10 @@
                             </td>
                             <td>{!! $reunion->codigo !!}</td>
                             <td>{!! $reunion->lugar !!}</td>
-                            <td>{!! $reunion->convocatoria !!}</td>
-                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->inicio)) }}</td>
-                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->fin)) }}</td>
+                            <td>{{ date("m-d-Y h:i A",strtotime($reunion->convocatoria)) }}</td>
+                            <td>{{ ($reunion->inicio != "")? date("m-d-Y h:i A",strtotime($reunion->inicio)):"" }}</td>
+                            <td>{{ ($reunion->fin != "")? date("m-d-Y h:i A",strtotime($reunion->inicio)):"" }}</td>
                             @if($reunion->vigente == 1)
-
                                 <td>
                                     {!! Form::open(['route'=>['enviar_convocatoria_jd'],'method'=> 'POST','id'=>"c".$reunion->id]) !!}
                                     <input type="hidden" name="id_comision" id="id_comision"
@@ -144,6 +142,9 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 @endsection
 
 
@@ -151,17 +152,65 @@
 @section("scripts")
     <script type="text/javascript">
         $(function () {
-            $('.input-group.date.fecha').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                language: "es",
-                autoclose: true,
-                todayHighlight: true,
-                toggleActive: true
+
+            $('#fecha').mask("99-99-9999", {placeholder: "dd-mm-yyyy"});
+
+            $('#fechaReunion')
+                .datepicker({
+                    format: 'dd-mm-yyyy',
+                    clearBtn: true,
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                    toggleActive: true
+                }).on('changeDate', function (e) {
+                // Revalidate the start date field
+                $('#convocatoria').formValidation('revalidateField', 'fecha');
             });
 
             $('#hora').datetimepicker({
-                format: 'LT',
+                format: 'LT'
+            }).on('dp.change', function (e) {
+                // Revalidate the start date field
+                $('#convocatoria').formValidation('revalidateField', 'hora');
+
+            });
+
+            $('#convocatoria').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    lugar: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El lugar de la sesión es requerido'
+                            }
+                        }
+                    },
+                    fecha: {
+                        validators: {
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                min: "{{ \Carbon\Carbon::now()->format("d-m-Y") }}",
+                                message: 'La fecha debe ser igual o mayor que '+ "{{ \Carbon\Carbon::now()->format("d-m-Y") }}"
+                            },
+                            notEmpty: {
+                                message: 'La fecha de la sesion es requerida'
+                            }
+                        }
+                    },
+                    hora: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La hora de la sesion es requerida'
+                            }
+                        }
+                    }
+                }
             });
         });
     </script>

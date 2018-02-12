@@ -5,8 +5,8 @@
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 
     <style>
         .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
@@ -25,9 +25,10 @@
     <section class="">
         <ol class="breadcrumb">
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
-            <li><a href="{{ route("trabajo_junta_directiva") }}">Junta Directiva</a></li>
+            <li><a>Junta Directiva</a></li>
+            <li><a href="{{ route("trabajo_junta_directiva") }}">Trabajo Junta Directiva</a></li>
             <li><a href="{{ url("listado_reuniones_jd") }}">Listado de Reuniones</a></li>
-            <li class="active">Subir Documento</li>
+            <li class="active">Subir Bitacora</li>
         </ol>
     </section>
 @endsection
@@ -35,7 +36,7 @@
 @section("content")
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Subir documento</h3>
+            <h3 class="box-title">Subir Bitacora</h3>
         </div>
         <div class="box-body">
             <form class="form-group" id="guardar_bitacora_jd" name="guardar_bitacora_jd" method="post"
@@ -50,7 +51,7 @@
                             <div class="file-loading">
 
                                 <input id="documento_jd" name="documento_jd" type="file" required="required"
-                                       data-show-preview="false">
+                                       data-show-preview="false" accept=".doc, .docx, .pdf, .xls, .xlsx">
                             </div>
 
                         </div>
@@ -74,7 +75,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-hover text-center" id="tabla">
+                    <table class="table table-hover text-center table-bordered table-stripped" id="tabla">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -84,7 +85,7 @@
                             <th>Opcion</th>
                         </tr>
                         </thead>
-                        <tbody id="cuerpoTabla" class="text-center">
+                        <tbody id="cuerpoTabla" class="text-center table-hover">
                         @php $contador = 1 @endphp
                         @forelse($reunion->documentos as $documento)
                             @if($documento->tipo_documento_id == 7)
@@ -150,6 +151,10 @@
                     showDrag: false
                 },
                 hideThumbnailContent: true
+            }).on('change', function(event) {
+                $('#guardar_bitacora_jd').formValidation('revalidateField', 'documento_jd');
+            }).on('filecleared', function(event) {
+                $('#guardar_bitacora_jd').formValidation('revalidateField', 'documento_jd');
             });
 
             var oTable = $('#tabla').DataTable({
@@ -181,6 +186,24 @@
                 columnDefs: [{orderable: false, targets: [0, 4]}],
                 order: [[1, 'asc']]
 
+            });
+
+            $('#guardar_bitacora_jd').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    documento_jd: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El documento es requerido'
+                            }
+                        }
+                    }
+                }
             });
 
         });

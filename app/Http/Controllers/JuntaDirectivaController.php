@@ -88,24 +88,15 @@ class JuntaDirectivaController extends Controller
     public function crear_reunion_jd(Request $request, Redirector $redirect)
     {
         $comision = Comision::where('id', '=', $request->id_comision)->first();
-        //$cargos = $comision->cargos;
-
-
         $reunion = new Reunion();
-        //dd($request->fecha);
         $reunion->comision_id = $comision->id;
         $reunion->periodo_id = Periodo::latest()->first()->id;
-        $reunion->codigo = $comision->codigo . " " . DateTime::createFromFormat('d/m/Y', $request->fecha)->format('d-m-y');
+        $reunion->codigo = $comision->codigo . " " . DateTime::createFromFormat('d-m-Y', $request->fecha)->format('d-m-y');
         $reunion->lugar = $request->lugar;
-        $reunion->convocatoria = DateTime::createFromFormat('d/m/Y H:i:s', $request->fecha . '' . date('H:i:s', strtotime($request->hora)))->format('Y-m-d H:i:s');
-        //$reunion->inicio
-        //$reunion->fin           .''.date('H:i:s', strtotime($request->hora))
+        $reunion->convocatoria = DateTime::createFromFormat('d-m-Y h:i A', $request->fecha . '' . date('h:i A', strtotime($request->hora)))->format('Y-m-d H:i:s');
         $reunion->vigente = '1';
         $reunion->activa = '0';
-        //date('j-m-y'); Carbon::now()->format('Y-m-d H:i:s')
         $reunion->save();
-
-        //$peticiones = Peticion::where('id','!=',0)->get(); //->paginate(10); para obtener todos los resultados  o null
         $reuniones = Reunion::where('id', '!=', 0)->where('comision_id', '=', '1')->orderBy('created_at', 'DESC')->get();
 
         return view('jdagu.generar_reuniones_jd')

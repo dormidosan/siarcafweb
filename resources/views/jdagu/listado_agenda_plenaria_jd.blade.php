@@ -72,7 +72,6 @@
                                 <span class="input-group-addon add-on"><span
                                             class="glyphicon glyphicon-calendar"></span></span>
                             </div>
-                            <span class="help-block">La fecha debe ser mayor o igual {{ \Carbon\Carbon::now()->format("d-m-Y") }}</span>
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-12 col-md-12">
@@ -163,7 +162,7 @@
                                     {!! Form::open(['route'=>['subir_acta_plenaria'],'method'=> 'POST']) !!}
                                     <input type="hidden" name="id_agenda" id="id_agenda" value="{{$agenda->id}}">
                                         <button type="submit" class="btn btn-info btn-xs btn-block" ><i
-                                                    class="fa fa-eye"></i>Subir Acta Plenaria
+                                                    class="fa fa-upload"></i> Subir Acta Plenaria
                                         </button>
                                     {!! Form::close() !!}
                                 @endif
@@ -215,7 +214,7 @@
                 }).on('changeDate', function (e) {
                 // Revalidate the start date field
                 $('#convocatoria').formValidation('revalidateField', 'fecha');
-            });
+                });
 
             $('#hora').datetimepicker({
                 format: 'LT'
@@ -252,7 +251,7 @@
                             date: {
                                 format: 'DD-MM-YYYY',
                                 min: "{{ \Carbon\Carbon::now()->format("d-m-Y") }}",
-                                message: 'La fecha no es una fecha valida'
+                                message: 'La fecha debe ser igual o mayor que '+ "{{ \Carbon\Carbon::now()->format("d-m-Y") }}"
                             },
                             notEmpty: {
                                 message: 'La fecha de la sesion es requerida'

@@ -33,13 +33,15 @@
             <h3 class="box-title">Administrar Integrantes de {{ ucwords($comision->nombre) }}</h3>
         </div>
         <div class="box-body">
-            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post" action="{{ route("agregar_asambleistas_comision") }}">
+            <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post"
+                  action="{{ route("agregar_asambleistas_comision") }}">
                 {{ csrf_field() }}
                 <div class="row hidden">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label for="nombre">Comision</label>
-                            <input type="text" id="comision_id" name="comision_id" class="form-control" value="{{ $comision->id }}">
+                            <input type="text" id="comision_id" name="comision_id" class="form-control"
+                                   value="{{ $comision->id }}">
                         </div>
                     </div>
                 </div>
@@ -87,10 +89,12 @@
                             <td>{{ $integrante->asambleista->facultad->nombre }}</td>
                             <td>{{ $integrante->cargo }}</td>
                             <td>
-                                <form id="retirar_asambleista" name="retirar_asambleista" method="post" action="{{ route("retirar_asambleista_comision") }}">
+                                <form id="retirar_asambleista" name="retirar_asambleista" method="post"
+                                      action="{{ route("retirar_asambleista_comision") }}">
                                     {{ csrf_field() }}
                                     <input class="hidden" id="comision_id" name="comision_id" value="{{$comision->id}}">
-                                    <input class="hidden" id="asambleista_id" name="asambleista_id" value="{{$integrante->asambleista_id}}">
+                                    <input class="hidden" id="asambleista_id" name="asambleista_id"
+                                           value="{{$integrante->asambleista_id}}">
                                     <button class="btn btn-danger btn-xs">Retirar</button>
                                 </form>
                             </td>
@@ -176,7 +180,7 @@
                 .find('[name="asambleistas[]"]')
                 .select2()
                 // Revalidate the color when it is changed
-                .change(function(e) {
+                .change(function (e) {
                     $('#AgregarAsambleista').formValidation('revalidateField', 'asambleistas[]');
                 })
                 .end()
@@ -193,7 +197,7 @@
                             validators: {
                                 callback: {
                                     message: 'Seleccione al menos un asambleista',
-                                    callback: function(value, validator, $field) {
+                                    callback: function (value, validator, $field) {
                                         // Get the selected options
                                         var options = validator.getFieldElements('asambleistas[]').val();
                                         return (options != null && options.length >= 1);
