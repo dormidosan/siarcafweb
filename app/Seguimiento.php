@@ -30,4 +30,9 @@ class Seguimiento extends Model
         return $this->belongsTo('App\Documento');
     }
 
+    public function reunion()
+    {
+        return $this->belongsTo('App\Reunion');
+    }
+
 }

@@ -984,9 +984,14 @@ class JuntaDirectivaController extends Controller
         $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
         $disco = "../storage/documentos/";
 
+        $seguimientos = Seguimiento::where('comision_id','=',$comision->id)
+        ->where('documento_id','!=',NULL)
+        ->get();
+
         return view('jdagu.historial_dictamenes_jd')
             ->with('disco', $disco)
-            ->with('reuniones', $reuniones);
+            ->with('reuniones', $reuniones)
+            ->with('seguimientos', $seguimientos);
     }
 
 

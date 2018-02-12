@@ -40,9 +40,10 @@
             <table id="resultadoDocs" class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
+                    <th>Codigo Reunion</th>
                     <th>Nombre Bitacora</th>
                     <th>Fecha Creacion</th>
-                    <th>Accion</th>
+                    <th colspan="2">Accion</th>
                 </tr>
                 </thead>
 
@@ -51,8 +52,9 @@
                     @forelse($reunion->documentos as $documento)
                         @if($documento->tipo_documento_id == 7)
                             <tr>
+                                <td>{!! $reunion->codigo !!}</td>
                                 <td>{!! $documento->nombre_documento !!}</td>
-                                <td>{{ date("d-m-Y h:m A",strtotime($documento->fecha_ingreso)) }}</td>
+                                <td>{{ date("d-m-Y h:i A",strtotime($documento->fecha_ingreso)) }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 col-md-6">

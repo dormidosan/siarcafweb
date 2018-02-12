@@ -83,7 +83,11 @@ class ComisionController extends Controller
     {
         //obtengo una comision
         $comision = Comision::find($request->get("comision_id"));
-        $peticiones = $comision->peticiones;
+        $peticiones = $comision->peticiones()
+            ->orderBy('peticiones.created_at', 'asc')
+            ->get();
+
+ 
         return view("Comisiones.listado_peticiones_comision", ["comision" => $comision, "peticiones" => $peticiones]);
     }
 
@@ -195,14 +199,18 @@ class ComisionController extends Controller
 
     public function iniciar_reunion_comision(Request $request)
     {
-
-        $peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        // 0987
+        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
+        //$peticiones = Peticion::where('id', '!=', 0)->orderBy('estado_peticion_id', 'ASC')->orderBy('updated_at', 'ASC')->get(); // Primero ordenar por el estado, despues los estados ordenarlo por fechas
+        $peticiones = $comision->peticiones()
+            ->orderBy('peticiones.created_at', 'asc')
+            ->get();
 
         $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
         $reunion->activa = '1';
         $reunion->inicio = Carbon::now()->format('Y-m-d H:i:s');
         $reunion->save();
-        $comision = Comision::where('id', '=', $request->id_comision)->firstOrFail();
+        
 
         $todos_puntos = 1;
 
@@ -266,6 +274,33 @@ class ComisionController extends Controller
             return view('Comisiones.seguimiento_peticion_comision', array("disco" => $disco, "comision" => $comision, "peticion" => $peticion));
         } else {
             $reunion = Reunion::find($request->get("id_reunion"));
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision->id,EstadoSeguimiento::where('estado', '=', "ds")->first()->id);
+
+            if ($seguimiento_exist == 0) {
+                $seguimiento = new Seguimiento();
+                $seguimiento->peticion_id = $peticion->id;
+                $seguimiento->comision_id = $comision->id; // Esta si cuenta ya que comision esta guardando actualmente la comision en que se esta trabajando
+                //$seguimiento->comision_id = $comision_jd; // ya que $comision->id esta guardando la comision a la cual se enviara, no la comision que esta trabajando
+
+                $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ds")->first()->id; // ds estado discutido
+                //$seguimiento->documento_id = $documento_jd->id;
+
+                $seguimiento->reunion_id = $reunion->id;
+                $seguimiento->inicio = Carbon::now();
+                $seguimiento->fin = Carbon::now();
+                $seguimiento->activo = '0';
+                $seguimiento->agendado = '0';
+
+                $seguimiento->descripcion = 'Peticion discutida en '.$comision->nombre; //COLOCAR FECHA DESPUES
+                $seguimiento->save();
+            }
+
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+
+            
             return view('Comisiones.seguimiento_peticion_comision', array("disco" => $disco, "comision" => $comision, "reunion" => $reunion, "peticion" => $peticion));
         }
 
@@ -309,10 +344,17 @@ class ComisionController extends Controller
         $reuniones = Reunion::where('comision_id', '=', $comision->id)->where('periodo_id', '=', $periodo->id)->orderBy('created_at', 'DESC')->get();
         $disco = "../storage/documentos/";
 
+        $seguimientos = Seguimiento::where('comision_id','=',$comision->id)
+        ->where('documento_id','!=',NULL)
+        ->get();
+
+        //dd($seguimientos);
+
         return view('Comisiones.historial_dictamenes')
             ->with('disco', $disco)
             ->with('comision', $comision)
-            ->with('reuniones', $reuniones);
+            ->with('reuniones', $reuniones)
+            ->with('seguimientos', $seguimientos);
     }
 
     public function convocatoria_comision(Request $request, Redirector $redirect)
@@ -355,6 +397,7 @@ class ComisionController extends Controller
 
     public function guardar_documento_comision(Request $request, Redirector $redirect)
     {
+        //dd($request->all());
         $id_peticion = $request->id_peticion;
         $tipo_documento = $request->tipo_documentos;
         $peticion = Peticion::where('id', '=', $id_peticion)->firstOrFail();
@@ -364,6 +407,32 @@ class ComisionController extends Controller
         if (($request->id_reunion) and ($request->id_reunion != 0)) {
             $reunion = Reunion::where('id', '=', $request->id_reunion)->firstOrFail();
             $is_reunion = '1';
+
+
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            $seguimiento_exist = $this->existeSeguimiento($peticion->id,$comision->id,EstadoSeguimiento::where('estado', '=', "ds")->first()->id);
+
+            if ($seguimiento_exist == 0) {
+                $seguimiento = new Seguimiento();
+                $seguimiento->peticion_id = $peticion->id;
+                $seguimiento->comision_id = $comision->id; // Esta si cuenta ya que comision esta guardando actualmente la comision en que se esta trabajando
+                //$seguimiento->comision_id = $comision_jd; // ya que $comision->id esta guardando la comision a la cual se enviara, no la comision que esta trabajando
+
+                $seguimiento->estado_seguimiento_id = EstadoSeguimiento::where('estado', '=', "ds")->first()->id; // ds estado discutido
+                //$seguimiento->documento_id = $documento_jd->id;
+
+                $seguimiento->reunion_id = $reunion->id;
+                $seguimiento->inicio = Carbon::now();
+                $seguimiento->fin = Carbon::now();
+                $seguimiento->activo = '0';
+                $seguimiento->agendado = '0';
+
+                $seguimiento->descripcion = 'Peticion discutida en '.$comision->nombre; //COLOCAR FECHA DESPUES
+                $seguimiento->save();
+            }
+
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
         } else {
             $reunion = '0';
         }
@@ -519,4 +588,26 @@ class ComisionController extends Controller
             ->with('agendas', $agendas);
 
     }
+
+    public function existeSeguimiento($peticion_id,$comision_id,$estado_seguimiento_id) {
+        //dd($comision_id);
+         
+        $seguimiento_exist = Seguimiento::where('peticion_id','=',$peticion_id)
+        ->where('comision_id','=',$comision_id)
+        ->where('estado_seguimiento_id','=',$estado_seguimiento_id)
+        ->where('inicio','=',Carbon::now()->toDateString())
+        ->first();
+
+        //dd($seguimiento_exist);
+        if ($seguimiento_exist) {
+            return $seguimiento_exist->id;
+        } else {
+            return '0';
+        }
+    
+
+    
+    }
+
+
 }
