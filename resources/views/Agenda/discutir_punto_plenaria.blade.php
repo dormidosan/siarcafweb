@@ -225,7 +225,15 @@
                }
             });
 
-            $('#agregarPropuesta').formValidation({
+            $('#agregarPropuesta')
+                .find('[name="asambleista_id"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function (e) {
+                    $('#agregarPropuesta').formValidation('revalidateField', 'asambleista_id');
+                })
+                .end()
+                .formValidation({
                 framework: 'bootstrap',
                 icon: {
                     valid: 'glyphicon glyphicon-ok',
@@ -246,15 +254,28 @@
                     },
                     asambleista_id: {
                         validators: {
-                            notEmpty: {
-                                message: 'El asambleista es requerido'
+                            callback: {
+                                message: 'Seleccione un asambleista',
+                                callback: function (value, validator, $field) {
+                                    // Get the selected options
+                                    var options = validator.getFieldElements('asambleista_id').val();
+                                    return (options != null && options.length >= 1);
+                                }
                             }
                         }
                     }
                 }
             });
 
-            $('#agregarIntervenciones').formValidation({
+            $('#agregarIntervencion')
+                .find('[name="asambleista_id_intervencion"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function (e) {
+                    $('#agregarIntervencion').formValidation('revalidateField', 'asambleista_id_intervencion');
+                })
+                .end()
+                .formValidation({
                 framework: 'bootstrap',
                 icon: {
                     valid: 'glyphicon glyphicon-ok',
@@ -275,8 +296,13 @@
                     },
                     asambleista_id_intervencion: {
                         validators: {
-                            notEmpty: {
-                                message: 'El asambleista es requerido'
+                            callback: {
+                                message: 'Seleccione un asambleista',
+                                callback: function (value, validator, $field) {
+                                    // Get the selected options
+                                    var options = validator.getFieldElements('asambleista_id_intervencion').val();
+                                    return (options != null && options.length >= 1);
+                                }
                             }
                         }
                     }
