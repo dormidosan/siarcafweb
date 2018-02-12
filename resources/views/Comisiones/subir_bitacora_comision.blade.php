@@ -115,7 +115,7 @@
                                     </td>
                                     <td>{{$documento->nombre_documento}}</td>
                                     <td>{{$documento->tipo_documento->tipo}}</td>
-                                    <td>{{ date("d-m-Y h:m A",strtotime($documento->fecha_ingreso)) }}</td>
+                                    <td>{{ date("d-m-Y h:i A",strtotime($documento->fecha_ingreso)) }}</td>
                                     <td>
                                         <a class="btn btn-info btn-xs"
                                            href="{{ asset($disco.''.$documento->path) }}"

@@ -48,43 +48,48 @@
             <table id="resultadoDocs" class="table table-striped table-bordered table-hover text-center">
                 <thead>
                 <tr>
-                    <th>Nombre Bitacora</th>
+                    <th>Codigo reunion</th>
+                    <th>Nombre Dictamen</th>
                     <th>Fecha Creacion</th>
-                    <th>Accion</th>
+                    <th colspan="2">Accion</th>
                 </tr>
                 </thead>
 
                 <tbody id="cuerpoTabla">
-                @forelse($reuniones as $reunion)
-                    @forelse($reunion->documentos as $documento)
-                        @if($documento->tipo_documento_id == 7)
+                @forelse($seguimientos as $seguimiento)  <!-- $$$$$$$$$$$$$ -->
+                        @if($seguimiento->documento->tipo_documento_id == 3)
                             <tr>
-                                <td>{!! $documento->nombre_documento !!}</td>
-                                <td>{{ date("d-m-Y h:m A",strtotime($documento->fecha_ingreso)) }}</td>
+                                <td>
+                                    @if($seguimiento->reunion)
+                                        {!! $seguimiento->reunion->codigo !!}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td>{!! $seguimiento->documento->nombre_documento !!}</td>
+                                <td>{{ date("d-m-Y h:i A",strtotime($seguimiento->documento->fecha_ingreso)) }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 col-md-6">
-                                            <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$documento->path) }}"
+                                            <a class="btn btn-primary btn-xs btn-block" href="{{ asset($disco.''.$seguimiento->documento->path) }}"
                                                role="button" target="_blank"><i class="fa fa-eye"></i> Ver</a>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-md-6">
                                             <a class="btn btn-success btn-xs btn-block"
-                                               href="descargar_documento/<?= $documento->id; ?>" role="button">
+                                               href="descargar_documento/<?= $seguimiento->documento->id; ?>" role="button">
                                                 <i class="fa fa-download"></i> Descargar</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         @endif
-                    @empty
-                        <!-- <p style="color: red ;">No hay criterios de busqueda</p> -->
-                        <?php $text1 = 1; ?>
-                    @endforelse
-                @empty
-                    @if($text1 == 1)
+                  
+                @empty <!-- $$$$$$$$$$$$$ -->
+                    
                         <p style="color: red ;">No hay criterios de busqueda</p>
-                    @endif
-                @endforelse
+                    
+                @endforelse <!-- $$$$$$$$$$$$$ -->
 
                 </tbody>
 
