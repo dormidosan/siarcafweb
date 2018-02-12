@@ -280,6 +280,7 @@ class AgendaController extends Controller
             //$agendas = Agenda::where('vigente','=', '1')->orderBy('created_at', 'ASC')->get();
             $agenda->activa  = '0';
             $agenda->vigente = '0';
+            $agenda->fin = Carbon::now();
             $agenda->save();
 
             $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
