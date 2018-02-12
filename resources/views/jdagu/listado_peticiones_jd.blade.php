@@ -1,8 +1,17 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('') }}">
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 @endsection
+
 
 @section('breadcrumb')
     <section>
@@ -23,7 +32,7 @@
 
         <div class="box-body">
             <div class="table-responsive">
-                <table class="table text-center table-bordered hover">
+                <table class="table text-center table-bordered table-stripped table-hover" id="tabla">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -34,15 +43,13 @@
                         <th>Peticionario</th>
                         <th>Ultima asignacion</th>
                         <th>Visto anteriormente por</th>
-                        <th colspan="2">Acción</th>
+                        <th>Acción</th>
                     </tr>
                     </thead>
-                    <tbody id="cuerpoTabla">
+                    <tbody id="cuerpoTabla" class="table-hover">
                     @php $contador =1 @endphp
                     @forelse($peticiones as $peticion)
-                        
                         <tr>
-
                             <td>
                                 {!! $contador !!}
                                 @php $contador++ @endphp
@@ -54,12 +61,10 @@
                                 {!! $peticion->descripcion !!}
                             </td>
                             <td>{{ date("m-d-Y h:i A",strtotime($peticion->fecha)) }}</td>
-                            {{-- <td>{{ \Carbon\Carbon::now() }}</td>--}}
                             <td>
                                 {!! $peticion->peticionario !!}
                             </td>
                             <td>
-                                {{-- Ultima asignacion --}}
                                 @php
                                     $i = ''
                                 @endphp
@@ -73,7 +78,6 @@
                                 {!! $i !!}
                             </td>
                             <td>
-                                {{-- Visto anteriormente por  --}}
                                 @php
                                     $i = ''
                                 @endphp
@@ -86,28 +90,31 @@
                                 @endforeach
                                 {!! $i !!}
                             </td>
-                            <td>
-                            {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST','id'=>$peticion->id.'1']) !!}
-                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
-                            <input type="hidden" name="es_reunion"  id="es_reunion"  value="0">
-                                <button type="submit" class="btn btn-primary btn-xs btn-block">
-                                    <i class="fa fa-eye"></i> Ver
-                                </button>
-                            {!! Form::close() !!}
-                            </td>
-                            <td>
-                            {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
-                            <input type="hidden" name="id_comision" id="id_comision" value="1">
-                            <input type="hidden" name="id_peticion" id="id_peticion"  value="{{$peticion->id}}">
-                                    <button type="submit" class="btn btn-warning btn-xs btn-block" >
-                                    <i class="fa fa-eye"></i> Subir documentacion
+                            <td colspan="row">
+                                <div class="col-lg-4">
+                                    {!! Form::open(['route'=>['seguimiento_peticion_jd'],'method'=> 'POST','id'=>$peticion->id.'1']) !!}
+                                    <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                                    <input type="hidden" name="es_reunion" id="es_reunion" value="0">
+                                    <button type="submit" class="btn btn-primary btn-xs">
+                                        <i class="fa fa-eye"></i> Ver
                                     </button>
-                            {!! Form::close() !!}
+                                    {!! Form::close() !!}
+                                </div>
+                                <div class="col-lg-1">
+
+                                    {!! Form::open(['route'=>['subir_documento_jd'],'method'=> 'POST','id'=>$peticion->id.'2']) !!}
+                                    <input type="hidden" name="id_comision" id="id_comision" value="1">
+                                    <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                                    <button type="submit" class="btn btn-info btn-xs">
+                                        <i class="fa fa-upload"></i> Subir documentacion
+                                    </button>
+                                    {!! Form::close() !!}
+                                </div>
                             </td>
                         </tr>
-                        
+
                     @empty
-                        <p style="color: red ;">No hay criterios de busqueda</p>
+
                     @endforelse
                     </tbody>
                 </table>
@@ -115,12 +122,46 @@
         </div>
     </div>
 @endsection
+
 @section("js")
-    <script src="{{ asset('') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 @endsection
+
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+            var oTable = $('#tabla').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                /*searching: false,
+                paging: false,*/
+                columnDefs: [{orderable: false, targets: [0,7]}],
+                order: [[1, 'asc']]
+            });
         });
     </script>
 @endsection

@@ -199,7 +199,7 @@ class ModulosTableSeeder extends Seeder
         //18
         \DB::table('modulos')->insert(array (
             'nombre_modulo'  => 'Registrar Peticiones',
-            'url' => 'RegistrarPeticion',
+            'url' => 'registrar_peticion',
             'modulo_padre' => '8',
             'icono'  => 'fa fa-dot-circle-o',
             'tiene_hijos' => false,

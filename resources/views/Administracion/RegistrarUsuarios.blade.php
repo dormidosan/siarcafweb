@@ -4,7 +4,9 @@
     <link href="{{ asset('libs/file/css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ asset('libs/file/themes/explorer/theme.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/datepicker/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
     <style>
         .kv-avatar .krajee-default.file-preview-frame, .kv-avatar .krajee-default.file-preview-frame:hover {
             margin: 0;
@@ -41,6 +43,7 @@
             <li><a href="{{ route("inicio") }}"><i class="fa fa-home"></i> Inicio</a></li>
             <li><a>Administracion</a></li>
             <li><a>Gestionar Usuarios</a></li>
+            <li><a href="{{route("administracion_usuario")}}">Administrar Usuarios</a></li>
             <li class="active">Registrar Usuarios</li>
         </ol>
     </section>
@@ -53,23 +56,11 @@
         </div>
         <div class="box-body">
 
-            {{-- @if ($errors->any())
-                <div class="alert alert-danger">
-                    <p>Por favor, corriga los siguientes errores:</p>
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif  --}}
-
-
             <form class="form" id="agregar_usuario" method="post" action="{{ url("guardar_usuario") }}"
                   enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-sm-3 col-lg-3 text-center">
+                    <div class="col-sm-2 col-lg-2 text-center">
                         <div class="form-group {{ $errors->has('foto') ? 'has-error' : '' }}">
                             <div class="kv-avatar">
                                 <div class="file-loading">
@@ -79,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-10">
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group {{ $errors->has('primer_nombre') ? 'has-error' : '' }}">
@@ -141,13 +132,15 @@
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                              <div class="form-group">
-                            <label for="fecha">FECHA NACIMIENTO</label>
-                            <div class="input-group date fecha">
-                                <input value="{{old("fecha1")}}" required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                <div class="form-group">
+                                    <label for="fecha1">Fecha Nacimiento</label>
+                                    <div class="input-group date fecha" id="fechaNacimiento">
+                                        <input name="fecha1" id="fecha1" type="text" class="form-control"><span
+                                                class="input-group-addon"><i class="glyphicon glyphicon-th"
+                                                                             required="required"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
@@ -239,9 +232,10 @@
     <script src="{{ asset('libs/datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/moment.min.js') }}"></script>
     <script src="{{ asset('libs/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('libs/adminLTE/plugins/icheck/icheck.min.js') }}"></script>
-    <script src="{{ asset('libs/adminLTE/plugins/toogle/js/bootstrap-toggle.min.js') }}"></script>
-  
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
+
+
 @endsection
 
 
@@ -249,6 +243,19 @@
 
     <script type="text/javascript">
         $(function () {
+
+            $('#dui').mask("00000000-0", {placeholder: "99999999-9"});
+            $('#nit').mask("0000-000000-000-0", {placeholder: "9999-999999-999-9"});
+            $('#afp').mask("000000000000", {placeholder: "999999999999"});
+            $('#cuenta').mask("0000000000", {placeholder: "9999999999"});
+            $('#correo').mask('A', {
+                'translation': {
+                    A: {pattern: /[\w@\-.+]/, recursive: true}
+                },
+                placeholder: "ejemplo@gmail.com"
+            });
+            $('#fecha1').mask("99-99-9999", {placeholder: "dd-mm-yyyy"});
+
             $("#foto").fileinput({
                 language: "es",
                 overwriteInitial: true,
@@ -265,7 +272,7 @@
                 defaultPreviewContent: '<img src="{{ asset('images/default-user.png') }}" alt="Your Avatar" class="img-responsive">',
                 //layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
                 layoutTemplates: {main2: '{preview} ' + ' {remove} {browse}'},
-                allowedFileExtensions: ["jpg", "png", "gif","jpeg"],
+                allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
                 fileActionSettings: {
                     showRemove: false,
                     showUpload: false,
@@ -274,40 +281,136 @@
                 },
                 "file-upload-indicator": false
             });
-            $('#dui').mask("00000000-0", {placeholder: "99999999-9"});
-            $('#nit').mask("0000-000000-000-0", {placeholder: "9999-999999-999-9"});
-            $('#afp').mask("000000000000", {placeholder: "999999999999"});
-            $('#cuenta').mask("0000000000", {placeholder: "9999999999"});
-            $('#correo').mask('A', {'translation': {
-                A: { pattern: /[\w@\-.+]/, recursive: true }
-            },
-            placeholder: "ejemplo@gmail.com"});
+
+            $('#fechaNacimiento')
+                .datepicker({
+                    format: 'dd-mm-yyyy',
+                    clearBtn: true,
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                    toggleActive: true
+                }).on('changeDate', function (e) {
+                // Revalidate the start date field
+                $('#agregar_usuario').formValidation('revalidateField', 'fecha1');
+            });
+
+            $('#agregar_usuario').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    primer_nombre: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El primer nombre es requerido'
+                            }
+                        }
+                    },
+                    segundo_nombre: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El segundo nombre es requerido'
+                            }
+                        }
+                    },
+                    primer_apellido: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El primer apellido es requerido'
+                            }
+                        }
+                    },
+                    segundo_apellido: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El segundo apellido es requerido'
+                            }
+                        }
+                    },
+                    correo: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El correo electronico es requerido'
+                            },
+                            emailAddress: {
+                                message: 'El valor ingresado no es un correo valido'
+                            }
+                        }
+                    },
+                    dui: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El DUI es requerido'
+                            }
+                        }
+                    },
+                    nit: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El NIT es requerido'
+                            }
+                        }
+                    },
+                    fecha1: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La fecha de nacimiento es requerida'
+                            }
+                        }
+                    },
+                    afp: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El AFP es requerido'
+                            }
+                        }
+                    },
+                    cuenta: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La cuenta bancaria es requerida'
+                            }
+                        }
+                    },
+                    tipo_usuario: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El tipo de usuario es requerido'
+                            }
+                        }
+                    },
+                    sector: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El sector es requerido'
+                            }
+                        }
+                    },
+                    facultad: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La facultad es requerida'
+                            }
+                        }
+                    },
+                    propietario: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tipo de propetaria es requerida'
+                            }
+                        }
+                    }
+
+                }
+            });
+
         });
-        $('#fecha').datepicker({
-              format: "yyyy-mm-dd",
-                clearBtn: true,
-                language: "es",
-                autoclose: true,
-                todayHighlight: true
-            });
 
 
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('.input-group.date.fecha').datepicker({
-                format: "yyyy-mm-dd",
-                clearBtn: true,
-                language: "es",
-                autoclose: true,
-                todayHighlight: true,
-                toggleActive: true
-            });
-
-            $('#hora').datetimepicker({
-                format: 'LT',
-            });
-        });
     </script>
 
 @endsection

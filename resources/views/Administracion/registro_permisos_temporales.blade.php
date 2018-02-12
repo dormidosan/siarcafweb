@@ -205,67 +205,85 @@
                     $('#registro_permisos_temporales').formValidation('revalidateField', 'endDate');
                 });
 
-            $('#registro_permisos_temporales').formValidation({
-                framework: 'bootstrap',
-                icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    asambleista: {
-                        validators: {
-                            notEmpty: {
-                                enabled: false,
-                                message: 'Seleccione un asambleista'
-                            }
-                        }
+            $('#registro_permisos_temporales')
+                .find('[name="asambleista"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function (e) {
+                    $('#registro_permisos_temporales').formValidation('revalidateField', 'asambleista');
+                })
+                .end()
+                .formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
                     },
-                    delegado: {
-                        validators: {
-                            notEmpty: {
-                                enabled: false,
-                                message: 'Seleccione un delegado'
+                    fields: {
+                        asambleista: {
+                            /*validators: {
+                                notEmpty: {
+                                    enabled: false,
+                                    message: 'Seleccione un asambleista'
+                                }
+                            }*/
+                            validators: {
+                                callback: {
+                                    message: 'Seleccione un asambleista',
+                                    callback: function (value, validator, $field) {
+                                        // Get the selected options
+                                        var options = validator.getFieldElements('asambleista').val();
+                                        return (options != null && options.length >= 1);
+                                    }
+                                }
                             }
-                        }
-                    },
-                    motivo: {
-                        validators: {
-                            stringLength: {
-                                max: 50,
-                                message: 'La razon del permiso no debe de exceder los 50 caracteres'
-                            },
-                            notEmpty: {
-                                message: 'La razon del permiso es requerida'
+                        },
+                        delegado: {
+                            validators: {
+                                notEmpty: {
+                                    enabled: false,
+                                    message: 'Seleccione un delegado'
+                                }
                             }
-                        }
-                    },
-                    startDate: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Fecha de inicio requerida'
-                            },
-                            date: {
-                                format: 'DD-MM-YYYY',
-                                max: 'endDate',
-                                message: 'Fecha de inicio no puede ser mayor que fecha fin'
+                        },
+                        motivo: {
+                            validators: {
+                                stringLength: {
+                                    max: 50,
+                                    message: 'La razon del permiso no debe de exceder los 50 caracteres'
+                                },
+                                notEmpty: {
+                                    message: 'La razon del permiso es requerida'
+                                }
                             }
-                        }
-                    },
-                    endDate: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Fecha fin es requerida'
-                            },
-                            date: {
-                                format: 'DD-MM-YYYY',
-                                min: 'startDate',
-                                message: 'Fecha fin no puede ser mayor que fecha inicio'
+                        },
+                        startDate: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Fecha de inicio requerida'
+                                },
+                                date: {
+                                    format: 'DD-MM-YYYY',
+                                    max: 'endDate',
+                                    message: 'Fecha de inicio no puede ser mayor que fecha fin'
+                                }
+                            }
+                        },
+                        endDate: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Fecha fin es requerida'
+                                },
+                                date: {
+                                    format: 'DD-MM-YYYY',
+                                    min: 'startDate',
+                                    message: 'Fecha fin no puede ser mayor que fecha inicio'
+                                }
                             }
                         }
                     }
-                }
-            }).on('success.field.fv', function (e, data) {
+                }).on('success.field.fv', function (e, data) {
                 if (data.field === 'startDate' && !data.fv.isValidField('endDate')) {
                     // We need to revalidate the end date
                     data.fv.revalidateField('endDate');
@@ -331,7 +349,7 @@
             placeholder: 'Seleccione un asambleista',
             language: "es",
             width: '100%'
-        });
+        }).on();
 
         function mostrar_delegados(id_asambleista) {
             $.ajax({

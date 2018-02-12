@@ -196,7 +196,6 @@
     <script src="{{ asset('libs/file/js/locales/es.js') }}"></script>
     <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
     <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
-
 @endsection
 
 @section("scripts")
