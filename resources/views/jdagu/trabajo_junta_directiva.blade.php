@@ -17,8 +17,6 @@
         </div>
 
         <div class="box-body">
-            {{-- <h4 class="text-center text-bold">Administrar Trabajo de Junta Directiva</h4> --}}
-
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-lg-offset-1">
                     <div class="box box-info">
@@ -27,7 +25,7 @@
                                 <i class="fa fa-file-text-o fa-4x text-info"></i>
                             </div>
                             <h3 class="profile-username text-center">Peticiones</h3>
-                            <a href="{{url('listado_peticiones_jd')}}"
+                            <a href="{{route('listado_peticiones_jd')}}"
                                class="btn btn-info btn-block btn-sm"><b>Acceder</b></a>
                         </div>
                     </div>
@@ -40,7 +38,8 @@
                                 <i class="fa fa-book fa-4x text-red"></i>
                             </div>
                             <h3 class="profile-username text-center">Generar Agenda Plenaria</h3>
-                            <a href="{{url('listado_agenda_plenaria_jd')}}" class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
+                            <a href="{{route('listado_agenda_plenaria_jd')}}"
+                               class="btn btn-danger btn-block btn-sm"><b>Acceder</b></a>
                         </div>
                     </div>
                 </div>
@@ -54,9 +53,7 @@
                                 <i class="fa fa-envelope fa-4x text-green"></i>
                             </div>
                             <h3 class="profile-username text-center">Generar Reuniones JD</h3>
-                            <!--<a href="{{ url('convocatoria_jd') }}"
-                               class="btn btn-success btn-block btn-sm"><b>Acceder</b></a> -->
-                            <a href="{{ url('generar_reuniones_jd') }}"
+                            <a href="{{ route('generar_reuniones_jd') }}"
                                class="btn btn-success btn-block btn-sm"><b>Acceder</b></a>
 
                         </div>
@@ -68,10 +65,11 @@
                         <div class="box-body">
                             <div class="text-center">
                                 <i class="fa fa-folder-open-o fa-4x text-warning"></i>
-                            </div>                            
+                            </div>
                             <h3 class="profile-username text-center">Historial Bitacoras</h3>
-                            {!! Form::open(['route'=>['historial_bitacoras_jd'],'method'=> 'POST']) !!}                            
-                            <button type="submit" id="finalizar" name="finalizar" class="btn btn-warning btn-block btn-sm"><b>Acceder</b>
+                            {!! Form::open(['route'=>['historial_bitacoras_jd'],'method'=> 'POST']) !!}
+                            <button type="submit" id="finalizar" name="finalizar"
+                                    class="btn btn-warning btn-block btn-sm"><b>Acceder</b>
                             </button>
                             {!! Form::close() !!}
                         </div>
@@ -87,7 +85,7 @@
                                 <i class="fa fa-group fa-4x text-maroon"></i>
                             </div>
                             <h3 class="profile-username text-center">Reuniones</h3>
-                            <a href="{{url('listado_reuniones_jd')}}"
+                            <a href="{{ route('listado_reuniones_jd') }}"
                                class="btn bg-maroon btn-block btn-sm"><b>Acceder</b></a>
                         </div>
                     </div>
@@ -100,8 +98,9 @@
                                 <i class="fa fa-clone fa-4x text-teal"></i>
                             </div>
                             <h3 class="profile-username text-center">Historial Dictamenes</h3>
-                            {!! Form::open(['route'=>['historial_dictamenes_jd'],'method'=> 'POST']) !!}                            
-                            <button type="submit" id="finalizar" name="finalizar" class="btn bg-teal btn-block btn-sm"><b>Acceder</b>
+                            {!! Form::open(['route'=>['historial_dictamenes_jd'],'method'=> 'POST']) !!}
+                            <button type="submit" id="finalizar" name="finalizar" class="btn bg-teal btn-block btn-sm">
+                                <b>Acceder</b>
                             </button>
                             {!! Form::close() !!}
                         </div>

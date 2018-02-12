@@ -13,6 +13,7 @@
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -38,10 +39,10 @@
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
-                        <div class="form-group {{ $errors->has('codigo_peticion') ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <label for="codigo_peticion">Codigo de Peticion</label>
-                            <input type="text" id="codigo_peticion" name="codigo_peticion" class="form-control" placeholder="Ingrese el codigo de su petición" required>
-                            <span class="text-danger">{{ $errors->first('codigo_peticion') }}</span>
+                            <input type="text" id="codigo_peticion" name="codigo_peticion" class="form-control"
+                                   placeholder="Ingrese el codigo de su petición" required>
                         </div>
                     </div>
                 </div>
@@ -63,8 +64,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="resultado"
-                               class="table table-striped table-bordered table-condensed table-hover text-center">
+                        <table id="resultado" class="table table-striped table-bordered table-condensed table-hover text-center">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -82,7 +82,7 @@
 
                             @if(empty($peticionBuscada) != true)
 
-                                <tbody id="cuerpoTabla" class="text-center">
+                                <tbody id="cuerpoTabla" class="text-center table-hover">
                                 @php $contador = 1 @endphp
                                 @foreach($peticionBuscada->seguimientos as $seguimiento)
                                     <tr>
@@ -96,23 +96,30 @@
                                         <td>{{ $seguimiento->descripcion }}</td>
                                         @if($seguimiento->documento)
                                             <td>{{ $seguimiento->documento->tipo_documento->tipo }}</td>
-                                        @else
                                             <td>
-                                                N/A
+                                                <a class="btn btn-info btn-xs"
+                                                   href="{{ asset($disco.''.$documento->path) }}"
+                                                   role="button"><i class="fa fa-eye"></i> Ver</a>
+
+                                                <a class="btn btn-success btn-xs"
+                                                   href="descargar_documento/<?= $seguimiento->documento->id; ?>"
+                                                   role="button"><i class="fa fa-download"></i> Descargar</a>
+
                                             </td>
+                                        @else
                                             <td>
                                                 Sin documento
                                             </td>
+                                            <td>
+                                                N/A
+                                            </td>
                                         @endif
+
                                     </tr>
                                 @endforeach
                                 </tbody>
                             @else
-                                <tbody>
-                                <tr>
-                                    <td colspan="7">No se encuentra resultados</td>
-                                </tr>
-                                </tbody>
+
                             @endif
                         </table>
                     </div>
@@ -130,16 +137,62 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 @endsection
 
 @section("scripts")
     <script type="text/javascript">
         $(function () {
 
-            $('#codigo_peticion').select2({
-                placeholder: 'Ingrese su codigo de peticion',
-                language: "es",
-                width: '100%'
+            var oTable = $('#resultado').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                searching: false,
+                paging: false,
+                columnDefs: [{orderable: false, targets: [0, 6]}],
+                order: [[1, 'asc']]
+            });
+
+            $('#monitorearPeticion').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    codigo_peticion: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ingrese el codigo de su peticion'
+                            }
+                        }
+                    }
+                }
             });
         });
     </script>
