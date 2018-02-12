@@ -176,7 +176,7 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 type: 'POST',
-                route: "{{ route('actualizar_comision') }}",
+                url: "{{ route('actualizar_comision') }}",
                 data: {
                     "id": id
                 },

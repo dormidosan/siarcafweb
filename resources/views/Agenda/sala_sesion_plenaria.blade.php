@@ -11,7 +11,8 @@
     </style>
     <!-- Datatables-->
     <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
@@ -43,11 +44,11 @@
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="nombre">Asambleista</label>
+                                    <label for="asambleistas">Asambleista</label>
                                     <select id="asambleistas" name="asambleistas[]" class="form-control"
-                                            multiple="multiple" required>
+                                            multiple="multiple">
                                         @foreach($asambleistas as $asambleista)
-                                            <option value="{{ $asambleista->id }}">{{ $asambleista->sector->nombre." - ".$asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
+                                            <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -240,6 +241,45 @@
                 },
 
             });
+
+            $('#asambleista_id').select2({
+                placeholder: 'Seleccione un asambleista',
+                language: "es",
+                width: '100%'
+            });
+
+
+            $('#AgregarAsambleista')
+                .find('[name="asambleistas[]"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function (e) {
+                    $('#AgregarAsambleista').formValidation('revalidateField', 'asambleistas[]');
+                })
+                .end()
+                .formValidation({
+                    framework: 'bootstrap',
+                    excluded: ':disabled',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        "asambleistas[]": {
+                            validators: {
+                                callback: {
+                                    message: 'Seleccione al menos un asambleista',
+                                    callback: function (value, validator, $field) {
+                                        // Get the selected options
+                                        var options = validator.getFieldElements('asambleistas[]').val();
+                                        return (options != null && options.length >= 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
         });
 
         /*Esta función permite mostrar el modal*/
@@ -247,43 +287,7 @@
             $("#iniciarSesionPlenaria").modal('show')
         }
 
-        $('#asambleistas').select2({
-            placeholder: 'Seleccione un asambleista',
-            language: "es",
-            width: '100%'
-        });
 
-        $('#AgregarAsambleista')
-            .find('[name="asambleistas[]"]')
-            .select2()
-            // Revalidate the color when it is changed
-            .change(function (e) {
-                $('#AgregarAsambleista').formValidation('revalidateField', 'asambleistas[]');
-            })
-            .end()
-            .formValidation({
-                framework: 'bootstrap',
-                excluded: ':disabled',
-                icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    "asambleistas[]": {
-                        validators: {
-                            callback: {
-                                message: 'Seleccione al menos un asambleista',
-                                callback: function (value, validator, $field) {
-                                    // Get the selected options
-                                    var options = validator.getFieldElements('asambleistas[]').val();
-                                    return (options != null && options.length >= 1);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
     </script>
 @endsection
 

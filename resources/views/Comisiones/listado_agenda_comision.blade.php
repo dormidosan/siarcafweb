@@ -330,7 +330,7 @@
             var form = $("#eliminar_agenda_creada_jd"+i).serialize();
             $.ajax({
                 type: 'POST',
-                route: "{{ route('eliminar_agenda_creada_jd') }}",
+                url: "{{ route('eliminar_agenda_creada_jd') }}",
                 data: form,
                 success: function (response) {
                     notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
