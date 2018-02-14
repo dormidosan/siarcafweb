@@ -306,6 +306,7 @@ Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_c
 Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
 Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
+Route::get('dietas_asambleista', 'AdministracionController@dietas_asambleista')->name("dietas_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
@@ -324,6 +325,10 @@ Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
 Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 Route::post('obtener_usuario', "AdministracionController@obtener_usuario")->name("obtener_usuario");
+Route::post('busqueda_dietas_asambleista', "AdministracionController@busqueda_dietas_asambleista")->name("busqueda_dietas_asambleista");
+Route::post('almacenar_dieta_asambleista', "AdministracionController@almacenar_dieta_asambleista")->name("almacenar_dieta_asambleista");
+
+
 
 
 
