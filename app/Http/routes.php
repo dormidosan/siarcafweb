@@ -307,6 +307,7 @@ Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plant
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
 Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
+Route::post('actualizar_usuario', "AdministracionController@actualizar_usuario")->name("actualizar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
 Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));

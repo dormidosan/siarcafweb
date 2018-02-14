@@ -46,59 +46,90 @@ class AdministracionController extends Controller
 
     public function guardar_usuario(Request $request)
     {
+        if ($request->ajax()) {
+
+            $total_tipos_usuarios = 0;
+
+            if ($request->tipo_usuario == 3) {
+                $periodo_activo = Periodo::where("activo",1)->first();
+                $total_tipos_usuarios = Asambleista::join("users", "asambleistas.user_id", "=", "users.id")
+                    ->where("users.rol_id", 3)
+                    ->where('asambleistas.propietario', $request->propietario)
+                    ->where('asambleistas.facultad_id', $request->facultad)
+                    ->where('asambleistas.sector_id', $request->sector)
+                    ->where('asambleistas.activo', 1)
+                    ->where('asambleistas.periodo_id', $periodo_activo->id)
+                    ->count();
+            }
+
+            if ($total_tipos_usuarios == 2) {
+                $respuesta = new \stdClass();
+                $respuesta->error = true;
+                $facultad = Facultad::find($request->facultad);
+                $sector = Sector::find($request->sector);
+                $propietaria = ($request->propietario == 0) ? 'Suplentes':'Propietarios';
+                $respuesta->mensaje = (new Mensaje("Error", "Ya existe el total maximo de asambleistas " . $propietaria . " para la " . $facultad->nombre . " en el sector " . $sector->nombre, "error"))->toArray();
+                return new JsonResponse($respuesta);
+            } else {
+                $persona = new Persona();
+                $persona->primer_nombre = $request->get("primer_nombre");
+                $persona->segundo_nombre = $request->get("segundo_nombre");
+                $persona->primer_apellido = $request->get("primer_apellido");
+                $persona->segundo_apellido = $request->get("segundo_apellido");
+                $persona->dui = $request->get("dui");
+                $persona->nit = $request->get("nit");
+                $persona->nacimiento = $request->get("fecha1");
+                $persona->nacimiento = (DateTime::createFromFormat('d-m-Y', $request->fecha1))->format('Y-m-d');
+                //sentencia para agregar la foto
+                //$persona->foto = $request->get("foto");
+
+                $persona->afp = $request->get("afp");
+                $persona->cuenta = $request->get("cuenta");
+                $persona->save();
+
+                $usuario = new User();
+                $usuario->rol_id = $request->get("tipo_usuario");
+                $usuario->persona_id = $persona->id;
+                $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
+                $usuario->password = bcrypt("ATB");
+                $usuario->email = $request->get("correo");
+                $usuario->activo = 1;
+                $usuario->save();
+
+
+                if ($request->get("tipo_usuario") == 3) {
+                    $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                    $asambleista = new Asambleista();
+                    $asambleista->user_id = $usuario->id;
+                    $asambleista->periodo_id = $periodo_activo->id;
+                    $asambleista->facultad_id = $request->get("facultad");
+                    $asambleista->sector_id = $request->get("sector");
+                    $asambleista->propietario = $request->get("propietario");
+                    //setea al user como un asambleista activo
+                    $asambleista->activo = 1;
+
+                    $hoy = Carbon::now();
+                    $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
+
+                    if ($hoy > $inicio_periodo) {
+                        $asambleista->inicio = $hoy;
+                    } else {
+                        $asambleista->inicio = $inicio_periodo;
+                    }
+                    $asambleista->save();
+                }
+
+                /*$request->session()->flash("success", "Usuario agregado con exito");
+                return redirect()->route("mostrar_formulario_registrar_usuario");*/
+                $respuesta = new \stdClass();
+                $respuesta->error = false;
+                $respuesta->mensaje = (new Mensaje("Exito", "Usuario agregado con exito", "success"))->toArray();
+                return new JsonResponse($respuesta);
+            }
+        }
         //Se crea un objeto de tipo persona y se asocia lo que se recibe del form a su respectiva variable,
         //una vez ingresado la nueva persona, ya se tiene acceso a todos sus datos.
-        $persona = new Persona();
-        $persona->primer_nombre = $request->get("primer_nombre");
-        $persona->segundo_nombre = $request->get("segundo_nombre");
-        $persona->primer_apellido = $request->get("primer_apellido");
-        $persona->segundo_apellido = $request->get("segundo_apellido");
-        $persona->dui = $request->get("dui");
-        $persona->nit = $request->get("nit");
-        $persona->nacimiento = $request->get("fecha1");
-        $persona->nacimiento = (DateTime::createFromFormat('d-m-Y', $request->fecha1))->format('Y-m-d');
-        //sentencia para agregar la foto
-        //$persona->foto = $request->get("foto");
 
-        $persona->afp = $request->get("afp");
-        $persona->cuenta = $request->get("cuenta");
-        $persona->save();
-
-        $usuario = new User();
-        $usuario->rol_id = $request->get("tipo_usuario");
-        $usuario->persona_id = $persona->id;
-        $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
-        $usuario->password = bcrypt("ATB");
-        $usuario->email = $request->get("correo");
-        $usuario->activo = 1;
-        $usuario->save();
-
-
-        if ($request->get("tipo_usuario") == 3) {
-            $periodo_activo = Periodo::where("activo", "=", 1)->first();
-            //dd($periodo_activo);
-            $asambleista = new Asambleista();
-            $asambleista->user_id = $usuario->id;
-            $asambleista->periodo_id = $periodo_activo->id;
-            $asambleista->facultad_id = $request->get("facultad");
-            $asambleista->sector_id = $request->get("sector");
-            $asambleista->propietario = $request->get("propietario");
-            //setea al user como un asambleista activo
-            $asambleista->activo = 1;
-
-            $hoy = Carbon::now();
-            $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
-
-            if ($hoy > $inicio_periodo) {
-                $asambleista->inicio = $hoy;
-            } else {
-                $asambleista->inicio = $inicio_periodo;
-            }
-            $asambleista->save();
-        }
-
-        $request->session()->flash("success", "Usuario agregado con exito");
-        return redirect()->route("mostrar_formulario_registrar_usuario");
     }
 
     public function gestionar_plantillas()
@@ -815,8 +846,9 @@ class AdministracionController extends Controller
     {
         if ($request->ajax()) {
             $usuario = User::find($request->id);
-            $asambleista = Asambleista::where("user_id",$usuario->id)->first();
+            $asambleista = Asambleista::where("user_id", $usuario->id)->first();
             $respuesta = new \stdClass();
+            $respuesta->user_id = $usuario->id;
             $respuesta->primer_nombre = $usuario->persona->primer_nombre;
             $respuesta->segundo_nombre = $usuario->persona->segundo_nombre;
             $respuesta->primer_apellido = $usuario->persona->primer_apellido;
@@ -828,10 +860,98 @@ class AdministracionController extends Controller
             $respuesta->afp = $usuario->persona->afp;
             $respuesta->cuenta = $usuario->persona->cuenta;
             $respuesta->tipo = $usuario->rol_id;
-            $respuesta->sector = $asambleista->sector->id;
-            $respuesta->facultad = $asambleista->facultad->id;
-            $respuesta->propietario = $asambleista->propietario;
+            if ($usuario->rol->id == 3){
+                $respuesta->sector = $asambleista->sector->id;
+                $respuesta->facultad = $asambleista->facultad->id;
+                $respuesta->propietario = $asambleista->propietario;
+            }
             return new JsonResponse($respuesta);
+        }
+    }
+
+    public function actualizar_usuario(Request $request){
+        if ($request->ajax()) {
+
+            $total_tipos_usuarios = 0;
+
+            if ($request->tipo_usuario == 3) {
+                $periodo_activo = Periodo::where("activo",1)->first();
+                $total_tipos_usuarios = Asambleista::join("users", "asambleistas.user_id", "=", "users.id")
+                    ->where("users.rol_id", 3)
+                    ->where('asambleistas.propietario', $request->propietario_actualizar)
+                    ->where('asambleistas.facultad_id', $request->facultad_actualizar)
+                    ->where('asambleistas.sector_id', $request->sector_actualizar)
+                    ->where('asambleistas.activo', 1)
+                    ->where('asambleistas.periodo_id', $periodo_activo->id)
+                    ->count();
+            }
+
+            if ($total_tipos_usuarios >= 2) {
+                $respuesta = new \stdClass();
+                $respuesta->error = true;
+                $facultad = Facultad::find($request->facultad_actualizar);
+                $sector = Sector::find($request->sector_actualizar);
+                $propietaria = ($request->propietario_actualizar == 0) ? 'Suplentes':'Propietarios';
+                $respuesta->mensaje = (new Mensaje("Error", "Ya existe el total maximo de asambleistas " . $propietaria . " para la " . $facultad->nombre . " en el sector " . $sector->nombre, "error"))->toArray();
+                return new JsonResponse($respuesta);
+            } else {
+
+                $usuario = User::find($request->user_id_actualizar);
+                $persona = Persona::find($usuario->persona->id);
+
+                $persona->primer_nombre = $request->get("primer_nombre_actualizar");
+                $persona->segundo_nombre = $request->get("segundo_nombre_actualizar");
+                $persona->primer_apellido = $request->get("primer_apellido_actualizar");
+                $persona->segundo_apellido = $request->get("segundo_apellido_actualizar");
+                $persona->dui = $request->get("dui_actualizar");
+                $persona->nit = $request->get("nit_actualizar");
+                //$persona->nacimiento = $request->get("fecha1_actualizar");
+                $persona->nacimiento = (DateTime::createFromFormat('d-m-Y', $request->fecha1_actualizar))->format('Y-m-d');
+                //sentencia para agregar la foto
+                //$persona->foto = $request->get("foto");
+
+                $persona->afp = $request->get("afp_actualizar");
+                $persona->cuenta = $request->get("cuenta_actualizar");
+                $persona->save();
+
+                $usuario->rol_id = $request->get("tipo_usuario_actualizar");
+                $usuario->persona_id = $persona->id;
+                $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
+                $usuario->password = bcrypt("ATB");
+                $usuario->email = $request->get("correo_actualizar");
+                $usuario->activo = 1;
+                $usuario->save();
+
+
+                if ($request->get("tipo_usuario_actualizar") == 3) {
+                    $asambleista = Asambleista::find($usuario->id);
+                    $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                    $asambleista->user_id = $usuario->id;
+                    $asambleista->periodo_id = $periodo_activo->id;
+                    $asambleista->facultad_id = $request->get("facultad_actualizar");
+                    $asambleista->sector_id = $request->get("sector_actualizar");
+                    $asambleista->propietario = $request->get("propietario_actualizar");
+                    //setea al user como un asambleista activo
+                    $asambleista->activo = 1;
+
+                    $hoy = Carbon::now();
+                    $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
+
+                    if ($hoy > $inicio_periodo) {
+                        $asambleista->inicio = $hoy;
+                    } else {
+                        $asambleista->inicio = $inicio_periodo;
+                    }
+                    $asambleista->save();
+                }
+
+                /*$request->session()->flash("success", "Usuario agregado con exito");
+                return redirect()->route("mostrar_formulario_registrar_usuario");*/
+                $respuesta = new \stdClass();
+                $respuesta->error = false;
+                $respuesta->mensaje = (new Mensaje("Exito", "Usuario actualizado con exito", "success"))->toArray();
+                return new JsonResponse($respuesta);
+            }
         }
     }
 
