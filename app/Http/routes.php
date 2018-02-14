@@ -117,7 +117,7 @@ Route::group(['prefix' => 'peticiones'], function() {
 
 Route::get('registrar_peticion', 'PeticionController@registrar_peticion')->name('registrar_peticion');
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion')->name('monitoreo_peticion');
-Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
+//Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::post('registrar_peticion_post', 'PeticionController@registrar_peticion_post')->name('registrar_peticion_post');
@@ -306,6 +306,7 @@ Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_c
 Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
 Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
+Route::get('dietas_asambleista', 'AdministracionController@dietas_asambleista')->name("dietas_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
 Route::post('actualizar_usuario', "AdministracionController@actualizar_usuario")->name("actualizar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
@@ -325,6 +326,10 @@ Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
 Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 Route::post('obtener_usuario', "AdministracionController@obtener_usuario")->name("obtener_usuario");
+Route::post('busqueda_dietas_asambleista', "AdministracionController@busqueda_dietas_asambleista")->name("busqueda_dietas_asambleista");
+Route::post('almacenar_dieta_asambleista', "AdministracionController@almacenar_dieta_asambleista")->name("almacenar_dieta_asambleista");
+
+
 
 
 
