@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('') }}">
+    <style>
+        .dataTables_wrapper.form-inline.dt-bootstrap.no-footer > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -23,7 +30,7 @@
 
         <div class="box-body">
             <div class="table-responsive">
-                <table class="table text-center table-bordered hover">
+                <table class="table text-center table-bordered table-hover table-striped table-condensed" id="tabla">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -42,7 +49,7 @@
 
                     </tr>
                     </thead>
-                    <tbody id="cuerpoTabla">
+                    <tbody id="cuerpoTabla" class="table-hover">
                     @php $contador =1 @endphp
                     @forelse($peticiones as $peticion)
                         
@@ -137,12 +144,46 @@
         </div>
     </div>
 @endsection
+
 @section("js")
-    <script src="{{ asset('') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/adminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 @endsection
+
 @section("scripts")
     <script type="text/javascript">
         $(function () {
+            var oTable = $('#tabla').DataTable({
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                /*searching: false,
+                paging: false,*/
+                columnDefs: [{orderable: false, targets: [0, 6]}],
+                order: [[1, 'asc']]
+            });
         });
     </script>
 @endsection

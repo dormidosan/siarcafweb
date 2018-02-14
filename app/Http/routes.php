@@ -117,13 +117,12 @@ Route::group(['prefix' => 'peticiones'], function() {
 
 });
 
-
-Route::get('RegistrarPeticion', array('as' => 'RegistrarPeticion', 'uses' => 'PeticionController@vista_registrar_peticion'));
-//Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion');
-Route::get('monitoreo_peticion', array('as' => 'monitoreo_peticion', 'uses' => 'PeticionController@monitoreo_peticion'));
-Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
+Route::get('registrar_peticion', 'PeticionController@registrar_peticion')->name('registrar_peticion');
+Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion')->name('monitoreo_peticion');
+Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
-Route::post('registrar_peticion', array('as' => 'registrar_peticion', 'uses' => 'PeticionController@registrar_peticion'));
+Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
+Route::post('registrar_peticion_post', 'PeticionController@registrar_peticion_post')->name('registrar_peticion_post');
 
 
 /* Reportes */
@@ -327,6 +326,7 @@ Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla
 Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
 Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
+Route::post('obtener_usuario', "AdministracionController@obtener_usuario")->name("obtener_usuario");
 
 
 

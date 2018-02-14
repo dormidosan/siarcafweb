@@ -18,7 +18,7 @@ class CreateDietasTable extends Migration
             $table->unsignedInteger('asambleista_id');
             $table->string('mes', 10)->nullable();
             $table->smallInteger('asistencia')->nullable();
-            $table->boolean('junta_directiva')->nullable();
+            $table->smallInteger('junta_directiva')->nullable();
             $table->smallInteger('anio')->nullable();
 
             $table->index(["asambleista_id"], 'fk_dietas_asambleistas1_idx');

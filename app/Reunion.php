@@ -31,7 +31,10 @@ class Reunion extends Model
         return $this->hasMany('App\Presente');
     }
     
-
+    public function seguimientos()
+    {
+        return $this->hasMany('App\Seguimiento');
+    }
 
 
 

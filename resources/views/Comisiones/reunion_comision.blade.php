@@ -153,9 +153,9 @@
                                     </td>
                                     <td>
                                         {!! Form::open(['route'=>['seguimiento_peticion_comision'],'method'=> 'POST']) !!}
-                                        {{ Form::hidden('id_peticion', $peticion->id) }}
-                                        {{ Form::hidden('id_reunion', $reunion->id) }}
-                                        {{ Form::hidden('id_comision', $comision->id) }}
+                                        <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                                        <input type="hidden" name="id_comision" id="id_comision"  value="{{$comision->id}}">
+                                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                                         <button type="submit" class="btn btn-primary btn-xs btn-block" id="ver"
                                                 name="ver"><i class="fa fa-eye"></i> Ver
                                         </button>
@@ -163,12 +163,9 @@
                                     </td>
                                     <td>
                                         {!! Form::open(['route'=>['subir_documento_comision'],'method'=> 'POST','id'=>$peticion->id]) !!}
-                                        <input type="hidden" name="id_peticion" id="id_peticion"
-                                               value="{{$peticion->id}}">
-                                        <input type="hidden" name="id_comision" id="id_comision"
-                                               value="{{$comision->id}}">
-                                        <input type="hidden" name="id_reunion" id="id_reunion"
-                                               value="{{$reunion->id}}">
+                                        <input type="hidden" name="id_peticion" id="id_peticion" value="{{$peticion->id}}">
+                                        <input type="hidden" name="id_comision" id="id_comision"  value="{{$comision->id}}">
+                                        <input type="hidden" name="id_reunion" id="id_reunion" value="{{$reunion->id}}">
                                         <button type="submit" class="btn btn-info btn-xs btn-block">
                                             <i class="fa fa-upload"></i> Subir documentacion
                                         </button>

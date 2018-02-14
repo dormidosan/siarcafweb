@@ -3,12 +3,12 @@
         <h4 class="panel-title">Intervenciones</h4>
     </div>
     <div class="panel-body">
-        {!! Form::open(['route'=>['agregar_intervencion'],'method'=> 'POST','id'=>'agregarPropuesta','id'=>'agregarIntervenciones','class'=>'agregarIntervencion']) !!}
+        {!! Form::open(['route'=>['agregar_intervencion'],'method'=> 'POST','id'=>'agregarIntervencion','class'=>'agregarIntervencion']) !!}
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
-                    {!! Form::label('asambleista_id', 'Asambleista'); !!}
-                    {!! Form::select('asambleista_id',$asambleistas_plenaria,null,['id'=>'asambleista_id_intervencion','class'=>'form-control','required'=>'required','placeholder' => 'Seleccione asambleista...']) !!}
+                    {!! Form::label('asambleista_id_intervencion', 'Asambleista'); !!}
+                    {!! Form::select('asambleista_id_intervencion',$asambleistas_plenaria,null,['id'=>'asambleista_id_intervencion','class'=>'form-control','placeholder' => 'Seleccione asambleista...']) !!}
                 </div>
             </div>
 

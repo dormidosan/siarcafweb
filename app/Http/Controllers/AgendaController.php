@@ -782,7 +782,7 @@ class AgendaController extends Controller
         // ******* CUERPO DEL METODO
         $intervencion = new Intervencion();
         $intervencion->punto_id = $punto->id;
-        $intervencion->asambleista_id = $request->asambleista_id;
+        $intervencion->asambleista_id = $request->asambleista_id_intervencion;
         $intervencion->descripcion = $request->nueva_intervencion;
         $intervencion->save();
         // ******* CUERPO DEL METODO
