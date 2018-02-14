@@ -54,6 +54,9 @@ class ReportesController extends Controller
         $resultados = NULL;
         $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id');
 
+
+      
+
         return view('Reportes.Reporte_Asambleistas_Cumple')
             ->with('periodo', $periodo)
             ->with('periodos', $periodos)
@@ -369,7 +372,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el id
                 ->where('asambleistas.sector_id', '=', 1)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'ESTUDIANTIL';
@@ -389,7 +392,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el i
                 ->where('asambleistas.sector_id', '=', 2)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'DOCENTE';
@@ -409,7 +412,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el id
                 ->where('asambleistas.sector_id', '=', 3)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'NO DOCENTE';
