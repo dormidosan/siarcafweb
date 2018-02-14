@@ -117,7 +117,7 @@ Route::group(['prefix' => 'peticiones'], function() {
 
 Route::get('registrar_peticion', 'PeticionController@registrar_peticion')->name('registrar_peticion');
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion')->name('monitoreo_peticion');
-Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
+//Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::post('registrar_peticion_post', 'PeticionController@registrar_peticion_post')->name('registrar_peticion_post');

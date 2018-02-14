@@ -28,6 +28,7 @@ use App\Asistencia;
 use App\Facultad;
 use App\Tiempo;
 use App\Parametro;
+use App\Dieta;
 
 class AgendaController extends Controller
 {
@@ -286,13 +287,22 @@ class AgendaController extends Controller
             // ###############################################################################
             // ##################   INSERTAR CODIGO AQUI JAIME ###############################
             // ###############################################################################
+            $tiempos_sin_terminar =  Tiempo::where('salida','=',NULL)->get();
+            foreach ($tiempos_sin_terminar as $tiempo_individual) {
+                $asistencia_individual = $tiempo_individual->asistencia;
+                $asistencia_individual->salida = Carbon::now()->toTimeString();
+                $asistencia_individual->save();
+
+                $tiempo_individual->salida = Carbon::now()->toTimeString();
+                $tiempo_individual->save();
+
+            }
+
+
+dd();
+
+
             
-
-
-
-
-
-
 
 
 
