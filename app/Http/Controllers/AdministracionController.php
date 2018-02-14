@@ -846,7 +846,6 @@ class AdministracionController extends Controller
     {
         if ($request->ajax()) {
             $usuario = User::find($request->id);
-            $asambleista = Asambleista::where("user_id", $usuario->id)->first();
             $respuesta = new \stdClass();
             $respuesta->user_id = $usuario->id;
             $respuesta->primer_nombre = $usuario->persona->primer_nombre;
@@ -861,6 +860,7 @@ class AdministracionController extends Controller
             $respuesta->cuenta = $usuario->persona->cuenta;
             $respuesta->tipo = $usuario->rol_id;
             if ($usuario->rol->id == 3){
+                $asambleista = Asambleista::where("user_id", $request->id)->first();
                 $respuesta->sector = $asambleista->sector->id;
                 $respuesta->facultad = $asambleista->facultad->id;
                 $respuesta->propietario = $asambleista->propietario;
@@ -889,6 +889,7 @@ class AdministracionController extends Controller
             if ($total_tipos_usuarios >= 2) {
                 $respuesta = new \stdClass();
                 $respuesta->error = true;
+                $respuesta->error = $total_tipos_usuarios;
                 $facultad = Facultad::find($request->facultad_actualizar);
                 $sector = Sector::find($request->sector_actualizar);
                 $propietaria = ($request->propietario_actualizar == 0) ? 'Suplentes':'Propietarios';
@@ -898,7 +899,6 @@ class AdministracionController extends Controller
 
                 $usuario = User::find($request->user_id_actualizar);
                 $persona = Persona::find($usuario->persona->id);
-
                 $persona->primer_nombre = $request->get("primer_nombre_actualizar");
                 $persona->segundo_nombre = $request->get("segundo_nombre_actualizar");
                 $persona->primer_apellido = $request->get("primer_apellido_actualizar");
@@ -915,9 +915,9 @@ class AdministracionController extends Controller
                 $persona->save();
 
                 $usuario->rol_id = $request->get("tipo_usuario_actualizar");
-                $usuario->persona_id = $persona->id;
+                //$usuario->persona_id = $persona->id;
                 $usuario->name = $persona->primer_nombre . "." . $persona->primer_apellido;
-                $usuario->password = bcrypt("ATB");
+                //$usuario->password = bcrypt("ATB");
                 $usuario->email = $request->get("correo_actualizar");
                 $usuario->activo = 1;
                 $usuario->save();
@@ -926,7 +926,7 @@ class AdministracionController extends Controller
                 if ($request->get("tipo_usuario_actualizar") == 3) {
                     $asambleista = Asambleista::find($usuario->id);
                     $periodo_activo = Periodo::where("activo", "=", 1)->first();
-                    $asambleista->user_id = $usuario->id;
+                    //$asambleista->user_id = $usuario->id;
                     $asambleista->periodo_id = $periodo_activo->id;
                     $asambleista->facultad_id = $request->get("facultad_actualizar");
                     $asambleista->sector_id = $request->get("sector_actualizar");
@@ -949,6 +949,7 @@ class AdministracionController extends Controller
                 return redirect()->route("mostrar_formulario_registrar_usuario");*/
                 $respuesta = new \stdClass();
                 $respuesta->error = false;
+                $respuesta->error = $total_tipos_usuarios;
                 $respuesta->mensaje = (new Mensaje("Exito", "Usuario actualizado con exito", "success"))->toArray();
                 return new JsonResponse($respuesta);
             }

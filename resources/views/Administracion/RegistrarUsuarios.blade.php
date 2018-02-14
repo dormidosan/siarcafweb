@@ -804,6 +804,7 @@
                     url: "{{ route('actualizar_usuario') }}",
                     data: form,
                     success: function (response) {
+                        console.log(response.$total_tipos_usuarios);
                         if (response.error == true) {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
                             $("#submitButtonUpdate").prop("disabled",false);
@@ -833,7 +834,7 @@
                     'id': id
                 },
                 success: function (response) {
-                    /*console.log(response.user_id);
+                    console.log(response.user_id);
                     //notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
                     $("#user_id_actualizar").val(response.user_id);
                     $("#primer_nombre_actualizar").val(response.primer_nombre);
@@ -856,8 +857,7 @@
                     else {
                         $("#row_campos_asambleistas_actualizar").addClass('hidden');
                     }
-                    $("#actualizar").removeClass('hidden');*/
-                    console.log(response.code)
+                    $("#actualizar").removeClass('hidden');
                 }
             });
         }
