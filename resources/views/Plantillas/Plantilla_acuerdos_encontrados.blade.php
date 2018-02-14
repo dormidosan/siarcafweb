@@ -11,42 +11,9 @@
 @section('content')
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Buscar Actas</h3>
+            <h3 class="box-title">Plantilla de Acuerdos</h3>
         </div>
-        <div class="box-body">
-            <form id="buscarDocs" method="post" action="{{ url("buscar_acuerdos") }}">
-                  {{ csrf_field() }}
-                <div class="row">
-                   
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label for="fecha">Fecha inicial</label>
-                            <div class="input-group date fecha">
-                                <input required="true" id="fecha1" name="fecha1" type="text" class="form-control"><span class="input-group-addon"><i
-                                            class="glyphicon glyphicon-th"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-12 col-md-4">
-                        <div class="form-group">
-                            <label for="fecha">Fecha final</label>
-                            <div class="input-group date fecha">
-                                <input required="true" id="fecha2" name="fecha2" type="text" class="form-control"><span class="input-group-addon"><i
-                                            class="glyphicon glyphicon-th"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <button  type="submit" id="buscar" name="buscar" class="btn btn-primary">Buscar
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+     
         <!-- /.box-body -->
     </div>
 
@@ -62,13 +29,12 @@
 
                     <th>Num</th>
 
-                    <th>Codigo</th>
+                    <th>Nombre Propuestas</th>
 
-                    <th>Nombre</th>
+                   
 
-                     <th>Trascendental</th>
 
-                    <th>Fecha</th>
+        
 
 
                     <th>Descargar</th>
@@ -87,28 +53,16 @@
                         {{$i}}
                     </td>
                      <td>
-                        {{$result->codigo}}
+                        {{$result->nombre_propuesta}}
                     </td>
+
+                  
+
+                  
 
                     <td>
-                        {{$result->lugar}}
-                    </td>
-                      @if($result->trascendental==0)
-                     <td>
-                        NO
-                    </td>
-                    @else
-                     <td>
-                        SI
-                    </td>
-                    @endif
-
-                    <td>de {{$result->inicio}} al {{$result->fin}}</td>
-                    <td>
-                       <!-- <a href="{{url("/desc_Plantilla_acuerdos/$result->id.$result->periodo_id.$result->codigo.$result->fecha.$result->lugar")}}" class="btn btn-block btn-success btn-xs">DESCARGAR</a>-->
-
-                        <a href="{{url("/buscar_propuesta/$result->id.$result->periodo_id.$result->codigo.$result->fecha.$result->lugar")}}" class="btn btn-block btn-success btn-xs">VER ACUERDOS</a>
-
+                  
+                    <a href="{{url("/desc_Plantilla_acuerdos/$result->pro_id.$result->age_id.$result->pun_id")}}" class="btn btn-block btn-success btn-xs">DESCARGAR</a>
                     </td>
                 </tr>
                   @php $i=$i+1 @endphp

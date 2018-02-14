@@ -13,6 +13,7 @@ use App\Http\Requests;
 use App\Http\Requests\PropuestaRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Storage;
 use App\Agenda;
 use App\Punto;
@@ -281,13 +282,18 @@ class AgendaController extends Controller
             //$agendas = Agenda::where('vigente','=', '1')->orderBy('created_at', 'ASC')->get();
             $agenda->activa  = '0';
             $agenda->vigente = '0';
+            //$agenda->fin=Carbon::now();
             $agenda->save();
 
             $agendas = Agenda::where('vigente','=','1')->orderBy('created_at', 'ASC')->get();
             // ###############################################################################
             // ##################   INSERTAR CODIGO AQUI JAIME ###############################
             // ###############################################################################
-            $tiempos_sin_terminar =  Tiempo::where('salida','=',NULL)->get();
+            
+
+
+             $tiempos_sin_terminar =  Tiempo::where('salida','=',NULL)->get();
+             // dd($tiempos_sin_terminar);
             foreach ($tiempos_sin_terminar as $tiempo_individual) {
                 $asistencia_individual = $tiempo_individual->asistencia;
                 $asistencia_individual->salida = Carbon::now()->toTimeString();
@@ -297,15 +303,157 @@ class AgendaController extends Controller
                 $tiempo_individual->save();
 
             }
+            //$tiempos_sin_terminar =  Tiempo::where('salida','=',NULL)->get();
+            //dd($tiempos_sin_terminar);
+
+                $busqueda=DB::table('asambleistas')  //todos los asambleistas que participaron como propietario en la plenaria a finalizar 
+                ->join('asistencias','asistencias.asambleista_id','=','asambleistas.id')
+                ->join('agendas','agendas.id','=','asistencias.agenda_id')
+                ->join('tiempos','tiempos.asistencia_id','=','asistencias.id')
+                ->join('estado_asistencias','estado_asistencias.id','=','tiempos.estado_asistencia_id')
+                ->where('agendas.id','=',$agenda->id)
+                ->where('estado_asistencias.estado','=','nor')
+                ->where('tiempos.tiempo_propietario','=',1)//1 para los que fueron propietarios            
+                ->get();
+
+                //dd($busqueda);
+               
+                $mesyanio=explode('-', $agenda->fecha);  // mes y año de la agenda 
+                $anio_agend=$mesyanio[0];
+                $mes_agend=$mesyanio[1];
+                $mes=$this->numero_mes($mes_agend);
 
 
-dd();
+                //dd($busqueda);
+        $porcentaje_asistencia = 0.0;
+        $monto_dieta = 0.0;
 
+
+        $parametros = DB::table('parametros')->get();
+
+                foreach ($parametros as $parametro) {
+                    if ($parametro->nombre_parametro == 'porcentaje_asistencia') {
+                        $porcentaje_asistencia = ($parametro->valor) * 100;
+                    }
+                    if ($parametro->nombre_parametro == 'monto_dieta') {
+                        $monto_dieta = $parametro->valor;
+                    }
+                }
+
+               //dd($parametros);
+
+        
+        foreach ($busqueda as $busq) {
+
+            $agendas_anio = DB::table('agendas')->where('agendas.id','=',$request->id_agenda)->get();
+
+
+           // dd($agendas_anio);
+
+            foreach ($agendas_anio as $agendas_in) {
+
+                /*$horasreunion = DB::table('agendas') //total de duracion de la reunion                   
+                    ->where('agendas.id', '=', $agendas_in->id)
+                    ->select('agendas.inicio','agendas.fin')
+                    ->get();*/
+
+                $horasreunion = DB::table('agendas') //total de duracion de la reunion 
+                    ->selectRaw('ABS(sum(time_to_sec(timediff(inicio,fin)))/3600) as suma')
+                    ->where('agendas.id', '=', $agendas_in->id)
+                    ->get();
+
+                  //  dd($agendas->id);
+                //dd($horasreunion);
+
+                   $horasasistencia = DB::table('tiempos')
+                    ->selectRaw('ABS(sum(time_to_sec(timediff(tiempos.entrada,tiempos.salida)))/3600) as suma')
+                    ->join('asistencias', 'asistencias.id', '=', 'tiempos.asistencia_id')
+                    ->join('estado_asistencias','estado_asistencias.id','=','tiempos.estado_asistencia_id')
+                    //s->where('estado_asistencias.estado','=','nor')         
+                    ->where('tiempos.tiempo_propietario','=',1)                  
+                    ->where('asistencias.asambleista_id', '=', $busq->id)
+                    ->where('asistencias.agenda_id', '=', $agendas_in->id)
+                    ->get();
+
+                    /*$horasasistencia = DB::table('asistencias')
+                    ->join('tiempos', 'asistencias.id', '=', 'tiempos.asistencia_id') 
+                    ->join('estado_asistencias','estado_asistencias.id','=','tiempos.estado_asistencia_id')                       
+                    ->where('asistencias.asambleista_id', '=', $busq->id)
+                    ->where('asistencias.agenda_id', '=', $agendas_in->id)//por el momento solo filtro por el id
+                    ->get();*/
+
+
+
+
+
+                    //dd($horasasistencia);
+
+                if ($horasreunion[0]->suma > 0.0) {
+
+                    $porcAsistencia = ($horasasistencia[0]->suma / $horasreunion[0]->suma) * 100; // porcentage de asistencia por asambleista
+                } else {
+
+                    $porcAsistencia = 0.0; // 
+
+                }
+
+                 //dd($porcAsistencia);
+
+                if ($porcAsistencia >= $porcentaje_asistencia) {
+
+                    $cantDiet = Dieta::where('dietas.asambleista_id', '=', $busq->id) //registro del mes y año de la agenda del asambleista
+                        ->where('dietas.mes','=',$mes) // mes de la junta
+                        ->where('dietas.anio','=',$anio_agend)// año de la junta
+                        ->first();
+
+                        //dd($cantDiet);
+
+                    if($cantDiet==NULL){ //aqui inserta si no hay
+
+                            $cargo=DB::table('cargos')
+                            ->join('comisiones','comisiones.id','=','cargos.comision_id')
+                            ->where('cargos.asambleista_id','=',$busq->id)
+                            ->where('cargos.activo','=',1) //
+                            ->select('cargos.comision_id','comisiones.codigo')
+                            ->first();
+
+                           // dd($cargo);
+                            $cantDiet = new Dieta();
+                            $cantDiet->asambleista_id=$busq->id;
+                            $cantDiet->mes=$mes;
+
+                            $cantDiet->anio=$anio_agend;
+                            //dd($cantDiet);
+                            $cantDiet->asistencia=1; //lo inserta de un solo con 1 porquue alcanzo el porcentage de asistencia minimo para aplicar a la dieta
+                            if($cargo->codigo=='jda'){
+                            $cantDiet->junta_directiva=1;
+                            }
+                            else{
+                            $cantDiet->junta_directiva=0;
+                            }
+                            //dd($cantDiet);
+                            $cantDiet->save();
+                        
+
+                    }
+
+                    else{ // aqui actualiza si hay
+            
+                        if($cantDiet->asistencia<4){ // si es de junta puede tener hasta 8 dietas al mes
+                            $cantDiet->asistencia=$cantDiet->asistencia+1;
+                            //dd($cantDiet);
+                            $cantDiet->save();
+                        }
+                  
+                    }
+
+                }
+
+            }
 
             
-
-
-
+           
+        }
 
 
             // ###############################################################################
@@ -1149,6 +1297,62 @@ dd();
             ->with('facultad', $facultad)
             ->with('asistentes', $asistentes)
             ->with('asambleistas', $asambleistas);
+    }
+
+    public function numero_mes($mesnum)
+    {
+
+        $mes = ' ';
+        if ($mesnum == 1) {
+
+            $mes = 'enero';
+        }
+        if ($mesnum == 2) {
+
+            $mes = 'febrero';
+        }
+        if ($mesnum == 3) {
+
+            $mes = 'marzo';
+        }
+        if ($mesnum == 4) {
+
+            $mes = 'abril';
+        }
+        if ($mesnum == 5) {
+
+            $mes = 'mayo';
+        }
+        if ($mesnum == 6) {
+
+            $mes = 'junio';
+        }
+        if ($mesnum == 7) {
+
+            $mes = 'julio';
+        }
+        if ($mesnum == 8) {
+
+            $mes = 'agosto';
+        }
+        if ($mesnum == 9) {
+
+            $mes = 'septiembre';
+        }
+        if ($mesnum == 10) {
+
+            $mes = 'octubre';
+        }
+        if ($mesnum == 11) {
+
+            $mes = 'noviembre';
+        }
+        if ($mesnum == 12) {
+
+            $mes = 'diciembre';
+        }
+
+        return $mes;
     }
 
 }

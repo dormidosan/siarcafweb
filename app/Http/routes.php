@@ -100,6 +100,8 @@ Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_a
 
 Route::post('buscar_acuerdos', 'PlantillasController@buscar_acuerdos')->name("buscar_acuerdos");
 
+
+
 Route::post('buscar_dictamenes', 'PlantillasController@buscar_dictamenes')->name("buscar_dictamenes");
 
 Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
@@ -202,6 +204,7 @@ Route::get('/Plantilla_Actas_JD', function () {
 
 Route::get('/desc_Plantilla_actas/{tipo}', 'PlantillasController@desc_Plantilla_actas');
 Route::get('/desc_Plantilla_acuerdos/{tipo}', 'PlantillasController@desc_Plantilla_acuerdos');
+Route::get('/buscar_propuesta/{tipo}', 'PlantillasController@buscar_propuesta');
 Route::get('/desc_Plantilla_dictamenes/{tipo}', 'PlantillasController@desc_Plantilla_dictamenes');
 
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
