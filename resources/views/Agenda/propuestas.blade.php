@@ -8,7 +8,7 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     {!! Form::label('asambleista_id', 'Asambleista'); !!}
-                    {!! Form::select('asambleista_id',$asambleistas_plenaria,null,['id'=>'asambleista_id','class'=>'form-control','required'=>'required','placeholder' => 'Seleccione asambleista...']) !!}
+                    {!! Form::select('asambleista_id',$asambleistas_plenaria,null,['id'=>'asambleista_id','class'=>'form-control','placeholder' => 'Seleccione asambleista...']) !!}
                 </div>
             </div>
 

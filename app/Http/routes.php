@@ -323,6 +323,7 @@ Route::post('almacenar_plantilla', "AdministracionController@almacenar_plantilla
 Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->name("mostrar_delegados");
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
 Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
+Route::post('obtener_usuario', "AdministracionController@obtener_usuario")->name("obtener_usuario");
 
 
 

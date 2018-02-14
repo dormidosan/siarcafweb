@@ -15,6 +15,7 @@
           href="{{ asset('libs/adminLTE/plugins/datatables/responsive/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/lolibox/css/Lobibox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libs/formvalidation/css/formValidation.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -33,11 +34,6 @@
     <div class="row">
         <div class="col-lg-6 col-sm-6 col-md-6">
             <div class="box box-default">
-                <!--<div class="box-header with-border">
-                    <i class="fa fa-user"></i>
-                    <h3 class="box-title">Asambleistas</h3>
-                </div>-->
-
                 <!-- Contenedor de ingreso de asambleista-->
                 <div class="box-body">
                     <form id="AgregarAsambleista" name="AgregarAsambleista" class="AgregarAsambleista" method="post"
@@ -48,11 +44,11 @@
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="nombre">Asambleista</label>
+                                    <label for="asambleistas">Asambleista</label>
                                     <select id="asambleistas" name="asambleistas[]" class="form-control"
-                                            multiple="multiple" required="required">
+                                            multiple="multiple">
                                         @foreach($asambleistas as $asambleista)
-                                            <option value="{{ $asambleista->id }}">{{ $asambleista->sector->nombre." - ".$asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
+                                            <option value="{{ $asambleista->id }}">{{ $asambleista->user->persona->primer_nombre . " " . $asambleista->user->persona->segundo_nombre . " " . $asambleista->user->persona->primer_apellido . " " . $asambleista->user->persona->segundo_apellido }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -210,6 +206,8 @@
     <script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
     <script src="{{ asset('libs/utils/utils.js') }}"></script>
     <script src="{{ asset('libs/lolibox/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/formValidation.min.js') }}"></script>
+    <script src="{{ asset('libs/formvalidation/js/framework/bootstrap.min.js') }}"></script>
 @endsection
 
 
@@ -243,6 +241,45 @@
                 },
 
             });
+
+            $('#asambleista_id').select2({
+                placeholder: 'Seleccione un asambleista',
+                language: "es",
+                width: '100%'
+            });
+
+
+            $('#AgregarAsambleista')
+                .find('[name="asambleistas[]"]')
+                .select2()
+                // Revalidate the color when it is changed
+                .change(function (e) {
+                    $('#AgregarAsambleista').formValidation('revalidateField', 'asambleistas[]');
+                })
+                .end()
+                .formValidation({
+                    framework: 'bootstrap',
+                    excluded: ':disabled',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        "asambleistas[]": {
+                            validators: {
+                                callback: {
+                                    message: 'Seleccione al menos un asambleista',
+                                    callback: function (value, validator, $field) {
+                                        // Get the selected options
+                                        var options = validator.getFieldElements('asambleistas[]').val();
+                                        return (options != null && options.length >= 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
         });
 
         /*Esta función permite mostrar el modal*/
@@ -250,11 +287,7 @@
             $("#iniciarSesionPlenaria").modal('show')
         }
 
-        $('#asambleistas').select2({
-            placeholder: 'Seleccione un asambleista',
-            language: "es",
-            width: '100%'
-        });
+
     </script>
 @endsection
 
