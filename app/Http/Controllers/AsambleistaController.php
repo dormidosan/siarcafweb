@@ -23,6 +23,7 @@ class AsambleistaController extends Controller
         $facultades = Facultad::all();
         $asambleistas = Asambleista::join("periodos","asambleistas.periodo_id","=","periodos.id")
                         ->where("periodos.activo","=",1)
+                        ->where("asambleistas.activo","=",1)
                         ->get();
         //dd($asambleistas);
         $fotos = "../storage/fotos/";
@@ -37,8 +38,6 @@ class AsambleistaController extends Controller
 
         //recuperar las comisiones que estan activas en el periodo vigente
         $comisiones = Comision::where('activa','=', 1)->where('codigo','!=','jda')->get();
-
-        
 
         //se obtiene todos los asambleistas activos que pertenecen a una comision activa en el periodo vigente
         $cargos = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")

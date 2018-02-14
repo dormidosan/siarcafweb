@@ -21,7 +21,7 @@ class CreatePersonasTable extends Migration
             $table->string('segundo_apellido', 15)->nullable();
             $table->date('nacimiento')->nullable();
             $table->char('dui', 10)->nullable();
-            $table->char('nit', 14)->nullable();
+            $table->char('nit', 17)->nullable();
             $table->string('foto', 45)->nullable();
             $table->string('afp', 45)->nullable();
             $table->string('cuenta', 45)->nullable();

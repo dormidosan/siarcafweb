@@ -100,6 +100,8 @@ Route::post('buscar_actas', 'PlantillasController@buscar_actas')->name("buscar_a
 
 Route::post('buscar_acuerdos', 'PlantillasController@buscar_acuerdos')->name("buscar_acuerdos");
 
+
+
 Route::post('buscar_dictamenes', 'PlantillasController@buscar_dictamenes')->name("buscar_dictamenes");
 
 Route::post('buscar_actas_JD', 'PlantillasController@buscar_actas_JD')->name("buscar_actas_JD");
@@ -117,7 +119,7 @@ Route::group(['prefix' => 'peticiones'], function() {
 
 Route::get('registrar_peticion', 'PeticionController@registrar_peticion')->name('registrar_peticion');
 Route::get('monitoreo_peticion', 'PeticionController@monitoreo_peticion')->name('monitoreo_peticion');
-Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
+//Route::get('listado_peticiones', 'PeticionController@listado_peticiones')->name('listado_peticiones');
 Route::get('listado_peticiones', array('as' => 'listado_peticiones', 'uses' => 'PeticionController@listado_peticiones'));
 Route::post('consultar_estado_peticion', 'PeticionController@consultar_estado_peticion')->name("consultar_estado_peticion");
 Route::post('registrar_peticion_post', 'PeticionController@registrar_peticion_post')->name('registrar_peticion_post');
@@ -202,6 +204,7 @@ Route::get('/Plantilla_Actas_JD', function () {
 
 Route::get('/desc_Plantilla_actas/{tipo}', 'PlantillasController@desc_Plantilla_actas');
 Route::get('/desc_Plantilla_acuerdos/{tipo}', 'PlantillasController@desc_Plantilla_acuerdos');
+Route::get('/buscar_propuesta/{tipo}', 'PlantillasController@buscar_propuesta');
 Route::get('/desc_Plantilla_dictamenes/{tipo}', 'PlantillasController@desc_Plantilla_dictamenes');
 
 Route::get('/Reporte_permisos_temporales/{tipo}', 'ReportesController@Reporte_permisos_temporales');
@@ -306,7 +309,9 @@ Route::get('cambiar_cargos_junta_directiva', "AdministracionController@cambiar_c
 Route::get('descargar_plantilla/{id}', 'AdministracionController@descargar_plantilla')->name("descargar_plantilla");
 Route::get('registro_permisos_temporales', 'AdministracionController@registro_permisos_temporales')->name("registro_permisos_temporales");
 Route::get('baja_asambleista', 'AdministracionController@baja_asambleista')->name("baja_asambleista");
+Route::get('dietas_asambleista', 'AdministracionController@dietas_asambleista')->name("dietas_asambleista");
 Route::post('guardar_usuario', "AdministracionController@guardar_usuario")->name("guardar_usuario");
+Route::post('actualizar_usuario', "AdministracionController@actualizar_usuario")->name("actualizar_usuario");
 Route::post('guardar_periodo', "AdministracionController@guardar_periodo")->name("guardar_periodo");
 Route::post('finalizar_periodo', "AdministracionController@finalizar_periodo")->name("finalizar_periodo");
 Route::post('almacenar_parametro', array('as' => 'almacenar_parametro', 'uses' => 'AdministracionController@almacenar_parametro'));
@@ -324,6 +329,10 @@ Route::post('mostrar_delegados', "AdministracionController@mostrar_delegados")->
 Route::post('guardar_permiso', "AdministracionController@guardar_permiso")->name("guardar_permiso");
 Route::post('dar_baja', "AdministracionController@modificar_estado_asambleista")->name("modificar_estado_asambleista");
 Route::post('obtener_usuario', "AdministracionController@obtener_usuario")->name("obtener_usuario");
+Route::post('busqueda_dietas_asambleista', "AdministracionController@busqueda_dietas_asambleista")->name("busqueda_dietas_asambleista");
+Route::post('almacenar_dieta_asambleista', "AdministracionController@almacenar_dieta_asambleista")->name("almacenar_dieta_asambleista");
+
+
 
 
 

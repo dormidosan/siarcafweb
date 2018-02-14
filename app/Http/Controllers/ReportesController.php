@@ -54,6 +54,9 @@ class ReportesController extends Controller
         $resultados = NULL;
         $periodos = Periodo::where('id', '!=', '0')->pluck('nombre_periodo', 'id');
 
+
+      
+
         return view('Reportes.Reporte_Asambleistas_Cumple')
             ->with('periodo', $periodo)
             ->with('periodos', $periodos)
@@ -369,7 +372,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el id
                 ->where('asambleistas.sector_id', '=', 1)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'ESTUDIANTIL';
@@ -389,7 +392,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el i
                 ->where('asambleistas.sector_id', '=', 2)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'DOCENTE';
@@ -409,7 +412,7 @@ class ReportesController extends Controller
                 ->where('asistencias.agenda_id', '=', $idagenda)//por el momento solo filtro por el id
                 ->where('asambleistas.sector_id', '=', 3)//sector estudiantil
                 ->select('personas.primer_apellido', 'personas.primer_nombre', 'personas.segundo_apellido',
-                    'personas.segundo_nombre', 'asistencias.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
+                    'personas.segundo_nombre', 'tiempos.entrada', 'tiempos.salida', 'asistencias.propietaria', 'facultades.nombre')
                 ->orderBy('facultades.nombre', 'desc')
                 ->get();
             $sector = 'NO DOCENTE';
@@ -662,21 +665,34 @@ class ReportesController extends Controller
         //  dd($request->all());
 
 
-        $fechainicial = $request->fecha1;
-        $fechafinal = $request->fecha2;
-        $resultados = DB::table('agendas')
-            ->join('asistencias', 'asistencias.agenda_id', '=', 'agendas.id')
-            ->join('tiempos', 'asistencias.id', '=', 'tiempos.asistencia_id')
-            ->join('estado_asistencias', 'tiempos.estado_asistencia_id', '=', 'estado_asistencias.id')
-            ->where('estado_asistencias.id', '=', 1)//1 por ser permisos temporales
-            ->where
-            ([
-                ['agendas.fecha', '>=', $this->convertirfecha($fechainicial)],
-                ['agendas.fecha', '<=', $this->convertirfecha($fechafinal)]
-            ])
-            ->select('agendas.id', 'agendas.fecha', 'agendas.periodo_id')
-            ->distinct()
-            ->get();
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;   
+
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_permisos_temporales")
+        ->with('resultados',NULL);
+        }
+
+         $resultados=DB::table('agendas')
+        ->join('asistencias','asistencias.agenda_id','=','agendas.id')
+        ->join('tiempos','asistencias.id','=','tiempos.asistencia_id')
+        ->join('estado_asistencias','tiempos.estado_asistencia_id','=','estado_asistencias.id')
+        ->where('estado_asistencias.id','=',1)//1 por ser permisos temporales 
+        ->where
+([
+  ['agendas.fecha','>=',$this->convertirfecha($fechainicial)],
+  ['agendas.fecha','<=',$this->convertirfecha($fechafinal)]
+])
+->select('agendas.id','agendas.fecha','agendas.periodo_id')
+->distinct()
+        ->get();
+ 
+
 
 
         if ($resultados == NULL) {
@@ -698,19 +714,31 @@ class ReportesController extends Controller
     }
 
 
+
+
+
     public function buscar_asistencias(ReportesAsistenciasRequest $request)
     {
+
 
 
         // dd($request->all());
 
 
-        $fechainicial = $request->fecha1;
-        $fechafinal = $request->fecha2;
+        $fechainicial=$request->fecha1;
+        $fechafinal=$request->fecha2;
+        
+        $sector=$request->tipoDocumento;
+        $tipo=$request->tipoDocumento;
+        
+       $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
 
-        $sector = $request->tipoDocumento;
-        $tipo = $request->tipoDocumento;
-
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_asistencias_sesion_plenaria")
+        ->with('resultados',NULL);
+        }
 
         if ($sector == 'E') {
 
@@ -764,8 +792,13 @@ class ReportesController extends Controller
             ->with('tipo', $tipo);
 
 
+
+
+
+
         return view("Reportes.Reporte_asistencias_sesion_plenaria", ['resultados' => NULL]);
     }
+
 
 
     public function buscar_bitacora_correspondencia(BuscarBitacoraCorrespRequest $request)
@@ -774,6 +807,15 @@ class ReportesController extends Controller
         $fechainicial = $request->fecha1;
 
         $fechafinal = $request->fecha2;
+
+           $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_bitacora_correspondencia")
+        ->with('resultados',NULL);
+        }
 
 
         $resultados = DB::table('peticiones')
@@ -1406,6 +1448,15 @@ class ReportesController extends Controller
 
         $fechainicial = $request->fecha1;
         $fechafinal = $request->fecha2;
+
+        $date1 = Date($fechainicial);
+        $date2 = Date($fechafinal);
+
+        if($date1>$date2){
+        $request->session()->flash("warning", "Fecha inicial no puede ser mayor a la fecha final");
+        return view("Reportes.Reporte_permisos_permanentes")
+        ->with('resultados',NULL);
+        }
 
         $resultados = DB::table('permisos')
             ->where
