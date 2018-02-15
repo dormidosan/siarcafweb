@@ -81,7 +81,8 @@
                         </div>
                         <br>
                         <div id="actualizar" class="hidden">
-                            <form class="form" id="actualizar_usuario" method="post" action=""
+                            <form class="form" id="actualizar_usuario" method="post"
+                                  action="{{ route("actualizar_usuario") }}"
                                   enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row">
@@ -194,7 +195,8 @@
                                                 <div class="form-group">
                                                     <label for="tipo_usuario_actualizar">Tipo Usuario</label>
                                                     <select id="tipo_usuario_actualizar" name="tipo_usuario_actualizar"
-                                                            class="form-control" onchange="mostrar_campos_asambleistas_actualizar(this.value)">
+                                                            class="form-control"
+                                                            onchange="mostrar_campos_asambleistas_actualizar(this.value)">
                                                         <option value="">Seleccione</option>
                                                         @foreach($tipos_usuario as $tipo)
                                                             <option value="{{$tipo->id}}">{{ ucwords($tipo->nombre_rol)}}</option>
@@ -232,7 +234,7 @@
                                                 <div class="form-group">
                                                     <label for="propietario_actualizar">Propietario</label>
                                                     <select id="propietario_actualizar" name="propietario_actualizar"
-                                                            class="form-control">
+                                                            class="form-control" onchange="cambio_propietaria_dd(this.value)">
                                                         <option value="">Seleccione</option>
                                                         <option value="1">Si</option>
                                                         <option value="0">No</option>
@@ -240,11 +242,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row hidden">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="cambio_propietaria">Cambio Propietaria</label>
+                                                    <input type="text" class="form-control" id="cambio_propietaria"
+                                                           name="cambio_propietaria" value="0">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row text-center">
-                                    <button type="submit" id="submitButtonUpdate" class="btn btn-primary">Aceptar</button>
+                                    <button type="submit" id="submitButtonUpdate" class="btn btn-primary">Aceptar
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -423,6 +435,9 @@
 @section("scripts")
 
     <script type="text/javascript">
+
+        var propietaria = "";
+
         $(function () {
 
             $('#dui').mask("00000000-0", {placeholder: "99999999-9"});
@@ -650,6 +665,7 @@
                 e.preventDefault();
 
                 var form = $("#agregar_usuario").serialize();
+
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('guardar_usuario') }}",
@@ -657,7 +673,7 @@
                     success: function (response) {
                         if (response.error == true) {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
-                            $("#submitButton").prop("disabled",false);
+                            $("#submitButton").prop("disabled", false);
                             $("#submitButton").removeClass("disabled");
                         } else {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
@@ -804,10 +820,9 @@
                     url: "{{ route('actualizar_usuario') }}",
                     data: form,
                     success: function (response) {
-                        console.log(response.$total_tipos_usuarios);
                         if (response.error == true) {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
-                            $("#submitButtonUpdate").prop("disabled",false);
+                            $("#submitButtonUpdate").prop("disabled", false);
                             $("#submitButtonUpdate").removeClass("disabled");
                         } else {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
@@ -853,6 +868,7 @@
                         $("#sector_actualizar").val(response.sector);
                         $("#facultad_actualizar").val(response.facultad);
                         $("#propietario_actualizar").val(response.propietario);
+                        propietaria = response.propietario;
                     }
                     else {
                         $("#row_campos_asambleistas_actualizar").addClass('hidden');
@@ -869,7 +885,7 @@
                 $('#agregar_usuario').formValidation('enableFieldValidators', 'facultad', true);
                 $('#agregar_usuario').formValidation('enableFieldValidators', 'propietario', true);
             }
-            else{
+            else {
                 $("#row_campos_asambleistas").addClass("hidden");
                 $('#agregar_usuario').formValidation('enableFieldValidators', 'sector', false);
                 $('#agregar_usuario').formValidation('enableFieldValidators', 'facultad', false);
@@ -884,21 +900,25 @@
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'facultad_actualizar', true);
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'propietario_actualizar', true);
             }
-            else{
+            else {
                 $("#row_campos_asambleistas_actualizar").addClass("hidden");
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'sector_actualizar', false);
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'facultad_actualizar', false);
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'propietario_actualizar', false);
             }
         }
+        
+        function cambio_propietaria_dd(value) {
+            if(value != propietaria){
+                //se cambio el tipo que tenia
+                //$("#cambio_propietaria").val("1");
+                $('#cambio_propietaria').attr("value", "1");
+            }else{
+                //no cambio, o se volvio a colocar el mismo que tenia originalmente
+                //$("#cambio_propietaria").val("0");
+                $('#cambio_propietaria').attr("value", "0");
+            }
+        }
     </script>
 
-@endsection
-
-@section("lobibox")
-    @if(Session::has('success'))
-        <script>
-            notificacion("Exito", "{{ Session::get('success') }}", "success");
-        </script>
-    @endif
 @endsection
