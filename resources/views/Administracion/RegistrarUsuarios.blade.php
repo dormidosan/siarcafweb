@@ -86,17 +86,7 @@
                                   enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row">
-                                    <div class="col-sm-2 col-lg-2 text-center">
-                                        <div class="form-group">
-                                            <div class="kv-avatar">
-                                                <div class="file-loading">
-                                                    <input id="foto_actualizar" name="foto_actualizar" type="file"
-                                                           accept="image/*">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-12">
                                         <div class="row hidden">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -664,12 +654,16 @@
                 // Prevent form submission
                 e.preventDefault();
 
-                var form = $("#agregar_usuario").serialize();
+                //var form = $("#agregar_usuario").serialize();
+                var form = new FormData(document.getElementById("agregar_usuario"));
 
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('guardar_usuario') }}",
                     data: form,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         if (response.error == true) {
                             notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
@@ -849,8 +843,6 @@
                     'id': id
                 },
                 success: function (response) {
-                    console.log(response.user_id);
-                    //notificacion(response.mensaje.titulo, response.mensaje.contenido, response.mensaje.tipo);
                     $("#user_id_actualizar").val(response.user_id);
                     $("#primer_nombre_actualizar").val(response.primer_nombre);
                     $("#segundo_nombre_actualizar").val(response.segundo_nombre);
@@ -907,7 +899,7 @@
                 $('#actualizar_usuario').formValidation('enableFieldValidators', 'propietario_actualizar', false);
             }
         }
-        
+
         function cambio_propietaria_dd(value) {
             if(value != propietaria){
                 //se cambio el tipo que tenia
