@@ -98,7 +98,7 @@
                                             <td>{{ $seguimiento->documento->tipo_documento->tipo }}</td>
                                             <td>
                                                 <a class="btn btn-info btn-xs"
-                                                   href="{{ asset($disco.''.$documento->path) }}"
+                                                   href="{{ asset($disco.''.$seguimiento->documento->path) }}"
                                                    role="button"><i class="fa fa-eye"></i> Ver</a>
 
                                                 <a class="btn btn-success btn-xs"
