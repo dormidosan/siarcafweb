@@ -50,6 +50,7 @@ class AdministracionController extends Controller
         if ($request->ajax()) {
 
             $total_tipos_usuarios = 0;
+            $disco = "../storage/fotos/";
 
             if ($request->tipo_usuario == 3) {
                 $periodo_activo = Periodo::where("activo", 1)->first();
@@ -83,6 +84,23 @@ class AdministracionController extends Controller
                 $persona->nacimiento = (DateTime::createFromFormat('d-m-Y', $request->fecha1))->format('Y-m-d');
                 //sentencia para agregar la foto
                 //$persona->foto = $request->get("foto");
+
+                if ($request->hasFile('foto')){
+                    /*$foto = $request->get("foto");
+                    $filename = time() . '.'.$foto->getClientOriginalExtension();
+                    Image::make($foto)->rezise(300,300)->save(public_path('storage/fotos/'.$filename));
+                    $persona->foto = $filename;*/
+                    $file = $request->files->get('foto');
+                    $ext = $file->guessExtension();
+                    if ($ext == "jpeg" || $ext == "jpg" || $ext == "png" || $ext == "gif") {
+                        $nombreArchivo = time() . '' . rand(1,9999) . '.' .$file->getClientOriginalExtension();
+                        $persona->foto = $nombreArchivo;
+                        $archivo = $file->move($disco, $nombreArchivo);
+                    }
+
+                }
+
+
 
                 $persona->afp = $request->get("afp");
                 $persona->cuenta = $request->get("cuenta");
@@ -853,6 +871,7 @@ class AdministracionController extends Controller
             $respuesta->segundo_nombre = $usuario->persona->segundo_nombre;
             $respuesta->primer_apellido = $usuario->persona->primer_apellido;
             $respuesta->segundo_apellido = $usuario->persona->segundo_apellido;
+            $respuesta->foto = $usuario->persona->foto;
             $respuesta->correo = $usuario->email;
             $respuesta->dui = $usuario->persona->dui;
             $respuesta->nit = $usuario->persona->nit;
@@ -866,6 +885,7 @@ class AdministracionController extends Controller
                 $respuesta->facultad = $asambleista->facultad->id;
                 $respuesta->propietario = $asambleista->propietario;
             }
+            $respuesta->disco = "../storage/fotos/";
             return new JsonResponse($respuesta);
         }
     }
@@ -1051,7 +1071,6 @@ class AdministracionController extends Controller
             ->with('getRangeYear', $getRangeYear)
             ->with('asambleistas_plenaria', $asambleistas_plenaria);
     }
-
 
     public function getMeses()
     {
