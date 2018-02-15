@@ -6,6 +6,7 @@ use App\Asambleista;
 use App\Cargo;
 use App\Clases\Mensaje;
 use App\Comision;
+use App\Dieta;
 use App\Facultad;
 use App\Modulo;
 use App\Periodo;
@@ -51,7 +52,7 @@ class AdministracionController extends Controller
             $total_tipos_usuarios = 0;
 
             if ($request->tipo_usuario == 3) {
-                $periodo_activo = Periodo::where("activo",1)->first();
+                $periodo_activo = Periodo::where("activo", 1)->first();
                 $total_tipos_usuarios = Asambleista::join("users", "asambleistas.user_id", "=", "users.id")
                     ->where("users.rol_id", 3)
                     ->where('asambleistas.propietario', $request->propietario)
@@ -67,7 +68,7 @@ class AdministracionController extends Controller
                 $respuesta->error = true;
                 $facultad = Facultad::find($request->facultad);
                 $sector = Sector::find($request->sector);
-                $propietaria = ($request->propietario == 0) ? 'Suplentes':'Propietarios';
+                $propietaria = ($request->propietario == 0) ? 'Suplentes' : 'Propietarios';
                 $respuesta->mensaje = (new Mensaje("Error", "Ya existe el total maximo de asambleistas " . $propietaria . " para la " . $facultad->nombre . " en el sector " . $sector->nombre, "error"))->toArray();
                 return new JsonResponse($respuesta);
             } else {
@@ -859,7 +860,7 @@ class AdministracionController extends Controller
             $respuesta->afp = $usuario->persona->afp;
             $respuesta->cuenta = $usuario->persona->cuenta;
             $respuesta->tipo = $usuario->rol_id;
-            if ($usuario->rol->id == 3){
+            if ($usuario->rol->id == 3) {
                 $asambleista = Asambleista::where("user_id", $request->id)->first();
                 $respuesta->sector = $asambleista->sector->id;
                 $respuesta->facultad = $asambleista->facultad->id;
@@ -869,14 +870,15 @@ class AdministracionController extends Controller
         }
     }
 
-    public function actualizar_usuario(Request $request){
+    public function actualizar_usuario(Request $request)
+    {
         if ($request->ajax()) {
 
             $total_tipos_usuarios = 0;
             $respuesta = new \stdClass();
 
-            if ($request->tipo_usuario_actualizar == 3 ) {
-                $periodo_activo = Periodo::where("activo",1)->first();
+            if ($request->tipo_usuario_actualizar == 3) {
+                $periodo_activo = Periodo::where("activo", 1)->first();
                 $total_tipos_usuarios = Asambleista::join("users", "asambleistas.user_id", "=", "users.id")
                     ->where("users.rol_id", 3)
                     ->where('asambleistas.propietario', $request->propietario_actualizar)
@@ -891,7 +893,7 @@ class AdministracionController extends Controller
                 $respuesta->error = true;
                 $facultad = Facultad::find($request->facultad_actualizar);
                 $sector = Sector::find($request->sector_actualizar);
-                $propietaria = ($request->propietario_actualizar == 0) ? 'Suplentes':'Propietarios';
+                $propietaria = ($request->propietario_actualizar == 0) ? 'Suplentes' : 'Propietarios';
                 $respuesta->mensaje = (new Mensaje("Error", "Ya existe el total maximo de asambleistas " . $propietaria . " para la " . $facultad->nombre . " en el sector " . $sector->nombre, "error"))->toArray();
                 return new JsonResponse($respuesta);
             } else {
@@ -923,7 +925,7 @@ class AdministracionController extends Controller
 
 
                 if ($request->get("tipo_usuario_actualizar") == 3) {
-                    $asambleista = Asambleista::where("user_id",$usuario->id)->first();
+                    $asambleista = Asambleista::where("user_id", $usuario->id)->first();
                     //$periodo_activo = Periodo::where("activo", "=", 1)->first();
                     //$asambleista->user_id = $usuario->id;
                     //$asambleista->periodo_id = $periodo_activo->id;
@@ -950,5 +952,125 @@ class AdministracionController extends Controller
             }
         }
     }
+
+    public function dietas_asambleista(Request $request)
+    {
+        $todos = 0;
+        $dietas = collect();//Dieta::join("asambleistas","dietas.asambleista_id", "=","asambleistas.id")->get();
+
+        $asambleistas_activos = Asambleista::where('id', '!=', '0')->where('activo', '=', '1')->get();
+        $asambleistas_plenaria[] = array();
+        foreach ($asambleistas_activos as $asambleista) {
+            $asambleistas_plenaria[$asambleista->id] = $asambleista->user->persona->primer_nombre
+                . ' ' . $asambleista->user->persona->segundo_nombre
+                . ' ' . $asambleista->user->persona->primer_apellido
+                . ' ' . $asambleista->user->persona->segundo_apellido;
+        }
+        unset($asambleistas_plenaria[0]);
+
+        $meses = $this->getMeses();
+        //dd($asambleistas_plenaria);
+        $periodo = Periodo::latest()->first();
+        $start = $periodo->inicio;//'2010-12-02';
+        $end = $periodo->fin;//'2016-05-06';
+
+
+        $getRangeYear = range(gmdate('Y', strtotime($start)), gmdate('Y', strtotime($end)));
+
+        /*
+            $integrantes = Cargo::join("asambleistas", "cargos.asambleista_id", "=", "asambleistas.id")
+                    ->join("periodos", "asambleistas.periodo_id", "=", "periodos.id")
+                    ->where("cargos.comision_id", $request->get("idComision"))
+                    ->where("asambleistas.activo", 1)
+                    ->where("periodos.activo", 1)
+                    ->where("cargos.activo", 1)
+                    ->get();
+        */
+        //$todos = 0;
+        return view('Administracion.dietas_asambleista')
+            ->with('todos', $todos)
+            ->with('meses', $meses)
+            ->with('dietas', $dietas)
+            ->with('getRangeYear', $getRangeYear)
+            ->with('asambleistas_plenaria', $asambleistas_plenaria);
+    }
+
+    public function almacenar_dieta_asambleista(Request $request)
+    {
+        //dd($request->all());
+        $todos = $request->todos;
+        $periodo = Periodo::latest()->first();
+        $start = $periodo->inicio;//'2010-12-02';
+        $end = $periodo->fin;//'2016-05-06';
+
+        $getRangeYear = range(gmdate('Y', strtotime($start)), gmdate('Y', strtotime($end)));
+
+        $dieta = Dieta::where('id', '=', $request->id_dieta)->first();
+        $dieta->asistencia = $request->asistencia;
+        $dieta->junta_directiva = $request->junta_directiva;
+        $dieta->save();
+        $mes = $dieta->mes;
+        $year = $dieta->anio;
+        $asambleista_id = $dieta->asambleista_id;
+        //dd($year);
+        if ($todos == 1) {
+            $dietas = Dieta::join("asambleistas", "dietas.asambleista_id", "=", "asambleistas.id")
+                ->where("asambleistas.activo", "=", 1)
+                //->where("asambleistas.id","=", $asambleista_id)
+                ->where("dietas.mes", "=", $mes)
+                ->where("dietas.anio", "=", $year)
+                ->select('dietas.*')
+                ->get();
+        } else {
+            $dietas = Dieta::join("asambleistas", "dietas.asambleista_id", "=", "asambleistas.id")
+                ->where("asambleistas.activo", "=", 1)
+                ->where("asambleistas.id", "=", $asambleista_id)
+                ->where("dietas.mes", "=", $mes)
+                ->where("dietas.anio", "=", $year)
+                ->select('dietas.*')
+                ->get();
+        }
+        //dd($dietas);
+        $asambleistas_activos = Asambleista::where('id', '!=', '0')->where('activo', '=', '1')->get();
+        $asambleistas_plenaria[] = array();
+        foreach ($asambleistas_activos as $asambleista) {
+            $asambleistas_plenaria[$asambleista->id] = $asambleista->user->persona->primer_nombre
+                . ' ' . $asambleista->user->persona->segundo_nombre
+                . ' ' . $asambleista->user->persona->primer_apellido
+                . ' ' . $asambleista->user->persona->segundo_apellido;
+        }
+        unset($asambleistas_plenaria[0]);
+
+        $meses = $this->getMeses();
+
+
+        return view('Administracion.dietas_asambleista')
+            ->with('todos', $todos)
+            ->with('meses', $meses)
+            ->with('dietas', $dietas)
+            ->with('getRangeYear', $getRangeYear)
+            ->with('asambleistas_plenaria', $asambleistas_plenaria);
+    }
+
+
+    public function getMeses()
+    {
+        $varMeses = [
+            "enero" => "enero",
+            "febrero" => "febrero",
+            "marzo" => "marzo",
+            "abril" => "abril",
+            "mayo" => "mayo",
+            "junio" => "junio",
+            "julio" => "julio",
+            "agosto" => "agosto",
+            "septiembre" => "septiembre",
+            "octubre" => "octubre",
+            "noviembre" => "noviembre",
+            "diciembre" => "diciembre",
+        ];
+        return $varMeses;
+    }
+
 
 }
