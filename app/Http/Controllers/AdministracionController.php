@@ -873,8 +873,9 @@ class AdministracionController extends Controller
         if ($request->ajax()) {
 
             $total_tipos_usuarios = 0;
+            $respuesta = new \stdClass();
 
-            if ($request->tipo_usuario == 3) {
+            if ($request->tipo_usuario_actualizar == 3 ) {
                 $periodo_activo = Periodo::where("activo",1)->first();
                 $total_tipos_usuarios = Asambleista::join("users", "asambleistas.user_id", "=", "users.id")
                     ->where("users.rol_id", 3)
@@ -886,10 +887,8 @@ class AdministracionController extends Controller
                     ->count();
             }
 
-            if ($total_tipos_usuarios >= 2) {
-                $respuesta = new \stdClass();
+            if ($total_tipos_usuarios == 2 && $request->cambio_propietaria == 1) {
                 $respuesta->error = true;
-                $respuesta->error = $total_tipos_usuarios;
                 $facultad = Facultad::find($request->facultad_actualizar);
                 $sector = Sector::find($request->sector_actualizar);
                 $propietaria = ($request->propietario_actualizar == 0) ? 'Suplentes':'Propietarios';
@@ -924,32 +923,28 @@ class AdministracionController extends Controller
 
 
                 if ($request->get("tipo_usuario_actualizar") == 3) {
-                    $asambleista = Asambleista::find($usuario->id);
-                    $periodo_activo = Periodo::where("activo", "=", 1)->first();
+                    $asambleista = Asambleista::where("user_id",$usuario->id)->first();
+                    //$periodo_activo = Periodo::where("activo", "=", 1)->first();
                     //$asambleista->user_id = $usuario->id;
-                    $asambleista->periodo_id = $periodo_activo->id;
+                    //$asambleista->periodo_id = $periodo_activo->id;
                     $asambleista->facultad_id = $request->get("facultad_actualizar");
                     $asambleista->sector_id = $request->get("sector_actualizar");
                     $asambleista->propietario = $request->get("propietario_actualizar");
                     //setea al user como un asambleista activo
-                    $asambleista->activo = 1;
+                    //$asambleista->activo = 1;
 
-                    $hoy = Carbon::now();
+                    /*$hoy = Carbon::now();
                     $inicio_periodo = Carbon::createFromFormat("Y-m-d", $periodo_activo->inicio);
 
                     if ($hoy > $inicio_periodo) {
                         $asambleista->inicio = $hoy;
                     } else {
                         $asambleista->inicio = $inicio_periodo;
-                    }
+                    }*/
                     $asambleista->save();
                 }
 
-                /*$request->session()->flash("success", "Usuario agregado con exito");
-                return redirect()->route("mostrar_formulario_registrar_usuario");*/
-                $respuesta = new \stdClass();
                 $respuesta->error = false;
-                $respuesta->error = $total_tipos_usuarios;
                 $respuesta->mensaje = (new Mensaje("Exito", "Usuario actualizado con exito", "success"))->toArray();
                 return new JsonResponse($respuesta);
             }
